@@ -1,14 +1,18 @@
-package com.dragontrain.md.domain.user.domain;
+package com.dragontrain.md.domain.refrigerator.domain;
 
 import java.time.LocalDateTime;
 
+import com.dragontrain.md.domain.user.domain.User;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -21,17 +25,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "tbl_user")
-public class User {
+@Table(name = "tbl_refrigerator")
+public class Refrigerator {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "user_id", columnDefinition = "bigint", nullable = false)
-	private Long userId;
+	@Column(name = "refrigerator_id", columnDefinition = "bigint", nullable = false)
+	private Long refrigeratorId;
 
-	@Enumerated(value = EnumType.STRING)
-	@Column(name = "social_login_type",columnDefinition = "char(5)", nullable = false)
-	private SocialLoginType socialLoginType;
+	@Column(name = "exp", columnDefinition = "int default 0", nullable = false)
+	private Integer exp;
 
 	@Column(name = "created_at", columnDefinition = "datetime", nullable = false)
 	private LocalDateTime createdAt;
@@ -44,6 +47,14 @@ public class User {
 
 	@Column(name = "is_deleted", columnDefinition = "boolean default false", nullable = false)
 	private Boolean isDeleted;
+
+	@JoinColumn(name = "user_id")
+	@OneToOne(fetch = FetchType.LAZY)
+	private User user;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "level_id")
+	private Level level;
+
 
 
 }

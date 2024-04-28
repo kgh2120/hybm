@@ -1,14 +1,19 @@
-package com.dragontrain.md.domain.user.domain;
+package com.dragontrain.md.domain.notice.domain;
 
 import java.time.LocalDateTime;
+
+import com.dragontrain.md.domain.food.domain.Food;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -21,29 +26,31 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "tbl_user")
-public class User {
-
+@Table(name = "tbl_notice")
+public class Notice {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "user_id", columnDefinition = "bigint", nullable = false)
-	private Long userId;
+	@Column(name = "notice_id", columnDefinition = "bigint", nullable = false)
+	private Long noticeId;
 
-	@Enumerated(value = EnumType.STRING)
-	@Column(name = "social_login_type",columnDefinition = "char(5)", nullable = false)
-	private SocialLoginType socialLoginType;
+	@Column(name = "content", columnDefinition = "varchar(100)", nullable = false)
+	private String content;
+
+	@Column(name = "is_checked", columnDefinition = "boolean default false", nullable = false)
+	private Boolean isChecked;
 
 	@Column(name = "created_at", columnDefinition = "datetime", nullable = false)
 	private LocalDateTime createdAt;
-
 	@Column(name = "updated_at", columnDefinition = "datetime", nullable = false)
 	private LocalDateTime updatedAt;
-
 	@Column(name = "deleted_at", columnDefinition = "datetime")
 	private LocalDateTime deletedAt;
 
-	@Column(name = "is_deleted", columnDefinition = "boolean default false", nullable = false)
-	private Boolean isDeleted;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "type", columnDefinition = "varchar(8)", nullable = false)
+	private NoticeType type;
 
-
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "food_id")
+	private Food food;
 }

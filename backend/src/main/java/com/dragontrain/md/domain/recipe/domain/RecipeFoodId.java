@@ -1,0 +1,28 @@
+package com.dragontrain.md.domain.recipe.domain;
+
+import java.io.Serializable;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@Builder
+@NoArgsConstructor
+@Getter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Embeddable
+public class RecipeFoodId implements Serializable {
+
+	@EqualsAndHashCode.Include
+	@Column(name = "recipe_id", columnDefinition = "int")
+	private Integer recipeId;
+
+	@EqualsAndHashCode.Include
+	@Column(name = "category_detail_id", columnDefinition = "int")
+	private Integer categoryDetailId;
+}

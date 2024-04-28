@@ -1,0 +1,64 @@
+package com.dragontrain.md.domain.food.domain;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
+@Table(name = "tbl_food")
+public class Food {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "food_id", columnDefinition = "bigint", nullable = false)
+	private Long foodId;
+
+	@Column(name = "name", columnDefinition = "varchar(100)", nullable = false)
+	private String name;
+
+	@Column(name = "expected_expiration_date", columnDefinition = "date", nullable = false)
+	private LocalDate expectedExpirationDate;
+
+	@Column(name = "created_at", columnDefinition = "datetime", nullable = false)
+	private LocalDateTime createdAt;
+	@Column(name = "updated_at", columnDefinition = "datetime", nullable = false)
+	private LocalDateTime updatedAt;
+	@Column(name = "deleted_at", columnDefinition = "datetime")
+	private LocalDateTime deletedAt;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "delete_type", columnDefinition = "varchar(10)")
+	private FoodDeleteType foodDeleteType;
+
+	@Column(name = "is_manual", columnDefinition = "boolean", nullable = false)
+	private Boolean isManual;
+
+	@Column(name = "price", columnDefinition = "int")
+	private Integer price;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "category_detail_id")
+	private CategoryDetail categoryDetail;
+
+	// TODO 냉장고, 타입 아이디 가져야 함.
+}

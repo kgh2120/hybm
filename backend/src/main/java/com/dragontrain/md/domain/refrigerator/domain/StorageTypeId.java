@@ -1,4 +1,5 @@
 package com.dragontrain.md.domain.refrigerator.domain;
 
-public class Sample {
+public enum StorageTypeId {
+	ICE, COOL, CABINET
 }

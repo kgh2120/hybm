@@ -1,4 +1,6 @@
 package com.dragontrain.md.domain.notice.domain;
 
-public class Sample {
+public enum NoticeType {
+	TO_DANGER,
+	TO_ROTTEN
 }
