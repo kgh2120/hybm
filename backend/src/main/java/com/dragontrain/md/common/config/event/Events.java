@@ -19,7 +19,8 @@ public class Events {
 	}
 
 	public static void raise(Event event) {
-		if (eventPublisher != null)
+		if (eventPublisher != null) {
 			eventPublisher.publishEvent(event);
+		}
 	}
 }
