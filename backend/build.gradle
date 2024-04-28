@@ -40,6 +40,10 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-impl:0.12.3'
     implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3'
 
+    // monitoring
+    implementation 'org.springframework.boot:spring-boot-starter-actuator' //actuator 추가
+    implementation 'io.micrometer:micrometer-registry-prometheus' //프로메테우스 데이터 형태로 변환
+
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
