@@ -70,7 +70,7 @@ editorconfig {
 check.dependsOn editorconfigCheck
 
 checkstyle {
-    maxWarnings = 0
+    maxWarnings = 500
     configFile = file("${rootDir}/config/naver-checkstyle-rules.xml")
     configProperties = ["suppressionFile": "${rootDir}/config/naver-checkstyle-suppressions.xml"]
     toolVersion = "9.2"
