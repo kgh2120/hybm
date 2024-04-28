@@ -1,0 +1,114 @@
+stages:          # List of stages for jobs, and their order of execution
+  - test
+  - build
+  - deploy
+image: gradle:alpine
+
+test-backend:       # This job runs in the build stage, which runs first.
+  image: gradle:jdk21-alpine
+  stage: test
+  # before_script:
+  #   - echo "$SECRET_YML" > backend/src/main/resources/secret.yml
+  script:
+    - cd backend
+    - chmod +x gradlew
+    - ./gradlew test
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event' && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "be"
+  artifacts:
+    paths:
+      - backend/build/reports/tests/test/*
+    name: "$CI_COMMIT_REF_NAME"
+    expire_in: 1 day
+
+test-frontend:       # This job runs in the build stage, which runs first.
+  image: node:18-alpine
+  stage: test
+  script:
+    - cd frontend
+    - rm -rf node_modules/
+    - npm install --legacy-peer-deps
+    - yarn build
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event' && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "fe"
+
+build-backend:       # This job runs in the build stage, which runs first.
+  image: docker:stable
+  stage: build
+  services:
+    - name: docker:20-dind
+      alias: localhost
+      command: ['--tls=false']
+  variables:    # activate container-to-container networking
+    CPU: 1024
+    MEMORY: 2048
+    DOCKER_HOST: tcp://localhost:2375
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ''
+  # before_script:
+  #   - echo "$SECRET_YML" > backend/src/main/resources/secret.yml
+  script:
+    - cd backend
+    - docker build -t $DOCKER_HUB_ID/$DOCKER_BACKEND_NAME .
+    - docker login -u $DOCKER_HUB_ID -p $DOCKER_HUB_PW
+    - docker push $DOCKER_HUB_ID/$DOCKER_BACKEND_NAME
+  after_script:
+    - docker logout
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'push' && $CI_COMMIT_BRANCH == "be"
+
+build-frontend:       # This job runs in the build stage, which runs first.
+  image: docker:stable
+  stage: build
+  services:
+    - name: docker:20-dind
+      alias: localhost
+      command: ['--tls=false']
+  variables:    # activate container-to-container networking
+    CPU: 1024
+    MEMORY: 2048
+    DOCKER_HOST: tcp://localhost:2375
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ''
+  script:
+    - cd frontend
+    - rm -rf node_modules/
+    - docker build -t $DOCKER_HUB_ID/$DOCKER_FRONTEND_NAME .
+    - docker login -u $DOCKER_HUB_ID -p $DOCKER_HUB_PW
+    - docker push $DOCKER_HUB_ID/$DOCKER_FRONTEND_NAME
+  after_script:
+    - docker logout
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'push' && $CI_COMMIT_BRANCH == "fe"
+
+deploy-backend:       # This job runs in the build stage, which runs first.
+  image: alpine:latest
+  stage: deploy
+  script:
+    - 'command -v ssh-agent >/dev/null || ( apk update  && apk add openssh-client )'
+    - eval $(ssh-agent -s)
+    - chmod 400 "$SSH_PRIVATE_KEY"
+    - ssh-add "$SSH_PRIVATE_KEY"
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan -H $REMOTE_SERVER_ADDRESS >> ~/.ssh/known_hosts
+    - ssh $REMOTE_USERNAME@$REMOTE_SERVER_ADDRESS 'sh be.sh'
+  needs: [build-backend]
+  only:
+    - be
+
+deploy-frontend:       # This job runs in the build stage, which runs first.
+  image: alpine:latest
+  stage: deploy
+  script:
+    - 'command -v ssh-agent >/dev/null || ( apk update  && apk add openssh-client )'
+    - eval $(ssh-agent -s)
+    - chmod 400 "$SSH_PRIVATE_KEY"
+    - ssh-add "$SSH_PRIVATE_KEY"
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan -H $REMOTE_SERVER_ADDRESS >> ~/.ssh/known_hosts
+    - ssh $REMOTE_USERNAME@$REMOTE_SERVER_ADDRESS 'sh fe.sh'
+  needs: [build-frontend]
+  only:
+    - fe
