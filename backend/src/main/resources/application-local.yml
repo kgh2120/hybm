@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: md
+  h2:
+    console:
+      enabled: true
+  data:
+    redis:
+      host: k10a707.p.ssafy.io
+      port: 6378
+      timeout: 6
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

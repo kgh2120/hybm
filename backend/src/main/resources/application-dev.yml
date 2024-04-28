@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: md
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: ssafy
+    password: 1q2w3e4rQ!4dnjf
+  data:
+    redis:
+      host: k10a707.p.ssafy.io
+      port: 6379
+      timeout: 6
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
