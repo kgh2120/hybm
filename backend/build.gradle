@@ -2,6 +2,8 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.5'
     id 'io.spring.dependency-management' version '1.1.4'
+    id 'checkstyle'
+    id 'org.ec4j.editorconfig' version '0.0.3'
 }
 
 group = 'com.dragontrain'
@@ -59,5 +61,21 @@ tasks.named('test') {
 def generatedDir = 'src/main/generated'
 
 clean {
-    delete file (generatedDir)
+    delete file(generatedDir)
 }
+editorconfig {
+    excludes = ['build']
+}
+
+check.dependsOn editorconfigCheck
+
+checkstyle {
+    maxWarnings = 0
+    configFile = file("${rootDir}/config/naver-checkstyle-rules.xml")
+    configProperties = ["suppressionFile": "${rootDir}/config/naver-checkstyle-suppressions.xml"]
+    toolVersion = "9.2"
+}
+
+
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'

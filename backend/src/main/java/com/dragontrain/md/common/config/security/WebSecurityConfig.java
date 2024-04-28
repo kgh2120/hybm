@@ -35,6 +35,7 @@ public class WebSecurityConfig {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return web -> web.ignoring()
@@ -49,9 +50,10 @@ public class WebSecurityConfig {
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.formLogin(FormLoginConfigurer::disable)
 			.cors(c -> c.configurationSource(corsConfigurationSource()))
-            .authorizeHttpRequests((auth) -> auth.anyRequest().permitAll());
+			.authorizeHttpRequests((auth) -> auth.anyRequest().permitAll());
 		return http.build();
 	}
+
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
