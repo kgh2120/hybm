@@ -1,1 +1,6 @@
-spring.application.name=md
+spring:
+  application:
+    name: md
+  h2:
+    console:
+      enabled: true
