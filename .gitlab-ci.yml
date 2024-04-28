@@ -5,7 +5,7 @@ stages:          # List of stages for jobs, and their order of execution
 image: gradle:alpine
 
 test-backend:       # This job runs in the build stage, which runs first.
-  image: gradle:jdk21-alpine
+  image: gradle:jdk17-alpine
   stage: test
   # before_script:
   #   - echo "$SECRET_YML" > backend/src/main/resources/secret.yml
