@@ -1,5 +1,5 @@
-import styles from "../../styles/common/Modal.module.css";
-import line from "../../assets/line.png";
+import styles from '../../styles/common/Modal.module.css';
+import Header from './Header';
 
 interface propsType {
   title: string;
@@ -11,14 +11,10 @@ function Modal({ title, clickEvent, children }: propsType) {
     <>
       <div className={styles.modal}>
         <div className={styles.modalContent}>
-          <header>
-            <div className={styles.left}>알림함 비우기</div>
-            <h1>{title}</h1>
-            <div onClick={clickEvent} className={styles.closeButton}>
-              x
-            </div>
-          </header>
-          <img className={styles.line} src={line} alt="" />
+          <div onClick={clickEvent} className={styles.closeButton}>
+            x
+          </div>
+          <Header title={title}/>
           {children}
         </div>
       </div>

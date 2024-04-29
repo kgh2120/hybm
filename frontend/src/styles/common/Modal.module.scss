@@ -12,19 +12,8 @@
   .modalContent {
     padding: 20px;
     background-color: white;
-    border-radius: 10px;
-    header {
-      display: flex;
-
-      .left {
-      }
-      h1 {
-        @include modal-title;
-      }
-    }
-    .line {
-      width: 290px;
-    }
+    border: 1px solid $color-light;
+    
   }
 }
 
