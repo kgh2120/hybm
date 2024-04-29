@@ -3,7 +3,6 @@ plugins {
     id 'org.springframework.boot' version '3.2.5'
     id 'io.spring.dependency-management' version '1.1.4'
     id 'checkstyle'
-    id 'org.ec4j.editorconfig' version '0.0.3'
 }
 
 group = 'com.dragontrain'
@@ -63,11 +62,6 @@ def generatedDir = 'src/main/generated'
 clean {
     delete file(generatedDir)
 }
-editorconfig {
-    excludes = ['build']
-}
-
-check.dependsOn editorconfigCheck
 
 checkstyle {
     maxWarnings = 500
