@@ -30,7 +30,7 @@ public class User {
 	private Long userId;
 
 	@Enumerated(value = EnumType.STRING)
-	@Column(name = "social_login_type",columnDefinition = "char(5)", nullable = false)
+	@Column(name = "social_login_type", columnDefinition = "char(5)", nullable = false)
 	private SocialLoginType socialLoginType;
 
 	@Column(name = "created_at", columnDefinition = "datetime", nullable = false)
