@@ -41,6 +41,6 @@ public class Barcode {
 	private LocalDateTime deletedAt;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "kan_code", referencedColumnName = "kan_code")
+	@JoinColumn(name = "kan_code", referencedColumnName = "kan_code", nullable = false)
 	private CategoryDetail categoryDetail;
 }

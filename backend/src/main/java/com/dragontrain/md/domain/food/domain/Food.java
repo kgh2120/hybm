@@ -3,6 +3,9 @@ package com.dragontrain.md.domain.food.domain;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
+import com.dragontrain.md.domain.refrigerator.domain.StorageType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -60,5 +63,14 @@ public class Food {
 	@JoinColumn(name = "category_detail_id")
 	private CategoryDetail categoryDetail;
 
-	// TODO 냉장고, 타입 아이디 가져야 함.
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "refrigerator_id")
+	private Refrigerator refrigerator;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "storage_type")
+	private StorageType storageType;
+
+	@Column(name = "status", columnDefinition = "varchar(7)", nullable = false)
+	private FoodStatus foodStatus;
 }

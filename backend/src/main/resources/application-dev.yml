@@ -5,6 +5,8 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
     username: ssafy
     password: 1q2w3e4rQ!4dnjf
+    url: jdbc:mariadb://k10a707.p.ssafy.io:3306/hybm?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+
   data:
     redis:
       host: k10a707.p.ssafy.io
@@ -13,6 +15,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
 management:
   endpoints:
     web:

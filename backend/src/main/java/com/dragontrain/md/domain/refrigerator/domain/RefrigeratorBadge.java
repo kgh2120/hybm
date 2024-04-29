@@ -3,6 +3,7 @@ package com.dragontrain.md.domain.refrigerator.domain;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -29,8 +30,11 @@ public class RefrigeratorBadge {
 
 	@MapsId("badgeId")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "badge_id")
 	private Badge badge;
+
+	@MapsId("refrigeratorId")
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Refrigerator refrigerator;
 
 	@Column(name = "created_at", columnDefinition = "datetime", nullable = false)
 	private LocalDateTime createdAt;

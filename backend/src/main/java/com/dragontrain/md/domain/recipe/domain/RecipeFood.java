@@ -1,5 +1,7 @@
 package com.dragontrain.md.domain.recipe.domain;
 
+import com.dragontrain.md.domain.food.domain.CategoryDetail;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -27,7 +29,11 @@ public class RecipeFood {
 	@Column(name = "ingredient_name", columnDefinition = "varchar(100)", nullable = false)
 	private String ingredientName;
 
-	@MapsId("recipe_id")
+	@MapsId("recipeId")
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Recipe recipe;
+
+	@MapsId("categoryDetailId")
+	@ManyToOne(fetch = FetchType.LAZY)
+	private CategoryDetail categoryDetail;
 }
