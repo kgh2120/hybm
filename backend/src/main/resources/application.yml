@@ -1,1 +1,5 @@
-spring.application.name=md
+spring:
+  application:
+    name: md
+  profiles:
+    default: local
