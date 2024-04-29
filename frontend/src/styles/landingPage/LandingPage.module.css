@@ -1,3 +1,24 @@
-div {
+.wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.wrapper img {
+  display: block;
+  margin-bottom: 10px;
+}
+.wrapper div {
+  font-size: 12px;
+}
+.wrapper .subHeader {
+  font-size: 24px;
+}
+.wrapper .authBtn {
+  margin-top: 40px;
+}
+
+.wrapperHeight {
   height: 100%;
 }/*# sourceMappingURL=LandingPage.module.css.map */
