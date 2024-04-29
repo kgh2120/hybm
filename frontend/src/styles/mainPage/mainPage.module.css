@@ -1,0 +1,56 @@
+.notification_modal_wrapper .notification_item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px;
+}
+.notification_modal_wrapper .notification_item .image_section {
+  width: 40px;
+  aspect-ratio: 1/1;
+  background-color: #fce6e7;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px dashed #fb5862;
+}
+.notification_modal_wrapper .notification_item .image_section img {
+  width: 80%;
+  aspect-ratio: 1/1;
+}
+.notification_modal_wrapper .notification_item .main_section {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.notification_modal_wrapper .notification_item .main_section > span {
+  width: 100%;
+  text-align: left;
+  color: #e5333e;
+  font-size: 13px;
+}
+.notification_modal_wrapper .notification_item .main_section > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.notification_modal_wrapper .notification_item .main_section > div span {
+  color: #666666;
+  font-size: 11px;
+}
+.notification_modal_wrapper .notification_item .main_section > div > div {
+  display: flex;
+  gap: 5px;
+}
+.notification_modal_wrapper .notification_item .main_section > div > div button {
+  color: #666666;
+  font-size: 11px;
+  border-radius: 10px;
+  border: 1px solid #666666;
+  background-color: white;
+  padding: 2px;
+  width: 70px;
+}/*# sourceMappingURL=mainPage.module.css.map */
