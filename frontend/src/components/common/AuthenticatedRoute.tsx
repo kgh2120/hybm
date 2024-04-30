@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import useAuthStore from "../../stores/useAuthStore";
-import styles from "../../styles/landingPage/LandingPage.module.css";
+import styles from "../../styles/common/AuthenticatedRoute.module.css";
 
 function AuthenticatedRoute() {
   const isLogin = useAuthStore((state) => state.isLogin);
@@ -8,7 +8,7 @@ function AuthenticatedRoute() {
     return <Navigate to="/" />;
   }
   return (
-    <div className={styles.wrapperHeight}>
+    <div className={styles.wrapper}>
       <Outlet />
     </div>
   );
