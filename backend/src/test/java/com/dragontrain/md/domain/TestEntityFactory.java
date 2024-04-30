@@ -14,6 +14,7 @@ public class TestEntityFactory {
 	public User getTestUserEntity(Long userId){
 		return User.builder()
 			.userId(userId)
+			.email("ssafy@ssafy.com")
 			.createdAt(LocalDateTime.now())
 			.updatedAt(LocalDateTime.now())
 			.isDeleted(Boolean.FALSE)
