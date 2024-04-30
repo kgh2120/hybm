@@ -10,7 +10,6 @@ import java.util.List;
 public interface StorageStorageDesignJpaRepository extends JpaRepository<StorageStorageDesign, Long> {
 	@Query("select new com.dragontrain.md.domain.refrigerator.controller.Response.StorageDesignResponse" +
 		"(sd.storageDesignId, sd.storageDesignName, sd.imgSrc, ssd.isApplied, sd.level, CASE WHEN ssd is null THEN false ELSE true END, sd.storageType.storageType)" +
-		" from StorageStorageDesign ssd right join ssd.storageDesign sd")// +
-//		" on ssd.refrigerator.refrigeratorId=:refrigeratorId and ssd.storageStorageDesignId.storageDesignId = sd.storageDesignId")
+		" from StorageStorageDesign ssd right join ssd.storageDesign sd")
 	List<StorageDesignResponse> findAllStorageDesign(Long refrigeratorId);
 }
