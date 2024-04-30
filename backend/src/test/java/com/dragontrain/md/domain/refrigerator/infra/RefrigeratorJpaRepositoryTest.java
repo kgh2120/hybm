@@ -4,7 +4,7 @@ import com.dragontrain.md.domain.TestEntityFactory;
 import com.dragontrain.md.domain.refrigerator.domain.Level;
 import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
 import com.dragontrain.md.domain.user.domain.User;
-import com.dragontrain.md.domain.user.infra.UserJpaRepository;
+import com.dragontrain.md.domain.user.infra.JpaUserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ class RefrigeratorJpaRepositoryTest {
 	private RefrigeratorJpaRepository refrigeratorJpaRepository;
 
 	@Autowired
-	private UserJpaRepository userJpaRepository;
+	private JpaUserRepository jpaUserRepository;
 
 	@Autowired
 	private LevelJpaRepository levelJpaRepository;
@@ -32,7 +32,7 @@ class RefrigeratorJpaRepositoryTest {
 	@Test
 	void 유저아이디로_냉장고조회_성공(){
 		User user = testEntityFactory.getTestUserEntity(null);
-		userJpaRepository.save(user);
+		jpaUserRepository.save(user);
 
 		Level level = testEntityFactory.getTestLevelEntity(null,1, 1);
 		levelJpaRepository.save(level);
