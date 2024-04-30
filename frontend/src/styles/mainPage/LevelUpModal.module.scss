@@ -1,0 +1,8 @@
+@import "../common/common";
+
+.wrapper {
+  > section {
+    background-color: $color-back;
+    border-radius: 20px;
+  }
+}

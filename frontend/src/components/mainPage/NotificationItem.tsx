@@ -1,4 +1,4 @@
-import styles from "../../styles/mainPage/mainPage.module.css";
+import styles from "../../styles/mainPage/NotificationModal.module.css";
 import meat from "../../assets/meat.png";
 
 function NotificationItem() {

@@ -1,4 +1,4 @@
-import styles from "../../styles/mainPage/mainPage.module.css";
+import styles from "../../styles/mainPage/NotificationModal.module.css";
 import NotificationItem from "./NotificationItem";
 
 function NotificationModal() {

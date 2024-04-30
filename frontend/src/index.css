@@ -24,6 +24,14 @@ button {
   line-height: 1;
 }
 
+/* html {
+  height: 100vh;
+}
+
+body, #root {
+  height: 100%;
+} */
+
 ol,
 ul {
   list-style: none;

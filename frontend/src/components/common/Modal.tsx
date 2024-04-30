@@ -10,8 +10,8 @@ function Modal({ title, clickEvent, children }: propsType) {
   return (
     <>
       <div className={styles.modal}>
-        <div className={styles.modalContent}>
-          <div onClick={clickEvent} className={styles.closeButton}>
+        <div className={styles.modal_content}>
+          <div onClick={clickEvent} className={styles.close_button}>
             x
           </div>
           <Header title={title}/>
