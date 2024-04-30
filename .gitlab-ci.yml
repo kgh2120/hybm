@@ -7,8 +7,8 @@ image: gradle:alpine
 test-backend:       # This job runs in the build stage, which runs first.
   image: gradle:jdk17-alpine
   stage: test
-  # before_script:
-  #   - echo "$SECRET_YML" > backend/src/main/resources/secret.yml
+  before_script:
+    - echo "$SECRET_YML" > backend/src/main/resources/secret.yml
   script:
     - cd backend
     - chmod +x gradlew
@@ -45,8 +45,8 @@ build-backend:       # This job runs in the build stage, which runs first.
     DOCKER_HOST: tcp://localhost:2375
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ''
-  # before_script:
-  #   - echo "$SECRET_YML" > backend/src/main/resources/secret.yml
+  before_script:
+    - echo "$SECRET_YML" > backend/src/main/resources/secret.yml
   script:
     - cd backend
     - docker build -t $DOCKER_HUB_ID/$DOCKER_BACKEND_NAME .
