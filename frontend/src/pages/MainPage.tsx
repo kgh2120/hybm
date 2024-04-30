@@ -27,10 +27,6 @@ function MainPage() {
 
   return (
     <div className={styles.wrapper}>
-      {/* <Link to="/">
-        <img src={levelBar} alt="" />
-      </Link> */}
-      <img src="" alt="" />
       <Link to="/badge">배지</Link>
       <Link to="/design">디자인</Link>
       <Link to="/landing">랜딩</Link>
