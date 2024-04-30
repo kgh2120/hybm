@@ -5,8 +5,8 @@
 
 .notification_modal_wrapper {
   overflow-y: auto;
-        // min-height: 50px;
-        max-height: 280px;
+  // min-height: 50px;
+  max-height: 250px;
   &::-webkit-scrollbar {
     width: 4px;
   }
@@ -16,9 +16,9 @@
     border-radius: 10px;
     background-clip: padding-box;
     border: 2px solid transparent;
-    // &:hover {
-    //   background-color: rgba($color-line, 0.4);
-    // }
+    &:hover {
+      background-color: rgba($color-line, 0.4);
+    }
   }
 
   &::-webkit-scrollbar-track {
@@ -33,7 +33,7 @@
     gap: 5px;
     padding: 7px;
     &::after {
-      content: '';
+      content: "";
       display: block;
       border: 1px dashed $color-back;
       width: 100%;
@@ -45,8 +45,8 @@
     .main_section {
       display: flex;
       justify-content: center;
-    align-items: center;
-    gap: 10px;
+      align-items: center;
+      gap: 10px;
       .image_section {
         width: 40px;
         aspect-ratio: 1/1;
@@ -103,5 +103,12 @@
         color: $color-text;
       }
     }
+  }
+  .remove_all_button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: $color-text;
+    font-size: $font-sm;
   }
 }
