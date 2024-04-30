@@ -1,5 +1,7 @@
 package com.dragontrain.md.domain.refrigerator.infra;
 
+import com.dragontrain.md.domain.refrigerator.controller.Response.AppliedStorageDesign;
+import com.dragontrain.md.domain.refrigerator.controller.Response.AppliedStorageDesignResponse;
 import com.dragontrain.md.domain.refrigerator.controller.Response.StorageDesignResponse;
 import com.dragontrain.md.domain.refrigerator.domain.StorageStorageDesign;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +15,10 @@ public interface StorageStorageDesignJpaRepository extends JpaRepository<Storage
 		" from StorageStorageDesign ssd right join ssd.storageDesign sd" +
 		" on ssd.refrigerator.refrigeratorId=:refrigeratorId")
 	List<StorageDesignResponse> findAllStorageDesign(Long refrigeratorId);
+
+	@Query("select new com.dragontrain.md.domain.refrigerator.controller.Response.AppliedStorageDesign" +
+		"(sd.storageDesignId, sd.imgSrc, ssd.storageType.storageType)" +
+		" from StorageStorageDesign ssd join ssd.storageDesign sd" +
+		" on ssd.refrigerator.refrigeratorId=:refrigeratorId and ssd.isApplied=true")
+	List<AppliedStorageDesign> findAllAppliedStorageDesign(Long refrigeratorId);
 }
