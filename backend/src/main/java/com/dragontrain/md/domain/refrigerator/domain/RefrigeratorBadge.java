@@ -1,9 +1,19 @@
 package com.dragontrain.md.domain.refrigerator.domain;
 
-import jakarta.persistence.*;
-import lombok.*;
-
 import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
@@ -32,6 +42,5 @@ public class RefrigeratorBadge {
 
 	@Column(name = "is_attached", columnDefinition = "boolean default false", nullable = false)
 	private Boolean isAttached;
-
 
 }
