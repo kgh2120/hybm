@@ -1,0 +1,116 @@
+@import "../common/_common";
+
+.wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .title {
+    @include modal-title;
+  }
+
+  .white_background {
+    background-color: white;
+    width: 90%;
+    height: 90%;
+    overflow-y: scroll;
+    padding: 5%;
+    margin: 1%;
+  }
+
+  .content {
+    .sub_title {
+      text-align: start;
+      font-size: $font-lg;
+      text-decoration: {
+        line: underline;
+        color: $color-point;
+        thickness: 2px;
+      }
+      text-underline-offset: 6px;
+      margin-top: 7%;
+    }
+
+    .sub_content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: $font-md;
+
+      .context {
+        margin: 8%;
+        p {
+          line-height: 150%;
+        }
+        p > span {
+          color: $color-point;
+        }
+      }
+    }
+
+    // 임시 우수식품 차트 css
+    .best_food {
+      width: 270px;
+      height: 230px;
+      border: 2px solid $color-point;
+      border-radius: 10px;
+      div {
+        background-color: beige;
+      }
+
+      // 여기서부턴 쓸지도 모름
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      p > span {
+        color: $color-point;
+      }
+    }
+
+    .alert {
+      width: 270px;
+      display: flex;
+      justify-content: end;
+      color: $color-text;
+      font-size: $font-sm;
+      margin: 2%;
+    }
+
+    .versus {
+      width: 270px;
+      height: 230px;
+      border: 1px dashed gray;
+
+      // 여기서부턴 쓸지도 모름
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      p > span {
+        color: $color-point;
+      }
+    }
+
+    .top_five {
+      width: 95%;
+      background-color: $color-back;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 10px;
+      padding: 5%;
+      gap: 1vh;
+
+      p > span {
+        color: $color-point;
+      }
+    }
+  }
+}
