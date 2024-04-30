@@ -1,0 +1,72 @@
+.wrapper {
+  border: 1px solid black;
+  display: flex;
+  position: relative;
+  height: 720px;
+  .cabinet_btn {
+    position: absolute;
+    // top: 40px;
+    top: 35px;
+    left: -1px;
+    width: 170px;
+    height: 180px;
+    border-radius: 50%;
+    cursor: pointer;
+    // width: 170px;
+    z-index: 10;
+    background-color: red;
+    opacity: 0;
+  }
+  .cabinet {
+    position: absolute;
+    // top: 40px;
+    top: 10px;
+    left: -1px;
+    width: 180px;
+    // width: 170px;
+    z-index: 2;
+  }
+  .cool {
+    position: absolute;
+    // top: 177px;
+    top: 150px;
+    left: -10px;
+    // width: 190px;
+    width: 200px;
+  }
+  .ice {
+    position: absolute;
+    bottom: 0px;
+    left: -9px;
+    // width: 191px;
+    width: 200px;
+  }
+  //   .set {
+  //     height: 720px;
+  //     // display: flex;
+  //     // flex-direction: column;
+  //     position: relative;
+  //     .cabinet {
+  //     //   position: absolute;
+  //     //   top: 10px;
+  //     //   left: 0px;
+  //       width: 30%;
+  //     }
+  //     .cool {
+  //       position: absolute;
+  //       top: 150px;
+  //       left: 0px;
+  //       width: 40%;
+  //     }
+  //     .ice {
+  //       position: absolute;
+  //       top: 450px;
+  //       left: 0px;
+  //       width: 40%;
+  //     }
+  //   }
+  //   img {
+  //     width: 100px;
+  //     height: 200px;
+  //   }
+}

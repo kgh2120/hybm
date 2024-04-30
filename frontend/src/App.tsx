@@ -8,6 +8,7 @@ import StoragePage from './pages/StoragePage';
 import BadgePage from './pages/BadgePage';
 import DesignPage from './pages/DesignPage';
 import AuthenticatedRoute from './components/common/AuthenticatedRoute';
+import TestPage from './pages/TestPage';
 
 function App() {
   const router = createBrowserRouter([
@@ -35,6 +36,10 @@ function App() {
         {
           path: '/design',
           element: <DesignPage />,
+        },
+        {
+          path: '/test',
+          element: <TestPage />,
         },
       ],
     },
