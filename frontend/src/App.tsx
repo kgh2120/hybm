@@ -14,7 +14,7 @@ function App() {
     {
       path: '/',
       element: <ProtectedRoute />,
-      errorElement: <ErrorPage />,
+      // errorElement: <ErrorPage />,
       children: [
         {
           path: '/',
