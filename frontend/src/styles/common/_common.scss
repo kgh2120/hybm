@@ -3,7 +3,23 @@ $color-light: #fb5862;
 $color-point: #e5333e;
 $color-line: #c9c9c9;
 $color-text: #666666;
-$font-sm: 11;
-$font-md: 13;
-$font-lg: 15;
-$font-xl: 20;
+$font-sm: 11px;
+$font-md: 13px;
+$font-lg: 15px;
+$font-xl: 20px;
+
+@mixin modal-title {
+  color: $color-text;
+  font-size: $font-xl;
+  font-weight: 100;
+}
+
+@mixin item-name {
+  color: $color-point;
+  font-size: $font-md;
+}
+
+@mixin item-content {
+  color: $color-text;
+  font-size: $font-sm;
+}

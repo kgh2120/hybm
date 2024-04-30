@@ -1,0 +1,105 @@
+.notification_modal_wrapper {
+  overflow-y: auto;
+  max-height: 250px;
+}
+.notification_modal_wrapper::-webkit-scrollbar {
+  width: 4px;
+}
+.notification_modal_wrapper::-webkit-scrollbar-thumb {
+  background-color: rgba(201, 201, 201, 0.2);
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+.notification_modal_wrapper::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(201, 201, 201, 0.4);
+}
+.notification_modal_wrapper::-webkit-scrollbar-track {
+  background-color: rgba(220, 220, 220, 0.7);
+  border-radius: 10px;
+  /* box-shadow: inset 0px 0px 5px white; */
+}
+.notification_modal_wrapper .notification_item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 7px;
+}
+.notification_modal_wrapper .notification_item::after {
+  content: "";
+  border: 1px dashed #fce6e7;
+  width: 100%;
+  margin-top: 5px;
+}
+.notification_modal_wrapper .notification_item:last-child::after {
+  content: none;
+}
+.notification_modal_wrapper .notification_item .main_section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.notification_modal_wrapper .notification_item .main_section .image_section {
+  width: 40px;
+  aspect-ratio: 1/1;
+  background-color: #fce6e7;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px dashed #fb5862;
+}
+.notification_modal_wrapper .notification_item .main_section .image_section img {
+  width: 80%;
+  aspect-ratio: 1/1;
+}
+.notification_modal_wrapper .notification_item .main_section .content_section {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.notification_modal_wrapper .notification_item .main_section .content_section > span {
+  width: 100%;
+  text-align: left;
+  color: #e5333e;
+  font-size: 13px;
+}
+.notification_modal_wrapper .notification_item .main_section .content_section > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.notification_modal_wrapper .notification_item .main_section .content_section > div span {
+  color: #666666;
+  font-size: 11px;
+}
+.notification_modal_wrapper .notification_item .main_section .content_section > div > div {
+  display: flex;
+  gap: 5px;
+}
+.notification_modal_wrapper .notification_item .main_section .content_section > div > div button {
+  color: #666666;
+  font-size: 11px;
+  border-radius: 10px;
+  border: 1px solid #666666;
+  background-color: white;
+  padding: 2px;
+  width: 70px;
+}
+.notification_modal_wrapper .notification_item .main_section .button_section {
+  align-self: flex-start;
+  font-size: 20px;
+  color: #666666;
+}
+.notification_modal_wrapper .remove_all_button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: #666666;
+  font-size: 11px;
+}/*# sourceMappingURL=mainPage.module.css.map */
