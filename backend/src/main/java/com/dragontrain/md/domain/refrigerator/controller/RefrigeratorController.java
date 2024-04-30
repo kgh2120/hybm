@@ -1,7 +1,6 @@
 package com.dragontrain.md.domain.refrigerator.controller;
 
 import com.dragontrain.md.domain.refrigerator.controller.Response.StorageDesignsResponse;
-import com.dragontrain.md.domain.refrigerator.service.StorageDesignService;
 import com.dragontrain.md.domain.refrigerator.service.StorageStorageDesignService;
 import com.dragontrain.md.domain.user.domain.User;
 import lombok.RequiredArgsConstructor;
