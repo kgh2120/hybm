@@ -1,4 +1,5 @@
 package com.dragontrain.md.domain.refrigerator.service;
 
-public class Sample {
+
+public interface StorageDesignService {
 }
