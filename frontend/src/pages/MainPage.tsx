@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import levelBar from "../assets/levelBar.png";
 import { useState } from "react";
 import Modal from "../components/common/Modal";
 import NotificationModal from "../components/mainPage/NotificationModal";
