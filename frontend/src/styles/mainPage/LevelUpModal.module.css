@@ -1,4 +1,56 @@
 .wrapper > section {
   background-color: #fce6e7;
   border-radius: 20px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.wrapper > section .content {
+  font-size: 15px;
+  color: #666666;
+  line-height: 30px;
+}
+.wrapper > section .content .level {
+  font-size: 20px;
+  color: #fb5862;
+}
+.wrapper > section .item_section {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.wrapper > section .item_section .item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.wrapper > section .item_section .item::after {
+  content: "";
+  width: 1px;
+  height: 40px;
+  background-color: #c9c9c9;
+}
+.wrapper > section .item_section .item:last-child::after {
+  content: none;
+}
+.wrapper > section .item_section .item .item_img_box {
+  width: 40px;
+  aspect-ratio: 1/1;
+  background-color: white;
+  border: 1px dashed #fb5862;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wrapper > section .item_section .item .item_img_box .item_img {
+  width: 70%;
+  aspect-ratio: 1/1;
+}
+.wrapper > section .item_section .item .item_text {
+  color: black;
+  font-size: 13px;
 }/*# sourceMappingURL=LevelUpModal.module.css.map */
