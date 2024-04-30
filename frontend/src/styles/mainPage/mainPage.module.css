@@ -28,7 +28,6 @@
 }
 .notification_modal_wrapper .notification_item::after {
   content: "";
-  display: block;
   border: 1px dashed #fce6e7;
   width: 100%;
   margin-top: 5px;

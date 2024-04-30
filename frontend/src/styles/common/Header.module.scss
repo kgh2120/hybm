@@ -1,8 +1,6 @@
 @import '../../styles/common/_common';
 
 .wrapper {
-  .left {
-  }
   h1 {
     @include modal-title;
   }

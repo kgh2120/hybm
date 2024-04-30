@@ -13,3 +13,13 @@ $font-xl: 20px;
   font-size: $font-xl;
   font-weight: 100;
 }
+
+@mixin item-name {
+  color: $color-point;
+  font-size: $font-md;
+}
+
+@mixin item-content {
+  color: $color-text;
+  font-size: $font-sm;
+}
