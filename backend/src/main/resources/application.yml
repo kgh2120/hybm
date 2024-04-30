@@ -3,3 +3,6 @@ spring:
     name: md
   profiles:
     default: local
+  config:
+    import:
+      - secret.yml

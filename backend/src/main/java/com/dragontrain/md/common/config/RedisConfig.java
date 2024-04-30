@@ -1,5 +1,6 @@
 package com.dragontrain.md.common.config;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +9,7 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 
 @Configuration
 public class RedisConfig {
@@ -25,6 +27,27 @@ public class RedisConfig {
 	@Bean
 	public RedisTemplate<String, String> redisTemplate() {
 		RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
+		redisTemplate.setKeySerializer(new StringRedisSerializer());
+		redisTemplate.setValueSerializer(new StringRedisSerializer());
+		redisTemplate.setConnectionFactory(redisConnectionFactory());
+		return redisTemplate;
+	}
+
+	@Qualifier("oAuth2AuthorizationRequestRedisTemplate")
+	@Bean
+	public RedisTemplate<String, OAuth2AuthorizationRequest> oAuth2AuthorizationRequestRedisTemplate(
+		GenericJackson2JsonRedisSerializer genericJackson2JsonRedisSerializer) {
+		RedisTemplate<String, OAuth2AuthorizationRequest> redisTemplate = new RedisTemplate<>();
+		redisTemplate.setKeySerializer(new StringRedisSerializer());
+		redisTemplate.setValueSerializer(genericJackson2JsonRedisSerializer);
+		redisTemplate.setConnectionFactory(redisConnectionFactory());
+		return redisTemplate;
+	}
+
+	@Qualifier("byteStringRedisTemplate")
+	@Bean
+	public RedisTemplate<String, byte[]> byteSerializer() {
+		RedisTemplate<String, byte[]> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setKeySerializer(new StringRedisSerializer());
 		redisTemplate.setValueSerializer(new StringRedisSerializer());
 		redisTemplate.setConnectionFactory(redisConnectionFactory());

@@ -55,6 +55,4 @@ public class Refrigerator {
 	@JoinColumn(name = "level_id")
 	private Level level;
 
-
-
 }
