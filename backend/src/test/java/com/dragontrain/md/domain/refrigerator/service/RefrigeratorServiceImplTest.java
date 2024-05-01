@@ -7,7 +7,10 @@ import static org.mockito.BDDMockito.*;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import org.assertj.core.api.Assertions;
+import com.dragontrain.md.domain.refrigerator.service.port.LevelRepository;
+import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
+import com.dragontrain.md.domain.refrigerator.service.port.StorageDesignRepository;
+import com.dragontrain.md.domain.refrigerator.service.port.StorageStorageDesignRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +20,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.dragontrain.md.common.service.TimeService;
 import com.dragontrain.md.domain.refrigerator.domain.Level;
-import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
 import com.dragontrain.md.domain.refrigerator.domain.StorageDesign;
 import com.dragontrain.md.domain.refrigerator.domain.StorageType;
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;

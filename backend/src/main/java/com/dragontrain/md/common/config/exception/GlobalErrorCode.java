@@ -1,9 +1,8 @@
 package com.dragontrain.md.common.config.exception;
 
-import org.springframework.http.HttpStatus;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 
 @RequiredArgsConstructor
 @Getter

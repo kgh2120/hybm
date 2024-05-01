@@ -1,4 +1,4 @@
-package com.dragontrain.md.domain.refrigerator.service;
+package com.dragontrain.md.domain.refrigerator.service.port;
 
 import java.util.Optional;
 

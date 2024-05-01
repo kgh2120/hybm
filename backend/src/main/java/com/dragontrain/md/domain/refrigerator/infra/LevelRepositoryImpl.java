@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 import com.dragontrain.md.domain.refrigerator.domain.Level;
-import com.dragontrain.md.domain.refrigerator.service.LevelRepository;
+import com.dragontrain.md.domain.refrigerator.service.port.LevelRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -13,10 +13,10 @@ import lombok.RequiredArgsConstructor;
 @Repository
 public class LevelRepositoryImpl implements LevelRepository {
 
-	private final JpaLevelRepository jpaLevelRepository;
+	private final LevelJpaRepository levelJpaRepository;
 
 	@Override
 	public Optional<Level> findLevel(int level) {
-		return jpaLevelRepository.findByLevel(level);
+		return levelJpaRepository.findByLevel(level);
 	}
 }
