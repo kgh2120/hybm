@@ -122,6 +122,6 @@ class StorageDesignJpaRepositoryTest {
 		Assertions.assertEquals(storageDesignJpaRepository.findAll().size(), 3);
 		Assertions.assertEquals(storageStorageDesignJpaRepository.findAll().size(), 2);
 
-		Assertions.assertEquals(storageStorageDesignJpaRepository.findAllAppliedStorageDesign(1L).size(), 1);
+		Assertions.assertEquals(storageStorageDesignJpaRepository.findAllAppliedStorageDesign(refrigerator.getRefrigeratorId()).size(), 1);
 	}
 }
