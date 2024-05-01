@@ -6,9 +6,11 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import com.dragontrain.md.common.config.event.Events;
 import com.dragontrain.md.common.service.TimeService;
 import com.dragontrain.md.domain.user.domain.SocialLoginType;
 import com.dragontrain.md.domain.user.domain.User;
+import com.dragontrain.md.domain.user.event.UserCreated;
 import com.dragontrain.md.domain.user.service.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -37,6 +39,8 @@ public class CustomOAuth2Service extends DefaultOAuth2UserService {
 	}
 
 	public User saveUser(String email, SocialLoginType socialLoginType) {
-		return userRepository.save(User.create(email, socialLoginType, timeService.localDateTimeNow()));
+		User user = userRepository.save(User.create(email, socialLoginType, timeService.localDateTimeNow()));
+		Events.raise(new UserCreated(user.getUserId()));
+		return user;
 	}
 }
