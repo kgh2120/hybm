@@ -80,14 +80,14 @@ class StorageDesignJpaRepositoryTest {
 		Assertions.assertEquals(storageDesignJpaRepository.findAll().size(), 3);
 		Assertions.assertEquals(storageStorageDesignJpaRepository.findAll().size(), 2);
 
-		Assertions.assertEquals(storageStorageDesignJpaRepository.findAllStorageDesign(1L).size(), 3);
+		Assertions.assertEquals(storageStorageDesignJpaRepository.findAllStorageDesign(refrigerator.getRefrigeratorId()).size(), 3);
 
-		Map<Boolean, List<StorageDesignResponse>> mineNotMine = storageStorageDesignJpaRepository.findAllStorageDesign(1L)
+		Map<Boolean, List<StorageDesignResponse>> mineNotMine = storageStorageDesignJpaRepository.findAllStorageDesign(refrigerator.getRefrigeratorId())
 			.stream()
 			.collect(Collectors.groupingBy(StorageDesignResponse::getHas));
 
-		Assertions.assertEquals(mineNotMine.get(Boolean.TRUE).size(), 2);
-		Assertions.assertEquals(mineNotMine.get(Boolean.FALSE).size(), 1);
+		Assertions.assertEquals(mineNotMine.get(true).size(), 2);
+		Assertions.assertEquals(mineNotMine.get(false).size(), 1);
 	}
 
 	@Test
