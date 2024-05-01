@@ -1,37 +1,80 @@
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+} from "chart.js";
 import { Pie } from "react-chartjs-2";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 import styles from "../styles/reportPage/reportPage.module.css";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const data = {
+const bestFoodChartData = {
   labels: ["육류", "음료", "기타", "면류", "과일류", "통조림"],
   datasets: [
     {
-      label: "# of Votes",
-      data: [12, 19, 3, 5, 2, 3],
+      // data를 크기순으로 정렬해서 보여주기
+      data: [19, 12, 5, 3, 3, 2],
       backgroundColor: [
-        "rgba(229, 51, 62, 1)",
-        "rgba(251, 88, 98, 1)",
-        "rgba(252, 230, 231, 1)",
-        "rgba(201, 201, 201, 1)",
-        "rgba(102, 102, 102, 1)",
-        "rgba(255, 159, 64, 0.2)",
+        "#e5333e",
+        "#ffecd9",
+        "#fce6e7",
+        //구분이 잘 안돼서 바꾸는거 생각해봐야할 듯
+        "#fb5862",
+        "#c9c9c9",
+        "#666666",
       ],
       borderColor: [
-        "rgba(255, 99, 132, 1)",
-        "rgba(54, 162, 235, 1)",
-        "rgba(255, 206, 86, 1)",
-        "rgba(75, 192, 192, 1)",
-        "rgba(153, 102, 255, 1)",
-        "rgba(255, 159, 64, 1)",
+        "#ffffff",
+        "#ffffff",
+        "#ffffff",
+        "#ffffff",
+        "#ffffff",
+        "#ffffff",
       ],
-      borderWidth: 1,
-    },
-  ],
+      borderWidth: 2,
+    }],
+};
+
+const eatenOrThrownChartData = {
+  labels: ["먹은 것", "버린 것"],
+  datasets: [
+    {
+      // data를 크기순으로 정렬해서 보여주기
+      data: [8, 3],
+      backgroundColor: [
+        "#fce6e7",
+        "#c9c9c9",
+      ],
+      borderColor: [
+        "#ffffff",
+        "#ffffff",
+      ],
+      borderWidth: 2,
+    }],
 };
 
 function ReportPage() {
+  const options = {
+    legend: {
+      display: true,
+    },
+    plugins: {
+      datalabels: {
+        font: {
+          size: 15,
+          family: "PFStardust",
+        },
+        color: "#666666",
+        formatter: function (value: any) {
+          return value
+        },
+        display: true,
+      },
+    },
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.title}>보고서</div>
@@ -52,8 +95,7 @@ function ReportPage() {
               <p>
                 <span>3월</span>의 우수 식품
               </p>
-              {/* <div>차트 있을자리임</div> */}
-              <Pie data={data} />
+              <Pie data={bestFoodChartData} options={options} plugins={[ChartDataLabels]} />
             </div>
             <p className={styles.alert}>
               3월에 가격을 정하지 않은 항목이 있어요!
@@ -64,17 +106,17 @@ function ReportPage() {
           <div className={styles.sub_title}>내 식품 통계</div>
           <div className={styles.sub_content}>
             <p className={styles.context}>먹은 것 vs 버린 것</p>
-            <div className={styles.versus}>
-              <div>차트 있을자리임</div>
+            <div className={styles.eaten_thrown}>
+              <Pie data={eatenOrThrownChartData} options={options} plugins={[ChartDataLabels]} />
             </div>
             <div className={styles.top_five}>
               <div>
                 <p>먹은 것 Top 5</p>
-                <div>똬똬똬똬똬</div>
+                <div>컴포넌트들 똬똬똬똬똬</div>
               </div>
               <div>
                 <p>버린 것 Top 5</p>
-                <div>똬똬똬똬똬</div>
+                <div>컴포넌트들 똬똬똬똬똬</div>
               </div>
             </div>
           </div>

@@ -32,6 +32,8 @@
   flex-direction: column;
   align-items: center;
   font-size: 13px;
+  width: 100%;
+  height: 100%;
 }
 .wrapper .content .sub_content .context {
   margin: 8%;
@@ -43,39 +45,36 @@
   color: #e5333e;
 }
 .wrapper .content .best_food {
-  width: 270px;
-  height: 230px;
+  width: 90%;
+  height: 90%;
   border: 2px solid #e5333e;
-  border-radius: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-}
-.wrapper .content .best_food div {
-  background-color: beige;
+  padding: 5%;
 }
 .wrapper .content .best_food p > span {
   color: #e5333e;
 }
 .wrapper .content .alert {
-  width: 270px;
+  width: 90%;
   display: flex;
   justify-content: end;
   color: #666666;
   font-size: 11px;
-  margin: 2%;
+  margin: 1%;
 }
-.wrapper .content .versus {
-  width: 270px;
-  height: 230px;
-  border: 1px dashed gray;
+.wrapper .content .eaten_thrown {
+  width: 90%;
+  height: 90%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  padding: 5%;
 }
-.wrapper .content .versus p > span {
+.wrapper .content .eaten_thrown p > span {
   color: #e5333e;
 }
 .wrapper .content .top_five {
