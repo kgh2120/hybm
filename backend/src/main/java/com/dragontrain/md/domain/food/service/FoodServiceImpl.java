@@ -1,5 +1,6 @@
 package com.dragontrain.md.domain.food.service;
 
+import com.dragontrain.md.domain.food.controller.request.ReceiptRequest;
 import com.dragontrain.md.domain.food.controller.response.ReceiptProduct;
 import com.dragontrain.md.domain.food.controller.response.ReceiptProducts;
 import lombok.RequiredArgsConstructor;
@@ -219,5 +220,10 @@ public class FoodServiceImpl implements FoodService {
 		return receiptProducts;
 	}
 
+	@Override
+	public Void registerReceipt(ReceiptRequest receiptRequest) {
+
+
+	}
 }
 

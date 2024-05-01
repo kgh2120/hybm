@@ -1,5 +1,6 @@
 package com.dragontrain.md.domain.food.controller;
 
+import com.dragontrain.md.domain.food.controller.request.ReceiptRequest;
 import com.dragontrain.md.domain.food.controller.response.ReceiptProducts;
 import com.dragontrain.md.domain.food.service.FoodService;
 import lombok.RequiredArgsConstructor;
@@ -29,5 +30,10 @@ public class FoodController {
 
 
 		return ResponseEntity.ok(foodService.callDocumentOCR(imgFile));
+	}
+
+	public ResponseEntity<Void> registerReceipt(@RequestBody ReceiptRequest receiptRequest) {
+
+		return ResponseEntity.ok(foodService.registerReceipt(receiptRequest));
 	}
 }
