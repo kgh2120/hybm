@@ -11,6 +11,13 @@
   flex-direction: column;
   gap: 12px;
 }
+.wrapper .white_wrapper .home_img {
+  width: 20px;
+  aspect-ratio: 1/1;
+  position: absolute;
+  left: 20px;
+  top: 20px;
+}
 .wrapper .white_wrapper .food_list_section {
   width: 90%;
   display: flex;
