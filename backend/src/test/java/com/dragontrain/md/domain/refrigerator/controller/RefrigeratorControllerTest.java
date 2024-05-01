@@ -1,8 +1,8 @@
 package com.dragontrain.md.domain.refrigerator.controller;
 
 import com.dragontrain.md.domain.TestEntityFactory;
-import com.dragontrain.md.domain.refrigerator.controller.Response.StorageDesignResponse;
-import com.dragontrain.md.domain.refrigerator.controller.Response.StorageDesignsResponse;
+import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignResponse;
+import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignsResponse;
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import com.dragontrain.md.domain.refrigerator.service.StorageStorageDesignService;
 import org.junit.jupiter.api.BeforeAll;

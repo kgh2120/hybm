@@ -1,6 +1,6 @@
 package com.dragontrain.md.domain.refrigerator.infra;
 
-import com.dragontrain.md.domain.refrigerator.controller.Response.StorageDesignResponse;
+import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignResponse;
 import com.dragontrain.md.domain.refrigerator.domain.StorageDesign;
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import org.springframework.data.jpa.repository.JpaRepository;

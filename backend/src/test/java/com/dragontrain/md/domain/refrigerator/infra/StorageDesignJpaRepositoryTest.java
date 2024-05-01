@@ -1,7 +1,7 @@
 package com.dragontrain.md.domain.refrigerator.infra;
 
 import com.dragontrain.md.domain.TestEntityFactory;
-import com.dragontrain.md.domain.refrigerator.controller.Response.StorageDesignResponse;
+import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignResponse;
 import com.dragontrain.md.domain.refrigerator.domain.*;
 import com.dragontrain.md.domain.user.domain.User;
 import com.dragontrain.md.domain.user.infra.JpaUserRepository;

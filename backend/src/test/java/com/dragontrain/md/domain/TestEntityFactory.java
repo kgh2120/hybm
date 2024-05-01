@@ -1,7 +1,7 @@
 package com.dragontrain.md.domain;
 
-import com.dragontrain.md.domain.refrigerator.controller.Response.StorageDesignResponse;
-import com.dragontrain.md.domain.refrigerator.controller.Response.StorageDesignsResponse;
+import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignResponse;
+import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignsResponse;
 import com.dragontrain.md.domain.refrigerator.domain.*;
 import com.dragontrain.md.domain.user.domain.SocialLoginType;
 import com.dragontrain.md.domain.user.domain.User;

@@ -1,6 +1,6 @@
 package com.dragontrain.md.domain.refrigerator.service;
 
-import com.dragontrain.md.domain.refrigerator.controller.Response.StorageDesignsResponse;
+import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignsResponse;
 import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
 import com.dragontrain.md.domain.refrigerator.service.port.StorageStorageDesignRepository;
 import com.dragontrain.md.domain.user.domain.User;
@@ -16,6 +16,10 @@ public class StorageStorageDesignServiceImpl implements StorageStorageDesignServ
 
 	@Override
 	public StorageDesignsResponse findAllStorageDesign(User user) {
-		return StorageDesignsResponse.createByStorageType(storageDesignRepository.findAllStorageDesign(refrigeratorRepository.findByUserId(user.getUserId()).getRefrigeratorId()));
+		return StorageDesignsResponse.createByStorageType(
+			storageDesignRepository.findAllStorageDesign(
+				refrigeratorRepository.findByUserId(user.getUserId()).getRefrigeratorId()
+			)
+		);
 	}
 }
