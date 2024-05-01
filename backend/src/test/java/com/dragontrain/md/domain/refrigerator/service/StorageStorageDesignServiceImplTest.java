@@ -18,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -48,7 +49,7 @@ class StorageStorageDesignServiceImplTest {
 		Refrigerator refrigerator = testEntityFactory.getTestRefrigerator(null, user, Boolean.FALSE, level);
 
 		BDDMockito.given(refrigeratorRepository.findByUserId(any()))
-			.willReturn(refrigerator);
+			.willReturn(Optional.of(refrigerator));
 
 		BDDMockito.given(storageDesignRepository.findAllStorageDesign(any()))
 			.willReturn(Arrays.asList(testEntityFactory.getTestMyStorageDesignResponse(1, 1, "냉장칸")));
