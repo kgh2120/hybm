@@ -40,6 +40,6 @@ class RefrigeratorJpaRepositoryTest {
 		Refrigerator refrigerator = testEntityFactory.getTestRefrigerator(null, user, Boolean.FALSE, level);
 		refrigeratorJpaRepository.save(refrigerator);
 
-		Assertions.assertDoesNotThrow(() -> refrigeratorJpaRepository.findByUserId(user.getUserId()));
+		Assertions.assertDoesNotThrow(() -> refrigeratorJpaRepository.findByUser_UserId(user.getUserId()));
 	}
 }

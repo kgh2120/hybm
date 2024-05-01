@@ -1,8 +1,7 @@
 package com.dragontrain.md.domain;
 
-import com.dragontrain.md.domain.refrigerator.controller.Response.AppliedStorageDesign;
-import com.dragontrain.md.domain.refrigerator.controller.Response.StorageDesignResponse;
-import com.dragontrain.md.domain.refrigerator.controller.Response.StorageDesignsResponse;
+import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignResponse;
+import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignsResponse;
 import com.dragontrain.md.domain.refrigerator.domain.*;
 import com.dragontrain.md.domain.user.domain.SocialLoginType;
 import com.dragontrain.md.domain.user.domain.User;
@@ -95,7 +94,7 @@ public class TestEntityFactory {
 			.build();
 	}
 
-	public StorageDesignResponse getTestMyStorageDesignResponse(Integer id, Integer level, StorageTypeId type){
+	public StorageDesignResponse getTestMyStorageDesignResponse(Integer id, Integer level, String type){
 		return StorageDesignResponse.builder()
 			.storageDesignId(id)
 			.name("내테스트디자인레스폰스")
@@ -135,13 +134,5 @@ public class TestEntityFactory {
 
 	public StorageDesignsResponse getTestStorageDesignsResponse(List<StorageDesignResponse> responses){
 		return StorageDesignsResponse.createByStorageType(responses);
-	}
-
-	public AppliedStorageDesign getTestAppliedStorageDesign(Integer id, String imgSrc, StorageTypeId type){
-		return AppliedStorageDesign.builder()
-			.id(id)
-			.imgSrc(imgSrc)
-			.type(type)
-			.build();
 	}
 }

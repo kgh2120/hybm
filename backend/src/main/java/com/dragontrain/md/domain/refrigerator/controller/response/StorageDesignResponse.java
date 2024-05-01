@@ -1,4 +1,4 @@
-package com.dragontrain.md.domain.refrigerator.controller.Response;
+package com.dragontrain.md.domain.refrigerator.controller.response;
 
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import lombok.*;
@@ -14,5 +14,5 @@ public class StorageDesignResponse {
 	private Boolean isApplied;
 	private Integer level;
 	private Boolean has;
-	private StorageTypeId location;
+	private String location;
 }
