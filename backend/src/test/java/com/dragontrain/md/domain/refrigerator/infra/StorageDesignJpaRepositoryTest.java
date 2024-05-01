@@ -53,8 +53,7 @@ class StorageDesignJpaRepositoryTest {
 		Level level = testEntityFactory.getTestLevelEntity(null, 1, 1);
 		levelJpaRepository.save(level);
 		storageTypeJpaRepository.saveAll(testEntityFactory.getAllTestStorageTypes());
-		StorageType cool = storageTypeJpaRepository.findById(StorageTypeId.COOL)
-			.orElseThrow(() -> new Exception());
+		StorageType cool = storageTypeJpaRepository.findById(StorageTypeId.COOL).get();
 
 		Refrigerator refrigerator = testEntityFactory.getTestRefrigerator(null, user, Boolean.FALSE, level);
 		refrigeratorJpaRepository.save(refrigerator);
