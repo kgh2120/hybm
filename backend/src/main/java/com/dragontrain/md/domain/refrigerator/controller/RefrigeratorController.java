@@ -1,5 +1,6 @@
 package com.dragontrain.md.domain.refrigerator.controller;
 
+import com.dragontrain.md.domain.refrigerator.controller.response.AppliedStorageDesignsResponse;
 import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignsResponse;
 import com.dragontrain.md.domain.refrigerator.service.StorageStorageDesignService;
 import com.dragontrain.md.domain.user.domain.User;
@@ -21,6 +22,13 @@ public class RefrigeratorController {
 		@AuthenticationPrincipal User user
 		) {
 		return storageStorageDesignService.findAllStorageDesign(user);
+	}
+
+	@GetMapping("/designs/using")
+	public AppliedStorageDesignsResponse findAllAppliedStorageDesigns(
+		@AuthenticationPrincipal User user
+	) {
+		return storageStorageDesignService.findAllAppliedStorageDesign(user);
 	}
 
 }
