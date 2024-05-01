@@ -263,7 +263,7 @@ class FoodControllerTest {
 			.andExpectAll(
 				status().isBadRequest(),
 				jsonPath("$.errorName").value(GlobalErrorCode.BIND_ERROR.getErrorName()),
-				jsonPath("$.errorMessage").value("ice, cool, cabinet에 해당하는 값을 입력해주세요"),
+				jsonPath("$.errorMessage").value("ice, cool, cabinet에 해당하는 값을 입력해주세요\n"),
 				jsonPath("$.path").value(url)
 			).andDo(print());
 	}
