@@ -9,7 +9,7 @@ import BadgePage from './pages/BadgePage';
 import DesignPage from './pages/DesignPage';
 import AuthenticatedRoute from './components/common/AuthenticatedRoute';
 import TestPage from './pages/TestPage';
-import AuthCallback from './pages/AuthCallback';
+import AuthCallback from './pages/AuthCallbackPage';
 
 function App() {
   const router = createBrowserRouter([
