@@ -34,4 +34,18 @@ public class StorageStorageDesign {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Refrigerator refrigerator;
 
+	public static StorageStorageDesign create(Refrigerator refrigerator, StorageDesign storageDesign, LocalDateTime now){
+		return StorageStorageDesign.builder()
+			.storageStorageDesignId(StorageStorageDesignId.builder()
+				.refrigeratorId(refrigerator.getRefrigeratorId())
+				.storageDesignId(storageDesign.getStorageDesignId())
+				.build())
+			.isApplied(true)
+			.storageDesign(storageDesign)
+			.refrigerator(refrigerator)
+			.createdAt(now)
+			.storageType(storageDesign.getStorageType())
+			.build();
+	}
+
 }

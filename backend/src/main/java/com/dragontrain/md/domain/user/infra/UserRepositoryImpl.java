@@ -25,4 +25,9 @@ public class UserRepositoryImpl implements UserRepository {
 	public Optional<User> findByEmailAndSocialLoginType(String email, SocialLoginType socialLoginType) {
 		return jpaUserRepository.findByEmailAndSocialLoginType(email, socialLoginType);
 	}
+
+	@Override
+	public Optional<User> findById(Long userId) {
+		return jpaUserRepository.findById(userId);
+	}
 }
