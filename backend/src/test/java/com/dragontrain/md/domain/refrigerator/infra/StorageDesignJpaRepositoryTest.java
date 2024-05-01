@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@ExtendWith(SpringExtension.class)
 @DataJpaTest
 class StorageDesignJpaRepositoryTest {
 	@Autowired
