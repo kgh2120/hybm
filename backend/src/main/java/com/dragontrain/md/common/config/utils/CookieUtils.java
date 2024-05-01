@@ -1,5 +1,7 @@
 package com.dragontrain.md.common.config.utils;
 
+import java.util.Arrays;
+
 import jakarta.servlet.http.Cookie;
 
 public class CookieUtils {
@@ -26,5 +28,17 @@ public class CookieUtils {
 	}
 	public static Cookie makeAccessTokenCookie(String value, int maxAge){
 		return makeCookie(COOKIE_KEY_ACCESS_TOKEN, value, COOKIE_ACCESS_TOKEN_PATH, maxAge);
+	}
+
+	public static Cookie findAccessTokenCookie(Cookie[] cookies){
+		return Arrays.stream(cookies).filter(cookie -> cookie.getName().equals(COOKIE_KEY_ACCESS_TOKEN))
+			.findAny()
+			.orElse(null);
+	}
+
+	public static Cookie findRefreshToken(Cookie[] cookies){
+		return Arrays.stream(cookies).filter(cookie -> cookie.getName().equals(COOKIE_KEY_ACCESS_TOKEN))
+			.findAny()
+			.orElse(null);
 	}
 }

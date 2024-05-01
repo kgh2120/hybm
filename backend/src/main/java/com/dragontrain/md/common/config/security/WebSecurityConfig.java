@@ -15,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -39,6 +40,7 @@ public class WebSecurityConfig {
 	private final OAuth2SuccessHandler oAuth2SuccessHandler;
 	private final OAuth2FailureHandler oAuth2FailureHandler;
 	private final RedisAuthorizationRequestRepository redisAuthorizationRequestRepository;
+	private final JwtAuthorizationFilter jwtAuthorizationFilter;
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -54,13 +56,16 @@ public class WebSecurityConfig {
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.formLogin(FormLoginConfigurer::disable)
 			.cors(c -> c.configurationSource(corsConfigurationSource()))
-			.authorizeHttpRequests((auth) -> auth.anyRequest().permitAll())
+			.authorizeHttpRequests((auth) ->
+				auth.requestMatchers("/h2-console/**", "/oauth2/**", "/login/**").permitAll()
+					.anyRequest().authenticated())
 			.oauth2Login(config ->
 				config.userInfoEndpoint(c -> c.userService(customOAuth2Service))
 					.authorizationEndpoint(c -> c.authorizationRequestRepository(redisAuthorizationRequestRepository))
 					.successHandler(oAuth2SuccessHandler)
 					.failureHandler(oAuth2FailureHandler)
 			)
+			.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
 		;
 		return http.build();
 	}
