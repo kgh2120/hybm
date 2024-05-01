@@ -84,7 +84,7 @@ class StorageDesignJpaRepositoryTest {
 			.stream()
 			.collect(Collectors.groupingBy(StorageDesignResponse::getHas));
 
-		Assertions.assertEquals(mineNotMine.get(Boolean.TRUE).size(), 2);
-		Assertions.assertEquals(mineNotMine.get(Boolean.FALSE).size(), 1);
+		Assertions.assertEquals(mineNotMine.get(true).size(), 2);
+		Assertions.assertEquals(mineNotMine.get(false).size(), 1);
 	}
 }
