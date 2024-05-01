@@ -24,4 +24,9 @@ public class StorageStorageDesignRepositoryImpl implements StorageStorageDesignR
 	public List<AppliedStorageDesign> findAllAppliedStorageDesign(Long refrigeratorId) {
 		return storageStorageDesignJpaRepository.findAllAppliedStorageDesign(refrigeratorId);
 	}
+
+	@Override
+	public void save(StorageStorageDesign storageStorageDesign) {
+		storageStorageDesignJpaRepository.save(storageStorageDesign);
+	}
 }

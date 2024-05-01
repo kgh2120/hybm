@@ -7,4 +7,8 @@ public class RefrigeratorException extends CustomException {
 	public RefrigeratorException(ErrorCode errorCode) {
 		super(errorCode);
 	}
+
+	public RefrigeratorException(ErrorCode errorCode, String loggingMessage) {
+		super(errorCode, loggingMessage);
+	}
 }

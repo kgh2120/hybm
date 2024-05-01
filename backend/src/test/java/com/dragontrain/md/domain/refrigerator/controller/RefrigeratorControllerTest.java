@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -57,7 +58,8 @@ class RefrigeratorControllerTest {
 		BDDMockito.given(storageStorageDesignService.findAllStorageDesign(any()))
 			.willReturn(StorageDesignsResponse.createByStorageType(arr));
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/api/refrigerators/designs"))
+		mockMvc.perform(MockMvcRequestBuilders.get("/api/refrigerators/designs")
+				.with(csrf()))
 			.andExpect(status().isOk())
 			.andDo(print());
 	}

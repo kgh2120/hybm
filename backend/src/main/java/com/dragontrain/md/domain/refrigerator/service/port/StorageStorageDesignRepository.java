@@ -9,4 +9,5 @@ import java.util.List;
 public interface StorageStorageDesignRepository {
 	List<StorageDesignResponse> findAllStorageDesign(Long refrigeratorId);
 	List<AppliedStorageDesign> findAllAppliedStorageDesign(Long refrigeratorId);
+	void save(StorageStorageDesign storageStorageDesign);
 }
