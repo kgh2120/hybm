@@ -94,7 +94,7 @@ public class TestEntityFactory {
 			.build();
 	}
 
-	public StorageDesignResponse getTestMyStorageDesignResponse(Integer id, Integer level, StorageTypeId type){
+	public StorageDesignResponse getTestMyStorageDesignResponse(Integer id, Integer level, String type){
 		return StorageDesignResponse.builder()
 			.storageDesignId(id)
 			.name("내테스트디자인레스폰스")

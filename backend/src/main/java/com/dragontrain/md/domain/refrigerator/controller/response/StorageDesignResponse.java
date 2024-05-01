@@ -14,5 +14,5 @@ public class StorageDesignResponse {
 	private Boolean isApplied;
 	private Integer level;
 	private Boolean has;
-	private StorageTypeId location;
+	private String location;
 }
