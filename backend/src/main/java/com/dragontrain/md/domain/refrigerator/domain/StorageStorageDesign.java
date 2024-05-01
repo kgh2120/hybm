@@ -48,4 +48,12 @@ public class StorageStorageDesign {
 			.build();
 	}
 
+	public void dettach(){
+		this.isApplied = Boolean.FALSE;
+	}
+
+	public void attach(){
+		this.isApplied = Boolean.TRUE;
+	}
+
 }
