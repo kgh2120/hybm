@@ -7,8 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-
-
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 @Getter
@@ -17,7 +15,7 @@ public class ExpectedExpirationDate {
 	private final int month;
 	private final int day;
 
-	public static ExpectedExpirationDate from(LocalDate localDate){
+	public static ExpectedExpirationDate from(LocalDate localDate) {
 		return ExpectedExpirationDate.builder()
 			.year(localDate.getYear())
 			.month(localDate.getMonthValue())

@@ -37,6 +37,7 @@ class CrawlServiceImplTest {
 		// then
 		assertThat(sut.isPresent()).isTrue();
 	}
+
 	@Test
 	void crawlBarcodeFailTest() throws Exception {
 		// given

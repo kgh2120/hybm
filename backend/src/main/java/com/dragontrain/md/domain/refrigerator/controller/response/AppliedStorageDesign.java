@@ -1,7 +1,12 @@
 package com.dragontrain.md.domain.refrigerator.controller.response;
 
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
-import lombok.*;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
