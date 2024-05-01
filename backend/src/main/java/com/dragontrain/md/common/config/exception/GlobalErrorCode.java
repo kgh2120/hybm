@@ -27,7 +27,18 @@ public enum GlobalErrorCode implements ErrorCode {
 
 	FILE_SIZE_LIMIT_EXCEEDED(HttpStatus.BAD_REQUEST, "업로드하신 파일의 크기가 너무 큽니다. 10MB 아래의 파일로 설정해주세요"),
 
-	UNAUTHORIZED_ACCESS(HttpStatus.UNAUTHORIZED, "로그인 후 접근해주세요");
+	UNAUTHORIZED_ACCESS(HttpStatus.UNAUTHORIZED, "로그인 후 접근해주세요"),
+
+	TOKEN_TYPE_MISS_MATCHED(HttpStatus.FORBIDDEN, "토큰의 타입이 맞지 않습니다"),
+
+	TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "토큰이 만료되었습니다"),
+
+	TOKEN_NOT_VERIFIED(HttpStatus.FORBIDDEN, "토큰의 시그내처가 유효하지 않습니다."), // v
+	TOKEN_MALFORMED(HttpStatus.FORBIDDEN, "토큰의 형식이 잘못되었습니다. 토큰은 [header].[payload].[secret]의 형식이어야 합니다."), // v
+	TOKEN_UNSUPPORTED(HttpStatus.FORBIDDEN, "지원하지 않는 종류의 토큰입니다."),
+
+
+		;
 
 	private final HttpStatus httpStatus;
 	private final String errorMessage;

@@ -3,11 +3,9 @@ package com.dragontrain.md.domain.refrigerator.domain;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
@@ -44,6 +42,5 @@ public class RefrigeratorBadge {
 
 	@Column(name = "is_attached", columnDefinition = "boolean default false", nullable = false)
 	private Boolean isAttached;
-
 
 }
