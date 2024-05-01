@@ -49,8 +49,8 @@ class RefrigeratorControllerTest {
 	@WithMockUser
 	@Test
 	void 전체디자인반환_성공() throws Exception{
-		StorageDesignResponse storageDesignResponseCool = testEntityFactory.getTestMyStorageDesignResponse(1, 1, StorageTypeId.COOL);
-		StorageDesignResponse storageDesignResponseICE = testEntityFactory.getTestMyStorageDesignResponse(2, 1, StorageTypeId.ICE);
+		StorageDesignResponse storageDesignResponseCool = testEntityFactory.getTestMyStorageDesignResponse(1, 1, "냉장칸");
+		StorageDesignResponse storageDesignResponseICE = testEntityFactory.getTestMyStorageDesignResponse(2, 1, "냉동칸");
 		List<StorageDesignResponse> arr = Arrays.asList(storageDesignResponseCool, storageDesignResponseICE);
 
 		BDDMockito.given(storageStorageDesignService.findAllStorageDesign(any()))

@@ -51,7 +51,7 @@ class StorageStorageDesignServiceImplTest {
 			.willReturn(refrigerator);
 
 		BDDMockito.given(storageDesignRepository.findAllStorageDesign(any()))
-			.willReturn(Arrays.asList(testEntityFactory.getTestMyStorageDesignResponse(1, 1, StorageTypeId.COOL)));
+			.willReturn(Arrays.asList(testEntityFactory.getTestMyStorageDesignResponse(1, 1, "냉장칸")));
 
 		Assertions.assertDoesNotThrow(() -> storageDesignService.findAllStorageDesign(user));
 		Assertions.assertEquals(storageDesignService.findAllStorageDesign(user).getCool().size(), 1);
