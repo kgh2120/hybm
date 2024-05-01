@@ -17,4 +17,11 @@
 }
 .wrapper .auth_btn {
   margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.wrapper .auth_btn button {
+  background-color: transparent;
 }/*# sourceMappingURL=LandingPage.module.css.map */
