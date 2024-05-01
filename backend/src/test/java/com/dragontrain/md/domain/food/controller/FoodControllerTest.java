@@ -144,8 +144,8 @@ class FoodControllerTest {
 		// given
 		int categoryDetailId = 10;
 		int year = 2024;
-		int month = 5;
-		int day = 1;
+		int month = 4;
+		int day = 31;
 		final String path = "/api/foods/expiration";
 		given(foodService.getExpectedExpirationDate(anyInt(),anyInt(),anyInt(),anyInt()))
 			.willThrow(new FoodException(INVALID_DATE_FORMAT));
@@ -186,6 +186,33 @@ class FoodControllerTest {
 				status().isNotFound(),
 				jsonPath("$.errorName").value(CATEGORY_DETAIL_NOT_FOUND.getErrorName()),
 				jsonPath("$.errorMessage").value(CATEGORY_DETAIL_NOT_FOUND.getErrorMessage()),
+				jsonPath("$.path").value(path)
+			)
+			.andDo(print());
+	}
+
+	@WithMockUser
+	@DisplayName("예상 소비기한 조회 테스트 실패 - 소비 기한 정보가 없는 경우")
+	@Test
+	void getExpectedExpirationDateFailExpirationNotFoundTest() throws Exception {
+		// given
+		int categoryDetailId = 10;
+		int year = 2024;
+		int month = 5;
+		int day = 1;
+		final String path = "/api/foods/expiration";
+		given(foodService.getExpectedExpirationDate(anyInt(),anyInt(),anyInt(),anyInt()))
+			.willThrow(new FoodException(EXPIRATION_DATE_NOT_FOUND));
+		// when // then
+		mockMvc.perform(get(path)
+				.param("categoryDetailId", Integer.toString(categoryDetailId))
+				.param("year", Integer.toString(year))
+				.param("month", Integer.toString(month))
+				.param("day", Integer.toString(day))
+			).andExpectAll(
+				status().isNotFound(),
+				jsonPath("$.errorName").value(EXPIRATION_DATE_NOT_FOUND.getErrorName()),
+				jsonPath("$.errorMessage").value(EXPIRATION_DATE_NOT_FOUND.getErrorMessage()),
 				jsonPath("$.path").value(path)
 			)
 			.andDo(print());

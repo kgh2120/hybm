@@ -236,4 +236,27 @@ class FoodServiceImplTest {
 			.hasFieldOrPropertyWithValue("errorCode", FoodErrorCode.CATEGORY_DETAIL_NOT_FOUND);
 	}
 
+	@DisplayName("예상 소비기한 조회 테스트 실패 - 소비 기한 정보가 없는 경우")
+	@Test
+	void getExpectedExpirationDateFailExpirationNotFoundTest() throws Exception {
+		// given
+		int categoryDetailId = 10;
+		int year = 2024;
+		int month = 5;
+		int day = 1;
+		CategoryDetail categoryDetail = CategoryDetail.builder()
+			.categoryDetailId(categoryDetailId)
+			.imgSrc("1234")
+			.name("과자세트")
+			.expirationDate(0)
+			.build();
+		given(categoryDetailRepository.findById(anyInt()))
+			.willReturn(Optional.of(categoryDetail));
+		// when
+		assertThatThrownBy(() -> foodService.getExpectedExpirationDate(categoryDetailId, year,
+			month, day))
+			.isInstanceOf(FoodException.class)
+			.hasFieldOrPropertyWithValue("errorCode", FoodErrorCode.EXPIRATION_DATE_NOT_FOUND);
+	}
+
 }

@@ -53,6 +53,11 @@ public class FoodServiceImpl implements FoodService {
 		LocalDate targetDate = makeLocalDate(year, month, day);
 		CategoryDetail categoryDetail = categoryDetailRepository.findById(categoryDetailId)
 			.orElseThrow(() -> new FoodException(FoodErrorCode.CATEGORY_DETAIL_NOT_FOUND));
+
+		if (categoryDetail.getExpirationDate().equals(0)) {
+			throw new FoodException(FoodErrorCode.EXPIRATION_DATE_NOT_FOUND);
+		}
+
 		return ExpectedExpirationDate.from(targetDate.plusDays(categoryDetail.getExpirationDate()));
 	}
 
