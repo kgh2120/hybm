@@ -57,5 +57,4 @@ public class User {
 			.isDeleted(false)
 			.build();
 	}
-
 }
