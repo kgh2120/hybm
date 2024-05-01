@@ -23,4 +23,11 @@ public interface StorageStorageDesignJpaRepository extends JpaRepository<Storage
 		" from StorageStorageDesign ssd join ssd.storageDesign sd" +
 		" on ssd.refrigerator.refrigeratorId=:refrigeratorId and ssd.isApplied=true")
 	List<AppliedStorageDesign> findAllAppliedStorageDesign(Long refrigeratorId);
+
+	@Query("select ssd from StorageStorageDesign ssd" +
+		" where ssd.storageStorageDesignId.storageDesignId in :designIds" +
+		" and ssd.refrigerator.refrigeratorId=:refrigeratorId")
+	List<StorageStorageDesign> findAllStorageStorageDesignByRefrigeratorIdAndDesignIds(Long refrigeratorId, List<Integer> designIds);
+
+	List<StorageStorageDesign> findAllByRefrigerator_RefrigeratorIdAndIsApplied(Long refrigeratorId, Boolean isApplied);
 }
