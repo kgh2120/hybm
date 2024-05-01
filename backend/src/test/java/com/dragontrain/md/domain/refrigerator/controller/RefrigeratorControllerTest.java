@@ -26,39 +26,39 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-//@ExtendWith(MockitoExtension.class)
-//@WebMvcTest(controllers = RefrigeratorController.class)
+@ExtendWith(MockitoExtension.class)
+@WebMvcTest(controllers = RefrigeratorController.class)
 class RefrigeratorControllerTest {
 
-//	@Autowired
-//	MockMvc mockMvc;
-//
-//	@MockBean
-//	private StorageStorageDesignService storageStorageDesignService;
-//
-//	@InjectMocks
-//	private RefrigeratorController refrigeratorController;
-//
-//	private static TestEntityFactory testEntityFactory;
-//
-//	@BeforeAll
-//	static void 장전(){
-//		testEntityFactory = new TestEntityFactory();
-//	}
-//
-//	@WithMockUser
-//	@Test
-//	void 전체디자인반환_성공() throws Exception{
-//		StorageDesignResponse storageDesignResponseCool = testEntityFactory.getTestMyStorageDesignResponse(1, 1, StorageTypeId.COOL);
-//		StorageDesignResponse storageDesignResponseICE = testEntityFactory.getTestMyStorageDesignResponse(2, 1, StorageTypeId.ICE);
-//		List<StorageDesignResponse> arr = Arrays.asList(storageDesignResponseCool, storageDesignResponseICE);
-//
-//		BDDMockito.given(storageStorageDesignService.findAllStorageDesign(any()))
-//			.willReturn(StorageDesignsResponse.createByStorageType(arr));
-//
-//		mockMvc.perform(MockMvcRequestBuilders.get("/api/refrigerators/designs")
-//				.with(csrf()))
-//			.andExpect(status().isOk())
-//			.andDo(print());
-//	}
+	@Autowired
+	MockMvc mockMvc;
+
+	@MockBean
+	private StorageStorageDesignService storageStorageDesignService;
+
+	@InjectMocks
+	private RefrigeratorController refrigeratorController;
+
+	private static TestEntityFactory testEntityFactory;
+
+	@BeforeAll
+	static void 장전(){
+		testEntityFactory = new TestEntityFactory();
+	}
+
+	@WithMockUser
+	@Test
+	void 전체디자인반환_성공() throws Exception{
+		StorageDesignResponse storageDesignResponseCool = testEntityFactory.getTestMyStorageDesignResponse(1, 1, StorageTypeId.COOL);
+		StorageDesignResponse storageDesignResponseICE = testEntityFactory.getTestMyStorageDesignResponse(2, 1, StorageTypeId.ICE);
+		List<StorageDesignResponse> arr = Arrays.asList(storageDesignResponseCool, storageDesignResponseICE);
+
+		BDDMockito.given(storageStorageDesignService.findAllStorageDesign(any()))
+			.willReturn(StorageDesignsResponse.createByStorageType(arr));
+
+		mockMvc.perform(MockMvcRequestBuilders.get("/api/refrigerators/designs")
+				.with(csrf()))
+			.andExpect(status().isOk())
+			.andDo(print());
+	}
 }
