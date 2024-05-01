@@ -8,6 +8,5 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface RefrigeratorJpaRepository extends JpaRepository<Refrigerator, Long> {
-	@Query("select r from Refrigerator r where r.user.userId=:userId")
-	Optional<Refrigerator> findByUserId(Long userId);
+	Optional<Refrigerator> findByUser_UserId(Long userId);
 }

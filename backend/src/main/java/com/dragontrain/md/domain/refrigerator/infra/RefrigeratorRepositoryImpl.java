@@ -9,6 +9,8 @@ import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Repository
 public class RefrigeratorRepositoryImpl implements RefrigeratorRepository {
@@ -19,8 +21,7 @@ public class RefrigeratorRepositoryImpl implements RefrigeratorRepository {
 	}
 
 	@Override
-	public Refrigerator findByUserId(Long userId) {
-		return refrigeratorJpaRepository.findByUserId(userId)
-			.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.NOT_FOUND));
+	public Optional<Refrigerator> findByUserId(Long userId) {
+		return refrigeratorJpaRepository.findByUser_UserId(userId);
 	}
 }
