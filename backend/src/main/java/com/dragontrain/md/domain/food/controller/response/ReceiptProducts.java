@@ -2,10 +2,12 @@ package com.dragontrain.md.domain.food.controller.response;
 
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class ReceiptResponse {
-
+public class ReceiptProducts {
+	private List<ReceiptProduct> receiptProducts;
 }

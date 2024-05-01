@@ -7,7 +7,7 @@ spring:
   data:
     redis:
       host: k10a707.p.ssafy.io
-      port: 6378
+      port: 6379
       timeout: 6
 management:
   endpoints:
