@@ -1,7 +1,6 @@
 @font-face {
   font-family: "PFStardust";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.3/PFStardust.woff")
-    format("woff");
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.3/PFStardust.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
@@ -14,6 +13,7 @@
   text-align: center;
   border: 0px;
   /* white-space: pre-wrap; */
+  /* white-space: pre-wrap; */
   font-size: 100%;
 }
 
@@ -25,6 +25,14 @@ button {
 
 html,
 body {
+  height: 100%;
+  background-color: #FCE6E7;
+}
+
+
+html,
+body {
+  width: 100%;
   height: 100%;
   background-color: #FCE6E7;
 }
@@ -55,6 +63,33 @@ table {
 button {
   background-color: white;
 }
+
+body>div {
+  height: 100%;
+}
+
+/* #root {
+  max-width: 400px;
+  width: 100%;
+}
+
+html {
+  height: 100dvh;
+  width: 100dvw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body {
+  max-width: 100vw;
+  height: 720px;
+  width: 100%;
+  background-color: aqua;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}  */
 
 /* 
 #root {
