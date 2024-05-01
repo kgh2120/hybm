@@ -18,4 +18,9 @@ public class CategoryDetailRepositoryImpl implements CategoryDetailRepository {
 	public Optional<CategoryDetail> findByKanCode(int kanCode) {
 		return categoryDetailJpaRepository.findByKanCode(kanCode);
 	}
+
+	@Override
+	public Optional<CategoryDetail> findById(int categoryDetailId) {
+		return categoryDetailJpaRepository.findById(categoryDetailId);
+	}
 }
