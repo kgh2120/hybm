@@ -26,6 +26,16 @@ public class StorageStorageDesignRepositoryImpl implements StorageStorageDesignR
 	}
 
 	@Override
+	public List<StorageStorageDesign> findAllSSDByRefrigeratorIdAndSDIds(Long refrigeratorId, List<Integer> designId) {
+		return storageStorageDesignJpaRepository.findAllStorageStorageDesignByRefrigeratorIdAndDesignIds(refrigeratorId, designId);
+	}
+
+	@Override
+	public List<StorageStorageDesign> findAllSSDByRefrigeratorIdAndIdApplied(Long refrigeratorId, Boolean isApplied) {
+		return storageStorageDesignJpaRepository.findAllByRefrigerator_RefrigeratorIdAndIsApplied(refrigeratorId, isApplied);
+	}
+
+	@Override
 	public void save(StorageStorageDesign storageStorageDesign) {
 		storageStorageDesignJpaRepository.save(storageStorageDesign);
 	}
