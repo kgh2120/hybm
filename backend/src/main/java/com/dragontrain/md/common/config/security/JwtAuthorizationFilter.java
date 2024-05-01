@@ -24,7 +24,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Component
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
 	private final JwtProvider jwtProvider;
