@@ -43,4 +43,13 @@ public class Barcode {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kan_code", referencedColumnName = "kan_code", nullable = false)
 	private CategoryDetail categoryDetail;
+
+	public static Barcode create(String name, CategoryDetail categoryDetail, LocalDateTime now){
+		return Barcode.builder()
+			.name(name)
+			.categoryDetail(categoryDetail)
+			.createdAt(now)
+			.updatedAt(now)
+			.build();
+	}
 }
