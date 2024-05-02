@@ -1,6 +1,7 @@
 package com.dragontrain.md.domain.refrigerator.controller.response;
 
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
+import com.dragontrain.md.domain.refrigerator.service.dto.AppliedStorageDesign;
 import lombok.*;
 
 import java.util.List;
