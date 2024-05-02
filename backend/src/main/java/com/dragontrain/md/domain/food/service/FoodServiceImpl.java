@@ -23,6 +23,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.json.JSONArray;
@@ -259,14 +260,14 @@ public class FoodServiceImpl implements FoodService {
 	public void registerReceipt(List<ReceiptEachRequest> receiptEachRequests, User user) {
 
 		Refrigerator refrigerator = refrigeratorRepository.findByUserId(user.getUserId())
-			.orElseThrow();
+			.orElseThrow(() -> new FoodException(FoodErrorCode.REFRIGERATOR_NOT_FOUND));
 
 		for (ReceiptEachRequest receiptEachRequest : receiptEachRequests) {
 			String name = receiptEachRequest.getName();
 			LocalDate expectedExpirationDate = receiptEachRequest.getExpiredDate();
 			Integer price = receiptEachRequest.getPrice();
 			CategoryDetail categoryDetail = categoryDetailRepository.findById(receiptEachRequest.getCategoryId())
-				.orElseThrow();
+				.orElseThrow(() -> new FoodException(FoodErrorCode.CATEGORY_DETAIL_NOT_FOUND));
 			StorageTypeId location = receiptEachRequest.getLocation();
 
 			Food food = Food.create(name, categoryDetail, price, expectedExpirationDate,
@@ -303,6 +304,13 @@ public class FoodServiceImpl implements FoodService {
 		}
 
 		return categoryInfoResponseList;
+	}
+
+	@Override
+	public FoodDetailResponse getFoodDetailInfo(Long foodId) {
+
+		Food food = foodRepository.findById(foodId).orElseThrow(() -> new FoodException(FoodErrorCode.FOOD_NOT_FOUND));
+		return FoodDetailResponse.create(food);
 	}
 
 
@@ -392,6 +400,8 @@ public class FoodServiceImpl implements FoodService {
 
 		return FoodStorageResponse.create(fresh, warning, danger, rotten);
 	}
+
+
 
 	private LocalDate makeLocalDate(int year, int month, int day) {
 		try {
