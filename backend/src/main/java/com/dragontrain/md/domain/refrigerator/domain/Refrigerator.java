@@ -55,7 +55,7 @@ public class Refrigerator {
 	@JoinColumn(name = "level_id")
 	private Level level;
 
-	public static Refrigerator create(User user,  Level level, LocalDateTime now){
+	public static Refrigerator create(User user, Level level, LocalDateTime now) {
 		return Refrigerator.builder()
 			.exp(0)
 			.createdAt(now)

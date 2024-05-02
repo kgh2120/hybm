@@ -11,5 +11,4 @@ public class UserCreated implements Event {
 
 	private final Long userId;
 
-
 }

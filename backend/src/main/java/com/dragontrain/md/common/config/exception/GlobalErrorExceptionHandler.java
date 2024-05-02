@@ -1,12 +1,14 @@
 package com.dragontrain.md.common.config.exception;
 
-import jakarta.servlet.http.HttpServletRequest;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestControllerAdvice
@@ -22,7 +24,7 @@ public class GlobalErrorExceptionHandler {
 
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ErrorResponse> handleUnhandledExceptionException(Exception unhandledException,
-																		   HttpServletRequest request) {
+		HttpServletRequest request) {
 		log.error("Unhandled Exception 발생!! FROM {} ", request.getRequestURI(), unhandledException);
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 			.body(
@@ -37,4 +39,16 @@ public class GlobalErrorExceptionHandler {
 			.body(ErrorResponse.createErrorResponse(GlobalErrorCode.UNAUTHORIZED_ACCESS, request.getRequestURI()));
 	}
 
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(
+		MethodArgumentNotValidException methodArgumentNotValidException, HttpServletRequest request) {
+		log.warn("MethodArgumentNotValidException 발생!!", methodArgumentNotValidException);
+		StringBuilder errorMessages = new StringBuilder();
+		methodArgumentNotValidException.getBindingResult().getFieldErrors().forEach(fieldError ->
+			errorMessages.append(fieldError.getDefaultMessage()).append("\n")
+		);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+			.body(ErrorResponse.createErrorResponse(GlobalErrorCode.BIND_ERROR, errorMessages.toString(),
+				request.getRequestURI()));
+	}
 }

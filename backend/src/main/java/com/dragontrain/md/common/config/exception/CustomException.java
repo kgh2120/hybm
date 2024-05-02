@@ -13,7 +13,6 @@ public class CustomException extends RuntimeException {
 		this.loggingMessage = "";
 	}
 
-
 	public CustomException(ErrorCode errorCode, String loggingMessage) {
 		super(errorCode.getErrorMessage());
 		this.errorCode = errorCode;

@@ -1,7 +1,8 @@
 package com.dragontrain.md.common.config.event;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class Events {

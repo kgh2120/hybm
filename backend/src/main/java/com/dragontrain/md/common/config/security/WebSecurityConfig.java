@@ -92,12 +92,12 @@ public class WebSecurityConfig {
 	}
 
 	@Bean
-	public JwtAuthorizationFilter jwtAuthorizationFilter(){
-		return new JwtAuthorizationFilter(jwtProvider,userService);
+	public JwtAuthorizationFilter jwtAuthorizationFilter() {
+		return new JwtAuthorizationFilter(jwtProvider, userService);
 	}
 
 	@Bean
-	public JwtExceptionFilter jwtExceptionFilter(){
+	public JwtExceptionFilter jwtExceptionFilter() {
 		return new JwtExceptionFilter(objectMapper);
 	}
 

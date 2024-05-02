@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 @Repository
 public class CategoryDetailRepositoryImpl implements CategoryDetailRepository {
 	private final CategoryDetailJpaRepository categoryDetailJpaRepository;
+
 	@Override
 	public Optional<CategoryDetail> findByKanCode(int kanCode) {
 		return categoryDetailJpaRepository.findByKanCode(kanCode);

@@ -15,7 +15,7 @@ public class RefrigeratorEventHandler {
 	private final RefrigeratorService refrigeratorService;
 
 	@EventListener
-	public void handleUserCreatedEvent(UserCreated userCreated){
+	public void handleUserCreatedEvent(UserCreated userCreated) {
 		refrigeratorService.createInitialRefrigerator(userCreated.getUserId());
 	}
 }

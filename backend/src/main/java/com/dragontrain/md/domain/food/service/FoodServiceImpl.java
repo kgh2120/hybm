@@ -35,12 +35,20 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dragontrain.md.common.service.TimeService;
+import com.dragontrain.md.domain.food.controller.request.FoodRegister;
 import com.dragontrain.md.domain.food.controller.response.BarcodeInfo;
 import com.dragontrain.md.domain.food.controller.response.ExpectedExpirationDate;
 import com.dragontrain.md.domain.food.domain.Barcode;
 import com.dragontrain.md.domain.food.domain.CategoryDetail;
+import com.dragontrain.md.domain.food.domain.Food;
 import com.dragontrain.md.domain.food.exception.FoodErrorCode;
 import com.dragontrain.md.domain.food.exception.FoodException;
+import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
+import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
+import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorErrorCode;
+import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorException;
+import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
+import com.dragontrain.md.domain.user.domain.User;
 
 
 @Slf4j
@@ -49,10 +57,13 @@ import com.dragontrain.md.domain.food.exception.FoodException;
 @Transactional(readOnly = true)
 public class FoodServiceImpl implements FoodService {
 
+
 	// OCR General 형식의 SECRET key, API URL
 	public static String OCR_SECRET = "b3JxaEhVYkdmT0R3eGV5Sk50ZE9jWW9BVXNRZ1lkZmg=";
 	public static String API_URL = "https://wfhz3a1k1w.apigw.ntruss.com/custom/v1/30488/74656867a5abc001d68c3c331b2cafc14096d4e749c14cedb25660009fbfe93f/general";
 
+
+	private final RefrigeratorRepository refrigeratorRepository;
 	private final FoodRepository foodRepository;
 	private final CategoryDetailRepository categoryDetailRepository;
 	private final BarcodeRepository barcodeRepository;
@@ -305,9 +316,34 @@ public class FoodServiceImpl implements FoodService {
 		return ExpectedExpirationDate.from(targetDate.plusDays(categoryDetail.getExpirationDate()));
 	}
 
+	@Override
+	public void registerFood(FoodRegister request, User user) {
+		// 유저로 냉장고 찾아오기
+		LocalDate expiredDate = makeLocalDate(request.getExpiredDate());
+		Refrigerator refrigerator = refrigeratorRepository.findByUserId(user.getUserId())
+			.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND));
+		// 저장고 위치 찾아오기
+		StorageTypeId storageTypeId = StorageTypeId.valueOf(request.getLocation().toUpperCase());
+
+		CategoryDetail categoryDetail = categoryDetailRepository.findById(request.getCategoryId())
+			.orElseThrow(() -> new FoodException(FoodErrorCode.CATEGORY_DETAIL_NOT_FOUND));
+
+		// Food
+		foodRepository.save(Food.create(request.getName(), categoryDetail, request.getPrice(), expiredDate,
+			storageTypeId, refrigerator, timeService.localDateTimeNow()));
+	}
+
 	private LocalDate makeLocalDate(int year, int month, int day) {
 		try {
 			return LocalDate.of(year, month, day);
+		} catch (DateTimeException e) {
+			throw new FoodException(FoodErrorCode.INVALID_DATE_FORMAT);
+		}
+	}
+
+	private LocalDate makeLocalDate(String date) {
+		try {
+			return LocalDate.parse(date);
 		} catch (DateTimeException e) {
 			throw new FoodException(FoodErrorCode.INVALID_DATE_FORMAT);
 		}

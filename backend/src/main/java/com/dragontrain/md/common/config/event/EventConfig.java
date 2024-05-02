@@ -1,11 +1,12 @@
 package com.dragontrain.md.common.config.event;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
+
+import lombok.RequiredArgsConstructor;
 
 @EnableAsync
 @RequiredArgsConstructor
