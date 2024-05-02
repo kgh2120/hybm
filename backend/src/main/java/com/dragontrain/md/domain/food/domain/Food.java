@@ -107,4 +107,10 @@ public class Food {
 		}
 		return FoodStatus.FRESH;
 	}
+
+	public static Integer getDDay(LocalDate expectedExpirationDate, LocalDate now) {
+		Period period = expectedExpirationDate.until(now);
+
+		return period.getDays();
+	}
 }

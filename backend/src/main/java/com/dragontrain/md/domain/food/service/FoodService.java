@@ -1,6 +1,7 @@
 package com.dragontrain.md.domain.food.service;
 
 import com.dragontrain.md.domain.food.controller.request.ReceiptEachRequest;
+import com.dragontrain.md.domain.food.controller.response.FoodStorageResponse;
 import com.dragontrain.md.domain.food.controller.response.ReceiptProducts;
 import com.dragontrain.md.domain.user.domain.User;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,5 +19,6 @@ public interface FoodService {
 	ReceiptProducts callDocumentOCR(MultipartFile imgFile);
 	void registerReceipt(List<ReceiptEachRequest> receiptEachRequests, User user);
 	void registerFood(FoodRegister request, User user);
+	FoodStorageResponse getFoodStorage(String storage, User user);
 
 }
