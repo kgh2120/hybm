@@ -1,6 +1,7 @@
 package com.dragontrain.md.domain.refrigerator.service;
 
 import com.dragontrain.md.domain.refrigerator.controller.request.ModifyAppliedStorageDesignRequest;
+import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import org.springframework.stereotype.Service;
 
 import com.dragontrain.md.domain.refrigerator.controller.response.AppliedStorageDesignsResponse;
@@ -78,7 +79,7 @@ public class StorageStorageDesignServiceImpl implements StorageStorageDesignServ
 
 		// 각 요청을 돌면서, 해당 designId과 position이 매칭되지 않으면 에러
 		request.getRequest().forEach(item -> {
-			if(!item.getPosition().equals(
+			if(!StorageTypeId.valueOf(item.getPosition().toUpperCase()).equals(
 				newDesigns.stream().filter(
 					design -> design.getStorageStorageDesignId().getStorageDesignId() ==
 						item.getDesignId()).toList().get(0).getStorageType().getStorageType()
