@@ -1,37 +1,62 @@
 .wrapper {
-  border: 1px solid black;
-  display: flex;
   position: relative;
   height: 720px;
 }
-.wrapper .cabinet_btn {
-  position: absolute;
-  top: 35px;
-  left: -1px;
-  width: 170px;
-  height: 180px;
-  border-radius: 50%;
-  cursor: pointer;
-  z-index: 10;
-  background-color: red;
-  opacity: 0;
-}
 .wrapper .cabinet {
   position: absolute;
-  top: 10px;
-  left: -1px;
-  width: 180px;
+  top: -20px;
+  left: -45px;
+  width: 220px;
   z-index: 2;
 }
 .wrapper .cool {
   position: absolute;
-  top: 150px;
-  left: -10px;
-  width: 200px;
+  bottom: 228px;
+  left: -50px;
+  width: 232px;
+  z-index: 1;
 }
 .wrapper .ice {
   position: absolute;
-  bottom: 0px;
-  left: -9px;
-  width: 200px;
+  bottom: 18px;
+  left: -50px;
+  width: 230px;
+}
+.wrapper .background {
+  width: 100%;
+  height: 100%;
+}
+.wrapper .receipt {
+  position: absolute;
+  z-index: 5;
+  opacity: 0;
+  top: 80px;
+  right: 60px;
+  width: 100px;
+  height: 100px;
+}
+.wrapper .design {
+  position: absolute;
+  z-index: 5;
+  opacity: 0;
+  top: 220px;
+  right: 20px;
+  width: 130px;
+  height: 100px;
+}
+.wrapper .report {
+  position: absolute;
+  z-index: 5;
+  opacity: 0;
+  top: 350px;
+  right: 90px;
+  width: 80px;
+  height: 70px;
+}
+.wrapper .recipe {
+  position: absolute;
+  z-index: 6;
+  bottom: 290px;
+  left: 110px;
+  width: 60px;
 }/*# sourceMappingURL=TestPage.module.css.map */
