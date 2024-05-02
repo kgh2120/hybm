@@ -17,7 +17,7 @@ public interface StorageStorageDesignJpaRepository extends JpaRepository<Storage
 		" on ssd.refrigerator.refrigeratorId=:refrigeratorId")
 	List<StorageDesignResponse> findAllStorageDesign(Long refrigeratorId);
 
-	@Query("select new com.dragontrain.md.domain.refrigerator.controller.response.AppliedStorageDesign" +
+	@Query("select new com.dragontrain.md.domain.refrigerator.service.dto.AppliedStorageDesign" +
 		"(sd.storageDesignId, sd.imgSrc, ssd.storageType.storageType)" +
 		" from StorageStorageDesign ssd join ssd.storageDesign sd" +
 		" on ssd.refrigerator.refrigeratorId=:refrigeratorId and ssd.isApplied=true")
