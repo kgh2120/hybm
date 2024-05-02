@@ -229,7 +229,8 @@ class FoodControllerTest {
 			+ "   \"categoryId\":10,\n"
 			+ "   \"price\":26000,\n"
 			+ "   \"expiredDate\":\"2024-04-26\",\n"
-			+ "   \"location\":\"CABINET\"\n"
+			+ "   \"location\":\"CABINET\",\n"
+			+ "   \"isManual\" : true \n"
 			+ "}";
 		final String url = "/api/foods";
 		// when // then
@@ -252,7 +253,8 @@ class FoodControllerTest {
 			+ "   \"categoryId\":10,\n"
 			+ "   \"price\":26000,\n"
 			+ "   \"expiredDate\":\"2024-04-26\",\n"
-			+ "   \"location\":\"HELLO\"\n"
+			+ "   \"location\":\"HELLO\",\n"
+			+ "   \"isManual\" : true \n"
 			+ "}";
 		final String url = "/api/foods";
 		// when // then
@@ -263,7 +265,7 @@ class FoodControllerTest {
 			.andExpectAll(
 				status().isBadRequest(),
 				jsonPath("$.errorName").value(GlobalErrorCode.BIND_ERROR.getErrorName()),
-				jsonPath("$.errorMessage").value("ice, cool, cabinet에 해당하는 값을 입력해주세요\n"),
+				jsonPath("$.errorMessage").value("ice, cool, cabinet에 해당하는 값을 입력해주세요.\n"),
 				jsonPath("$.path").value(url)
 			).andDo(print());
 	}
@@ -278,7 +280,8 @@ class FoodControllerTest {
 			+ "   \"categoryId\":6767,\n"
 			+ "   \"price\":26000,\n"
 			+ "   \"expiredDate\":\"2024-04-26\",\n"
-			+ "   \"location\":\"ice\"\n"
+			+ "   \"location\":\"ice\",\n"
+			+ "   \"isManual\" : true \n"
 			+ "}";
 		final String url = "/api/foods";
 
@@ -308,8 +311,10 @@ class FoodControllerTest {
 			+ "   \"categoryId\":10,\n"
 			+ "   \"price\":26000,\n"
 			+ "   \"expiredDate\":\"2024-04-31\",\n"
-			+ "   \"location\":\"ice\"\n"
+			+ "   \"location\":\"ice\",\n"
+			+ "   \"isManual\" : true \n"
 			+ "}";
+
 		final String url = "/api/foods";
 
 		willThrow(new FoodException(INVALID_DATE_FORMAT))
@@ -338,7 +343,8 @@ class FoodControllerTest {
 			+ "   \"categoryId\":10,\n"
 			+ "   \"price\":26000,\n"
 			+ "   \"expiredDate\":\"2024-04-31\",\n"
-			+ "   \"location\":\"asd\"\n"
+			+ "   \"location\":\"asd\",\n"
+			+ "   \"isManual\" : true \n"
 			+ "}";
 		final String url = "/api/foods";
 
