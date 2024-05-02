@@ -54,15 +54,15 @@ public class FoodServiceImpl implements FoodService {
 
 
 	// OCR General 형식의 SECRET key, API URL
-	@Value("${ocr.general.secret-key}")
+	@Value("${secret.ocr.general.service-key}")
 	private String OCR_SECRET;
-	@Value("${ocr.general.api_url}")
+	@Value("${secret.ocr.general.api-url}")
 	private String API_URL;
 
 	// OCR DOCUMENT 형식의 SECRET key, API URL
-	@Value("${ocr.document.secret-key}")
+	@Value("${secret.ocr.document.service-key}")
 	private String RECEIPT_SECRET;
-	@Value("${ocr.document.api-url}")
+	@Value("${secret.ocr.document.api-url}")
 	private String RECEIPT_API_URL;
 
 
