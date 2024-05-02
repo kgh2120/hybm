@@ -13,8 +13,8 @@ function CreateFoodModal() {
 
         <FoodSection />
         <section className={styles.btn_section}>
-          <div><img src={barcode} alt="" /></div>
-          <div><img src={camera} alt="" /></div>
+          <div><img src={barcode} alt="바코드아이콘" /></div>
+          <div><img src={camera} alt="카메라아이콘" /></div>
           <div></div>
         </section>
       </section>
