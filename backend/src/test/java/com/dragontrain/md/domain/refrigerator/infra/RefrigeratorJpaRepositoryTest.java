@@ -25,16 +25,16 @@ class RefrigeratorJpaRepositoryTest {
 	private static TestEntityFactory testEntityFactory;
 
 	@BeforeAll
-	static void 장전(){
+	static void 장전() {
 		testEntityFactory = new TestEntityFactory();
 	}
 
 	@Test
-	void 유저아이디로_냉장고조회_성공(){
+	void 유저아이디로_냉장고조회_성공() {
 		User user = testEntityFactory.getTestUserEntity(null);
 		jpaUserRepository.save(user);
 
-		Level level = testEntityFactory.getTestLevelEntity(null,1, 1);
+		Level level = testEntityFactory.getTestLevelEntity(null, 1, 1);
 		levelJpaRepository.save(level);
 
 		Refrigerator refrigerator = testEntityFactory.getTestRefrigerator(null, user, Boolean.FALSE, level);

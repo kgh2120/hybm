@@ -12,14 +12,7 @@ import lombok.RequiredArgsConstructor;
 public enum RefrigeratorErrorCode implements ErrorCode {
 	REFRIGERATOR_NOT_FOUND(HttpStatus.NOT_FOUND, "냉장고를 찾을 수 없습니다."),
 	LEVEL_RESOURCE_NOT_FOUND(HttpStatus.NOT_FOUND, "레벨 정보가 존재하지 않습니다"),
-	STORAGE_DESIGN_RESOURCE_NOT_FOUND(HttpStatus.NOT_FOUND, "저장고 디자인 정보가 존재하지 않습니다")
-
-
-
-
-
-
-	;
+	STORAGE_DESIGN_RESOURCE_NOT_FOUND(HttpStatus.NOT_FOUND, "저장고 디자인 정보가 존재하지 않습니다");
 
 	private final HttpStatus httpStatus;
 	private final String errorMessage;

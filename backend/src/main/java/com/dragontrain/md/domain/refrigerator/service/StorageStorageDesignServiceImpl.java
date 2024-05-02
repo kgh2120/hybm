@@ -1,6 +1,8 @@
 package com.dragontrain.md.domain.refrigerator.service;
 
 import com.dragontrain.md.domain.refrigerator.controller.request.ModifyAppliedStorageDesignRequest;
+import org.springframework.stereotype.Service;
+
 import com.dragontrain.md.domain.refrigerator.controller.response.AppliedStorageDesignsResponse;
 import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignsResponse;
 import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
@@ -12,6 +14,7 @@ import com.dragontrain.md.domain.refrigerator.exception.StorageDesignException;
 import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
 import com.dragontrain.md.domain.refrigerator.service.port.StorageStorageDesignRepository;
 import com.dragontrain.md.domain.user.domain.User;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +27,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class StorageStorageDesignServiceImpl implements StorageStorageDesignService{
+public class StorageStorageDesignServiceImpl implements StorageStorageDesignService {
 
 	private final StorageStorageDesignRepository storageStorageDesignRepository;
 	private final RefrigeratorRepository refrigeratorRepository;

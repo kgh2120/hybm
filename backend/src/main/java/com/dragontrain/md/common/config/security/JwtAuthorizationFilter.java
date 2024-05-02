@@ -6,7 +6,6 @@ import java.util.Objects;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.dragontrain.md.common.config.exception.GlobalErrorCode;
@@ -22,7 +21,9 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
@@ -32,17 +33,15 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
 		FilterChain filterChain) throws ServletException, IOException {
-
-		Cookie accessTokenCookie = CookieUtils.findAccessTokenCookie(request.getCookies());
-
-		if (!Objects.isNull(accessTokenCookie)) {
-			String accessToken = accessTokenCookie.getValue();
-			if (jwtProvider.isRefreshToken(accessToken)) {
-				throw new TokenException(GlobalErrorCode.TOKEN_TYPE_MISS_MATCHED,
-					"[AUTHORIZATION] refresh token is used ");
+			Cookie accessTokenCookie = CookieUtils.findAccessTokenCookie(request.getCookies());
+			if (!Objects.isNull(accessTokenCookie)) {
+				String accessToken = accessTokenCookie.getValue();
+				if (jwtProvider.isRefreshToken(accessToken)) {
+					throw new TokenException(GlobalErrorCode.TOKEN_TYPE_MISS_MATCHED,
+						"[AUTHORIZATION] refresh token is used ");
+				}
+				setAuthenticated(accessToken);
 			}
-			setAuthenticated(accessToken);
-		}
 
 		filterChain.doFilter(request, response);
 	}
@@ -50,6 +49,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 	private void setAuthenticated(String accessToken) {
 		Long userId = jwtProvider.parseUserId(accessToken);
 		User user = userService.loadUserByUserId(userId);
-		SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(user, user.getUserId(), new ArrayList<>()));
+		SecurityContextHolder.getContext()
+			.setAuthentication(new UsernamePasswordAuthenticationToken(user, user.getUserId(), new ArrayList<>()));
 	}
 }

@@ -10,6 +10,11 @@ import com.dragontrain.md.domain.refrigerator.exception.StorageDesignException;
 import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
 import com.dragontrain.md.domain.refrigerator.service.port.StorageStorageDesignRepository;
 import com.dragontrain.md.domain.user.domain.User;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -24,6 +29,9 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import static org.mockito.ArgumentMatchers.any;
+import com.dragontrain.md.domain.refrigerator.domain.Level;
+import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
+import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 
 @ExtendWith(MockitoExtension.class)
 class StorageStorageDesignServiceImplTest {
@@ -40,14 +48,14 @@ class StorageStorageDesignServiceImplTest {
 	private static TestEntityFactory testEntityFactory;
 
 	@BeforeAll
-	static void 장전(){
+	static void 장전() {
 		testEntityFactory = new TestEntityFactory();
 	}
 
 	@Test
-	void 모든_디자인_찾기(){
+	void 모든_디자인_찾기() {
 		User user = testEntityFactory.getTestUserEntity(null);
-		Level level = testEntityFactory.getTestLevelEntity(null,1, 1);
+		Level level = testEntityFactory.getTestLevelEntity(null, 1, 1);
 
 		Refrigerator refrigerator = testEntityFactory.getTestRefrigerator(null, user, Boolean.FALSE, level);
 
@@ -62,7 +70,7 @@ class StorageStorageDesignServiceImplTest {
 	}
 
 	@Test
-	void 적용된_디자인_찾기(){
+	void 적용된_디자인_찾기() {
 		User user = testEntityFactory.getTestUserEntity(null);
 		Level level = testEntityFactory.getTestLevelEntity(null, 1, 1);
 		Refrigerator refrigerator = testEntityFactory.getTestRefrigerator(null, user, Boolean.FALSE, level);

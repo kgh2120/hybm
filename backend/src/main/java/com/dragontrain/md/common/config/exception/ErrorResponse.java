@@ -1,11 +1,12 @@
 package com.dragontrain.md.common.config.exception;
 
+import java.time.Instant;
+
+import org.springframework.http.HttpStatus;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.http.HttpStatus;
-
-import java.time.Instant;
 
 @Getter
 @NoArgsConstructor
@@ -24,6 +25,25 @@ public class ErrorResponse {
 			errorCode.getHttpStatus(),
 			errorCode.getErrorName(),
 			errorCode.getErrorMessage(),
+			path);
+	}
+
+	public static ErrorResponse createErrorResponse(HttpStatus httpStatus, String errorName, String errorMessage,
+		String path) {
+		return new ErrorResponse(
+			Instant.now().toString(),
+			httpStatus,
+			errorName,
+			errorMessage,
+			path);
+	}
+
+	public static ErrorResponse createErrorResponse(ErrorCode errorCode, String errorMessage, String path) {
+		return new ErrorResponse(
+			Instant.now().toString(),
+			errorCode.getHttpStatus(),
+			errorCode.getErrorName(),
+			errorMessage,
 			path);
 	}
 

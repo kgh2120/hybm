@@ -15,9 +15,11 @@ import lombok.RequiredArgsConstructor;
 public class UserServiceImpl implements UserService {
 
 	private final UserRepository userRepository;
+
 	@Override
 	public User loadUserByUserId(Long userId) {
 		return userRepository.findById(userId)
-			.orElseThrow(() -> new UserException(UserErrorCode.USER_RESOURCE_NOT_FOUND, "userid " + userId + " is not found"));
+			.orElseThrow(
+				() -> new UserException(UserErrorCode.USER_RESOURCE_NOT_FOUND, "userid " + userId + " is not found"));
 	}
 }
