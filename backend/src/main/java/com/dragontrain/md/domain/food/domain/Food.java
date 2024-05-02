@@ -86,6 +86,7 @@ public class Food {
 			.createdAt(now)
 			.updatedAt(now)
 			.storageType(StorageType.builder().storageType(storageType).build())
+			.isManual(true)
 			.price(price)
 			.expectedExpirationDate(expectedExpirationDate)
 			.foodStatus(calculateFoodStatus(expectedExpirationDate, now.toLocalDate()))

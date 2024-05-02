@@ -1,4 +1,4 @@
-package com.dragontrain.md.domain.food.service;
+package com.dragontrain.md.domain.food.service.port;
 
 import com.dragontrain.md.domain.food.domain.Food;
 

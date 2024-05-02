@@ -1,11 +1,11 @@
 package com.dragontrain.md.domain.food.infra;
 
-import org.springframework.stereotype.Repository;
 
 import com.dragontrain.md.domain.food.domain.Food;
-import com.dragontrain.md.domain.food.service.FoodRepository;
-
+import com.dragontrain.md.domain.food.service.port.FoodRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
+
 
 @RequiredArgsConstructor
 @Repository
