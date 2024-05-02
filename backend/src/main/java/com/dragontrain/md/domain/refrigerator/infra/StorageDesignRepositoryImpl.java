@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 @Repository
 public class StorageDesignRepositoryImpl implements StorageDesignRepository {
 	private final StorageDesignJpaRepository storageDesignJpaRepository;
+
 	@Override
 	public Optional<StorageDesign> findStorageDesignByLevelAndType(int level, StorageTypeId storageTypeId) {
 		return storageDesignJpaRepository.findByLevelAndStorageType_StorageType(level, storageTypeId);

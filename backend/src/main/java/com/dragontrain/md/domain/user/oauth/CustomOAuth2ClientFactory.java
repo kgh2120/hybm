@@ -27,7 +27,8 @@ public class CustomOAuth2ClientFactory {
 			case NAVER_CLIENT_REGISTRATION_ID:
 				return new NaverOAuth2Client(parseNaverEmailInfo(deglatedOAuth2user), deglatedOAuth2user);
 			default:
-				throw new UserException(OAUTH2_UNKNOWN_REGISTER_ID, "UNKNOWN REGISTER ID IS ENTERED : " + registrationId);
+				throw new UserException(OAUTH2_UNKNOWN_REGISTER_ID,
+					"UNKNOWN REGISTER ID IS ENTERED : " + registrationId);
 		}
 	}
 

@@ -27,7 +27,7 @@ public class OAuth2FailureHandler extends SimpleUrlAuthenticationFailureHandler 
 		getRedirectStrategy().sendRedirect(request, response, getFailureRedirectUrl(request));
 	}
 
-	private String getFailureRedirectUrl(HttpServletRequest request){
+	private String getFailureRedirectUrl(HttpServletRequest request) {
 		return customAuthorizationRequestRepository.getRedirectUri(request) + "?result=false";
 	}
 }

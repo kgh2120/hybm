@@ -29,14 +29,14 @@ public class JwtProvider {
 	private SecretKey secretKey;
 
 	@PostConstruct
-	void init(){
+	void init() {
 		log.info("[JwtProperties]  accessTokenTtl : {}, refreshTokenTtl : {}, secretKey : {}, userIdClaimKey : {}",
-			jwtProperties.getAccessTokenTtl(), jwtProperties.getRefreshTokenTtl(), jwtProperties.getSecretKey(), jwtProperties.getUserIdClaimKey());
+			jwtProperties.getAccessTokenTtl(), jwtProperties.getRefreshTokenTtl(), jwtProperties.getSecretKey(),
+			jwtProperties.getUserIdClaimKey());
 		secretKey = Keys.hmacShaKeyFor(Base64.getEncoder().encode(jwtProperties.getSecretKey().getBytes()));
 	}
 
-
-	public Token createAccessToken(Long userId){
+	public Token createAccessToken(Long userId) {
 		Date now = new Date();
 		return Token.of(Jwts.builder()
 			.claim(jwtProperties.getUserIdClaimKey(), userId)
@@ -47,7 +47,7 @@ public class JwtProvider {
 			.compact(), jwtProperties.getAccessTokenTtl());
 	}
 
-	public Token createRefreshToken(Long userId){
+	public Token createRefreshToken(Long userId) {
 		Date now = new Date();
 		return Token.of(Jwts.builder()
 			.claim(jwtProperties.getUserIdClaimKey(), userId)
@@ -70,11 +70,11 @@ public class JwtProvider {
 			.getPayload();
 	}
 
-	public boolean isAccessToken(String token){
+	public boolean isAccessToken(String token) {
 		return getPayload(token).get(JWT_CLAIM_KEY_TYPE, String.class).equals(JWT_CLAIM_VALUE_ACCESS_TOKEN);
 	}
 
-	public boolean isRefreshToken(String token){
+	public boolean isRefreshToken(String token) {
 		return getPayload(token).get(JWT_CLAIM_KEY_TYPE, String.class).equals(JWT_CLAIM_VALUE_REFRESH_TOKEN);
 	}
 }

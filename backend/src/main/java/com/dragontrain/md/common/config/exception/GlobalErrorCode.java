@@ -1,8 +1,9 @@
 package com.dragontrain.md.common.config.exception;
 
+import org.springframework.http.HttpStatus;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 
 @RequiredArgsConstructor
 @Getter
@@ -36,8 +37,7 @@ public enum GlobalErrorCode implements ErrorCode {
 	TOKEN_MALFORMED(HttpStatus.FORBIDDEN, "토큰의 형식이 잘못되었습니다. 토큰은 [header].[payload].[secret]의 형식이어야 합니다."), // v
 	TOKEN_UNSUPPORTED(HttpStatus.FORBIDDEN, "지원하지 않는 종류의 토큰입니다."),
 
-
-		;
+	;
 
 	private final HttpStatus httpStatus;
 	private final String errorMessage;

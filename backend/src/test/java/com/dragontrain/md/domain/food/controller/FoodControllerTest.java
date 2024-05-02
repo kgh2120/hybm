@@ -3,6 +3,7 @@ package com.dragontrain.md.domain.food.controller;
 import static com.dragontrain.md.domain.food.exception.FoodErrorCode.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -11,21 +12,21 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.dragontrain.md.common.config.exception.GlobalErrorCode;
 import com.dragontrain.md.domain.food.controller.response.BarcodeInfo;
 import com.dragontrain.md.domain.food.controller.response.ExpectedExpirationDate;
-import com.dragontrain.md.domain.food.exception.FoodErrorCode;
 import com.dragontrain.md.domain.food.exception.FoodException;
 import com.dragontrain.md.domain.food.service.FoodService;
 
-@WebMvcTest(controllers = FoodController.class)
+@WebMvcTest(controllers = {FoodController.class})
 class FoodControllerTest {
 
 	@MockBean
@@ -120,20 +121,20 @@ class FoodControllerTest {
 		int month = 5;
 		int day = 1;
 		final String path = "/api/foods/expiration";
-		given(foodService.getExpectedExpirationDate(anyInt(),anyInt(),anyInt(),anyInt()))
-			.willReturn(ExpectedExpirationDate.from(LocalDate.of(2024,5,15)));
+		given(foodService.getExpectedExpirationDate(anyInt(), anyInt(), anyInt(), anyInt()))
+			.willReturn(ExpectedExpirationDate.from(LocalDate.of(2024, 5, 15)));
 		// when // then
 		mockMvc.perform(get(path)
-			.param("categoryDetailId", Integer.toString(categoryDetailId))
-			.param("year", Integer.toString(year))
-			.param("month", Integer.toString(month))
-			.param("day", Integer.toString(day))
+				.param("categoryDetailId", Integer.toString(categoryDetailId))
+				.param("year", Integer.toString(year))
+				.param("month", Integer.toString(month))
+				.param("day", Integer.toString(day))
 			).andExpectAll(
 				status().isOk(),
-			jsonPath("$.year").value(2024),
-			jsonPath("$.month").value(5),
-			jsonPath("$.day").value(15)
-		)
+				jsonPath("$.year").value(2024),
+				jsonPath("$.month").value(5),
+				jsonPath("$.day").value(15)
+			)
 			.andDo(print());
 	}
 
@@ -147,7 +148,7 @@ class FoodControllerTest {
 		int month = 4;
 		int day = 31;
 		final String path = "/api/foods/expiration";
-		given(foodService.getExpectedExpirationDate(anyInt(),anyInt(),anyInt(),anyInt()))
+		given(foodService.getExpectedExpirationDate(anyInt(), anyInt(), anyInt(), anyInt()))
 			.willThrow(new FoodException(INVALID_DATE_FORMAT));
 		// when // then
 		mockMvc.perform(get(path)
@@ -174,7 +175,7 @@ class FoodControllerTest {
 		int month = 5;
 		int day = 1;
 		final String path = "/api/foods/expiration";
-		given(foodService.getExpectedExpirationDate(anyInt(),anyInt(),anyInt(),anyInt()))
+		given(foodService.getExpectedExpirationDate(anyInt(), anyInt(), anyInt(), anyInt()))
 			.willThrow(new FoodException(CATEGORY_DETAIL_NOT_FOUND));
 		// when // then
 		mockMvc.perform(get(path)
@@ -201,7 +202,7 @@ class FoodControllerTest {
 		int month = 5;
 		int day = 1;
 		final String path = "/api/foods/expiration";
-		given(foodService.getExpectedExpirationDate(anyInt(),anyInt(),anyInt(),anyInt()))
+		given(foodService.getExpectedExpirationDate(anyInt(), anyInt(), anyInt(), anyInt()))
 			.willThrow(new FoodException(EXPIRATION_DATE_NOT_FOUND));
 		// when // then
 		mockMvc.perform(get(path)
@@ -218,4 +219,138 @@ class FoodControllerTest {
 			.andDo(print());
 	}
 
+	@WithMockUser
+	@DisplayName("음식 등록 테스트 성공")
+	@Test
+	void registerFoodSuccessTest() throws Exception {
+		// given
+		String body = "{\n"
+			+ "   \"name\":\"삼겹살\",\n"
+			+ "   \"categoryId\":10,\n"
+			+ "   \"price\":26000,\n"
+			+ "   \"expiredDate\":\"2024-04-26\",\n"
+			+ "   \"location\":\"CABINET\"\n"
+			+ "}";
+		final String url = "/api/foods";
+		// when // then
+		mockMvc.perform(post(url)
+				.content(body)
+				.contentType(MediaType.APPLICATION_JSON)
+				.with(csrf()))
+			.andExpectAll(
+				status().isCreated()
+			).andDo(print());
+	}
+
+	@WithMockUser
+	@DisplayName("음식 등록 테스트 실패 - location에 올바르지 못한 값을 입력한 경우")
+	@Test
+	void registerFoodFailKnownLocationTest() throws Exception {
+		// given
+		String body = "{\n"
+			+ "   \"name\":\"삼겹살\",\n"
+			+ "   \"categoryId\":10,\n"
+			+ "   \"price\":26000,\n"
+			+ "   \"expiredDate\":\"2024-04-26\",\n"
+			+ "   \"location\":\"HELLO\"\n"
+			+ "}";
+		final String url = "/api/foods";
+		// when // then
+		mockMvc.perform(post(url)
+				.content(body)
+				.contentType(MediaType.APPLICATION_JSON)
+				.with(csrf()))
+			.andExpectAll(
+				status().isBadRequest(),
+				jsonPath("$.errorName").value(GlobalErrorCode.BIND_ERROR.getErrorName()),
+				jsonPath("$.errorMessage").value("ice, cool, cabinet에 해당하는 값을 입력해주세요\n"),
+				jsonPath("$.path").value(url)
+			).andDo(print());
+	}
+
+	@WithMockUser
+	@DisplayName("음식 등록 테스트 실패 - 카테고리가 없는 경우")
+	@Test
+	void registerFoodFailCategoryNotFoundTest() throws Exception {
+		// given
+		String body = "{\n"
+			+ "   \"name\":\"삼겹살\",\n"
+			+ "   \"categoryId\":6767,\n"
+			+ "   \"price\":26000,\n"
+			+ "   \"expiredDate\":\"2024-04-26\",\n"
+			+ "   \"location\":\"ice\"\n"
+			+ "}";
+		final String url = "/api/foods";
+
+		willThrow(new FoodException(CATEGORY_DETAIL_NOT_FOUND))
+			.given(foodService)
+			.registerFood(any(), any());
+		// when // then
+		mockMvc.perform(post(url)
+				.content(body)
+				.contentType(MediaType.APPLICATION_JSON)
+				.with(csrf()))
+			.andExpectAll(
+				status().isNotFound(),
+				jsonPath("$.errorName").value(CATEGORY_DETAIL_NOT_FOUND.getErrorName()),
+				jsonPath("$.errorMessage").value(CATEGORY_DETAIL_NOT_FOUND.getErrorMessage()),
+				jsonPath("$.path").value(url)
+			).andDo(print());
+	}
+
+	@WithMockUser
+	@DisplayName("음식 등록 테스트 실패 - 날짜 양식이 안맞는 경우")
+	@Test
+	void registerFoodFailDateTimeFormatErrorTest() throws Exception {
+		// given
+		String body = "{\n"
+			+ "   \"name\":\"삼겹살\",\n"
+			+ "   \"categoryId\":10,\n"
+			+ "   \"price\":26000,\n"
+			+ "   \"expiredDate\":\"2024-04-31\",\n"
+			+ "   \"location\":\"ice\"\n"
+			+ "}";
+		final String url = "/api/foods";
+
+		willThrow(new FoodException(INVALID_DATE_FORMAT))
+			.given(foodService)
+			.registerFood(any(), any());
+
+		// when // then
+		mockMvc.perform(post(url)
+				.content(body)
+				.contentType(MediaType.APPLICATION_JSON)
+				.with(csrf()))
+			.andExpectAll(
+				status().isBadRequest(),
+				jsonPath("$.errorName").value(INVALID_DATE_FORMAT.getErrorName()),
+				jsonPath("$.errorMessage").value(INVALID_DATE_FORMAT.getErrorMessage()),
+				jsonPath("$.path").value(url)
+			).andDo(print());
+	}
+
+	@WithMockUser
+	@DisplayName("음식 등록 테스트 실패 - 이름이 양식에 맞지 않는 경우")
+	@Test
+	void registerFoodFailInvalidNameTest() throws Exception {
+		// given
+		String body = "{\n"
+			+ "   \"categoryId\":10,\n"
+			+ "   \"price\":26000,\n"
+			+ "   \"expiredDate\":\"2024-04-31\",\n"
+			+ "   \"location\":\"asd\"\n"
+			+ "}";
+		final String url = "/api/foods";
+
+		// when // then
+		mockMvc.perform(post(url)
+				.content(body)
+				.contentType(MediaType.APPLICATION_JSON)
+				.with(csrf()))
+			.andExpectAll(
+				status().isBadRequest(),
+				jsonPath("$.errorName").value(GlobalErrorCode.BIND_ERROR.getErrorName()),
+				jsonPath("$.path").value(url)
+			).andDo(print());
+	}
 }

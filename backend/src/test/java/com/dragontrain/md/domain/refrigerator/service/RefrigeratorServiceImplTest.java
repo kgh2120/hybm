@@ -7,10 +7,6 @@ import static org.mockito.BDDMockito.*;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import com.dragontrain.md.domain.refrigerator.service.port.LevelRepository;
-import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
-import com.dragontrain.md.domain.refrigerator.service.port.StorageDesignRepository;
-import com.dragontrain.md.domain.refrigerator.service.port.StorageStorageDesignRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,6 +21,10 @@ import com.dragontrain.md.domain.refrigerator.domain.StorageType;
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorErrorCode;
 import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorException;
+import com.dragontrain.md.domain.refrigerator.service.port.LevelRepository;
+import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
+import com.dragontrain.md.domain.refrigerator.service.port.StorageDesignRepository;
+import com.dragontrain.md.domain.refrigerator.service.port.StorageStorageDesignRepository;
 import com.dragontrain.md.domain.user.domain.SocialLoginType;
 import com.dragontrain.md.domain.user.domain.User;
 import com.dragontrain.md.domain.user.exception.UserErrorCode;
@@ -139,15 +139,13 @@ class RefrigeratorServiceImplTest {
 		given(levelRepository.findLevel(anyInt()))
 			.willReturn(Optional.of(givenLevel));
 
-			given(storageDesignRepository.findStorageDesignByLevelAndType(eq(1), any()))
-				.willReturn(Optional.empty());
+		given(storageDesignRepository.findStorageDesignByLevelAndType(eq(1), any()))
+			.willReturn(Optional.empty());
 
 		// when 		// then
 		assertThatThrownBy(() -> refrigeratorService.createInitialRefrigerator(userId))
 			.isInstanceOf(RefrigeratorException.class)
 			.hasFieldOrPropertyWithValue("errorCode", RefrigeratorErrorCode.STORAGE_DESIGN_RESOURCE_NOT_FOUND);
-
-
 
 	}
 
@@ -176,8 +174,6 @@ class RefrigeratorServiceImplTest {
 		assertThatThrownBy(() -> refrigeratorService.createInitialRefrigerator(userId))
 			.isInstanceOf(RefrigeratorException.class)
 			.hasFieldOrPropertyWithValue("errorCode", RefrigeratorErrorCode.LEVEL_RESOURCE_NOT_FOUND);
-
-
 
 	}
 

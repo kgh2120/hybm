@@ -1,12 +1,29 @@
 package com.dragontrain.md.domain.food.domain;
 
-import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
-import com.dragontrain.md.domain.refrigerator.domain.StorageType;
-import jakarta.persistence.*;
-import lombok.*;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
+
+import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
+import com.dragontrain.md.domain.refrigerator.domain.StorageType;
+import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
@@ -58,4 +75,35 @@ public class Food {
 
 	@Column(name = "status", columnDefinition = "varchar(7)", nullable = false)
 	private FoodStatus foodStatus;
+
+	public static Food create(String name, CategoryDetail categoryDetail,
+		Integer price, LocalDate expectedExpirationDate, StorageTypeId storageType,
+		Refrigerator refrigerator,
+		LocalDateTime now) {
+		return Food.builder()
+			.name(name)
+			.categoryDetail(categoryDetail)
+			.createdAt(now)
+			.updatedAt(now)
+			.storageType(StorageType.builder().storageType(storageType).build())
+			.price(price)
+			.expectedExpirationDate(expectedExpirationDate)
+			.foodStatus(calculateFoodStatus(expectedExpirationDate, now.toLocalDate()))
+			.refrigerator(refrigerator)
+			.build();
+	}
+
+	private static FoodStatus calculateFoodStatus(LocalDate expectedExpirationDate, LocalDate now) {
+		Period period = expectedExpirationDate.until(now);
+
+		int days = period.getDays();
+		if (days <= 0) {
+			return FoodStatus.ROTTEN;
+		} else if (days <= 3) {
+			return FoodStatus.DANGER;
+		} else if (days <= 7) {
+			return FoodStatus.WARNING;
+		}
+		return FoodStatus.FRESH;
+	}
 }
