@@ -1,5 +1,7 @@
 package com.dragontrain.md.domain.food.controller;
 
+import com.dragontrain.md.domain.food.controller.request.ReceiptEachRequest;
+import com.dragontrain.md.domain.food.controller.response.*;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -7,13 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dragontrain.md.domain.food.controller.request.FoodRegister;
@@ -40,6 +36,14 @@ public class FoodController {
 		return ResponseEntity.ok(foodService.getBarcodeInfo(barcode));
 	}
 
+
+	@GetMapping("/category")
+	public ResponseEntity<List<CategoryInfoResponse>> getCategoryInfo() {
+
+		return ResponseEntity.ok(foodService.getCategoryInfo());
+	}
+
+
 	@GetMapping("/expiration")
 	public ResponseEntity<ExpectedExpirationDate> getExpectedExpirationDate(@RequestParam int year,
 		@RequestParam int month, @RequestParam int day,
@@ -63,6 +67,14 @@ public class FoodController {
 		foodService.registerReceipt(receiptEachRequests, user);
 		return ResponseEntity.ok().build();
 	}
+
+	@GetMapping("/storage/{storage}")
+	public ResponseEntity<FoodStorageResponse> getFoodStorage(@PathVariable String storage, @AuthenticationPrincipal User user) {
+
+
+		return ResponseEntity.ok(foodService.getFoodStorage(storage, user));
+	}
+
 
 	@PostMapping
 	public ResponseEntity<Void> registerFood(@Validated @RequestBody FoodRegister request,

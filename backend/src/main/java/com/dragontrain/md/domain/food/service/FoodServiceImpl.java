@@ -1,15 +1,16 @@
 package com.dragontrain.md.domain.food.service;
 
 import com.dragontrain.md.domain.food.controller.request.ReceiptEachRequest;
-import com.dragontrain.md.domain.food.controller.response.ReceiptProduct;
-import com.dragontrain.md.domain.food.controller.response.ReceiptProducts;
+import com.dragontrain.md.domain.food.controller.response.*;
+import com.dragontrain.md.domain.food.domain.CategoryBig;
 import com.dragontrain.md.domain.food.domain.Food;
+import com.dragontrain.md.domain.food.service.port.BarcodeRepository;
+import com.dragontrain.md.domain.food.service.port.CategoryBigRepository;
+import com.dragontrain.md.domain.food.service.port.CategoryDetailRepository;
 import com.dragontrain.md.domain.food.service.port.FoodRepository;
 import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
-import com.dragontrain.md.domain.refrigerator.domain.StorageType;
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
-import com.dragontrain.md.domain.refrigerator.service.port.StorageTypeRepository;
 import com.dragontrain.md.domain.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,8 +37,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.dragontrain.md.common.service.TimeService;
 import com.dragontrain.md.domain.food.controller.request.FoodRegister;
-import com.dragontrain.md.domain.food.controller.response.BarcodeInfo;
-import com.dragontrain.md.domain.food.controller.response.ExpectedExpirationDate;
 import com.dragontrain.md.domain.food.domain.Barcode;
 import com.dragontrain.md.domain.food.domain.CategoryDetail;
 import com.dragontrain.md.domain.food.exception.FoodErrorCode;
@@ -69,9 +68,11 @@ public class FoodServiceImpl implements FoodService {
 	private final RefrigeratorRepository refrigeratorRepository;
 	private final FoodRepository foodRepository;
 	private final CategoryDetailRepository categoryDetailRepository;
+	private final CategoryBigRepository categoryBigRepository;
 	private final BarcodeRepository barcodeRepository;
 	private final CrawlService crawlService;
 	private final TimeService timeService;
+
 
 
 	// 이미지로 OCR General을 요청하는 Component
@@ -276,6 +277,35 @@ public class FoodServiceImpl implements FoodService {
 
 	}
 
+
+	@Override
+	public List<CategoryInfoResponse> getCategoryInfo() {
+		List<CategoryInfoResponse> categoryInfoResponseList = new ArrayList<>();
+		for (CategoryBig categoryBig : categoryBigRepository.findAll()) {
+			List<CategoryInfoDetail> categoryInfoDetails = new ArrayList<>();
+
+			for (CategoryDetail categoryDetail : categoryBig.getCategoryDetails()) {
+				CategoryInfoDetail categoryInfoDetail = CategoryInfoDetail.create(
+					categoryDetail.getCategoryDetailId(),
+					categoryDetail.getName(),
+					categoryDetail.getImgSrc()
+				);
+				categoryInfoDetails.add(categoryInfoDetail);
+			}
+
+			CategoryInfoResponse categoryInfoResponse = CategoryInfoResponse.create(
+				categoryBig.getCategoryBigId(),
+				categoryBig.getName(),
+				categoryBig.getImgSrc(),
+				categoryInfoDetails
+				);
+			categoryInfoResponseList.add(categoryInfoResponse);
+		}
+
+		return categoryInfoResponseList;
+	}
+
+
 	@Override
 	public BarcodeInfo getBarcodeInfo(Long barcode) {
 
@@ -327,6 +357,40 @@ public class FoodServiceImpl implements FoodService {
 		// Food
 		foodRepository.save(Food.create(request.getName(), categoryDetail, request.getPrice(), expiredDate,
 			storageTypeId, refrigerator, timeService.localDateTimeNow(), request.getIsManual()));
+	}
+
+	@Override
+	public FoodStorageResponse getFoodStorage(String storage, User user) {
+		Refrigerator refrigerator = refrigeratorRepository.findByUserId(user.getUserId())
+			.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND));
+
+		List<Food> foods = foodRepository.findAllByRefrigeratorIdAndFoodStorage(
+			refrigerator.getRefrigeratorId(),
+			StorageTypeId.valueOf(storage.toUpperCase())
+		);
+
+		List<FoodStorage> fresh = new ArrayList<>();
+		List<FoodStorage> warning = new ArrayList<>();
+		List<FoodStorage> danger = new ArrayList<>();
+		List<FoodStorage> rotten = new ArrayList<>();
+
+		for (Food food : foods) {
+			int dDay = food.getDDay(food.getExpectedExpirationDate(), LocalDate.now());
+			FoodStorage foodStorage = FoodStorage.create(
+				food.getFoodId(),
+				food.getName(),
+				food.getCategoryDetail().getImgSrc(),
+				dDay);
+
+			switch (food.getFoodStatus()) {
+				case FRESH -> fresh.add(foodStorage);
+				case WARNING -> warning.add(foodStorage);
+				case DANGER -> danger.add(foodStorage);
+				case ROTTEN -> rotten.add(foodStorage);
+			}
+		}
+
+		return FoodStorageResponse.create(fresh, warning, danger, rotten);
 	}
 
 	private LocalDate makeLocalDate(int year, int month, int day) {
