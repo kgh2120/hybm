@@ -22,7 +22,7 @@
 .wrapper .food_option_box > span {
   font-size: 15px;
   color: #666666;
-  width: 60px;
+  min-width: 60px;
 }
 .wrapper .food_option_box > input {
   text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;

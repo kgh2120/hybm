@@ -1,58 +1,20 @@
-@import '../common/common';
+@import "../common/common";
 
 .wrapper {
   @include center;
   flex-direction: column;
-}
-.main_section {
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  gap: 12px;
-  position: relative;
-  margin: 20px;
-  .img_section {
-    @include center;
-    gap: 5px;
-  }
-
-  .img_article {
-      @include center;
-      flex-direction: column;
-    gap: 12px;
-    }
-
-  .food_option_box {
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    gap: 5px;
-
-    > span {
-      font-size: $font-lg;
-      color: $color-text;
-      min-width: 60px;
-    }
-    .category_box {
-      @include center;
-      background-color: $color-back;
-      img {
-        width: 30px;
-        aspect-ratio: 1/1;
+  .main_section {
+    display: grid;
+    grid-template-columns: 6fr 1.2fr;
+    .btn_section {
+      display: grid;
+      grid-template-rows: 2fr 0.7fr 2.3fr;
+      > div {
+        @include center;
+        > img {
+          width: 30px;
+        }
       }
     }
-    input {
-      background-color: $color-back;
-      height: 30px;
-      color: $color-text;
-        font-size: $font-md;
-      &::placeholder {
-        color: $color-text;
-        font-size: $font-sm;
-      }
-    }
-  }
-  .button {
-    width: 30px;
   }
 }

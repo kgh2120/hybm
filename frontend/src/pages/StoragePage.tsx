@@ -40,7 +40,7 @@ function StoragePage() {
           <div>
             <h2>소비기한 지남 (D+)😥</h2>
           </div>
-          <section style={{ border: '2px solid #a9a9a9' }}>
+          <section style={{ border: "2px solid #a9a9a9" }}>
             <ItemBox option="inactive" />
             <ItemBox option="inactive" />
             <ItemBox option="inactive" />
@@ -51,7 +51,7 @@ function StoragePage() {
           <div>
             <h2>위험! (D-3)</h2>
           </div>
-          <section style={{ border: '2px solid #ffa7a7' }}>
+          <section style={{ border: "2px solid #ffa7a7" }}>
             <ItemBox option="active" />
             <ItemBox option="active" />
             <ItemBox option="active" />
@@ -62,7 +62,7 @@ function StoragePage() {
           <div>
             <h2>경고 (D-7)</h2>
           </div>
-          <section style={{ border: '2px solid #ffd66a' }}>
+          <section style={{ border: "2px solid #ffd66a" }}>
             <ItemBox option="active" />
             <ItemBox option="active" />
             <ItemBox option="active" />
@@ -73,7 +73,7 @@ function StoragePage() {
           <div>
             <h2>신선😊</h2>
           </div>
-          <section style={{ border: '2px solid #7dd086' }}>
+          <section style={{ border: "2px solid #7dd086" }}>
             <ItemBox option="active" />
             <ItemBox option="active" />
             <ItemBox option="active" />
@@ -87,14 +87,20 @@ function StoragePage() {
             <img src={edit} alt="" />
             <span>편집</span>
           </div>
-          <div className={styles.btn_box}>
+          <div
+            className={styles.btn_box}
+            onClick={handleOpenCreateFoodModal}
+          >
             <img src={plus} alt="" />
-            <span onClick={handleOpenCreateFoodModal}>식품 추가</span>
+            <span>식품 추가</span>
           </div>
         </section>
       </div>
       {isCreateFoodModalOpen && (
-        <Modal title="식품 등록" clickEvent={handleCloseCreateFoodModal}>
+        <Modal
+          title="식품 등록"
+          clickEvent={handleCloseCreateFoodModal}
+        >
           <CreateFoodModal />
         </Modal>
       )}
