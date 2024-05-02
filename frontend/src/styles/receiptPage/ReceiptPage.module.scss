@@ -1,0 +1,45 @@
+@import '../common/common';
+.wrapper {
+  background-color: $color-back;
+  padding: 5px;
+  .white_wrapper {
+    padding: 12px 5px;
+    background-color: white;
+    @include center;
+    flex-direction: column;
+    gap: 12px;
+    .home_img {
+      width: 20px;
+      aspect-ratio: 1/1;
+      position: absolute;
+      left: 20px;
+      top: 20px;
+    }
+    .food_list_section {
+      width: 90%;
+      @include center;
+      padding: 0px 12px;
+    flex-direction: column;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba($color-line, 0.2);
+      border-radius: 10px;
+      background-clip: padding-box;
+      border: 2px solid transparent;
+      &:hover {
+        background-color: rgba($color-line, 0.4);
+      }
+    }
+  
+    &::-webkit-scrollbar-track {
+      background-color: rgba(220, 220, 220, 0.7);
+      border-radius: 10px;
+      /* box-shadow: inset 0px 0px 5px white; */
+    }
+    }
+  }
+}

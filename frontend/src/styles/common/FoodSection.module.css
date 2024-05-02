@@ -1,0 +1,91 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 5px 0px;
+}
+.wrapper::after {
+  content: "";
+  border: 1px dashed #fce6e7;
+  width: 100%;
+}
+.wrapper:last-child::after {
+  content: none;
+}
+.wrapper .food_option_box {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+}
+.wrapper .food_option_box > span {
+  font-size: 15px;
+  color: #666666;
+  width: 60px;
+}
+.wrapper .food_option_box > input {
+  text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
+  font-size: 13px;
+  color: #666666;
+  height: 30px;
+  width: 80%;
+  text-align: start;
+  padding-left: 12px;
+  background-color: #fce6e7;
+}
+.wrapper .food_option_box > select {
+  text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
+  font-size: 13px;
+  color: #666666;
+  height: 30px;
+  text-align: start;
+  padding-left: 12px;
+  background-color: #fce6e7;
+}
+.wrapper .food_option_box .price_box {
+  text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
+  font-size: 13px;
+  color: #666666;
+  width: 80%;
+  background-color: #fce6e7;
+}
+.wrapper .food_option_box .price_box > input {
+  background-color: transparent;
+  text-align: start;
+  height: 30px;
+  text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
+  font-size: 13px;
+  color: #666666;
+}
+.wrapper .food_option_box .price_box > span {
+  font-size: 15px;
+}
+.wrapper .food_option_box .category_box {
+  text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
+  font-size: 13px;
+  color: #666666;
+  width: 80%;
+  background-color: #fce6e7;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0px 5px;
+}
+.wrapper .food_option_box .category_box .category_img {
+  width: 30px;
+  aspect-ratio: 1/1;
+}
+.wrapper .food_option_box .category_box > input {
+  width: 85%;
+  background-color: transparent;
+  text-align: start;
+  height: 30px;
+  text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
+  font-size: 13px;
+  color: #666666;
+}
+.wrapper .food_option_box .category_box .category_search_img {
+  width: 20px;
+  aspect-ratio: 1/1;
+}/*# sourceMappingURL=FoodSection.module.css.map */

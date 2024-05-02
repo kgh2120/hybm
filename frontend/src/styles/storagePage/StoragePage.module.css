@@ -1,0 +1,79 @@
+.wrapper {
+  background-color: #fce6e7;
+  padding: 5px;
+}
+.wrapper .white_wrapper {
+  padding: 12px 5px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+}
+.wrapper .white_wrapper > h1 {
+  color: #666666;
+  font-size: 20px;
+  font-weight: 100;
+  background-color: #fce6e7;
+  border-radius: 20px;
+  padding: 6px 12px;
+}
+.wrapper .white_wrapper .home_img {
+  width: 20px;
+  aspect-ratio: 1/1;
+  position: absolute;
+  left: 20px;
+  top: 20px;
+}
+.wrapper .white_wrapper .main_section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+.wrapper .white_wrapper .main_section > div {
+  position: relative;
+  width: 100%;
+}
+.wrapper .white_wrapper .main_section > div > h2 {
+  font-size: 15px;
+  color: #666666;
+  text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-weight: 100;
+  background-color: white;
+}
+.wrapper .white_wrapper .main_section > section {
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  overflow-x: scroll;
+}
+.wrapper .white_wrapper .btn_section {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0px 12px;
+}
+.wrapper .white_wrapper .btn_section .btn_box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+}
+.wrapper .white_wrapper .btn_section .btn_box > img {
+  width: 30px;
+}
+.wrapper .white_wrapper .btn_section .btn_box > span {
+  color: #666666;
+  font-size: 11px;
+}/*# sourceMappingURL=StoragePage.module.css.map */

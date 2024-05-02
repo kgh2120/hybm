@@ -1,0 +1,16 @@
+.red_button {
+  width: 80px;
+  height: 40px;
+  font-size: 15px;
+  color: white;
+  background-color: #fb5862;
+}
+
+.white_button {
+  width: 80px;
+  height: 40px;
+  font-size: 15px;
+  color: #fb5862;
+  background-color: white;
+  border: 1px solid #fb5862;
+}/*# sourceMappingURL=Button.module.css.map */

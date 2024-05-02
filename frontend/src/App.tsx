@@ -10,6 +10,7 @@ import DesignPage from './pages/DesignPage';
 import AuthenticatedRoute from './components/common/AuthenticatedRoute';
 import TestPage from './pages/TestPage';
 import AuthCallback from './pages/AuthCallbackPage';
+import ReceiptPage from './pages/ReceiptPage';
 
 function App() {
   const router = createBrowserRouter([
@@ -41,6 +42,10 @@ function App() {
         {
           path: '/test',
           element: <TestPage />,
+        },
+        {
+          path: '/receipt',
+          element: <ReceiptPage />,
         },
       ],
     },
