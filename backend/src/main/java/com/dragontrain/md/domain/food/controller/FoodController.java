@@ -1,6 +1,8 @@
 package com.dragontrain.md.domain.food.controller;
 
 import com.dragontrain.md.domain.food.controller.request.ReceiptRequest;
+import com.dragontrain.md.domain.food.controller.response.BarcodeInfo;
+import com.dragontrain.md.domain.food.controller.response.ExpectedExpirationDate;
 import com.dragontrain.md.domain.food.controller.response.ReceiptProducts;
 import com.dragontrain.md.domain.food.service.FoodService;
 import com.dragontrain.md.domain.user.domain.User;
@@ -14,12 +16,27 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/api/foods")
 @RestController
 public class FoodController {
 
 	private final FoodService foodService;
+
+	@GetMapping
+	public ResponseEntity<BarcodeInfo> getBarcodeInfo(@RequestParam Long barcode){
+
+		return ResponseEntity.ok(foodService.getBarcodeInfo(barcode));
+	}
+
+	@GetMapping("/expiration")
+	public ResponseEntity<ExpectedExpirationDate> getExpectedExpirationDate(@RequestParam int year,
+																			@RequestParam int month, @RequestParam int day,
+																			@RequestParam int categoryDetailId) {
+		return ResponseEntity.ok(foodService.getExpectedExpirationDate(categoryDetailId, year, month, day));
+	}
+
 
 	@PostMapping("/getGeneralOCR")
 	public ResponseEntity<String> getGeneralOCR(@RequestBody String imgURL) {
@@ -35,9 +52,12 @@ public class FoodController {
 		return ResponseEntity.ok(foodService.callDocumentOCR(imgFile));
 	}
 
+	@PostMapping("/bill")
 	public ResponseEntity<Void> registerReceipt(@RequestBody ReceiptRequest receiptRequest,
 												@AuthenticationPrincipal User user) {
 
 		return ResponseEntity.ok(foodService.registerReceipt(receiptRequest, user));
 	}
+
+
 }

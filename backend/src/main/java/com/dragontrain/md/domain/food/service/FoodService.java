@@ -10,7 +10,6 @@ import com.dragontrain.md.domain.food.controller.response.ExpectedExpirationDate
 public interface FoodService {
 
 	BarcodeInfo getBarcodeInfo(Long barcode);
-
 	ExpectedExpirationDate getExpectedExpirationDate(int categoryDetailId, int year, int month, int day);
 	String callGeneralOCR(String imgURL);
 	ReceiptProducts callDocumentOCR(MultipartFile imgFile);

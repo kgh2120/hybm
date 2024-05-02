@@ -1,8 +1,17 @@
 package com.dragontrain.md.domain.food.service;
 
+import com.dragontrain.md.domain.food.controller.request.ReceiptEachRequest;
 import com.dragontrain.md.domain.food.controller.request.ReceiptRequest;
 import com.dragontrain.md.domain.food.controller.response.ReceiptProduct;
 import com.dragontrain.md.domain.food.controller.response.ReceiptProducts;
+import com.dragontrain.md.domain.food.domain.Food;
+import com.dragontrain.md.domain.food.service.port.FoodRepository;
+import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
+import com.dragontrain.md.domain.refrigerator.domain.StorageType;
+import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
+import com.dragontrain.md.domain.refrigerator.infra.StorageTypeJpaRepository;
+import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
+import com.dragontrain.md.domain.refrigerator.service.port.StorageTypeRepository;
 import com.dragontrain.md.domain.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +52,8 @@ public class FoodServiceImpl implements FoodService {
 	// OCR General 형식의 SECRET key, API URL
 	public static String OCR_SECRET = "b3JxaEhVYkdmT0R3eGV5Sk50ZE9jWW9BVXNRZ1lkZmg=";
 	public static String API_URL = "https://wfhz3a1k1w.apigw.ntruss.com/custom/v1/30488/74656867a5abc001d68c3c331b2cafc14096d4e749c14cedb25660009fbfe93f/general";
+
+	private final FoodRepository foodRepository;
 	private final CategoryDetailRepository categoryDetailRepository;
 	private final BarcodeRepository barcodeRepository;
 	private final CrawlService crawlService;
@@ -72,12 +83,8 @@ public class FoodServiceImpl implements FoodService {
 			json.put("timestamp", System.currentTimeMillis());
 			JSONObject image = new JSONObject();
 			image.put("format", "jpg");
-			image.put("url", imgURL); // image should be public, otherwise, should use data
-			// FileInputStream inputStream = new FileInputStream("YOUR_IMAGE_FILE");
-			// byte[] buffer = new byte[inputStream.available()];
-			// inputStream.read(buffer);
-			// inputStream.close();
-			// image.put("data", buffer);
+			image.put("url", imgURL);
+
 			image.put("name", "demo");
 			JSONArray images = new JSONArray();
 			images.put(image);
@@ -235,8 +242,30 @@ public class FoodServiceImpl implements FoodService {
 		return receiptProducts;
 	}
 
+	private final RefrigeratorRepository refrigeratorRepository;
+	private final StorageTypeRepository storageTypeRepository;
+
 	@Override
 	public Void registerReceipt(ReceiptRequest receiptRequest, User user) {
+
+		Refrigerator refrigerator = refrigeratorRepository.findByUserId(user.getUserId())
+			.orElseThrow();
+
+		for (ReceiptEachRequest receiptEachRequest : receiptRequest.getReceiptEachRequests()) {
+			String name = receiptEachRequest.getName();
+			LocalDate expectedExpirationDate = receiptEachRequest.getExpiredDate();
+			Integer price = receiptEachRequest.getPrice();
+			CategoryDetail categoryDetail = categoryDetailRepository.findById(receiptEachRequest.getCategoryId())
+				.orElseThrow();
+			StorageTypeId location = receiptEachRequest.getLocation();
+			StorageType storageType = storageTypeRepository.findById(location)
+				.orElseThrow();
+
+			Food food = Food.create(name, expectedExpirationDate, false, price, categoryDetail,
+				refrigerator, storageType);
+
+			foodRepository.save(food);
+		}
 
 		return null;
 	}

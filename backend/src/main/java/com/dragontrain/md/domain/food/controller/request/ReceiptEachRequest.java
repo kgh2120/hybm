@@ -1,6 +1,9 @@
 package com.dragontrain.md.domain.food.controller.request;
 
+import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import lombok.*;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -9,9 +12,9 @@ import lombok.*;
 public class ReceiptEachRequest {
 
 	private String name;
-	private String categoryId;
-	private String price;
-	private String expiredDate;
-	private String location;
+	private Integer categoryId;
+	private Integer price;
+	private LocalDate expiredDate;
+	private StorageTypeId location;
 }
 

@@ -58,4 +58,21 @@ public class Food {
 
 	@Column(name = "status", columnDefinition = "varchar(7)", nullable = false)
 	private FoodStatus foodStatus;
+
+	public static Food create(String name, LocalDate expectedExpirationDate, Boolean isManual,
+							  Integer price, CategoryDetail categoryDetail, Refrigerator refrigerator,
+							  StorageType storageType) {
+		return Food.builder()
+			.name(name)
+			.expectedExpirationDate(expectedExpirationDate)
+			.createdAt(LocalDateTime.now())
+			.updatedAt(LocalDateTime.now())
+			.isManual(isManual)
+			.price(price)
+			.categoryDetail(categoryDetail)
+			.refrigerator(refrigerator)
+			.storageType(storageType)
+			.foodStatus(FoodStatus.FRESH)
+			.build();
+	}
 }
