@@ -42,7 +42,7 @@ public class RefrigeratorController {
 		@AuthenticationPrincipal User user,
 		@RequestBody ModifyAppliedStorageDesignRequest request
 		){
-		storageStorageDesignService.ModifyAppliedStorageDesign(user, request);
+		storageStorageDesignService.modifyAppliedStorageDesign(user, request);
 		return ResponseEntity.ok().build();
 	}
 
