@@ -23,6 +23,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.json.JSONArray;
@@ -305,6 +306,13 @@ public class FoodServiceImpl implements FoodService {
 		return categoryInfoResponseList;
 	}
 
+	@Override
+	public FoodDetailResponse getFoodDetailInfo(Long foodId) {
+
+		Food food = foodRepository.findById(foodId).orElseThrow();
+		return FoodDetailResponse.create(food);
+	}
+
 
 	@Override
 	public BarcodeInfo getBarcodeInfo(Long barcode) {
@@ -392,6 +400,8 @@ public class FoodServiceImpl implements FoodService {
 
 		return FoodStorageResponse.create(fresh, warning, danger, rotten);
 	}
+
+
 
 	private LocalDate makeLocalDate(int year, int month, int day) {
 		try {

@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.dragontrain.md.domain.food.controller.request.FoodRegister;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface FoodService {
 
@@ -18,4 +19,5 @@ public interface FoodService {
 	void registerFood(FoodRegister request, User user);
 	FoodStorageResponse getFoodStorage(String storage, User user);
 	List<CategoryInfoResponse> getCategoryInfo();
+	FoodDetailResponse getFoodDetailInfo(Long foodId);
 }
