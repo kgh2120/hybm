@@ -269,7 +269,7 @@ public class FoodServiceImpl implements FoodService {
 			StorageTypeId location = receiptEachRequest.getLocation();
 
 			Food food = Food.create(name, categoryDetail, price, expectedExpirationDate,
-				location, refrigerator, LocalDateTime.now());
+				location, refrigerator, LocalDateTime.now(), true);
 
 			foodRepository.save(food);
 		}
@@ -326,7 +326,7 @@ public class FoodServiceImpl implements FoodService {
 
 		// Food
 		foodRepository.save(Food.create(request.getName(), categoryDetail, request.getPrice(), expiredDate,
-			storageTypeId, refrigerator, timeService.localDateTimeNow()));
+			storageTypeId, refrigerator, timeService.localDateTimeNow(), request.getIsManual()));
 	}
 
 	private LocalDate makeLocalDate(int year, int month, int day) {

@@ -79,9 +79,10 @@ public class Food {
 	public static Food create(String name, CategoryDetail categoryDetail,
 		Integer price, LocalDate expectedExpirationDate, StorageTypeId storageType,
 		Refrigerator refrigerator,
-		LocalDateTime now) {
+		LocalDateTime now, Boolean isManual) {
 		return Food.builder()
 			.name(name)
+			.isManual(isManual)
 			.categoryDetail(categoryDetail)
 			.createdAt(now)
 			.updatedAt(now)
