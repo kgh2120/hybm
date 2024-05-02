@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 public class AppliedStorageDesign {
-	Integer id;
-	String imgSrc;
-	StorageTypeId type;
+	private Integer id;
+	private String imgSrc;
+	private StorageTypeId type;
 }
