@@ -278,13 +278,12 @@ public class FoodServiceImpl implements FoodService {
 	}
 
 
-	@Transactional(readOnly = true)
 	@Override
 	public List<CategoryInfoResponse> getCategoryInfo() {
 		List<CategoryInfoResponse> categoryInfoResponseList = new ArrayList<>();
-
 		for (CategoryBig categoryBig : categoryBigRepository.findAll()) {
 			List<CategoryInfoDetail> categoryInfoDetails = new ArrayList<>();
+			log.error("categoryBig", categoryBig.getName());
 
 			for (CategoryDetail categoryDetail : categoryDetailRepository.findAllByCategoryBig(categoryBig.getCategoryBigId())) {
 				CategoryInfoDetail categoryInfoDetail = CategoryInfoDetail.create(
