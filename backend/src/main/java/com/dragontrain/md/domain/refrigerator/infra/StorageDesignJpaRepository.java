@@ -10,4 +10,5 @@ import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 public interface StorageDesignJpaRepository extends JpaRepository<StorageDesign, Short> {
 	Optional<StorageDesign> findByLevelAndStorageType_StorageType(Integer level, StorageTypeId storageType);
 
+	Optional<StorageDesign> findByStorageDesignId(Integer storageDesignId);
 }

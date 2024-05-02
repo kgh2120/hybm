@@ -16,7 +16,7 @@ public class BarcodeInfo {
 	private final Integer categoryId;
 	private final Integer categoryBigId;
 
-	public static BarcodeInfo create(Barcode barcode) {
+	public static BarcodeInfo create(Barcode barcode){
 		CategoryDetail categoryDetail = barcode.getCategoryDetail();
 		return BarcodeInfo.builder()
 			.name(barcode.getName())

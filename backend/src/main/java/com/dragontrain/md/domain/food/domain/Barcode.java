@@ -1,21 +1,9 @@
 package com.dragontrain.md.domain.food.domain;
 
-import java.time.LocalDateTime;
+import jakarta.persistence.*;
+import lombok.*;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -44,7 +32,7 @@ public class Barcode {
 	@JoinColumn(name = "kan_code", referencedColumnName = "kan_code", nullable = false)
 	private CategoryDetail categoryDetail;
 
-	public static Barcode create(String name, CategoryDetail categoryDetail, LocalDateTime now) {
+	public static Barcode create(String name, CategoryDetail categoryDetail, LocalDateTime now){
 		return Barcode.builder()
 			.name(name)
 			.categoryDetail(categoryDetail)

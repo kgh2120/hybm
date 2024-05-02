@@ -5,12 +5,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dragontrain.md.domain.refrigerator.controller.request.ModifyAppliedStorageDesignRequest;
 import com.dragontrain.md.domain.refrigerator.controller.response.AppliedStorageDesignsResponse;
 import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignsResponse;
 import com.dragontrain.md.domain.refrigerator.service.StorageStorageDesignService;
 import com.dragontrain.md.domain.user.domain.User;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -20,17 +24,26 @@ public class RefrigeratorController {
 	private final StorageStorageDesignService storageStorageDesignService;
 
 	@GetMapping("/designs")
-	public StorageDesignsResponse findAllRefrigeratorDesigns(
+	public ResponseEntity<StorageDesignsResponse> findAllRefrigeratorDesigns(
 		@AuthenticationPrincipal User user
-	) {
-		return storageStorageDesignService.findAllStorageDesign(user);
+		) {
+		return ResponseEntity.ok(storageStorageDesignService.findAllStorageDesign(user));
 	}
 
 	@GetMapping("/designs/using")
-	public AppliedStorageDesignsResponse findAllAppliedStorageDesigns(
+	public ResponseEntity<AppliedStorageDesignsResponse> findAllAppliedStorageDesigns(
 		@AuthenticationPrincipal User user
 	) {
-		return storageStorageDesignService.findAllAppliedStorageDesign(user);
+		return ResponseEntity.ok(storageStorageDesignService.findAllAppliedStorageDesign(user));
+	}
+
+	@PutMapping("/designs")
+	public ResponseEntity<Void> modifyAppliedStorageDesign(
+		@AuthenticationPrincipal User user,
+		@RequestBody ModifyAppliedStorageDesignRequest request
+		){
+		storageStorageDesignService.modifyAppliedStorageDesign(user, request);
+		return ResponseEntity.ok().build();
 	}
 
 }

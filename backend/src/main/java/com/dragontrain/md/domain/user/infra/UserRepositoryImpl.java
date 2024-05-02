@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
-	private final JpaUserRepository jpaUserRepository;
+	private final UserJpaRepository jpaUserRepository;
 
 	@Override
 	public User save(User user) {

@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dragontrain.md.domain.refrigerator.controller.response.AppliedStorageDesign;
+import com.dragontrain.md.domain.refrigerator.service.dto.AppliedStorageDesign;
 import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignResponse;
 import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignsResponse;
 import com.dragontrain.md.domain.refrigerator.domain.Level;
