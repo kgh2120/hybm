@@ -111,7 +111,7 @@ class StorageStorageDesignServiceImplTest {
 		System.out.println(request.getRequest().stream().filter(distinctByKey(item -> item.getPosition())).toList().size());
 
 		Assertions.assertThrows(StorageDesignException.class
-			,() -> storageDesignService.ModifyAppliedStorageDesign(user, request));
+			,() -> storageDesignService.modifyAppliedStorageDesign(user, request));
 	}
 
 	@Test
@@ -137,7 +137,7 @@ class StorageStorageDesignServiceImplTest {
 			.willReturn(Optional.empty());
 
 		Assertions.assertThrows(RefrigeratorException.class,
-			() -> storageDesignService.ModifyAppliedStorageDesign(user, request));
+			() -> storageDesignService.modifyAppliedStorageDesign(user, request));
 
 	}
 
@@ -170,7 +170,7 @@ class StorageStorageDesignServiceImplTest {
 			.willReturn(new ArrayList<>());
 
 		Assertions.assertThrows(StorageDesignException.class,
-			() -> storageDesignService.ModifyAppliedStorageDesign(user, request));
+			() -> storageDesignService.modifyAppliedStorageDesign(user, request));
 	}
 
 	@Test
@@ -209,7 +209,7 @@ class StorageStorageDesignServiceImplTest {
 		SSDs.add(testEntityFactory.getTestStorageStorageDesignApplied(StorageType.builder().storageType(StorageTypeId.CABINET).build(), sdCABINET, refrigerator));
 
 		Assertions.assertThrows(StorageDesignException.class,
-			() -> storageDesignService.ModifyAppliedStorageDesign(user, request));
+			() -> storageDesignService.modifyAppliedStorageDesign(user, request));
 	}
 
 	@Test
@@ -271,7 +271,7 @@ class StorageStorageDesignServiceImplTest {
 		BDDMockito.given(storageStorageDesignRepository.findAllSSDByRefrigeratorIdAndSDIds(any(), any()))
 				.willReturn(SSDs);
 
-		Assertions.assertDoesNotThrow(() -> storageDesignService.ModifyAppliedStorageDesign(user, request));
+		Assertions.assertDoesNotThrow(() -> storageDesignService.modifyAppliedStorageDesign(user, request));
 	}
 
 	private <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {
