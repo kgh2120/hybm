@@ -28,7 +28,7 @@ public class CategoryDetail {
 	@Column(name = "category_detail_id", columnDefinition = "int", nullable = false)
 	private Integer categoryDetailId;
 
-	@Column(name = "name", columnDefinition = "varchar(20)", nullable = false, unique = true)
+	@Column(name = "name", columnDefinition = "varchar(20)", nullable = false)
 	private String name;
 
 	@Column(name = "img_src", columnDefinition = "text", nullable = false)
