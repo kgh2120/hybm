@@ -1,4 +1,4 @@
-package com.dragontrain.md.domain.refrigerator.controller.response;
+package com.dragontrain.md.domain.refrigerator.service.dto;
 
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import lombok.*;
