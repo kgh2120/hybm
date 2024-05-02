@@ -2,6 +2,8 @@ package com.dragontrain.md.common.config.utils;
 
 import java.util.Arrays;
 
+import org.springframework.util.ObjectUtils;
+
 import jakarta.servlet.http.Cookie;
 
 public class CookieUtils {
@@ -32,12 +34,16 @@ public class CookieUtils {
 	}
 
 	public static Cookie findAccessTokenCookie(Cookie[] cookies) {
+		if(ObjectUtils.isEmpty(cookies)) return null;
+
 		return Arrays.stream(cookies).filter(cookie -> cookie.getName().equals(COOKIE_KEY_ACCESS_TOKEN))
 			.findAny()
 			.orElse(null);
 	}
 
 	public static Cookie findRefreshToken(Cookie[] cookies) {
+		if(ObjectUtils.isEmpty(cookies)) return null;
+
 		return Arrays.stream(cookies).filter(cookie -> cookie.getName().equals(COOKIE_KEY_ACCESS_TOKEN))
 			.findAny()
 			.orElse(null);
