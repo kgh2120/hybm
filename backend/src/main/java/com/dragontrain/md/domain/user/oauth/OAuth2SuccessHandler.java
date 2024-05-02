@@ -28,7 +28,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 		Authentication authentication) throws IOException, ServletException {
 		AbstractCustomOAuth2Client oAuth2Client = (AbstractCustomOAuth2Client)authentication.getPrincipal();
-		log.debug("userId : {} is entered. SocialType : {}, Email : {}", oAuth2Client.getUserId(), oAuth2Client.getSocialLoginType().name(),
+		log.debug("userId : {} is entered. SocialType : {}, Email : {}", oAuth2Client.getUserId(),
+			oAuth2Client.getSocialLoginType().name(),
 			oAuth2Client.getUserEmail());
 
 		Long userId = oAuth2Client.getUserId();

@@ -4,6 +4,7 @@ import com.dragontrain.md.domain.food.controller.request.ReceiptEachRequest;
 import com.dragontrain.md.domain.food.controller.response.ReceiptProducts;
 import com.dragontrain.md.domain.user.domain.User;
 import org.springframework.web.multipart.MultipartFile;
+import com.dragontrain.md.domain.food.controller.request.FoodRegister;
 import com.dragontrain.md.domain.food.controller.response.BarcodeInfo;
 import com.dragontrain.md.domain.food.controller.response.ExpectedExpirationDate;
 
@@ -16,4 +17,6 @@ public interface FoodService {
 	String callGeneralOCR(String imgURL);
 	ReceiptProducts callDocumentOCR(MultipartFile imgFile);
 	void registerReceipt(List<ReceiptEachRequest> receiptEachRequests, User user);
+	void registerFood(FoodRegister request, User user);
+
 }

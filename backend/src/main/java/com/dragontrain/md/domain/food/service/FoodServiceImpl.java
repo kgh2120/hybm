@@ -19,6 +19,7 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -34,12 +35,15 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dragontrain.md.common.service.TimeService;
+import com.dragontrain.md.domain.food.controller.request.FoodRegister;
 import com.dragontrain.md.domain.food.controller.response.BarcodeInfo;
 import com.dragontrain.md.domain.food.controller.response.ExpectedExpirationDate;
 import com.dragontrain.md.domain.food.domain.Barcode;
 import com.dragontrain.md.domain.food.domain.CategoryDetail;
 import com.dragontrain.md.domain.food.exception.FoodErrorCode;
 import com.dragontrain.md.domain.food.exception.FoodException;
+import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorErrorCode;
+import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorException;
 
 
 @Slf4j
@@ -47,6 +51,7 @@ import com.dragontrain.md.domain.food.exception.FoodException;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class FoodServiceImpl implements FoodService {
+
 
 	// OCR General 형식의 SECRET key, API URL
 	@Value("${ocr.general.secret-key}")
@@ -60,13 +65,13 @@ public class FoodServiceImpl implements FoodService {
 	@Value("${ocr.document.api-url}")
 	private String RECEIPT_API_URL;
 
+
+	private final RefrigeratorRepository refrigeratorRepository;
 	private final FoodRepository foodRepository;
 	private final CategoryDetailRepository categoryDetailRepository;
 	private final BarcodeRepository barcodeRepository;
 	private final CrawlService crawlService;
 	private final TimeService timeService;
-	private final RefrigeratorRepository refrigeratorRepository;
-	private final StorageTypeRepository storageTypeRepository;
 
 
 	// 이미지로 OCR General을 요청하는 Component
@@ -262,11 +267,9 @@ public class FoodServiceImpl implements FoodService {
 			CategoryDetail categoryDetail = categoryDetailRepository.findById(receiptEachRequest.getCategoryId())
 				.orElseThrow();
 			StorageTypeId location = receiptEachRequest.getLocation();
-			StorageType storageType = storageTypeRepository.findById(location)
-				.orElseThrow();
 
-			Food food = Food.create(name, expectedExpirationDate, false, price, categoryDetail,
-				refrigerator, storageType);
+			Food food = Food.create(name, categoryDetail, price, expectedExpirationDate,
+				location, refrigerator, LocalDateTime.now());
 
 			foodRepository.save(food);
 		}
@@ -308,9 +311,34 @@ public class FoodServiceImpl implements FoodService {
 		return ExpectedExpirationDate.from(targetDate.plusDays(categoryDetail.getExpirationDate()));
 	}
 
+	@Override
+	public void registerFood(FoodRegister request, User user) {
+		// 유저로 냉장고 찾아오기
+		LocalDate expiredDate = makeLocalDate(request.getExpiredDate());
+		Refrigerator refrigerator = refrigeratorRepository.findByUserId(user.getUserId())
+			.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND));
+		// 저장고 위치 찾아오기
+		StorageTypeId storageTypeId = StorageTypeId.valueOf(request.getLocation().toUpperCase());
+
+		CategoryDetail categoryDetail = categoryDetailRepository.findById(request.getCategoryId())
+			.orElseThrow(() -> new FoodException(FoodErrorCode.CATEGORY_DETAIL_NOT_FOUND));
+
+		// Food
+		foodRepository.save(Food.create(request.getName(), categoryDetail, request.getPrice(), expiredDate,
+			storageTypeId, refrigerator, timeService.localDateTimeNow()));
+	}
+
 	private LocalDate makeLocalDate(int year, int month, int day) {
 		try {
 			return LocalDate.of(year, month, day);
+		} catch (DateTimeException e) {
+			throw new FoodException(FoodErrorCode.INVALID_DATE_FORMAT);
+		}
+	}
+
+	private LocalDate makeLocalDate(String date) {
+		try {
+			return LocalDate.parse(date);
 		} catch (DateTimeException e) {
 			throw new FoodException(FoodErrorCode.INVALID_DATE_FORMAT);
 		}

@@ -6,5 +6,6 @@ import com.dragontrain.md.domain.user.domain.User;
 
 public interface StorageStorageDesignService {
 	StorageDesignsResponse findAllStorageDesign(User user);
+
 	AppliedStorageDesignsResponse findAllAppliedStorageDesign(User user);
 }
