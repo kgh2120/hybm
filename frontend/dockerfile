@@ -3,7 +3,7 @@ WORKDIR /app
 COPY . .
 RUN npm install --legacy-peer-deps
 RUN ls -a
-RUN yarn build
+RUN yarn build --mode prod
 
 FROM nginx:stable-alpine
 RUN rm -rf /etc/nginx/conf.d
