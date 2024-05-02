@@ -12,4 +12,5 @@ import java.util.Optional;
 public interface StorageDesignJpaRepository extends JpaRepository<StorageDesign, Short> {
 	Optional<StorageDesign> findByLevelAndStorageType_StorageType(Integer level, StorageTypeId storageType);
 
+	Optional<StorageDesign> findByStorageDesignId(Integer storageDesignId);
 }
