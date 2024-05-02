@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -56,7 +57,7 @@ public class StorageStorageDesignServiceImpl implements StorageStorageDesignServ
 		// 들어오면서 처리될것
 		// 같은 position이 2개 이상이면 에러
 		if(request.getRequest().stream().filter(distinctByKey(item -> item.getPosition())).toList().size() != 3) {
-			new StorageDesignException(StorageDesignErrorCode.DUPLICATED_POSITION);
+			throw new StorageDesignException(StorageDesignErrorCode.DUPLICATED_POSITION);
 		}
 
 		Refrigerator refrigerator = refrigeratorRepository.findByUserId(user.getUserId())
@@ -69,15 +70,17 @@ public class StorageStorageDesignServiceImpl implements StorageStorageDesignServ
 		);
 
 		if(newDesigns.size() != 3){
-			new StorageDesignException(StorageDesignErrorCode.DESIGN_NOT_FOUND);
+			throw new StorageDesignException(StorageDesignErrorCode.DESIGN_NOT_FOUND);
 		}
 
 		// 각 요청을 돌면서, 해당 designId과 position이 매칭되지 않으면 에러
 		request.getRequest().forEach(item -> {
 			if(!item.getPosition().equals(
-				newDesigns.stream().filter(design -> design.getStorageStorageDesignId().getStorageDesignId() == item.getDesignId())
+				newDesigns.stream().filter(
+					design -> design.getStorageStorageDesignId().getStorageDesignId() ==
+						item.getDesignId()).toList().get(0).getStorageType().getStorageType()
 			)){
-				new StorageDesignException(StorageDesignErrorCode.DESIGN_AND_POSITION_NOT_MATCHED);
+				throw new StorageDesignException(StorageDesignErrorCode.DESIGN_AND_POSITION_NOT_MATCHED);
 			}
 		});
 
