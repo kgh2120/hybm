@@ -47,4 +47,33 @@
 .wrapper .text_box .item_content {
   color: #666666;
   font-size: 11px;
+}
+.wrapper .report_img_box {
+  width: 45px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fce6e7;
+  border: 1px dashed #fb5862;
+  position: relative;
+  margin: 0 1px;
+}
+.wrapper .report_img_box .img_white_box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 45px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.wrapper .report_img_box img {
+  width: 70%;
+  aspect-ratio: 1/1;
 }/*# sourceMappingURL=ItemBox.module.css.map */
