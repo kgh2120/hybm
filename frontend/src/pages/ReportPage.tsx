@@ -5,8 +5,9 @@ import {
   Legend,
 } from "chart.js";
 import { Pie } from "react-chartjs-2";
-import ChartDataLabels from "chartjs-plugin-datalabels";
-import styles from "../styles/reportPage/reportPage.module.css";
+import styles from "../styles/reportPage/ReportPage.module.css";
+import ItemBox from "../components/common/ItemBox";
+import MyDatePicker from "../components/reportPage/Calendar";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -18,10 +19,9 @@ const bestFoodChartData = {
       data: [19, 12, 5, 3, 3, 2],
       backgroundColor: [
         "#e5333e",
+        "#ff848c",
         "#ffecd9",
         "#fce6e7",
-        //구분이 잘 안돼서 바꾸는거 생각해봐야할 듯
-        "#fb5862",
         "#c9c9c9",
         "#666666",
       ],
@@ -33,8 +33,9 @@ const bestFoodChartData = {
         "#ffffff",
         "#ffffff",
       ],
-      borderWidth: 2,
-    }],
+      borderWidth: 1,
+    },
+  ],
 };
 
 const eatenOrThrownChartData = {
@@ -43,32 +44,36 @@ const eatenOrThrownChartData = {
     {
       // data를 크기순으로 정렬해서 보여주기
       data: [8, 3],
-      backgroundColor: [
-        "#fce6e7",
-        "#c9c9c9",
-      ],
-      borderColor: [
-        "#ffffff",
-        "#ffffff",
-      ],
-      borderWidth: 2,
-    }],
+      backgroundColor: ["#fce6e7", "#c9c9c9"],
+      borderColor: ["#ffffff", "#ffffff"],
+      borderWidth: 1,
+    },
+  ],
 };
 
 function ReportPage() {
   const options = {
-    legend: {
-      display: true,
-    },
+    responsive: true,
     plugins: {
+      legend: {
+        display: true,
+        usePointStyle: true,
+        labels: {
+          font: {
+            size: 11,
+            family: "PFStardust",
+          },
+          boxWidth: 10,
+        },
+      },
       datalabels: {
         font: {
           size: 15,
           family: "PFStardust",
         },
-        color: "#666666",
-        formatter: function (value: any) {
-          return value
+        color: "#000000",
+        formatter: function (value: number | string) {
+          return value;
         },
         display: true,
       },
@@ -79,7 +84,9 @@ function ReportPage() {
     <div className={styles.wrapper}>
       <div className={styles.title}>보고서</div>
       <div className={styles.white_background}>
-        <div>3월</div>
+        <div>
+          <MyDatePicker />
+        </div>
         <div className={styles.content}>
           <div className={styles.sub_title}>내 지출 통계</div>
           <div className={styles.sub_content}>
@@ -95,7 +102,7 @@ function ReportPage() {
               <p>
                 <span>3월</span>의 우수 식품
               </p>
-              <Pie data={bestFoodChartData} options={options} plugins={[ChartDataLabels]} />
+              <Pie data={bestFoodChartData} options={options} />
             </div>
             <p className={styles.alert}>
               3월에 가격을 정하지 않은 항목이 있어요!
@@ -107,16 +114,28 @@ function ReportPage() {
           <div className={styles.sub_content}>
             <p className={styles.context}>먹은 것 vs 버린 것</p>
             <div className={styles.eaten_thrown}>
-              <Pie data={eatenOrThrownChartData} options={options} plugins={[ChartDataLabels]} />
+              <Pie data={eatenOrThrownChartData} options={options} />
             </div>
             <div className={styles.top_five}>
               <div>
                 <p>먹은 것 Top 5</p>
-                <div>컴포넌트들 똬똬똬똬똬</div>
+                <div className={styles.item_boxes}>
+                  <ItemBox option="report" />
+                  <ItemBox option="report" />
+                  <ItemBox option="report" />
+                  <ItemBox option="report" />
+                  <ItemBox option="report" />
+                </div>
               </div>
               <div>
                 <p>버린 것 Top 5</p>
-                <div>컴포넌트들 똬똬똬똬똬</div>
+                <div className={styles.item_boxes}>
+                  <ItemBox option="report" />
+                  <ItemBox option="report" />
+                  <ItemBox option="report" />
+                  <ItemBox option="report" />
+                  <ItemBox option="report" />
+                </div>
               </div>
             </div>
           </div>

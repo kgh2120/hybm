@@ -91,4 +91,10 @@
 }
 .wrapper .content .top_five p > span {
   color: #e5333e;
+}
+.wrapper .content .top_five .item_boxes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 3%;
 }/*# sourceMappingURL=reportPage.module.css.map */
