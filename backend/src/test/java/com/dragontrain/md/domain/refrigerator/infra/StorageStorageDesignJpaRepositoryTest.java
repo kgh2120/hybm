@@ -47,7 +47,9 @@ class StorageStorageDesignJpaRepositoryTest {
 	private StorageDesign storageDesignCoolMine;
 	private StorageDesign storageDesignCoolNotMine;
 	private StorageDesign storageDesignCoolMineApplied;
-	private Integer sdMineId, sdNotMineId, sdMineAppliedId;
+	private Integer sdMineId;
+	private Integer sdNotMineId;
+	private Integer sdMineAppliedId;
 	private StorageStorageDesign storageStorageDesignApplied;
 	private StorageStorageDesign storageStorageDesignNotApplied;
 
