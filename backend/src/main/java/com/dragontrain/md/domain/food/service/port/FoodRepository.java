@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface FoodRepository {
 
-	List<Food> findAllByRefrigeratorIdAndFoodStorage(Long id, StorageTypeId storageTypeId);
+	List<Food> findAllByRefrigeratorIdAndFoodStorage(Long refrigeratorId, StorageTypeId storageTypeId);
 	void save(Food food);
 }

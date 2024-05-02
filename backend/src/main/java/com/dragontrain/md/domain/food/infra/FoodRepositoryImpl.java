@@ -17,8 +17,8 @@ public class FoodRepositoryImpl implements FoodRepository {
 	private final FoodJpaRepository foodJpaRepository;
 
 	@Override
-	public List<Food> findAllByRefrigeratorIdAndFoodStorage(Long id, StorageTypeId storageType) {
-		return foodJpaRepository.findAllByRefrigerator_RefrigeratorIdAndStorageType_StorageType(id, storageType);
+	public List<Food> findAllByRefrigeratorIdAndFoodStorage(Long refrigeratorId, StorageTypeId storageType) {
+		return foodJpaRepository.findAllByRefrigerator_RefrigeratorIdAndStorageType_StorageType(refrigeratorId, storageType);
 	}
 
 	@Override

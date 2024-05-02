@@ -10,5 +10,5 @@ import java.util.Optional;
 
 public interface FoodJpaRepository extends JpaRepository<Food, Long> {
 
-	List<Food> findAllByRefrigerator_RefrigeratorIdAndStorageType_StorageType(Long id, StorageTypeId storageType);
+	List<Food> findAllByRefrigerator_RefrigeratorIdAndStorageType_StorageType(Long refrigeratorId, StorageTypeId storageType);
 }

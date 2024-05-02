@@ -11,5 +11,4 @@ public interface CategoryDetailRepository {
 
 	Optional<CategoryDetail> findById(int categoryDetailId);
 
-	List<CategoryDetail> findAllByCategoryBig(int categoryBigId);
 }

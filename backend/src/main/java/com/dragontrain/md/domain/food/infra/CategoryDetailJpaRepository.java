@@ -11,5 +11,4 @@ public interface CategoryDetailJpaRepository extends JpaRepository<CategoryDetai
 
 	Optional<CategoryDetail> findByKanCode(Integer kanCode);
 
-	List<CategoryDetail> findAllByCategoryBig_CategoryBigId(Integer categoryBigId);
 }

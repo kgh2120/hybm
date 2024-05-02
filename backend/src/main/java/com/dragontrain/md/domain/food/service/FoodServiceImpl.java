@@ -283,9 +283,8 @@ public class FoodServiceImpl implements FoodService {
 		List<CategoryInfoResponse> categoryInfoResponseList = new ArrayList<>();
 		for (CategoryBig categoryBig : categoryBigRepository.findAll()) {
 			List<CategoryInfoDetail> categoryInfoDetails = new ArrayList<>();
-			log.error("categoryBig", categoryBig.getName());
 
-			for (CategoryDetail categoryDetail : categoryDetailRepository.findAllByCategoryBig(categoryBig.getCategoryBigId())) {
+			for (CategoryDetail categoryDetail : categoryBig.getCategoryDetails()) {
 				CategoryInfoDetail categoryInfoDetail = CategoryInfoDetail.create(
 					categoryDetail.getCategoryDetailId(),
 					categoryDetail.getName(),
@@ -376,7 +375,7 @@ public class FoodServiceImpl implements FoodService {
 		List<FoodStorage> rotten = new ArrayList<>();
 
 		for (Food food : foods) {
-			int dDay = Food.getDDay(food.getExpectedExpirationDate(), LocalDate.now());
+			int dDay = food.getDDay(food.getExpectedExpirationDate(), LocalDate.now());
 			FoodStorage foodStorage = FoodStorage.create(
 				food.getFoodId(),
 				food.getName(),

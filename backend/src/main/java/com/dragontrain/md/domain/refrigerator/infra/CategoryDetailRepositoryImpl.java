@@ -26,8 +26,4 @@ public class CategoryDetailRepositoryImpl implements CategoryDetailRepository {
 		return categoryDetailJpaRepository.findById(categoryDetailId);
 	}
 
-	@Override
-	public List<CategoryDetail> findAllByCategoryBig(int categoryBigId) {
-		return categoryDetailJpaRepository.findAllByCategoryBig_CategoryBigId(categoryBigId);
-	}
 }
