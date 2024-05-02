@@ -81,8 +81,8 @@ public class StorageStorageDesignServiceImpl implements StorageStorageDesignServ
 		request.getRequest().forEach(item -> {
 			if(!StorageTypeId.valueOf(item.getPosition().toUpperCase()).equals(
 				newDesigns.stream().filter(
-					design -> design.getStorageStorageDesignId().getStorageDesignId() ==
-						item.getDesignId()).toList().get(0).getStorageType().getStorageType()
+					design -> design.getStorageStorageDesignId().getStorageDesignId().equals(item.getDesignId())
+				).toList().get(0).getStorageType().getStorageType()
 			)){
 				throw new StorageDesignException(StorageDesignErrorCode.DESIGN_AND_POSITION_NOT_MATCHED);
 			}
