@@ -1,6 +1,7 @@
 package com.dragontrain.md.domain.refrigerator.controller.response;
 
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
+import com.dragontrain.md.domain.refrigerator.service.dto.AppliedStorageDesign;
 import lombok.*;
 
 import java.util.List;
@@ -13,9 +14,9 @@ import java.util.stream.Collectors;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 public class AppliedStorageDesignsResponse {
-	AppliedStorageDesignResponse ice;
-	AppliedStorageDesignResponse cool;
-	AppliedStorageDesignResponse cabinet;
+	private AppliedStorageDesignResponse ice;
+	private AppliedStorageDesignResponse cool;
+	private AppliedStorageDesignResponse cabinet;
 
 	public static AppliedStorageDesignsResponse createByAppliedStorageDesign(List<AppliedStorageDesign> appliedStorageDesigns){
 		Map<StorageTypeId, AppliedStorageDesign> map = appliedStorageDesigns.stream()

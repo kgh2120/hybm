@@ -3,7 +3,7 @@ package com.dragontrain.md.domain.refrigerator.service;
 import com.dragontrain.md.domain.TestEntityFactory;
 import com.dragontrain.md.domain.refrigerator.controller.request.ModifyAppliedStorageDesign;
 import com.dragontrain.md.domain.refrigerator.controller.request.ModifyAppliedStorageDesignRequest;
-import com.dragontrain.md.domain.refrigerator.controller.response.AppliedStorageDesign;
+import com.dragontrain.md.domain.refrigerator.service.dto.AppliedStorageDesign;
 import com.dragontrain.md.domain.refrigerator.domain.*;
 import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorException;
 import com.dragontrain.md.domain.refrigerator.exception.StorageDesignException;
@@ -99,7 +99,7 @@ class StorageStorageDesignServiceImplTest {
 			masds.add(
 				ModifyAppliedStorageDesign.builder()
 					.designId(i)
-					.position(StorageTypeId.COOL)
+					.position(StorageTypeId.COOL.name().toLowerCase())
 					.build()
 			);
 		}
@@ -111,7 +111,7 @@ class StorageStorageDesignServiceImplTest {
 		System.out.println(request.getRequest().stream().filter(distinctByKey(item -> item.getPosition())).toList().size());
 
 		Assertions.assertThrows(StorageDesignException.class
-			,() -> storageDesignService.ModifyAppliedStorageDesign(user, request));
+			,() -> storageDesignService.modifyAppliedStorageDesign(user, request));
 	}
 
 	@Test
@@ -124,7 +124,7 @@ class StorageStorageDesignServiceImplTest {
 			masds.add(
 				ModifyAppliedStorageDesign.builder()
 					.designId(designId++)
-					.position(typeId)
+					.position(typeId.name().toLowerCase())
 					.build()
 			);
 		}
@@ -137,7 +137,7 @@ class StorageStorageDesignServiceImplTest {
 			.willReturn(Optional.empty());
 
 		Assertions.assertThrows(RefrigeratorException.class,
-			() -> storageDesignService.ModifyAppliedStorageDesign(user, request));
+			() -> storageDesignService.modifyAppliedStorageDesign(user, request));
 
 	}
 
@@ -151,7 +151,7 @@ class StorageStorageDesignServiceImplTest {
 			masds.add(
 				ModifyAppliedStorageDesign.builder()
 					.designId(designId++)
-					.position(typeId)
+					.position(typeId.name().toLowerCase())
 					.build()
 			);
 		}
@@ -170,7 +170,7 @@ class StorageStorageDesignServiceImplTest {
 			.willReturn(new ArrayList<>());
 
 		Assertions.assertThrows(StorageDesignException.class,
-			() -> storageDesignService.ModifyAppliedStorageDesign(user, request));
+			() -> storageDesignService.modifyAppliedStorageDesign(user, request));
 	}
 
 	@Test
@@ -183,7 +183,7 @@ class StorageStorageDesignServiceImplTest {
 			masds.add(
 				ModifyAppliedStorageDesign.builder()
 					.designId(designId++)
-					.position(typeId)
+					.position(typeId.name().toLowerCase())
 					.build()
 			);
 		}
@@ -209,7 +209,7 @@ class StorageStorageDesignServiceImplTest {
 		SSDs.add(testEntityFactory.getTestStorageStorageDesignApplied(StorageType.builder().storageType(StorageTypeId.CABINET).build(), sdCABINET, refrigerator));
 
 		Assertions.assertThrows(StorageDesignException.class,
-			() -> storageDesignService.ModifyAppliedStorageDesign(user, request));
+			() -> storageDesignService.modifyAppliedStorageDesign(user, request));
 	}
 
 	@Test
@@ -222,7 +222,7 @@ class StorageStorageDesignServiceImplTest {
 			masds.add(
 				ModifyAppliedStorageDesign.builder()
 					.designId(designId++)
-					.position(typeId)
+					.position(typeId.name().toLowerCase())
 					.build()
 			);
 
@@ -271,7 +271,7 @@ class StorageStorageDesignServiceImplTest {
 		BDDMockito.given(storageStorageDesignRepository.findAllSSDByRefrigeratorIdAndSDIds(any(), any()))
 				.willReturn(SSDs);
 
-		Assertions.assertDoesNotThrow(() -> storageDesignService.ModifyAppliedStorageDesign(user, request));
+		Assertions.assertDoesNotThrow(() -> storageDesignService.modifyAppliedStorageDesign(user, request));
 	}
 
 	private <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {

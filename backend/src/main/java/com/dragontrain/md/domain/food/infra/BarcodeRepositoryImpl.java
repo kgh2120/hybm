@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 import com.dragontrain.md.domain.food.domain.Barcode;
-import com.dragontrain.md.domain.food.service.BarcodeRepository;
+import com.dragontrain.md.domain.food.service.port.BarcodeRepository;
 
 import lombok.RequiredArgsConstructor;
 

@@ -1,4 +1,4 @@
-package com.dragontrain.md.domain.refrigerator.controller.response;
+package com.dragontrain.md.domain.refrigerator.service.dto;
 
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import lombok.*;
@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 public class AppliedStorageDesign {
-	Integer id;
-	String imgSrc;
-	StorageTypeId type;
+	private Integer id;
+	private String imgSrc;
+	private StorageTypeId type;
 }

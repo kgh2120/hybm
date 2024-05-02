@@ -1,6 +1,7 @@
 package com.dragontrain.md.domain.refrigerator.service;
 
 import com.dragontrain.md.domain.refrigerator.controller.request.ModifyAppliedStorageDesignRequest;
+import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import org.springframework.stereotype.Service;
 
 import com.dragontrain.md.domain.refrigerator.controller.response.AppliedStorageDesignsResponse;
@@ -55,7 +56,7 @@ public class StorageStorageDesignServiceImpl implements StorageStorageDesignServ
 	}
 
 	@Override
-	public void ModifyAppliedStorageDesign(User user, ModifyAppliedStorageDesignRequest request) {
+	public void modifyAppliedStorageDesign(User user, ModifyAppliedStorageDesignRequest request) {
 		// request로 온 position이 이상한값이면 에러
 		// 들어오면서 처리될것
 		// 같은 position이 2개 이상이면 에러
@@ -78,10 +79,10 @@ public class StorageStorageDesignServiceImpl implements StorageStorageDesignServ
 
 		// 각 요청을 돌면서, 해당 designId과 position이 매칭되지 않으면 에러
 		request.getRequest().forEach(item -> {
-			if(!item.getPosition().equals(
+			if(!StorageTypeId.valueOf(item.getPosition().toUpperCase()).equals(
 				newDesigns.stream().filter(
-					design -> design.getStorageStorageDesignId().getStorageDesignId() ==
-						item.getDesignId()).toList().get(0).getStorageType().getStorageType()
+					design -> design.getStorageStorageDesignId().getStorageDesignId().equals(item.getDesignId())
+				).toList().get(0).getStorageType().getStorageType()
 			)){
 				throw new StorageDesignException(StorageDesignErrorCode.DESIGN_AND_POSITION_NOT_MATCHED);
 			}

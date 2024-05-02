@@ -1,13 +1,11 @@
 package com.dragontrain.md.domain.refrigerator.infra;
 
 import com.dragontrain.md.domain.TestEntityFactory;
-import com.dragontrain.md.domain.refrigerator.controller.response.AppliedStorageDesign;
 import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignResponse;
 import com.dragontrain.md.domain.refrigerator.domain.*;
 import com.dragontrain.md.domain.user.domain.User;
 import com.dragontrain.md.domain.user.infra.UserJpaRepository;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +45,9 @@ class StorageStorageDesignJpaRepositoryTest {
 	private StorageDesign storageDesignCoolMine;
 	private StorageDesign storageDesignCoolNotMine;
 	private StorageDesign storageDesignCoolMineApplied;
-	private Integer sdMineId, sdNotMineId, sdMineAppliedId;
+	private Integer sdMineId;
+	private Integer sdNotMineId;
+	private Integer sdMineAppliedId;
 	private StorageStorageDesign storageStorageDesignApplied;
 	private StorageStorageDesign storageStorageDesignNotApplied;
 
@@ -58,14 +58,14 @@ class StorageStorageDesignJpaRepositoryTest {
 		user = testEntityFactory.getTestUserEntity(null);
 		userJpaRepository.save(user);
 
-		if(levelJpaRepository.findAll().size() == 0) {
+		if(levelJpaRepository.findAll().isEmpty()) {
 			level = testEntityFactory.getTestLevelEntity(null, 1, 1);
 			levelJpaRepository.save(level);
 		} else {
 			level = levelJpaRepository.findByLevel(1).get();
 		}
 
-		if(storageTypeJpaRepository.findAll().size() == 0) {
+		if(storageTypeJpaRepository.findAll().isEmpty()) {
 			storageTypeJpaRepository.saveAll(testEntityFactory.getAllTestStorageTypes());
 		}
 		cool = storageTypeJpaRepository.findById(StorageTypeId.COOL).get();
@@ -73,7 +73,7 @@ class StorageStorageDesignJpaRepositoryTest {
 		refrigerator = testEntityFactory.getTestRefrigerator(null, user, Boolean.FALSE, level);
 		refrigeratorJpaRepository.save(refrigerator);
 
-		if(storageDesignJpaRepository.findAll().size() == 0) {
+		if(storageDesignJpaRepository.findAll().isEmpty()) {
 			storageDesignCoolMine = testEntityFactory.getTestMineNotUseDesign(null, cool);
 			storageDesignCoolNotMine = testEntityFactory.getTestNotMineStorageDesign(null, cool);
 			storageDesignCoolMineApplied = testEntityFactory.getTestMineUseDesign(null, cool);

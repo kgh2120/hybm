@@ -1,5 +1,6 @@
 package com.dragontrain.md.domain.refrigerator.controller.response;
 
+import com.dragontrain.md.domain.refrigerator.service.dto.AppliedStorageDesign;
 import lombok.*;
 
 @Getter
