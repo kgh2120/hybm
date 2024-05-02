@@ -99,7 +99,7 @@ class StorageStorageDesignServiceImplTest {
 			masds.add(
 				ModifyAppliedStorageDesign.builder()
 					.designId(i)
-					.position(StorageTypeId.COOL)
+					.position(StorageTypeId.COOL.name().toLowerCase())
 					.build()
 			);
 		}
@@ -124,7 +124,7 @@ class StorageStorageDesignServiceImplTest {
 			masds.add(
 				ModifyAppliedStorageDesign.builder()
 					.designId(designId++)
-					.position(typeId)
+					.position(typeId.name().toLowerCase())
 					.build()
 			);
 		}
@@ -151,7 +151,7 @@ class StorageStorageDesignServiceImplTest {
 			masds.add(
 				ModifyAppliedStorageDesign.builder()
 					.designId(designId++)
-					.position(typeId)
+					.position(typeId.name().toLowerCase())
 					.build()
 			);
 		}
@@ -183,7 +183,7 @@ class StorageStorageDesignServiceImplTest {
 			masds.add(
 				ModifyAppliedStorageDesign.builder()
 					.designId(designId++)
-					.position(typeId)
+					.position(typeId.name().toLowerCase())
 					.build()
 			);
 		}
@@ -222,7 +222,7 @@ class StorageStorageDesignServiceImplTest {
 			masds.add(
 				ModifyAppliedStorageDesign.builder()
 					.designId(designId++)
-					.position(typeId)
+					.position(typeId.name().toLowerCase())
 					.build()
 			);
 
