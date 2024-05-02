@@ -1,7 +1,6 @@
 package com.dragontrain.md.domain.food.service;
 
 import com.dragontrain.md.domain.food.controller.request.ReceiptEachRequest;
-import com.dragontrain.md.domain.food.controller.request.ReceiptRequest;
 import com.dragontrain.md.domain.food.controller.response.ReceiptProduct;
 import com.dragontrain.md.domain.food.controller.response.ReceiptProducts;
 import com.dragontrain.md.domain.food.domain.Food;
@@ -9,7 +8,6 @@ import com.dragontrain.md.domain.food.service.port.FoodRepository;
 import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
 import com.dragontrain.md.domain.refrigerator.domain.StorageType;
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
-import com.dragontrain.md.domain.refrigerator.infra.StorageTypeJpaRepository;
 import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
 import com.dragontrain.md.domain.refrigerator.service.port.StorageTypeRepository;
 import com.dragontrain.md.domain.user.domain.User;
@@ -30,6 +28,7 @@ import org.json.JSONObject;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,18 +49,25 @@ import com.dragontrain.md.domain.food.exception.FoodException;
 public class FoodServiceImpl implements FoodService {
 
 	// OCR General 형식의 SECRET key, API URL
-	public static String OCR_SECRET = "b3JxaEhVYkdmT0R3eGV5Sk50ZE9jWW9BVXNRZ1lkZmg=";
-	public static String API_URL = "https://wfhz3a1k1w.apigw.ntruss.com/custom/v1/30488/74656867a5abc001d68c3c331b2cafc14096d4e749c14cedb25660009fbfe93f/general";
+	@Value("${ocr.general.secret-key}")
+	private String OCR_SECRET;
+	@Value("${ocr.general.api_url}")
+	private String API_URL;
+
+	// OCR DOCUMENT 형식의 SECRET key, API URL
+	@Value("${ocr.document.secret-key}")
+	private String RECEIPT_SECRET;
+	@Value("${ocr.document.api-url}")
+	private String RECEIPT_API_URL;
 
 	private final FoodRepository foodRepository;
 	private final CategoryDetailRepository categoryDetailRepository;
 	private final BarcodeRepository barcodeRepository;
 	private final CrawlService crawlService;
 	private final TimeService timeService;
+	private final RefrigeratorRepository refrigeratorRepository;
+	private final StorageTypeRepository storageTypeRepository;
 
-	// OCR DOCUMENT 형식의 SECRET key, API URL
-	public static String RECEIPT_SECRET = "YWNmSXFqR3ZnakJQUUJRakp6T3JmTFhVYmZpRG1uenM=";
-	public static String RECEIPT_API_URL = "https://puztzs8le0.apigw.ntruss.com/custom/v1/30517/4d2d5ffbdc42a7778d0b0c57b540a0befce43d0c5c9c03cfaca1b3462e282205/document/receipt";
 
 	// 이미지로 OCR General을 요청하는 Component
 	@Override
@@ -242,16 +248,14 @@ public class FoodServiceImpl implements FoodService {
 		return receiptProducts;
 	}
 
-	private final RefrigeratorRepository refrigeratorRepository;
-	private final StorageTypeRepository storageTypeRepository;
 
 	@Override
-	public Void registerReceipt(ReceiptRequest receiptRequest, User user) {
+	public void registerReceipt(List<ReceiptEachRequest> receiptEachRequests, User user) {
 
 		Refrigerator refrigerator = refrigeratorRepository.findByUserId(user.getUserId())
 			.orElseThrow();
 
-		for (ReceiptEachRequest receiptEachRequest : receiptRequest.getReceiptEachRequests()) {
+		for (ReceiptEachRequest receiptEachRequest : receiptEachRequests) {
 			String name = receiptEachRequest.getName();
 			LocalDate expectedExpirationDate = receiptEachRequest.getExpiredDate();
 			Integer price = receiptEachRequest.getPrice();
@@ -267,7 +271,6 @@ public class FoodServiceImpl implements FoodService {
 			foodRepository.save(food);
 		}
 
-		return null;
 	}
 
 	@Override
