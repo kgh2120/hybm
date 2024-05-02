@@ -6,10 +6,12 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeParseException;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class FoodTest {
 
+	@DisplayName("LocalDate 날짜 비교 테스트")
 	@Test
 	void calculateFoodStatusTest() throws Exception {
 		// given
@@ -28,6 +30,7 @@ class FoodTest {
 		// then
 	}
 
+	@DisplayName("LocalDate 날짜 파싱 테스트")
 	@Test
 	void localDateParseTest() throws Exception {
 		// given
@@ -39,6 +42,7 @@ class FoodTest {
 		assertThat(parse.getDayOfMonth()).isEqualTo(2);
 	}
 
+	@DisplayName("LocalDate 날짜 파싱 오류 테스트")
 	@Test
 	void localDateParseExceptionTest() throws Exception {
 		// given

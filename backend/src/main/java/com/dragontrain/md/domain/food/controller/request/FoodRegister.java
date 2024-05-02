@@ -29,7 +29,7 @@ public class FoodRegister {
 	@Min(value = 1, message = "소분류 아이디는 양수를 넣어주세요")
 	private Integer categoryId;
 	private Integer price;
-	@NotNull(message = "예상 소비기한을 입력해주세요")
+	@NotBlank(message = "예상 소비기한을 입력해주세요")
 	private String expiredDate;
 	@NotNull(message = "넣을 위치를 입력해주세요")
 	@EnumType(targetEnum = StorageTypeId.class, message = "ice, cool, cabinet에 해당하는 값을 입력해주세요")
