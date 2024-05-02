@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.dragontrain.md.domain.refrigerator.controller.response.AppliedStorageDesign;
+import com.dragontrain.md.domain.refrigerator.service.dto.AppliedStorageDesign;
 import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignResponse;
 import com.dragontrain.md.domain.refrigerator.domain.StorageStorageDesign;
 

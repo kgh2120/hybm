@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.dragontrain.md.domain.refrigerator.controller.response.AppliedStorageDesign;
+import com.dragontrain.md.domain.refrigerator.service.dto.AppliedStorageDesign;
 import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignResponse;
 import com.dragontrain.md.domain.refrigerator.domain.StorageStorageDesign;
 import com.dragontrain.md.domain.refrigerator.service.port.StorageStorageDesignRepository;

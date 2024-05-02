@@ -3,7 +3,7 @@ package com.dragontrain.md.domain.refrigerator.service;
 import com.dragontrain.md.domain.TestEntityFactory;
 import com.dragontrain.md.domain.refrigerator.controller.request.ModifyAppliedStorageDesign;
 import com.dragontrain.md.domain.refrigerator.controller.request.ModifyAppliedStorageDesignRequest;
-import com.dragontrain.md.domain.refrigerator.controller.response.AppliedStorageDesign;
+import com.dragontrain.md.domain.refrigerator.service.dto.AppliedStorageDesign;
 import com.dragontrain.md.domain.refrigerator.domain.*;
 import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorException;
 import com.dragontrain.md.domain.refrigerator.exception.StorageDesignException;
