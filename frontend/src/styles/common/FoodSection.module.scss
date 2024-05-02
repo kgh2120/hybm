@@ -1,4 +1,4 @@
-@import '../common/common';
+@import "../common/common";
 
 .wrapper {
   display: flex;
@@ -7,7 +7,7 @@
   width: 100%;
   padding: 5px 0px;
   &::after {
-    content: '';
+    content: "";
     // display: block;
     border: 1px dashed $color-back;
     width: 100%;
@@ -23,24 +23,22 @@
     > span {
       font-size: $font-lg;
       color: $color-text;
-      width: 60px;
-      
+      min-width: 60px;
     }
     > input {
       @include input-text;
       height: 30px;
       width: 80%;
-      text-align:start;
+      text-align: start;
       padding-left: 12px;
       background-color: $color-back;
     }
     > select {
       @include input-text;
       height: 30px;
-      text-align:start;
+      text-align: start;
       padding-left: 12px;
       background-color: $color-back;
-      
     }
     .price_box {
       @include input-text;
@@ -48,13 +46,13 @@
       background-color: $color-back;
       > input {
         background-color: transparent;
-        text-align:start;
+        text-align: start;
         height: 30px;
+
         @include input-text;
       }
       > span {
         font-size: $font-lg;
-        
       }
     }
     .category_box {
@@ -72,7 +70,7 @@
       > input {
         width: 85%;
         background-color: transparent;
-        text-align:start;
+        text-align: start;
         height: 30px;
         @include input-text;
       }

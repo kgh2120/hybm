@@ -2,15 +2,23 @@ import Button from "../common/Button";
 import styles from "../../styles/storagePage/CreateFoodModal.module.css";
 import barcode from "../../assets/barcode.png";
 import camera from "../../assets/camera.png";
-import ExpiryDateSelector from "../common/ExpiryDateSelector";
-import meat from "../../assets/meat.png";
-import { useInput } from '../../hooks/useInput';
+// import { useInput } from "../../hooks/useInput";
+import FoodSection from "../common/FoodSection";
 
 function CreateFoodModal() {
-  const [category, changeCategory] = useInput('닭고기');
+  // const [category, changeCategory] = useInput("닭고기");
   return (
     <div className={styles.wrapper}>
       <section className={styles.main_section}>
+
+        <FoodSection />
+        <section className={styles.btn_section}>
+          <div><img src={barcode} alt="" /></div>
+          <div><img src={camera} alt="" /></div>
+          <div></div>
+        </section>
+      </section>
+      {/* <section className={styles.main_section}>
         <div className={styles.img_section}>
           <div className={styles.img_article}>
             <div className={styles.food_option_box}>
@@ -21,7 +29,13 @@ function CreateFoodModal() {
               <span>분류</span>
               <div className={styles.category_box}>
                 <img src={meat} alt="" />
-                <input value={category} onChange={changeCategory} type="text" name="" id=""></input>
+                <input
+                  value={category}
+                  onChange={changeCategory}
+                  type="text"
+                  name=""
+                  id=""
+                ></input>
               </div>
             </div>
           </div>
@@ -42,7 +56,7 @@ function CreateFoodModal() {
           <span>위치</span>
           <input></input>
         </div>
-      </section>
+      </section> */}
       <Button content="완료" color="red" />
     </div>
   );

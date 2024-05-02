@@ -4,63 +4,19 @@
   justify-content: center;
   flex-direction: column;
 }
-
-.main_section {
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  gap: 12px;
-  position: relative;
-  margin: 20px;
+.wrapper .main_section {
+  display: grid;
+  grid-template-columns: 6fr 1.2fr;
 }
-.main_section .img_section {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
+.wrapper .main_section .btn_section {
+  display: grid;
+  grid-template-rows: 2fr 0.7fr 2.3fr;
 }
-.main_section .img_article {
+.wrapper .main_section .btn_section > div {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-  gap: 12px;
 }
-.main_section .food_option_box {
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  gap: 5px;
-}
-.main_section .food_option_box > span {
-  font-size: 15px;
-  color: #666666;
-  min-width: 60px;
-}
-.main_section .food_option_box .category_box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #fce6e7;
-}
-.main_section .food_option_box .category_box img {
-  width: 30px;
-  aspect-ratio: 1/1;
-}
-.main_section .food_option_box input {
-  background-color: #fce6e7;
-  height: 30px;
-  color: #666666;
-  font-size: 13px;
-}
-.main_section .food_option_box input::-moz-placeholder {
-  color: #666666;
-  font-size: 11px;
-}
-.main_section .food_option_box input::placeholder {
-  color: #666666;
-  font-size: 11px;
-}
-.main_section .button {
+.wrapper .main_section .btn_section > div > img {
   width: 30px;
 }/*# sourceMappingURL=CreateFoodModal.module.css.map */
