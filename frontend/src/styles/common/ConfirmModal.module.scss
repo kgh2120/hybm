@@ -1,0 +1,20 @@
+@import '../common/common';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  > span {
+    font-size: $font-xl;
+    color: $color-light
+  }
+  .button_box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+  }
+
+}

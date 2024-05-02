@@ -7,6 +7,7 @@ $font-sm: 11px;
 $font-md: 13px;
 $font-lg: 15px;
 $font-xl: 20px;
+$font-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
 
 @mixin modal-title {
   color: $color-text;
@@ -22,4 +23,16 @@ $font-xl: 20px;
 @mixin item-content {
   color: $color-text;
   font-size: $font-sm;
+}
+
+@mixin center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin input-text {
+  text-shadow: $font-shadow;
+        font-size: $font-md;
+      color: $color-text;
 }

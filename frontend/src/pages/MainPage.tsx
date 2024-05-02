@@ -34,6 +34,7 @@ function MainPage() {
       <Link to="/storage/cool">냉장</Link>
       <Link to="/storage/ice">냉동</Link>
       <Link to="/report">보고서</Link>
+      <Link to="/receipt">영수증등록</Link>
       <Link to="/test">테스트</Link>
       <button onClick={handleOpenLevelUpModal}>레벨업</button>
       <button onClick={handleOpenNotificationModal}>알림</button>
