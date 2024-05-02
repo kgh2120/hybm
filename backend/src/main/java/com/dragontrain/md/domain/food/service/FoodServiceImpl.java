@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -19,10 +18,21 @@ import java.util.UUID;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import java.time.DateTimeException;
+import java.time.LocalDate;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.dragontrain.md.common.service.TimeService;
+import com.dragontrain.md.domain.food.controller.response.BarcodeInfo;
+import com.dragontrain.md.domain.food.controller.response.ExpectedExpirationDate;
+import com.dragontrain.md.domain.food.domain.Barcode;
+import com.dragontrain.md.domain.food.domain.CategoryDetail;
+import com.dragontrain.md.domain.food.exception.FoodErrorCode;
+import com.dragontrain.md.domain.food.exception.FoodException;
+
 
 @Slf4j
 @Service
@@ -33,6 +43,10 @@ public class FoodServiceImpl implements FoodService {
 	// OCR General 형식의 SECRET key, API URL
 	public static String OCR_SECRET = "b3JxaEhVYkdmT0R3eGV5Sk50ZE9jWW9BVXNRZ1lkZmg=";
 	public static String API_URL = "https://wfhz3a1k1w.apigw.ntruss.com/custom/v1/30488/74656867a5abc001d68c3c331b2cafc14096d4e749c14cedb25660009fbfe93f/general";
+	private final CategoryDetailRepository categoryDetailRepository;
+	private final BarcodeRepository barcodeRepository;
+	private final CrawlService crawlService;
+	private final TimeService timeService;
 
 	// OCR DOCUMENT 형식의 SECRET key, API URL
 	public static String RECEIPT_SECRET = "YWNmSXFqR3ZnakJQUUJRakp6T3JmTFhVYmZpRG1uenM=";
@@ -226,5 +240,47 @@ public class FoodServiceImpl implements FoodService {
 
 		return null;
 	}
-}
 
+	@Override
+	public BarcodeInfo getBarcodeInfo(Long barcode) {
+
+		Barcode barcodeInfo = barcodeRepository.findByBarcodeId(barcode)
+			.orElseGet(() -> {
+				// 검색
+				BarcodeCreate barcodeCreate = crawlService.crawlBarcode(barcode)
+					.orElseThrow(() -> new FoodException(FoodErrorCode.UNKNOWN_BARCODE));
+
+				CategoryDetail categoryDetail = categoryDetailRepository.findByKanCode(barcodeCreate.getKanCode())
+					.orElseThrow(() -> new FoodException(FoodErrorCode.UNKNOWN_KAN_CODE));
+
+				Barcode createdBarcode = Barcode.create(barcodeCreate.getName(), categoryDetail,
+					timeService.localDateTimeNow());
+				barcodeRepository.save(createdBarcode);
+				return createdBarcode;
+			});
+
+		return BarcodeInfo.create(barcodeInfo);
+	}
+
+	@Override
+	public ExpectedExpirationDate getExpectedExpirationDate(int categoryDetailId, int year, int month, int day) {
+		// 일단 날짜 만들기
+		LocalDate targetDate = makeLocalDate(year, month, day);
+		CategoryDetail categoryDetail = categoryDetailRepository.findById(categoryDetailId)
+			.orElseThrow(() -> new FoodException(FoodErrorCode.CATEGORY_DETAIL_NOT_FOUND));
+
+		if (categoryDetail.getExpirationDate().equals(0)) {
+			throw new FoodException(FoodErrorCode.EXPIRATION_DATE_NOT_FOUND);
+		}
+
+		return ExpectedExpirationDate.from(targetDate.plusDays(categoryDetail.getExpirationDate()));
+	}
+
+	private LocalDate makeLocalDate(int year, int month, int day) {
+		try {
+			return LocalDate.of(year, month, day);
+		} catch (DateTimeException e) {
+			throw new FoodException(FoodErrorCode.INVALID_DATE_FORMAT);
+		}
+	}
+}

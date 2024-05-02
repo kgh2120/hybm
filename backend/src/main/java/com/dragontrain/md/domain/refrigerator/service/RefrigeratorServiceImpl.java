@@ -5,6 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.dragontrain.md.domain.refrigerator.service.port.LevelRepository;
+import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
+import com.dragontrain.md.domain.refrigerator.service.port.StorageDesignRepository;
+import com.dragontrain.md.domain.refrigerator.service.port.StorageStorageDesignRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

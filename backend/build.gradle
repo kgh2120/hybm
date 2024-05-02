@@ -48,6 +48,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator' //actuator 추가
     implementation 'io.micrometer:micrometer-registry-prometheus' //프로메테우스 데이터 형태로 변환
 
+    // https://mvnrepository.com/artifact/org.jsoup/jsoup
+    implementation 'org.jsoup:jsoup:1.17.2'
+
+
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
