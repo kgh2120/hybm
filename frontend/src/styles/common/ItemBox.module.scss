@@ -1,0 +1,42 @@
+@import '../common/common';
+
+.wrapper {
+  @include center;
+  flex-direction: column;
+  gap: 12px;
+  .img_box {
+    width: 60px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    @include center;
+    background-color: $color-back;
+    border: 1px dashed $color-light;
+    position: relative;
+    .img_gray_box {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    @include center;
+    background-color: rgba(black, 0.2);
+    }
+    img {
+      width: 80%;
+      aspect-ratio: 1/1;
+    }
+  }
+  .text_box {
+    @include center;
+    flex-direction: column;
+    gap: 5px;
+    .item_name {
+      @include item-name;
+    }
+    .item_content {
+      @include item-content;
+    }
+  }
+}
