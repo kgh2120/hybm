@@ -1,7 +1,7 @@
 package com.dragontrain.md.domain.food.controller;
 
 import com.dragontrain.md.domain.food.controller.request.ReceiptEachRequest;
-import com.dragontrain.md.domain.food.controller.response.FoodStorageResponse;
+import com.dragontrain.md.domain.food.controller.response.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dragontrain.md.domain.food.controller.request.FoodRegister;
-import com.dragontrain.md.domain.food.controller.response.BarcodeInfo;
-import com.dragontrain.md.domain.food.controller.response.ExpectedExpirationDate;
-import com.dragontrain.md.domain.food.controller.response.ReceiptProducts;
 import com.dragontrain.md.domain.food.service.FoodService;
 import com.dragontrain.md.domain.user.domain.User;
 
@@ -35,6 +32,14 @@ public class FoodController {
 	public ResponseEntity<BarcodeInfo> getBarcodeInfo(@RequestParam Long barcode) {
 			return ResponseEntity.ok(foodService.getBarcodeInfo(barcode));
 		}
+
+
+	@GetMapping("/category")
+	public ResponseEntity<List<CategoryInfoResponse>> getCategoryInfo() {
+
+		return ResponseEntity.ok(foodService.getCategoryInfo());
+	}
+
 
 	@GetMapping("/expiration")
 	public ResponseEntity<ExpectedExpirationDate> getExpectedExpirationDate(@RequestParam int year,

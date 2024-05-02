@@ -2,13 +2,15 @@ package com.dragontrain.md.domain.food.service;
 
 import com.dragontrain.md.domain.food.controller.request.ReceiptEachRequest;
 import com.dragontrain.md.domain.food.controller.response.*;
+import com.dragontrain.md.domain.food.domain.CategoryBig;
 import com.dragontrain.md.domain.food.domain.Food;
+import com.dragontrain.md.domain.food.service.port.BarcodeRepository;
+import com.dragontrain.md.domain.food.service.port.CategoryBigRepository;
+import com.dragontrain.md.domain.food.service.port.CategoryDetailRepository;
 import com.dragontrain.md.domain.food.service.port.FoodRepository;
 import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
-import com.dragontrain.md.domain.refrigerator.domain.StorageType;
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
-import com.dragontrain.md.domain.refrigerator.service.port.StorageTypeRepository;
 import com.dragontrain.md.domain.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -66,9 +68,11 @@ public class FoodServiceImpl implements FoodService {
 	private final RefrigeratorRepository refrigeratorRepository;
 	private final FoodRepository foodRepository;
 	private final CategoryDetailRepository categoryDetailRepository;
+	private final CategoryBigRepository categoryBigRepository;
 	private final BarcodeRepository barcodeRepository;
 	private final CrawlService crawlService;
 	private final TimeService timeService;
+
 
 
 	// 이미지로 OCR General을 요청하는 Component
@@ -272,6 +276,37 @@ public class FoodServiceImpl implements FoodService {
 		}
 
 	}
+
+
+	@Transactional(readOnly = true)
+	@Override
+	public List<CategoryInfoResponse> getCategoryInfo() {
+		List<CategoryInfoResponse> categoryInfoResponseList = new ArrayList<>();
+
+		for (CategoryBig categoryBig : categoryBigRepository.findAll()) {
+			List<CategoryInfoDetail> categoryInfoDetails = new ArrayList<>();
+
+			for (CategoryDetail categoryDetail : categoryDetailRepository.findAllByCategoryBig(categoryBig.getCategoryBigId())) {
+				CategoryInfoDetail categoryInfoDetail = CategoryInfoDetail.create(
+					categoryDetail.getCategoryDetailId(),
+					categoryDetail.getName(),
+					categoryDetail.getImgSrc()
+				);
+				categoryInfoDetails.add(categoryInfoDetail);
+			}
+
+			CategoryInfoResponse categoryInfoResponse = CategoryInfoResponse.create(
+				categoryBig.getCategoryBigId(),
+				categoryBig.getName(),
+				categoryBig.getImgSrc(),
+				categoryInfoDetails
+				);
+			categoryInfoResponseList.add(categoryInfoResponse);
+		}
+
+		return categoryInfoResponseList;
+	}
+
 
 	@Override
 	public BarcodeInfo getBarcodeInfo(Long barcode) {
