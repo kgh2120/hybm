@@ -56,7 +56,7 @@ public class StorageStorageDesignServiceImpl implements StorageStorageDesignServ
 	}
 
 	@Override
-	public void ModifyAppliedStorageDesign(User user, ModifyAppliedStorageDesignRequest request) {
+	public void modifyAppliedStorageDesign(User user, ModifyAppliedStorageDesignRequest request) {
 		// request로 온 position이 이상한값이면 에러
 		// 들어오면서 처리될것
 		// 같은 position이 2개 이상이면 에러

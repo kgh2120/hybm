@@ -10,5 +10,5 @@ public interface StorageStorageDesignService {
 
 	AppliedStorageDesignsResponse findAllAppliedStorageDesign(User user);
 
-	void ModifyAppliedStorageDesign(User user, ModifyAppliedStorageDesignRequest request);
+	void modifyAppliedStorageDesign(User user, ModifyAppliedStorageDesignRequest request);
 }
