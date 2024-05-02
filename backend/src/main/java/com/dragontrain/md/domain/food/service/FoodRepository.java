@@ -1,8 +1,0 @@
-package com.dragontrain.md.domain.food.service;
-
-import com.dragontrain.md.domain.food.domain.Food;
-
-public interface FoodRepository {
-
-	void save(Food food);
-}

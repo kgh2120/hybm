@@ -311,6 +311,7 @@ public class FoodServiceImpl implements FoodService {
 		return ExpectedExpirationDate.from(targetDate.plusDays(categoryDetail.getExpirationDate()));
 	}
 
+	@Transactional
 	@Override
 	public void registerFood(FoodRegister request, User user) {
 		// 유저로 냉장고 찾아오기
