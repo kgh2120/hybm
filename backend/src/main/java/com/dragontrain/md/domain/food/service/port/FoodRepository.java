@@ -12,4 +12,6 @@ public interface FoodRepository {
 	List<Food> findAllByRefrigeratorId(Long refrigeratorId);
 	Optional<Food> findById(Long foodId);
 	void save(Food food);
+
+	List<Food> findAllDeletedFoodByRefrigeratorIdAndTime(Long refrigeratorId, Integer year, Integer month);
 }

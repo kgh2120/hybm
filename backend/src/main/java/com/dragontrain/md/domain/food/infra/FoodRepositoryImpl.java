@@ -35,4 +35,9 @@ public class FoodRepositoryImpl implements FoodRepository {
 	public void save(Food food) {
 		foodJpaRepository.save(food);
 	}
+
+	@Override
+	public List<Food> findAllDeletedFoodByRefrigeratorIdAndTime(Long refrigeratorId, Integer year, Integer month) {
+		return foodJpaRepository.findAllDeletedFoodByRefrigeratorIdAndTime(refrigeratorId, year, month);
+	}
 }

@@ -33,13 +33,13 @@ class RefrigeratorJpaRepositoryTest {
 
 	@Test
 	void 유저아이디로_냉장고조회_성공() {
-		User user = testEntityFactory.getTestUserEntity(null);
+		User user = testEntityFactory.getTestUserEntity();
 		jpaUserRepository.save(user);
 
-		Level level = testEntityFactory.getTestLevelEntity(null, 1, 1);
+		Level level = testEntityFactory.getTestLevelEntity(1, 1);
 		levelJpaRepository.save(level);
 
-		Refrigerator refrigerator = testEntityFactory.getTestRefrigerator(null, user, Boolean.FALSE, level);
+		Refrigerator refrigerator = testEntityFactory.getTestRefrigerator(user, Boolean.FALSE, level);
 		refrigeratorJpaRepository.save(refrigerator);
 
 		Assertions.assertDoesNotThrow(() -> refrigeratorJpaRepository.findByUser_UserId(user.getUserId()));
