@@ -5,10 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dragontrain.md.domain.food.domain.CategoryBig;
-import com.dragontrain.md.domain.food.domain.CategoryDetail;
-import com.dragontrain.md.domain.food.domain.Food;
-import com.dragontrain.md.domain.food.domain.FoodStatus;
+import com.dragontrain.md.domain.food.domain.*;
 import com.dragontrain.md.domain.refrigerator.service.dto.AppliedStorageDesign;
 import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignResponse;
 import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignsResponse;
@@ -219,6 +216,24 @@ public class TestEntityFactory {
 			.foodStatus(FoodStatus.FRESH)
 			.createdAt(createdAt)
 			.updatedAt(updatedAt)
+			.isManual(Boolean.FALSE)
+			.expectedExpirationDate(LocalDate.now())
+			.build();
+	}
+
+	public Food getDeletedFood(String name, Integer price, Refrigerator refrigerator, StorageType type, CategoryDetail categoryDetail
+		, LocalDateTime createdAt, LocalDateTime updatedAt, FoodDeleteType foodDeleteType, LocalDateTime deletedAt){
+		return Food.builder()
+			.name(name)
+			.price(price)
+			.refrigerator(refrigerator)
+			.storageType(type)
+			.categoryDetail(categoryDetail)
+			.foodStatus(FoodStatus.FRESH)
+			.foodDeleteType(foodDeleteType)
+			.createdAt(createdAt)
+			.updatedAt(updatedAt)
+			.deletedAt(deletedAt)
 			.isManual(Boolean.FALSE)
 			.expectedExpirationDate(LocalDate.now())
 			.build();
