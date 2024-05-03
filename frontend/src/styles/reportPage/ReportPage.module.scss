@@ -58,9 +58,9 @@
         margin: 8%;
         p {
           line-height: 150%;
-        }
-        p > span {
-          color: $color-point;
+          > span {
+            color: $color-point;
+          }
         }
       }
     }
