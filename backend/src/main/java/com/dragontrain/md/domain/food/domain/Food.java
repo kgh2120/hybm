@@ -106,21 +106,11 @@ public class Food {
 					   LocalDate expectedExpirationDate,
 					   StorageTypeId storageType) {
 
-		if (name != null && !name.isEmpty()) {
-			this.name = name;
-		}
-		if (categoryDetail != null) {
-			this.categoryDetail = categoryDetail;
-		}
-		if (price != null) {
-			this.price = price;
-		}
-		if (expectedExpirationDate != null) {
-			this.expectedExpirationDate = expectedExpirationDate;
-		}
-		if (storageType != null) {
-			this.storageType = StorageType.builder().storageType(storageType).build();
-		}
+		this.name = name;
+		this.categoryDetail = categoryDetail;
+		this.price = price;
+		this.expectedExpirationDate = expectedExpirationDate;
+		this.storageType = StorageType.builder().storageType(storageType).build();
 
 		return this;
 	}
