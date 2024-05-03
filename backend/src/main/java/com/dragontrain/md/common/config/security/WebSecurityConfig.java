@@ -63,7 +63,7 @@ public class WebSecurityConfig {
 			.cors(c -> c.configurationSource(corsConfigurationSource()))
 			.authorizeHttpRequests((auth) ->
 				auth.requestMatchers("/h2-console/**", "/oauth2/**", "/login/**",
-						"/api/users/login-fail").permitAll()
+						"/api/users/login-fail", "/api/users/reissue").permitAll()
 					.anyRequest().authenticated())
 			.oauth2Login(config ->
 				config.userInfoEndpoint(c -> c.userService(customOAuth2Service))

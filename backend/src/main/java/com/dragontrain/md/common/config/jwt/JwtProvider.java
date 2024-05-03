@@ -7,10 +7,18 @@ import javax.crypto.SecretKey;
 
 import org.springframework.stereotype.Component;
 
+import com.dragontrain.md.common.config.exception.GlobalErrorCode;
+import com.dragontrain.md.common.config.exception.TokenException;
+
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.security.InvalidKeyException;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -63,11 +71,29 @@ public class JwtProvider {
 	}
 
 	private Claims getPayload(String token) {
-		return Jwts.parser()
-			.verifyWith(secretKey)
-			.build()
-			.parseSignedClaims(token)
-			.getPayload();
+		try {
+			return Jwts.parser()
+				.verifyWith(secretKey)
+				.build()
+				.parseSignedClaims(token)
+				.getPayload();
+		} catch (JwtException e) {
+			GlobalErrorCode errorCode = null;
+			if (e instanceof MalformedJwtException) {
+				errorCode = GlobalErrorCode.TOKEN_MALFORMED;
+			} else if (e instanceof SignatureException) {
+				errorCode = GlobalErrorCode.TOKEN_NOT_VERIFIED;
+			} else if (e instanceof UnsupportedJwtException) {
+				errorCode = GlobalErrorCode.TOKEN_UNSUPPORTED;
+			} else if (e instanceof InvalidKeyException) {
+				errorCode = GlobalErrorCode.TOKEN_INVALID_KEY;
+			} else if (e instanceof ExpiredJwtException) {
+				errorCode = GlobalErrorCode.TOKEN_EXPIRED;
+			} else {
+				errorCode = GlobalErrorCode.FORBIDDEN;
+			}
+			throw new TokenException(errorCode);
+		}
 	}
 
 	public boolean isAccessToken(String token) {
