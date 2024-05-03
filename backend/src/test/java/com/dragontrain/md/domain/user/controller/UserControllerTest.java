@@ -58,7 +58,23 @@ class UserControllerTest {
 				jsonPath("$.errorMessage").value(UNAUTHORIZED_ACCESS.getErrorMessage()),
 				jsonPath("$.errorName").value(UNAUTHORIZED_ACCESS.getErrorName())
 			).andDo(print());
+	}
 
+	@WithMockUser
+	@DisplayName("로그아웃 테스트 - 만료 쿠기 2개가 리턴된다.")
+	@Test
+	void logoutTest() throws Exception{
+	// given
+		final String path = "/api/users/logout";
+	// when
+		mockMvc.perform(get(path))
+			.andExpectAll(
+				status().isOk(),
+				cookie().exists("access_token"),
+				cookie().exists("refresh_token")
+			).andDo(print());
+
+	// then
 	}
 
 }

@@ -25,6 +25,16 @@ public class CookieUtils {
 		return cookie;
 	}
 
+	public static Cookie deleteCookie(String key, String value, String path) {
+		return makeCookie(key, value, path, 0);
+	}
+	public static Cookie deleteAccessTokenCookie(){
+		return makeAccessTokenCookie("", 0);
+	}
+	public static Cookie deleteRefreshTokenCookie(){
+		return makeRefreshTokenCookie("", 0);
+	}
+
 	public static Cookie makeRefreshTokenCookie(String value, int maxAge) {
 		return makeCookie(COOKIE_KEY_REFRESH_TOKEN, value, COOKIE_REFRESH_TOKEN_PATH, maxAge);
 	}
