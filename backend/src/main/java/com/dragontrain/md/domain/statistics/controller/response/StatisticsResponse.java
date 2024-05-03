@@ -29,8 +29,8 @@ public class StatisticsResponse {
 		return StatisticsResponse.builder()
 			.total(totalPrice)
 			.spend(spendByBigCategories)
-			.eaten(countEatenAndRoten.get(FoodDeleteType.EATEN) != null ? countEatenAndRoten.get(FoodDeleteType.EATEN) : 0)
-			.thrown(countEatenAndRoten.get(FoodDeleteType.THROWN) != null ? countEatenAndRoten.get(FoodDeleteType.THROWN) : 0)
+			.eaten(countEatenAndRoten.containsKey(FoodDeleteType.EATEN) ? countEatenAndRoten.get(FoodDeleteType.EATEN) : 0)
+			.thrown(countEatenAndRoten.containsKey(FoodDeleteType.THROWN) ? countEatenAndRoten.get(FoodDeleteType.THROWN) : 0)
 			.topEaten(eatenRank.stream().map(TopEaten::createByTopEatenWithCount).limit(5).toList())
 			.topThrown(thrownRank.stream().map(TopThrown::createByTopThrownWithCount).limit(5).toList())
 			.build();
