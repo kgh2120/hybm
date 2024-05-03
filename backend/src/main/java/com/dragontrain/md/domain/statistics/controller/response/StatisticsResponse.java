@@ -9,9 +9,10 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 public class StatisticsResponse {
-	private String total;
+	private Integer total;
 	private List<SpendByBigCategory> spend;
-	private Integer eaten;
+	private Long eaten;
+	private Long thrown;
 	private List<TopEaten> topEaten;
 	private List<TopThrown> topThrown;
 }
