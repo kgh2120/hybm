@@ -1,6 +1,6 @@
 package com.dragontrain.md.domain.food.service;
 
-import com.dragontrain.md.domain.food.controller.request.ReceiptEachRequest;
+import com.dragontrain.md.domain.food.controller.request.FoodInfoRequest;
 import com.dragontrain.md.domain.food.controller.response.*;
 import com.dragontrain.md.domain.food.domain.CategoryBig;
 import com.dragontrain.md.domain.food.domain.Food;
@@ -9,8 +9,10 @@ import com.dragontrain.md.domain.food.service.port.CategoryBigRepository;
 import com.dragontrain.md.domain.food.service.port.CategoryDetailRepository;
 import com.dragontrain.md.domain.food.service.port.FoodRepository;
 import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
+import com.dragontrain.md.domain.refrigerator.domain.StorageType;
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
+import com.dragontrain.md.domain.refrigerator.service.port.StorageTypeRepository;
 import com.dragontrain.md.domain.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +25,6 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.json.JSONArray;
@@ -71,6 +72,7 @@ public class FoodServiceImpl implements FoodService {
 	private final CategoryDetailRepository categoryDetailRepository;
 	private final CategoryBigRepository categoryBigRepository;
 	private final BarcodeRepository barcodeRepository;
+	private final StorageTypeRepository storageTypeRepository;
 	private final CrawlService crawlService;
 	private final TimeService timeService;
 
@@ -78,7 +80,14 @@ public class FoodServiceImpl implements FoodService {
 
 	// 이미지로 OCR General을 요청하는 Component
 	@Override
-	public String callGeneralOCR(String imgURL) {
+	public String callGeneralOCR(MultipartFile imgFile) {
+
+		byte[] imgBytes = new byte[0];
+		try {
+			imgBytes = imgFile.getBytes();
+		} catch (Exception e) {
+			System.out.println("이미지 Byte 변환 실패 : " + e);
+		}
 
 		try {
 			URL url = new URL(API_URL);
@@ -96,7 +105,7 @@ public class FoodServiceImpl implements FoodService {
 			json.put("timestamp", System.currentTimeMillis());
 			JSONObject image = new JSONObject();
 			image.put("format", "jpg");
-			image.put("url", imgURL);
+			image.put("data", imgBytes);
 
 			image.put("name", "demo");
 			JSONArray images = new JSONArray();
@@ -257,18 +266,18 @@ public class FoodServiceImpl implements FoodService {
 
 
 	@Override
-	public void registerReceipt(List<ReceiptEachRequest> receiptEachRequests, User user) {
+	public void registerReceipt(List<FoodInfoRequest> foodInfoRequests, User user) {
 
 		Refrigerator refrigerator = refrigeratorRepository.findByUserId(user.getUserId())
 			.orElseThrow(() -> new FoodException(FoodErrorCode.REFRIGERATOR_NOT_FOUND));
 
-		for (ReceiptEachRequest receiptEachRequest : receiptEachRequests) {
-			String name = receiptEachRequest.getName();
-			LocalDate expectedExpirationDate = receiptEachRequest.getExpiredDate();
-			Integer price = receiptEachRequest.getPrice();
-			CategoryDetail categoryDetail = categoryDetailRepository.findById(receiptEachRequest.getCategoryId())
+		for (FoodInfoRequest foodInfoRequest : foodInfoRequests) {
+			String name = foodInfoRequest.getName();
+			LocalDate expectedExpirationDate = makeLocalDate(foodInfoRequest.getExpiredDate());
+			Integer price = foodInfoRequest.getPrice();
+			CategoryDetail categoryDetail = categoryDetailRepository.findById(foodInfoRequest.getCategoryId())
 				.orElseThrow(() -> new FoodException(FoodErrorCode.CATEGORY_DETAIL_NOT_FOUND));
-			StorageTypeId location = receiptEachRequest.getLocation();
+			StorageTypeId location = StorageTypeId.valueOf(foodInfoRequest.getLocation());
 
 			Food food = Food.create(name, categoryDetail, price, expectedExpirationDate,
 				location, refrigerator, LocalDateTime.now(), true);
@@ -311,6 +320,25 @@ public class FoodServiceImpl implements FoodService {
 
 		Food food = foodRepository.findById(foodId).orElseThrow(() -> new FoodException(FoodErrorCode.FOOD_NOT_FOUND));
 		return FoodDetailResponse.create(food);
+	}
+
+	@Override
+	public void updateFood(Long foodId, User user, FoodInfoRequest foodInfoRequest) {
+
+		Food food = foodRepository.findById(foodId).orElseThrow(() -> new FoodException(FoodErrorCode.FOOD_NOT_FOUND));
+		if (food.getRefrigerator().getUser() != user) {
+			throw new FoodException(FoodErrorCode.NOT_MY_FOOD);
+		}
+
+		String name = foodInfoRequest.getName();
+		CategoryDetail categoryDetail = categoryDetailRepository.findById(foodInfoRequest.getCategoryId())
+			.orElseThrow(() -> new FoodException(FoodErrorCode.CATEGORY_DETAIL_NOT_FOUND));
+		Integer price = foodInfoRequest.getPrice();
+		LocalDate expiredDate = makeLocalDate(foodInfoRequest.getExpiredDate());
+		StorageType location = storageTypeRepository.findById(StorageTypeId.valueOf(foodInfoRequest.getLocation()))
+			.orElseThrow(() -> new FoodException(FoodErrorCode.STORAGE_NOT_FOUND));
+
+		food.update(name, categoryDetail, price, expiredDate, location);
 	}
 
 
