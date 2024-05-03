@@ -8,10 +8,10 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 public class TopThrownWithCount {
-	Integer categoryDetailId;
-	String name;
-	String imgSrc;
-	Integer count;
+	private Integer categoryDetailId;
+	private String name;
+	private String imgSrc;
+	private Integer count;
 
 	public static TopThrownWithCount create(CategoryDetail categoryDetail, Integer count){
 		return TopThrownWithCount.builder()

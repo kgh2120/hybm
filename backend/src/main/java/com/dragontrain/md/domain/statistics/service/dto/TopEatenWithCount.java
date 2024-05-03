@@ -8,10 +8,10 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 public class TopEatenWithCount {
-	Integer categoryDetailId;
-	String name;
-	String imgSrc;
-	Integer count;
+	private Integer categoryDetailId;
+	private String name;
+	private String imgSrc;
+	private Integer count;
 
 	public static TopEatenWithCount create(CategoryDetail categoryDetail, Integer count){
 		return TopEatenWithCount.builder()
