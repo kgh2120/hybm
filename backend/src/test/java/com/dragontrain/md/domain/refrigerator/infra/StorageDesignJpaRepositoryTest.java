@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.dragontrain.md.domain.TestEntityFactory;
 import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignResponse;
@@ -21,6 +22,8 @@ import com.dragontrain.md.domain.refrigerator.domain.StorageType;
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import com.dragontrain.md.domain.user.domain.User;
 
+
+@ActiveProfiles("test")
 @DataJpaTest
 class StorageDesignJpaRepositoryTest {
 	@Autowired

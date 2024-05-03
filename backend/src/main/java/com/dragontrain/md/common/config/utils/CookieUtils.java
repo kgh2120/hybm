@@ -12,7 +12,7 @@ public class CookieUtils {
 	private static final String COOKIE_KEY_ACCESS_TOKEN = "access_token";
 	private static final String COOKIE_ATTRIBUTE_NAME_SAME_SITE = "same-site";
 	private static final String COOKIE_SAME_SITE_NONE = "none";
-	private static final String COOKIE_REFRESH_TOKEN_PATH = "/api/refresh";
+	private static final String COOKIE_REFRESH_TOKEN_PATH = "/api/users/reissue";
 	private static final String COOKIE_ACCESS_TOKEN_PATH = "/";
 
 	public static Cookie makeCookie(String key, String value, String path, int maxAge) {
@@ -23,6 +23,16 @@ public class CookieUtils {
 		cookie.setSecure(true);
 		cookie.setMaxAge(maxAge);
 		return cookie;
+	}
+
+	public static Cookie deleteCookie(String key, String value, String path) {
+		return makeCookie(key, value, path, 0);
+	}
+	public static Cookie deleteAccessTokenCookie(){
+		return makeAccessTokenCookie("", 0);
+	}
+	public static Cookie deleteRefreshTokenCookie(){
+		return makeRefreshTokenCookie("", 0);
 	}
 
 	public static Cookie makeRefreshTokenCookie(String value, int maxAge) {
