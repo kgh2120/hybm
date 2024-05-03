@@ -22,6 +22,11 @@ public class FoodRepositoryImpl implements FoodRepository {
 	}
 
 	@Override
+	public Optional<Food> findById(Long foodId) {
+		return foodJpaRepository.findById(foodId);
+	}
+
+	@Override
 	public void save(Food food) {
 		foodJpaRepository.save(food);
 	}

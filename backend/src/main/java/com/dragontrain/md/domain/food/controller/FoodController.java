@@ -75,6 +75,12 @@ public class FoodController {
 		return ResponseEntity.ok(foodService.getFoodStorage(storage, user));
 	}
 
+	@GetMapping("/{foodId}")
+	public ResponseEntity<FoodDetailResponse> getFoodDetailInfo(@PathVariable Long foodId) {
+
+		return ResponseEntity.ok(foodService.getFoodDetailInfo(foodId));
+	}
+
 
 	@PostMapping
 	public ResponseEntity<Void> registerFood(@Validated @RequestBody FoodRegister request,
