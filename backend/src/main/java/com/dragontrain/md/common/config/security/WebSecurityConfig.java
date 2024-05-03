@@ -62,13 +62,15 @@ public class WebSecurityConfig {
 			.formLogin(FormLoginConfigurer::disable)
 			.cors(c -> c.configurationSource(corsConfigurationSource()))
 			.authorizeHttpRequests((auth) ->
-				auth.requestMatchers("/h2-console/**", "/oauth2/**", "/login/**").permitAll()
-					.anyRequest().permitAll())
+				auth.requestMatchers("/h2-console/**", "/oauth2/**", "/login/**",
+						"/api/users/login-fail").permitAll()
+					.anyRequest().authenticated())
 			.oauth2Login(config ->
 				config.userInfoEndpoint(c -> c.userService(customOAuth2Service))
 					.authorizationEndpoint(c -> c.authorizationRequestRepository(redisAuthorizationRequestRepository))
 					.successHandler(oAuth2SuccessHandler)
 					.failureHandler(oAuth2FailureHandler)
+					.loginPage("/api/users/login-fail")
 			)
 			.addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
 			.addFilterBefore(jwtExceptionFilter(), JwtAuthorizationFilter.class)
