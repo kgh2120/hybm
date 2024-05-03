@@ -55,11 +55,11 @@ class StorageStorageDesignJpaRepositoryTest {
 	void 장전(){
 		testEntityFactory = new TestEntityFactory();
 
-		user = testEntityFactory.getTestUserEntity(null);
+		user = testEntityFactory.getTestUserEntity();
 		userJpaRepository.save(user);
 
 		if(levelJpaRepository.findAll().isEmpty()) {
-			level = testEntityFactory.getTestLevelEntity(null, 1, 1);
+			level = testEntityFactory.getTestLevelEntity(1, 1);
 			levelJpaRepository.save(level);
 		} else {
 			level = levelJpaRepository.findByLevel(1).get();
@@ -70,13 +70,13 @@ class StorageStorageDesignJpaRepositoryTest {
 		}
 		cool = storageTypeJpaRepository.findById(StorageTypeId.COOL).get();
 
-		refrigerator = testEntityFactory.getTestRefrigerator(null, user, Boolean.FALSE, level);
+		refrigerator = testEntityFactory.getTestRefrigerator(user, Boolean.FALSE, level);
 		refrigeratorJpaRepository.save(refrigerator);
 
 		if(storageDesignJpaRepository.findAll().isEmpty()) {
-			storageDesignCoolMine = testEntityFactory.getTestMineNotUseDesign(null, cool);
-			storageDesignCoolNotMine = testEntityFactory.getTestNotMineStorageDesign(null, cool);
-			storageDesignCoolMineApplied = testEntityFactory.getTestMineUseDesign(null, cool);
+			storageDesignCoolMine = testEntityFactory.getTestMineNotUseDesign(cool);
+			storageDesignCoolNotMine = testEntityFactory.getTestNotMineStorageDesign(cool);
+			storageDesignCoolMineApplied = testEntityFactory.getTestMineUseDesign(cool);
 			storageDesignJpaRepository.save(storageDesignCoolMine);
 			storageDesignJpaRepository.save(storageDesignCoolNotMine);
 			storageDesignJpaRepository.save(storageDesignCoolMineApplied);

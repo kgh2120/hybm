@@ -18,9 +18,8 @@ import com.dragontrain.md.domain.user.domain.SocialLoginType;
 import com.dragontrain.md.domain.user.domain.User;
 
 public class TestEntityFactory {
-	public User getTestUserEntity(Long userId) {
+	public User getTestUserEntity() {
 		return User.builder()
-			.userId(userId)
 			.email("ssafy@ssafy.com")
 			.createdAt(LocalDateTime.now())
 			.updatedAt(LocalDateTime.now())
@@ -29,17 +28,46 @@ public class TestEntityFactory {
 			.build();
 	}
 
-	public Level getTestLevelEntity(Integer levelId, int level, int maxExp) {
+	public User getTestUserEntity(Long id){
+		return User.builder()
+			.userId(id)
+			.email("ssafy@ssafy.com")
+			.createdAt(LocalDateTime.now())
+			.updatedAt(LocalDateTime.now())
+			.isDeleted(Boolean.FALSE)
+			.socialLoginType(SocialLoginType.NAVER)
+			.build();
+	}
+
+	public Level getTestLevelEntity(int level, int maxExp) {
 		return Level.builder()
-			.levelId(levelId)
 			.level(level)
 			.maxExp(maxExp)
 			.build();
 	}
 
-	public Refrigerator getTestRefrigerator(Long refId, User user, Boolean isDeleted, Level level) {
+	public Level getTestLevelEntity(Integer id, int level, int maxExp) {
+		return Level.builder()
+			.levelId(id)
+			.level(level)
+			.maxExp(maxExp)
+			.build();
+	}
+
+	public Refrigerator getTestRefrigerator(User user, Boolean isDeleted, Level level) {
 		return Refrigerator.builder()
-			.refrigeratorId(refId)
+			.level(level)
+			.exp(0)
+			.createdAt(LocalDateTime.now())
+			.updatedAt(LocalDateTime.now())
+			.user(user)
+			.isDeleted(isDeleted)
+			.build();
+	}
+
+	public Refrigerator getTestRefrigerator(Long id, User user, Boolean isDeleted, Level level) {
+		return Refrigerator.builder()
+			.refrigeratorId(id)
 			.level(level)
 			.exp(0)
 			.createdAt(LocalDateTime.now())
@@ -71,9 +99,8 @@ public class TestEntityFactory {
 		return storageTypes;
 	}
 
-	public StorageDesign getTestNotMineStorageDesign(Integer storageDesignId, StorageType storageType) {
+	public StorageDesign getTestNotMineStorageDesign(StorageType storageType) {
 		return StorageDesign.builder()
-			.storageDesignId(storageDesignId)
 			.storageDesignName("내거아님")
 			.level(5)
 			.imgSrc("내거아님이미지")
@@ -81,9 +108,8 @@ public class TestEntityFactory {
 			.build();
 	}
 
-	public StorageDesign getTestMineNotUseDesign(Integer storageDesignId, StorageType storageType) {
+	public StorageDesign getTestMineNotUseDesign(StorageType storageType) {
 		return StorageDesign.builder()
-			.storageDesignId(storageDesignId)
 			.storageDesignName("내건데안씀")
 			.level(5)
 			.imgSrc("내건데안씀이미지")
@@ -91,9 +117,8 @@ public class TestEntityFactory {
 			.build();
 	}
 
-	public StorageDesign getTestMineUseDesign(Integer storageDesignId, StorageType storageType) {
+	public StorageDesign getTestMineUseDesign(StorageType storageType) {
 		return StorageDesign.builder()
-			.storageDesignId(storageDesignId)
 			.storageDesignName("내건데안씀")
 			.level(5)
 			.imgSrc("내건데안씀이미지")
@@ -101,9 +126,18 @@ public class TestEntityFactory {
 			.build();
 	}
 
-	public StorageDesignResponse getTestMyStorageDesignResponse(Integer id, Integer level, String type) {
-		return StorageDesignResponse.builder()
+	public StorageDesign getTestMineUseDesign(Integer id, StorageType storageType) {
+		return StorageDesign.builder()
 			.storageDesignId(id)
+			.storageDesignName("내건데안씀")
+			.level(5)
+			.imgSrc("내건데안씀이미지")
+			.storageType(storageType)
+			.build();
+	}
+
+	public StorageDesignResponse getTestMyStorageDesignResponse(Integer level, String type) {
+		return StorageDesignResponse.builder()
 			.name("내테스트디자인레스폰스")
 			.has(Boolean.TRUE)
 			.designImgSrc("내테스트디자인")
