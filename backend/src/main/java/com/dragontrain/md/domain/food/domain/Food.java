@@ -4,10 +4,15 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 
+import com.dragontrain.md.domain.food.controller.request.FoodInfoRequest;
+import com.dragontrain.md.domain.food.exception.FoodErrorCode;
+import com.dragontrain.md.domain.food.exception.FoodException;
+import com.dragontrain.md.domain.food.service.port.CategoryDetailRepository;
 import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
 import com.dragontrain.md.domain.refrigerator.domain.StorageType;
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 
+import com.dragontrain.md.domain.refrigerator.service.port.StorageTypeRepository;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -93,6 +98,21 @@ public class Food {
 			.foodStatus(calculateFoodStatus(expectedExpirationDate, now.toLocalDate()))
 			.refrigerator(refrigerator)
 			.build();
+	}
+
+	public Food update(String name,
+					   CategoryDetail categoryDetail,
+					   Integer price,
+					   LocalDate expectedExpirationDate,
+					   StorageTypeId storageType) {
+
+		this.name = name;
+		this.categoryDetail = categoryDetail;
+		this.price = price;
+		this.expectedExpirationDate = expectedExpirationDate;
+		this.storageType = StorageType.builder().storageType(storageType).build();
+
+		return this;
 	}
 
 	private static FoodStatus calculateFoodStatus(LocalDate expectedExpirationDate, LocalDate now) {
