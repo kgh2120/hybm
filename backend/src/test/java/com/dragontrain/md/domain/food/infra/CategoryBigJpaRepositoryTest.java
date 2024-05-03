@@ -11,7 +11,6 @@ import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import com.dragontrain.md.domain.refrigerator.infra.LevelJpaRepository;
 import com.dragontrain.md.domain.refrigerator.infra.RefrigeratorJpaRepository;
 import com.dragontrain.md.domain.refrigerator.infra.StorageTypeJpaRepository;
-import com.dragontrain.md.domain.statistics.service.dto.BigCategoryStatistics;
 import com.dragontrain.md.domain.user.domain.User;
 import com.dragontrain.md.domain.user.infra.UserJpaRepository;
 import org.junit.jupiter.api.Assertions;
