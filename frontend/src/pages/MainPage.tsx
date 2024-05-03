@@ -1,4 +1,4 @@
-import styles from "../styles/testPage/TestPage.module.css";
+import styles from "../styles/mainPage/MainPage.module.css";
 import modernIce from "../assets/modernIce.png";
 import modernCool from "../assets/modernCool.png";
 import modernCabinet from "../assets/modernCabinet.png";
@@ -10,8 +10,8 @@ import expBar from "../assets/expBar.png";
 import trashCan from "../assets/trashCan.png";
 import notification from "../assets/notification.png";
 import { Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { getFoodCategoryList } from "../api/foodApi";
+// import { useQuery } from "@tanstack/react-query";
+// import { getFoodCategoryList } from "../api/foodApi";
 import { useState } from "react";
 import Modal from "../components/common/Modal";
 import NotificationModal from "../components/mainPage/NotificationModal";
