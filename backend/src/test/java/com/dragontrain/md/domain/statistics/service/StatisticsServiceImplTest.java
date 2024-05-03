@@ -99,11 +99,11 @@ class StatisticsServiceImplTest {
 
 		StatisticsResponse statisticsResponse = statisticsService.findStatisticsByYearAndMonth(user, 1, 1);
 
-		Assertions.assertEquals(statisticsResponse.getTopEaten().size(), 5);
-		Assertions.assertEquals(statisticsResponse.getTopThrown().size(), 5);
-		Assertions.assertEquals(statisticsResponse.getSpend().size(), 6);
-		Assertions.assertEquals(statisticsResponse.getEaten(), 420);
-		Assertions.assertEquals(statisticsResponse.getThrown(), 420);
-		Assertions.assertEquals(statisticsResponse.getTotal(), 4200000);
+		Assertions.assertEquals(statisticsResponse.getTopEatenDetailCategory().size(), 5);
+		Assertions.assertEquals(statisticsResponse.getTopThrownDetailCategory().size(), 5);
+		Assertions.assertEquals(statisticsResponse.getSpendByBigCategory().size(), 6);
+		Assertions.assertEquals(statisticsResponse.getEatenCount(), 420);
+		Assertions.assertEquals(statisticsResponse.getThrownCount(), 420);
+		Assertions.assertEquals(statisticsResponse.getTotalSpend(), 4200000);
 	}
 }

@@ -35,7 +35,7 @@ public class StatisticsResponse {
 		}
 
 		if(countEatenAndRoten.containsKey(FoodDeleteType.THROWN)
-		&& countEatenAndRoten.get(FoodDeleteType.THROWN) <= Integer.MAX_VALUE){
+			&& countEatenAndRoten.get(FoodDeleteType.THROWN) <= Integer.MAX_VALUE){
 			thrownCount = countEatenAndRoten.get(FoodDeleteType.THROWN).intValue();
 		}
 
