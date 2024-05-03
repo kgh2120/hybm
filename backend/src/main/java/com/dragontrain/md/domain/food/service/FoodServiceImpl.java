@@ -322,11 +322,12 @@ public class FoodServiceImpl implements FoodService {
 		return FoodDetailResponse.create(food);
 	}
 
+	@Transactional
 	@Override
 	public void updateFood(Long foodId, User user, FoodInfoRequest foodInfoRequest) {
 
 		Food food = foodRepository.findById(foodId).orElseThrow(() -> new FoodException(FoodErrorCode.FOOD_NOT_FOUND));
-		if (food.getRefrigerator().getUser() != user) {
+		if (food.getRefrigerator().getUser().equals(user)) {
 			throw new FoodException(FoodErrorCode.NOT_MY_FOOD);
 		}
 
@@ -335,10 +336,10 @@ public class FoodServiceImpl implements FoodService {
 			.orElseThrow(() -> new FoodException(FoodErrorCode.CATEGORY_DETAIL_NOT_FOUND));
 		Integer price = foodInfoRequest.getPrice();
 		LocalDate expiredDate = makeLocalDate(foodInfoRequest.getExpiredDate());
-		StorageType location = storageTypeRepository.findById(StorageTypeId.valueOf(foodInfoRequest.getLocation()))
-			.orElseThrow(() -> new FoodException(FoodErrorCode.STORAGE_NOT_FOUND));
+		StorageTypeId location = StorageTypeId.valueOf(foodInfoRequest.getLocation().toUpperCase());
+		Food updatedFood = food.update(name, categoryDetail, price, expiredDate, location);
 
-		food.update(name, categoryDetail, price, expiredDate, location);
+		foodRepository.save(updatedFood);
 	}
 
 

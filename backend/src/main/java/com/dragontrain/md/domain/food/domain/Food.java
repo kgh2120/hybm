@@ -100,11 +100,11 @@ public class Food {
 			.build();
 	}
 
-	public void update(String name,
+	public Food update(String name,
 					   CategoryDetail categoryDetail,
 					   Integer price,
 					   LocalDate expectedExpirationDate,
-					   StorageType storageType) {
+					   StorageTypeId storageType) {
 
 		if (name != null && !name.isEmpty()) {
 			this.name = name;
@@ -119,8 +119,10 @@ public class Food {
 			this.expectedExpirationDate = expectedExpirationDate;
 		}
 		if (storageType != null) {
-			this.storageType = storageType;
+			this.storageType = StorageType.builder().storageType(storageType).build();
 		}
+
+		return this;
 	}
 
 	private static FoodStatus calculateFoodStatus(LocalDate expectedExpirationDate, LocalDate now) {
