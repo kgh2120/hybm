@@ -6,7 +6,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-public class BigCategoryStatistics {
+public class BigCategoryPriceInfo {
 	private String bigCategory;
 	private Integer money;
 }

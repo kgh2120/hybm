@@ -2,7 +2,7 @@ package com.dragontrain.md.domain.food.infra;
 
 import com.dragontrain.md.domain.food.domain.CategoryBig;
 import com.dragontrain.md.domain.food.service.port.CategoryBigRepository;
-import com.dragontrain.md.domain.statistics.service.dto.BigCategoryStatistics;
+import com.dragontrain.md.domain.statistics.service.dto.BigCategoryPriceInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -21,7 +21,7 @@ public class CategoryBigRepositoryImpl implements CategoryBigRepository {
 	}
 
 	@Override
-	public List<BigCategoryStatistics> findAllBigGroupAndSpend(Long refrigeratorId, Integer year, Integer month) {
+	public List<BigCategoryPriceInfo> findAllBigGroupAndSpend(Long refrigeratorId, Integer year, Integer month) {
 		return categoryBigJpaRepository.findAllBigGroupAndSpend(refrigeratorId, year, month);
 	}
 }
