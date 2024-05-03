@@ -9,12 +9,12 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class ReceiptEachRequest {
+public class FoodInfoRequest {
 
 	private String name;
 	private Integer categoryId;
 	private Integer price;
-	private LocalDate expiredDate;
-	private StorageTypeId location;
+	private String expiredDate;
+	private String location;
 }
 

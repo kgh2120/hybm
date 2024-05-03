@@ -36,4 +36,6 @@ public class FoodRegister {
 	private String location;
 	@NotNull(message = "수동 여부를 전달해주세요.")
 	private Boolean isManual;
+
+
 }

@@ -1,6 +1,6 @@
 package com.dragontrain.md.domain.food.controller;
 
-import com.dragontrain.md.domain.food.controller.request.ReceiptEachRequest;
+import com.dragontrain.md.domain.food.controller.request.FoodInfoRequest;
 import com.dragontrain.md.domain.food.controller.response.*;
 import java.util.List;
 
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dragontrain.md.domain.food.controller.request.FoodRegister;
-import com.dragontrain.md.domain.food.controller.request.ReceiptEachRequest;
 import com.dragontrain.md.domain.food.controller.response.BarcodeInfo;
 import com.dragontrain.md.domain.food.controller.response.ExpectedExpirationDate;
 import com.dragontrain.md.domain.food.controller.response.ReceiptProducts;
@@ -51,9 +50,9 @@ public class FoodController {
 		return ResponseEntity.ok(foodService.getExpectedExpirationDate(categoryDetailId, year, month, day));
 	}
 
-	@PostMapping("/getGeneralOCR")
-	public ResponseEntity<String> getGeneralOCR(@RequestBody String imgURL) {
-		return ResponseEntity.ok(foodService.callGeneralOCR(imgURL));
+	@PostMapping(value = "/getGeneralOCR", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+	public ResponseEntity<String> getGeneralOCR(@RequestPart("image") MultipartFile imgFile) {
+		return ResponseEntity.ok(foodService.callGeneralOCR(imgFile));
 	}
 
 	@PostMapping(value = "/getReceiptOCR", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
@@ -62,9 +61,9 @@ public class FoodController {
 	}
 
 	@PostMapping("/bill")
-	public ResponseEntity<Void> registerReceipt(@RequestBody List<ReceiptEachRequest> receiptEachRequests,
+	public ResponseEntity<Void> registerReceipt(@RequestBody List<FoodInfoRequest> foodInfoRequests,
 		@AuthenticationPrincipal User user) {
-		foodService.registerReceipt(receiptEachRequests, user);
+		foodService.registerReceipt(foodInfoRequests, user);
 		return ResponseEntity.ok().build();
 	}
 
@@ -79,6 +78,14 @@ public class FoodController {
 	public ResponseEntity<FoodDetailResponse> getFoodDetailInfo(@PathVariable Long foodId) {
 
 		return ResponseEntity.ok(foodService.getFoodDetailInfo(foodId));
+	}
+
+	@PutMapping("/{foodId}")
+	public ResponseEntity<Void> updateFood(@PathVariable Long foodId,
+										   @AuthenticationPrincipal User user,
+										   @RequestBody FoodInfoRequest foodInfoRequest) {
+		foodService.updateFood(foodId, user, foodInfoRequest);
+		return ResponseEntity.ok().build();
 	}
 
 
