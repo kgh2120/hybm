@@ -52,8 +52,8 @@ class RefrigeratorControllerTest {
 	@WithMockUser
 	@Test
 	void 전체디자인반환_성공() throws Exception {
-		StorageDesignResponse storageDesignResponseCool = testEntityFactory.getTestMyStorageDesignResponse(1, 1, "냉장칸");
-		StorageDesignResponse storageDesignResponseICE = testEntityFactory.getTestMyStorageDesignResponse(2, 1, "냉동칸");
+		StorageDesignResponse storageDesignResponseCool = testEntityFactory.getTestMyStorageDesignResponse(1, "냉장칸");
+		StorageDesignResponse storageDesignResponseICE = testEntityFactory.getTestMyStorageDesignResponse(1, "냉동칸");
 		List<StorageDesignResponse> arr = Arrays.asList(storageDesignResponseCool, storageDesignResponseICE);
 
 		BDDMockito.given(storageStorageDesignService.findAllStorageDesign(any()))
@@ -69,8 +69,8 @@ class RefrigeratorControllerTest {
 	@Test
 	void 사용중디자인반환_성공() throws Exception {
 		AppliedStorageDesign ice = testEntityFactory.getTestAppliedStorageDesign(1, "1", StorageTypeId.ICE);
-		AppliedStorageDesign cool = testEntityFactory.getTestAppliedStorageDesign(3, "3", StorageTypeId.COOL);
-		AppliedStorageDesign cabinet = testEntityFactory.getTestAppliedStorageDesign(2, "2", StorageTypeId.CABINET);
+		AppliedStorageDesign cool = testEntityFactory.getTestAppliedStorageDesign(2, "3", StorageTypeId.COOL);
+		AppliedStorageDesign cabinet = testEntityFactory.getTestAppliedStorageDesign(3, "2", StorageTypeId.CABINET);
 		List<AppliedStorageDesign> designs = Arrays.asList(ice, cool, cabinet);
 		AppliedStorageDesignsResponse res = AppliedStorageDesignsResponse.createByAppliedStorageDesign(designs);
 
