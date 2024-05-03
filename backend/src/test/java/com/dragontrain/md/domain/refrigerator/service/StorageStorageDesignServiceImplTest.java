@@ -109,8 +109,6 @@ class StorageStorageDesignServiceImplTest {
 					.request(masds)
 					.build();
 
-		System.out.println(request.getRequest().stream().filter(distinctByKey(item -> item.getPosition())).toList().size());
-
 		Assertions.assertThrows(StorageDesignException.class
 			,() -> storageDesignService.modifyAppliedStorageDesign(user, request));
 	}
@@ -225,8 +223,6 @@ class StorageStorageDesignServiceImplTest {
 					.position(typeId.name().toLowerCase())
 					.build()
 			);
-
-			System.out.println(masds.get(designId - 2).getDesignId() + " " + masds.get(designId - 2).getPosition());
 		}
 
 		ModifyAppliedStorageDesignRequest request = ModifyAppliedStorageDesignRequest.builder()
@@ -245,10 +241,6 @@ class StorageStorageDesignServiceImplTest {
 		SSDs.add(testEntityFactory.getTestStorageStorageDesignApplied(StorageType.builder().storageType(StorageTypeId.ICE).build(), sdICE, refrigerator));
 		SSDs.add(testEntityFactory.getTestStorageStorageDesignApplied(StorageType.builder().storageType(StorageTypeId.COOL).build(), sdCOOL, refrigerator));
 		SSDs.add(testEntityFactory.getTestStorageStorageDesignApplied(StorageType.builder().storageType(StorageTypeId.CABINET).build(), sdCABINET, refrigerator));
-
-		for(StorageStorageDesign ssd : SSDs){
-			System.out.println(ssd.getStorageStorageDesignId().getStorageDesignId() + " " + ssd.getStorageType().getStorageType());
-		}
 
 		List<StorageStorageDesign> newDesigns = new ArrayList<>();
 		designId = 1;
