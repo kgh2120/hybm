@@ -17,6 +17,7 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Setter
 @Getter
 public class FoodRegister {
@@ -35,4 +36,6 @@ public class FoodRegister {
 	private String location;
 	@NotNull(message = "수동 여부를 전달해주세요.")
 	private Boolean isManual;
+
+
 }
