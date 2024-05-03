@@ -24,9 +24,6 @@ test-backend:       # This job runs in the build stage, which runs first.
 test-frontend:       # This job runs in the build stage, which runs first.
   image: node:18-alpine
   stage: test
-  before_script:
-    - echo "$ENV" > frontend/.env
-    - echo "$ENV_PROD" > frontend/.env.prod
   script:
     - cd frontend
     - rm -rf node_modules/
@@ -73,9 +70,6 @@ build-frontend:       # This job runs in the build stage, which runs first.
     DOCKER_HOST: tcp://localhost:2375
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ''
-  before_script:
-    - echo "$ENV" > frontend/.env
-    - echo "$ENV_PROD" > frontend/.env.prod
   script:
     - cd frontend
     - rm -rf node_modules/
