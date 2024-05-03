@@ -38,21 +38,21 @@ function MainPage() {
     setIsLevelUpModalOpen(false);
   };
 
-  const {
-    data: foodCategoryList,
-    isPending: isFoodCategoryListPending,
-    isError: isFoodCategoryListError,
-  } = useQuery({
-    queryKey: ["foodCategoryList"],
-    queryFn: getFoodCategoryList,
-  });
+  // const {
+  //   data: foodCategoryList,
+  //   isPending: isFoodCategoryListPending,
+  //   isError: isFoodCategoryListError,
+  // } = useQuery({
+  //   queryKey: ["foodCategoryList"],
+  //   queryFn: getFoodCategoryList,
+  // });
 
-  if (isFoodCategoryListPending) {
-    return <div>isLoding...</div>;
-  }
-  if (isFoodCategoryListError) {
-    return <div>error</div>;
-  }
+  // if (isFoodCategoryListPending) {
+  //   return <div>isLoding...</div>;
+  // }
+  // if (isFoodCategoryListError) {
+  //   return <div>error</div>;
+  // }
 
   // console.log(foodCategoryList);
   return (
@@ -81,7 +81,10 @@ function MainPage() {
             alt="경험치바 이미지"
           />
           <div className={styles.current_exp}></div>
-          <div className={styles.notification_box} onClick={handleOpenNotificationModal}>
+          <div
+            className={styles.notification_box}
+            onClick={handleOpenNotificationModal}
+          >
             <div className={styles.notification_sub_box}>
               <img src={notification} alt="알림 이미지" />
               <div></div>
