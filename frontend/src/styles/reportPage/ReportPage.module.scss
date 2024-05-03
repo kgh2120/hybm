@@ -7,8 +7,21 @@
   align-items: center;
   justify-content: center;
 
-  .title {
+  .page_header {
     @include modal-title;
+    width: 100%;
+
+    span {
+      @include modal-title;
+      position: relative;
+    }
+
+    .home_img {
+      width: 20px;
+      aspect-ratio: 1/1;
+      position: absolute;
+      left: 20px;
+    }
   }
 
   .white_background {
@@ -45,9 +58,9 @@
         margin: 8%;
         p {
           line-height: 150%;
-        }
-        p > span {
-          color: $color-point;
+          > span {
+            color: $color-point;
+          }
         }
       }
     }
@@ -61,6 +74,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 5%;
+      gap: 15px;
 
       p > span {
         color: $color-point;
