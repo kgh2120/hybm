@@ -1,15 +1,31 @@
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getLoginStatus } from "../api/userApi";
+import useAuthStore from "../stores/useAuthStore";
 
-function AuthCallback() {    
-    const navigate = useNavigate()
-    // 회원정보 api 만들어지면 추가할 부분
-    useEffect(() => {
-        navigate("/")
-    }, [])
-    return (
-      <></>
-    )
+function AuthCallback() {
+  const { setIsLogin } = useAuthStore();
+  const navigate = useNavigate();
+  const {
+    data: loginStatus,
+    isPending: isLoginStatusPending,
+    isError: isLoginStatusError,
+  } = useQuery({
+    queryKey: ["loginStatus"],
+    queryFn: getLoginStatus,
+  });
+
+  if (isLoginStatusPending) {
+    return <div>로그인 중...</div>;
   }
-  
-  export default AuthCallback
+  if (isLoginStatusError) {
+    navigate("/landing");
+  }
+  if (loginStatus === 200) {
+    setIsLogin(true);
+    navigate("/");
+  }
+  return <></>;
+}
+
+export default AuthCallback;
