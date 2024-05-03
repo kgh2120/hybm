@@ -1,5 +1,6 @@
 package com.dragontrain.md.domain.statistics.service.dto;
 
+import com.dragontrain.md.domain.food.domain.CategoryDetail;
 import lombok.*;
 
 @Getter
@@ -11,5 +12,14 @@ public class TopThrownWithCount {
 	String name;
 	String imgSrc;
 	Integer count;
+
+	public static TopThrownWithCount create(CategoryDetail categoryDetail, Integer count){
+		return TopThrownWithCount.builder()
+			.categoryDetailId(categoryDetail.getCategoryDetailId())
+			.name(categoryDetail.getName())
+			.imgSrc(categoryDetail.getImgSrc())
+			.count(count)
+			.build();
+	}
 
 }

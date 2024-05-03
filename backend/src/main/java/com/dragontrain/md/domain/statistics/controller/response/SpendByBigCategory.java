@@ -9,4 +9,11 @@ import lombok.*;
 public class SpendByBigCategory {
 	private String bigCategory;
 	private Integer money;
+
+	public static SpendByBigCategory create(String bigCategory, Integer money){
+		return SpendByBigCategory.builder()
+			.bigCategory(bigCategory)
+			.money(money)
+			.build();
+	}
 }
