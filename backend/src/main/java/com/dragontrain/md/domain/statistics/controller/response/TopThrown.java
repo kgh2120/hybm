@@ -8,13 +8,13 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 public class TopThrown {
-	private Integer foodId;
+	private Integer detailCategoryId;
 	private String name;
 	private String imgSrc;
 
 	public static TopThrown createByTopThrownWithCount(TopThrownWithCount topThrownWithCount){
 		return TopThrown.builder()
-			.foodId(topThrownWithCount.getCategoryDetailId())
+			.detailCategoryId(topThrownWithCount.getCategoryDetailId())
 			.name(topThrownWithCount.getName())
 			.imgSrc(topThrownWithCount.getImgSrc())
 			.build();

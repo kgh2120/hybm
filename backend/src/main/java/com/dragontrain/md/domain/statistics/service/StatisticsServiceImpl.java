@@ -64,7 +64,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 				SpendByBigCategory.create(bigCategory, sum)
 			);
 		}
-		Collections.sort(priceResult, (o1, o2) -> Integer.compare(o2.getMoney(), o1.getMoney()));
+		Collections.sort(priceResult, (o1, o2) -> Integer.compare(o2.getSpend(), o1.getSpend()));
 
 		List<SpendByBigCategory> priceResponse;
 		if(priceResult.size() > 5){
@@ -72,7 +72,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 			int tmpCount = 0;
 			for(int i = 0; i < 5; i++){
 				priceResponse.add(priceResult.get(i));
-				tmpCount += priceResult.get(i).getMoney();
+				tmpCount += priceResult.get(i).getSpend();
 			}
 			priceResponse.add(
 				SpendByBigCategory.create("etc", totalPrice - tmpCount)

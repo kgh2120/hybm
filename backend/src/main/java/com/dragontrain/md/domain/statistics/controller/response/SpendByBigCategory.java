@@ -8,12 +8,12 @@ import lombok.*;
 @Builder
 public class SpendByBigCategory {
 	private String bigCategory;
-	private Integer money;
+	private Integer spend;
 
-	public static SpendByBigCategory create(String bigCategory, Integer money){
+	public static SpendByBigCategory create(String bigCategory, Integer spend){
 		return SpendByBigCategory.builder()
 			.bigCategory(bigCategory)
-			.money(money)
+			.spend(spend)
 			.build();
 	}
 }
