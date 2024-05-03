@@ -1,0 +1,27 @@
+.wrapper {
+  position: relative;
+}
+.wrapper .background {
+  pointer-events: none;
+}
+.wrapper .white_section {
+  z-index: 100;
+  position: absolute;
+  top: 10%;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.left_arrow {
+  width: 25px;
+  height: 75px;
+  position: absolute;
+  z-index: 100;
+  top: 50%;
+  left: 10%;
+  transform: translate(-50%, -50%);
+}/*# sourceMappingURL=DesignPage.module.css.map */

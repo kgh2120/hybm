@@ -2,9 +2,11 @@ import meat from "../../assets/meat.png";
 import styles from "../../styles/common/ItemBox.module.css";
 
 interface propsType {
+  name: string;
+  content: string;
   option: string;
 }
-function ItemBox({ option = "active" }: propsType) {
+function ItemBox({ name, content, option = "active" }: propsType) {
   return (
     <article className={styles.wrapper}>
       {option === "inactive" ? (
@@ -25,8 +27,8 @@ function ItemBox({ option = "active" }: propsType) {
         </div>
       )}
       <div className={styles.text_box}>
-        <span className={styles.item_name}>고기고기</span>
-        <span className={styles.item_content}>D-7</span>
+        <span className={styles.item_name}>{name}</span>
+        <span className={styles.item_content}>{content}</span>
       </div>
     </article>
   );

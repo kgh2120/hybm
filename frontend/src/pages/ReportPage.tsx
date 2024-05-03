@@ -143,21 +143,22 @@ function ReportPage() {
               <div>
                 <p>먹은 것 Top 5</p>
                 <div className={styles.item_boxes}>
-                  <ItemBox option="report" />
-                  <ItemBox option="report" />
-                  <ItemBox option="report" />
-                  <ItemBox option="report" />
-                  <ItemBox option="report" />
+                  <ItemBox name="기본찬장" content="" option="report" />
+                  <ItemBox name="기본찬장" content="" option="report" />
+                  <ItemBox name="기본찬장" content="" option="report" />
+                  <ItemBox name="기본찬장" content="" option="report" />
+                  <ItemBox name="기본찬장" content="" option="report" />
+              
                 </div>
               </div>
               <div>
                 <p>버린 것 Top 5</p>
                 <div className={styles.item_boxes}>
-                  <ItemBox option="report" />
-                  <ItemBox option="report" />
-                  <ItemBox option="report" />
-                  <ItemBox option="report" />
-                  <ItemBox option="report" />
+                <ItemBox name="기본찬장" content="" option="report" />
+                  <ItemBox name="기본찬장" content="" option="report" />
+                  <ItemBox name="기본찬장" content="" option="report" />
+                  <ItemBox name="기본찬장" content="" option="report" />
+                  <ItemBox name="기본찬장" content="" option="report" />
                 </div>
               </div>
             </div>

@@ -1,0 +1,36 @@
+.wrapper {
+  background-color: rgba(255, 255, 255, 0.97);
+  border: 1px solid #fb5862;
+  border-radius: 10px;
+  position: relative;
+  width: 180px;
+}
+.wrapper > div {
+  width: 100%;
+  position: relative;
+}
+.wrapper > div > h2 {
+  position: absolute;
+  top: -5px;
+  left: 10px;
+  font-size: 15px;
+  color: #666666;
+  font-weight: 100;
+  text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
+}
+.wrapper .main_section {
+  padding: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  row-gap: 5px;
+  overflow-x: auto;
+}
+.wrapper > img {
+  width: 23px;
+  aspect-ratio: 1/1;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  top: -5px;
+}/*# sourceMappingURL=WhiteSection.module.css.map */
