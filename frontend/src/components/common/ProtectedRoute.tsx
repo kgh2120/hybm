@@ -5,7 +5,7 @@ import styles from "../../styles/common/ProtectedRoute.module.css";
 function ProtectedRoute() {
   const isLogin = useAuthStore((state) => state.isLogin);
 
-  if (isLogin) {
+  if (!isLogin) {
     return <Navigate to="/landing" />;
   }
   return (
