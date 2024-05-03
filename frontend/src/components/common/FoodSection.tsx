@@ -18,6 +18,7 @@ function FoodSection({
   price,
   setPrice,
 }: propsType) {
+  
   const handleChangePrice = (e: ChangeEvent<HTMLInputElement>) => {
     const updatedPrice = e.target.value.replace(/[^0-9]/g, ""); // 숫자 이외의 문자 제거
     setPrice(updatedPrice);
