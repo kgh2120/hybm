@@ -13,12 +13,12 @@ import java.util.Map;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 public class StatisticsResponse {
-	private Integer total;
-	private List<SpendByBigCategory> spend;
-	private Long eaten;
-	private Long thrown;
-	private List<TopEaten> topEaten;
-	private List<TopThrown> topThrown;
+	private Integer totalSpend;
+	private List<SpendByBigCategory> spendByBigCategory;
+	private Integer eatenCount;
+	private Integer thrownCount;
+	private List<TopEaten> topEatenDetailCategory;
+	private List<TopThrown> topThrownDetailCategory;
 
 	public static StatisticsResponse create(Integer totalPrice,
 											List<SpendByBigCategory>spendByBigCategories,
@@ -26,13 +26,26 @@ public class StatisticsResponse {
 											List<TopEatenWithCount> eatenRank,
 											List<TopThrownWithCount> thrownRank)
 	{
+		int eatenCount = 0;
+		int thrownCount = 0;
+
+		if(countEatenAndRoten.containsKey(FoodDeleteType.EATEN)
+			&& countEatenAndRoten.get(FoodDeleteType.EATEN) <= Integer.MAX_VALUE){
+			eatenCount = countEatenAndRoten.get(FoodDeleteType.EATEN).intValue();
+		}
+
+		if(countEatenAndRoten.containsKey(FoodDeleteType.THROWN)
+		&& countEatenAndRoten.get(FoodDeleteType.THROWN) <= Integer.MAX_VALUE){
+			thrownCount = countEatenAndRoten.get(FoodDeleteType.THROWN).intValue();
+		}
+
 		return StatisticsResponse.builder()
-			.total(totalPrice)
-			.spend(spendByBigCategories)
-			.eaten(countEatenAndRoten.containsKey(FoodDeleteType.EATEN) ? countEatenAndRoten.get(FoodDeleteType.EATEN) : 0)
-			.thrown(countEatenAndRoten.containsKey(FoodDeleteType.THROWN) ? countEatenAndRoten.get(FoodDeleteType.THROWN) : 0)
-			.topEaten(eatenRank.stream().map(TopEaten::createByTopEatenWithCount).limit(5).toList())
-			.topThrown(thrownRank.stream().map(TopThrown::createByTopThrownWithCount).limit(5).toList())
+			.totalSpend(totalPrice)
+			.spendByBigCategory(spendByBigCategories)
+			.eatenCount(eatenCount)
+			.thrownCount(thrownCount)
+			.topEatenDetailCategory(eatenRank.stream().map(TopEaten::createByTopEatenWithCount).limit(5).toList())
+			.topThrownDetailCategory(thrownRank.stream().map(TopThrown::createByTopThrownWithCount).limit(5).toList())
 			.build();
 	}
 }
