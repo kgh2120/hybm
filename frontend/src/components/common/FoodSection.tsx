@@ -1,17 +1,23 @@
-import { ChangeEvent, useState } from "react";
+// import { ChangeEvent } from "react";
 import styles from "../../styles/common/FoodSection.module.css";
-import { formatPrice } from "../../utils/formatting";
+// import { formatPrice } from "../../utils/formatting";
 import ExpiryDateSelector from "./ExpiryDateSelector";
 import meat from "../../assets/meat.png";
 import search from "../../assets/search.png";
 
-function FoodSection() {
-  const [price, setPrice] = useState<number | string>(0);
+// interface propsType {
+//   name: string | number | boolean | ((e: React.ChangeEvent<HTMLInputElement>) => void)
+//   changeName: string | number | boolean | ((e: React.ChangeEvent<HTMLInputElement>) => void)
+//   price: string | number | boolean | ((e: React.ChangeEvent<HTMLInputElement>) => void)
+//   setPrice: React.Dispatch<React.SetStateAction<number | string>>;
+// }
 
-  const handleChangePrice = (e: ChangeEvent<HTMLInputElement>) => {
-    const updatedPrice = e.target.value.replace(/[^0-9]/g, ""); // 숫자 이외의 문자 제거
-    setPrice(updatedPrice);
-  };
+function FoodSection() {
+  
+  // const handleChangePrice = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const updatedPrice = e.target.value.replace(/[^0-9]/g, ""); // 숫자 이외의 문자 제거
+  //   setPrice(updatedPrice);
+  // };
 
   return (
     <div className={styles.wrapper}>
@@ -25,8 +31,8 @@ function FoodSection() {
           <img className={styles.category_img} src={meat} alt="" />
           <input
             type="text"
-            value={formatPrice(price)}
-            onChange={handleChangePrice}
+            // value={formatPrice(price)}
+            // onChange={handleChangePrice}
           />
           <img
             className={styles.category_search_img}
@@ -44,8 +50,8 @@ function FoodSection() {
         <div className={styles.price_box}>
           <input
             type="text"
-            value={formatPrice(price)}
-            onChange={handleChangePrice}
+            // value={formatPrice(price)}
+            // onChange={handleChangePrice}
           />
           <span>원</span>
         </div>

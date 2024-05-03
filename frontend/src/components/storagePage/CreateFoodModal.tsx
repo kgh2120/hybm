@@ -4,13 +4,20 @@ import barcode from "../../assets/barcode.png";
 import camera from "../../assets/camera.png";
 // import { useInput } from "../../hooks/useInput";
 import FoodSection from "../common/FoodSection";
+// import { useState } from "react";
 
 function CreateFoodModal() {
-  // const [category, changeCategory] = useInput("닭고기");
+  // const [name, changeName] = useInput("닭고기");
+  // const [categoryId, changeCategoryId] = useInput("닭고기");
+  // const [price, setPrice] = useState(0);
+  // const [expiredDate, changeExpiredDate] = useInput("닭고기");
+  // const [location, changeLocation] = useInput("닭고기");
+  // const [isManual, changeIsManual] = useInput("닭고기");
   return (
     <div className={styles.wrapper}>
       <section className={styles.main_section}>
 
+        {/* <FoodSection name={name} changeName={changeName} price={price} setPrice={setPrice}/> */}
         <FoodSection />
         <section className={styles.btn_section}>
           <div><img src={barcode} alt="바코드아이콘" /></div>
