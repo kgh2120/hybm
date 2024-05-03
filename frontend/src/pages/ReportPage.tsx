@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -10,6 +11,7 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 import styles from "../styles/reportPage/ReportPage.module.css";
 import ItemBox from "../components/common/ItemBox";
 import MyDatePicker from "../components/reportPage/Calendar";
+import HomeBtn from "../assets/home.png";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -85,7 +87,16 @@ function ReportPage() {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.title}>보고서</div>
+      <div className={styles.page_header}>
+        <Link to="/">
+          <img
+            src={HomeBtn}
+            className={styles.home_img}
+            alt="홈버튼"
+          />
+        </Link>
+        <span className={styles.title}>보고서</span>
+      </div>
       <div className={styles.white_background}>
         <div>
           <MyDatePicker />

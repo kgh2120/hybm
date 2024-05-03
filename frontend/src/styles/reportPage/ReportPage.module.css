@@ -5,10 +5,23 @@
   align-items: center;
   justify-content: center;
 }
-.wrapper .title {
+.wrapper .page_header {
   color: #666666;
   font-size: 20px;
   font-weight: 100;
+  width: 100%;
+}
+.wrapper .page_header span {
+  color: #666666;
+  font-size: 20px;
+  font-weight: 100;
+  position: relative;
+}
+.wrapper .page_header .home_img {
+  width: 20px;
+  aspect-ratio: 1/1;
+  position: absolute;
+  left: 20px;
 }
 .wrapper .white_background {
   background-color: white;
