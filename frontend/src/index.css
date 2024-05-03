@@ -1,7 +1,6 @@
 @font-face {
   font-family: "PFStardust";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.3/PFStardust.woff")
-    format("woff");
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.3/PFStardust.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
@@ -28,6 +27,35 @@ html,
 body {
   height: 100%;
   background-color: #FCE6E7;
+
+  .react-datepicker {
+    border: 1px solid black;
+    border-radius: 0;
+    display: flex;
+
+    .react-datepicker__header {
+      background-color: #FCE6E7;
+      border-bottom: none;
+      border-radius: 0;
+    }
+
+  }
+
+  .react-datepicker__input-container {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+  }
+
+  .react-datepicker__view-calendar-icon input {
+    padding: 0px;
+  }
+
+  .react-datepicker__triangle {
+    display: none;
+  }
+
 }
 
 ol,
@@ -55,6 +83,10 @@ table {
 
 button {
   background-color: white;
+}
+
+body>div {
+  height: 100%;
 }
 
 /* 
