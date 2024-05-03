@@ -41,45 +41,41 @@ function StoragePage() {
             <h2>소비기한 지남 (D+)😥</h2>
           </div>
           <section style={{ border: "2px solid #a9a9a9" }}>
-            <ItemBox option="inactive" />
-            <ItemBox option="inactive" />
-            <ItemBox option="inactive" />
-            <ItemBox option="inactive" />
-            <ItemBox option="inactive" />
-            <ItemBox option="inactive" />
+            <ItemBox name="기본찬장" content="" option="report" />
+            <ItemBox name="기본찬장" content="" option="report" />
+            <ItemBox name="기본찬장" content="" option="report" />
+            <ItemBox name="기본찬장" content="" option="report" />
+            <ItemBox name="기본찬장" content="" option="report" />
           </section>
           <div>
             <h2>위험! (D-3)</h2>
           </div>
           <section style={{ border: "2px solid #ffa7a7" }}>
-            <ItemBox option="active" />
-            <ItemBox option="active" />
-            <ItemBox option="active" />
-            <ItemBox option="active" />
-            <ItemBox option="active" />
-            <ItemBox option="active" />
+            <ItemBox name="기본찬장" content="" option="report" />
+            <ItemBox name="기본찬장" content="" option="report" />
+            <ItemBox name="기본찬장" content="" option="report" />
+            <ItemBox name="기본찬장" content="" option="report" />
+            <ItemBox name="기본찬장" content="" option="report" />
           </section>
           <div>
             <h2>경고 (D-7)</h2>
           </div>
           <section style={{ border: "2px solid #ffd66a" }}>
-            <ItemBox option="active" />
-            <ItemBox option="active" />
-            <ItemBox option="active" />
-            <ItemBox option="active" />
-            <ItemBox option="active" />
-            <ItemBox option="active" />
+            <ItemBox name="기본찬장" content="" option="report" />
+            <ItemBox name="기본찬장" content="" option="report" />
+            <ItemBox name="기본찬장" content="" option="report" />
+            <ItemBox name="기본찬장" content="" option="report" />
+            <ItemBox name="기본찬장" content="" option="report" />
           </section>
           <div>
             <h2>신선😊</h2>
           </div>
           <section style={{ border: "2px solid #7dd086" }}>
-            <ItemBox option="active" />
-            <ItemBox option="active" />
-            <ItemBox option="active" />
-            <ItemBox option="active" />
-            <ItemBox option="active" />
-            <ItemBox option="active" />
+            <ItemBox name="기본찬장" content="" option="report" />
+            <ItemBox name="기본찬장" content="" option="report" />
+            <ItemBox name="기본찬장" content="" option="report" />
+            <ItemBox name="기본찬장" content="" option="report" />
+            <ItemBox name="기본찬장" content="" option="report" />
           </section>
         </section>
         <section className={styles.btn_section}>

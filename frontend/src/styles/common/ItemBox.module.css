@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 12px;
+  gap: 5px;
 }
 .wrapper .img_box {
   width: 60px;
@@ -38,7 +38,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 5px;
+  gap: 3px;
 }
 .wrapper .text_box .item_name {
   color: #e5333e;

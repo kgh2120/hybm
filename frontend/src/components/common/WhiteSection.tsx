@@ -1,10 +1,26 @@
-import styles from '../../styles/common/WhiteSection.module.css';
+import styles from "../../styles/common/WhiteSection.module.css";
+import clip from "../../assets/clip.png";
+import ItemBox from "./ItemBox";
 
-function WhiteSection() {
+interface propsType {
+  title: string;
+}
+
+function WhiteSection({ title }: propsType) {
   return (
     <section className={styles.wrapper}>
-      <h2>보유 배지</h2>
-      <img src="" alt="" />
+      <div>
+        <h2>{title}</h2>
+      </div>
+      <img src={clip} alt="압정 이미지" />
+
+      <section className={styles.main_section}>
+        <ItemBox name="기본찬장" content="" option="active" />
+        <ItemBox name="기본찬장" content="" option="active" />
+        <ItemBox name="기본찬장" content="" option="active" />
+        <ItemBox name="기본찬장" content="" option="active" />
+        
+      </section>
     </section>
   );
 }

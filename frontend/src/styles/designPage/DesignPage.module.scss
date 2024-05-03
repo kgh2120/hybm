@@ -1,0 +1,27 @@
+@import "../common/common";
+
+.wrapper {
+  position: relative;
+  .background {
+    pointer-events: none;
+  }
+  .white_section {
+    z-index: 100;
+    position: absolute;
+    top: 10%;
+    right: 10px;
+    @include center;
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
+.left_arrow {
+    width: 25px;
+    height: 75px;
+    position: absolute;
+    z-index: 100;
+    top: 50%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+}

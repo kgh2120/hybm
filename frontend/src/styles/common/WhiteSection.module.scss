@@ -1,7 +1,38 @@
-@import '../common/WhiteSection.module.css';
+@import "../common/common";
 
 .wrapper {
   background-color: rgba(white, 0.97);
   border: 1px solid $color-light;
   border-radius: 10px;
+  position: relative;
+  width: 180px;
+  > div {
+    width: 100%;
+    position: relative;
+    > h2 {
+      position: absolute;
+      top: -5px;
+      left: 10px;
+      font-size: $font-lg;
+      color: $color-text;
+      font-weight: 100;
+      text-shadow: $font-shadow;
+    }
+  }
+  .main_section {
+    padding: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    row-gap: 5px;
+    overflow-x: auto;
+  }
+  > img {
+    width: 23px;
+    aspect-ratio: 1/1;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    top: -5px;
+  }
 }
