@@ -20,4 +20,5 @@ public interface FoodService {
 	List<CategoryInfoResponse> getCategoryInfo();
 	FoodDetailResponse getFoodDetailInfo(Long foodId);
 	void updateFood(Long foodId, User user, FoodInfoRequest foodInfoRequest);
+	void clearRefrigerator(User user);
 }

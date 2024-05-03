@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface FoodRepository {
 
 	List<Food> findAllByRefrigeratorIdAndFoodStorage(Long refrigeratorId, StorageTypeId storageTypeId);
+	List<Food> findAllByRefrigeratorId(Long refrigeratorId);
 	Optional<Food> findById(Long foodId);
 	void save(Food food);
 }

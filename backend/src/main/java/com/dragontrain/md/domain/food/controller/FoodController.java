@@ -96,4 +96,12 @@ public class FoodController {
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
+
+	@PutMapping("/clear")
+	public ResponseEntity<Void> clearRefrigerator(@AuthenticationPrincipal User user) {
+
+		foodService.clearRefrigerator(user);
+		return ResponseEntity.ok().build();
+	}
+
 }

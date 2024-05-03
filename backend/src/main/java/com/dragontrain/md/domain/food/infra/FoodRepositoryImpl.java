@@ -22,6 +22,11 @@ public class FoodRepositoryImpl implements FoodRepository {
 	}
 
 	@Override
+	public List<Food> findAllByRefrigeratorId(Long refrigeratorId) {
+		return foodJpaRepository.findAllByRefrigerator_RefrigeratorId(refrigeratorId);
+	}
+
+	@Override
 	public Optional<Food> findById(Long foodId) {
 		return foodJpaRepository.findById(foodId);
 	}

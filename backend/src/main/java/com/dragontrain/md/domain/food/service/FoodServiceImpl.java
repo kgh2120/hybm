@@ -14,6 +14,8 @@ import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
 import com.dragontrain.md.domain.refrigerator.service.port.StorageTypeRepository;
 import com.dragontrain.md.domain.user.domain.User;
+import com.dragontrain.md.domain.user.exception.UserErrorCode;
+import com.dragontrain.md.domain.user.exception.UserException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -72,7 +74,6 @@ public class FoodServiceImpl implements FoodService {
 	private final CategoryDetailRepository categoryDetailRepository;
 	private final CategoryBigRepository categoryBigRepository;
 	private final BarcodeRepository barcodeRepository;
-	private final StorageTypeRepository storageTypeRepository;
 	private final CrawlService crawlService;
 	private final TimeService timeService;
 
@@ -396,6 +397,7 @@ public class FoodServiceImpl implements FoodService {
 			storageTypeId, refrigerator, timeService.localDateTimeNow(), request.getIsManual()));
 	}
 
+
 	@Override
 	public FoodStorageResponse getFoodStorage(String storage, User user) {
 		Refrigerator refrigerator = refrigeratorRepository.findByUserId(user.getUserId())
@@ -431,6 +433,21 @@ public class FoodServiceImpl implements FoodService {
 	}
 
 
+	@Transactional
+	@Override
+	public void clearRefrigerator(User user) {
+
+		Refrigerator refrigerator = refrigeratorRepository.findByUserId(user.getUserId())
+			.orElseThrow(() -> new FoodException(FoodErrorCode.REFRIGERATOR_NOT_FOUND));
+
+		List<Food> foods = foodRepository.findAllByRefrigeratorId(refrigerator.getRefrigeratorId());
+		for (Food food : foods) {
+			food.clear();
+			foodRepository.save(food);
+		}
+
+	}
+
 
 	private LocalDate makeLocalDate(int year, int month, int day) {
 		try {
@@ -447,4 +464,5 @@ public class FoodServiceImpl implements FoodService {
 			throw new FoodException(FoodErrorCode.INVALID_DATE_FORMAT);
 		}
 	}
+
 }
