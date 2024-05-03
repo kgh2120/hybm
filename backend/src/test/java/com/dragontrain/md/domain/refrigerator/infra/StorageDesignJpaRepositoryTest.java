@@ -51,20 +51,20 @@ class StorageDesignJpaRepositoryTest {
 	@Test
 	void 냉장고디자인전체조회_성공() throws Exception {
 
-		User user = testEntityFactory.getTestUserEntity(null);
+		User user = testEntityFactory.getTestUserEntity();
 		userJpaRepository.save(user);
 
-		Level level = testEntityFactory.getTestLevelEntity(null, 1, 1);
+		Level level = testEntityFactory.getTestLevelEntity(1, 1);
 		levelJpaRepository.save(level);
 		storageTypeJpaRepository.saveAll(testEntityFactory.getAllTestStorageTypes());
 		StorageType cool = storageTypeJpaRepository.findById(StorageTypeId.COOL).get();
 
-		Refrigerator refrigerator = testEntityFactory.getTestRefrigerator(null, user, Boolean.FALSE, level);
+		Refrigerator refrigerator = testEntityFactory.getTestRefrigerator(user, Boolean.FALSE, level);
 		refrigeratorJpaRepository.save(refrigerator);
 
-		StorageDesign storageDesignCoolMine = testEntityFactory.getTestMineNotUseDesign(null, cool);
-		StorageDesign storageDesignCoolNotMine = testEntityFactory.getTestNotMineStorageDesign(null, cool);
-		StorageDesign storageDesignCoolMineApplied = testEntityFactory.getTestMineUseDesign(null, cool);
+		StorageDesign storageDesignCoolMine = testEntityFactory.getTestMineNotUseDesign(cool);
+		StorageDesign storageDesignCoolNotMine = testEntityFactory.getTestNotMineStorageDesign(cool);
+		StorageDesign storageDesignCoolMineApplied = testEntityFactory.getTestMineUseDesign(cool);
 		storageDesignJpaRepository.save(storageDesignCoolMine);
 		storageDesignJpaRepository.save(storageDesignCoolNotMine);
 		storageDesignJpaRepository.save(storageDesignCoolMineApplied);
@@ -96,21 +96,21 @@ class StorageDesignJpaRepositoryTest {
 
 	@Test
 	void 현재적용디자인조회_성공() throws Exception {
-		User user = testEntityFactory.getTestUserEntity(null);
+		User user = testEntityFactory.getTestUserEntity();
 		userJpaRepository.save(user);
 
-		Level level = testEntityFactory.getTestLevelEntity(null, 1, 1);
+		Level level = testEntityFactory.getTestLevelEntity(1, 1);
 		levelJpaRepository.save(level);
 		storageTypeJpaRepository.saveAll(testEntityFactory.getAllTestStorageTypes());
 		StorageType cool = storageTypeJpaRepository.findById(StorageTypeId.COOL)
 			.orElseThrow(() -> new Exception());
 
-		Refrigerator refrigerator = testEntityFactory.getTestRefrigerator(null, user, Boolean.FALSE, level);
+		Refrigerator refrigerator = testEntityFactory.getTestRefrigerator(user, Boolean.FALSE, level);
 		refrigeratorJpaRepository.save(refrigerator);
 
-		StorageDesign storageDesignCoolMine = testEntityFactory.getTestMineNotUseDesign(null, cool);
-		StorageDesign storageDesignCoolNotMine = testEntityFactory.getTestNotMineStorageDesign(null, cool);
-		StorageDesign storageDesignCoolMineApplied = testEntityFactory.getTestMineUseDesign(null, cool);
+		StorageDesign storageDesignCoolMine = testEntityFactory.getTestMineNotUseDesign(cool);
+		StorageDesign storageDesignCoolNotMine = testEntityFactory.getTestNotMineStorageDesign(cool);
+		StorageDesign storageDesignCoolMineApplied = testEntityFactory.getTestMineUseDesign(cool);
 		storageDesignJpaRepository.save(storageDesignCoolMine);
 		storageDesignJpaRepository.save(storageDesignCoolNotMine);
 		storageDesignJpaRepository.save(storageDesignCoolMineApplied);
