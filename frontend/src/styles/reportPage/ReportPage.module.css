@@ -53,6 +53,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 5%;
+  gap: 15px;
 }
 .wrapper .content .best_food p > span {
   color: #e5333e;
