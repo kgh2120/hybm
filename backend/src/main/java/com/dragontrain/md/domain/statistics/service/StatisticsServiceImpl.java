@@ -11,8 +11,8 @@ import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorException;
 import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
 import com.dragontrain.md.domain.statistics.controller.response.SpendByBigCategory;
 import com.dragontrain.md.domain.statistics.controller.response.StatisticsResponse;
-import com.dragontrain.md.domain.statistics.controller.response.TopEaten;
-import com.dragontrain.md.domain.statistics.controller.response.TopThrown;
+import com.dragontrain.md.domain.statistics.exception.StatisticsErrorCode;
+import com.dragontrain.md.domain.statistics.exception.StatisticsException;
 import com.dragontrain.md.domain.statistics.service.dto.BigCategoryPriceInfo;
 import com.dragontrain.md.domain.statistics.service.dto.TopEatenWithCount;
 import com.dragontrain.md.domain.statistics.service.dto.TopThrownWithCount;
@@ -20,6 +20,7 @@ import com.dragontrain.md.domain.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,6 +36,11 @@ public class StatisticsServiceImpl implements StatisticsService {
 	private final FoodRepository foodRepository;
 	@Override
 	public StatisticsResponse findStatisticsByYearAndMonth(User user, Integer year, Integer month) {
+
+		if(!checkYearAndMonth(user, year, month)){
+			throw new StatisticsException(StatisticsErrorCode.NOT_VALIDATED_YEAR_OR_MONTH);
+		}
+
 		Refrigerator refrigerator = refrigeratorRepository.findByUserId(user.getUserId())
 			.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND));
 
@@ -55,14 +61,11 @@ public class StatisticsServiceImpl implements StatisticsService {
 			}
 			totalPrice += sum;
 			priceResult.add(
-				SpendByBigCategory.builder()
-					.bigCategory(bigCategory)
-					.money(sum)
-					.build()
+				SpendByBigCategory.create(bigCategory, sum)
 			);
 		}
-
 		Collections.sort(priceResult, (o1, o2) -> Integer.compare(o2.getMoney(), o1.getMoney()));
+
 		List<SpendByBigCategory> priceResponse;
 		if(priceResult.size() > 5){
 			priceResponse = new ArrayList<>();
@@ -72,10 +75,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 				tmpCount += priceResult.get(i).getMoney();
 			}
 			priceResponse.add(
-				SpendByBigCategory.builder()
-					.bigCategory("etc")
-					.money(totalPrice - tmpCount)
-					.build()
+				SpendByBigCategory.create("etc", totalPrice - tmpCount)
 			);
 		}
 		else {
@@ -100,17 +100,12 @@ public class StatisticsServiceImpl implements StatisticsService {
 		List<TopEatenWithCount> eatenRank = new ArrayList<>();
 		for(CategoryDetail categoryDetail : eatenFoods.keySet()){
 			eatenRank.add(
-				TopEatenWithCount.builder()
-					.categoryDetailId(categoryDetail.getCategoryDetailId())
-					.name(categoryDetail.getName())
-					.imgSrc(categoryDetail.getImgSrc())
-					.count(eatenFoods.get(categoryDetail).size())
-					.build()
+				TopEatenWithCount.create(categoryDetail, eatenFoods.get(categoryDetail).size())
 			);
 		}
 		Collections.sort(eatenRank, (o1, o2) -> Integer.compare(o2.getCount(), o1.getCount()));
 
-		Map<CategoryDetail, List<Food>> rotenFoods = foods.stream()
+		Map<CategoryDetail, List<Food>> thrownFoods = foods.stream()
 			.filter(item -> item.getFoodDeleteType().equals(FoodDeleteType.THROWN))
 			.collect(Collectors.groupingBy(
 				item -> item.getCategoryDetail(),
@@ -118,25 +113,27 @@ public class StatisticsServiceImpl implements StatisticsService {
 			));
 
 		List<TopThrownWithCount> rotenRank = new ArrayList<>();
-		for(CategoryDetail categoryDetail : rotenFoods.keySet()){
+		for(CategoryDetail categoryDetail : thrownFoods.keySet()){
 			rotenRank.add(
-				TopThrownWithCount.builder()
-					.categoryDetailId(categoryDetail.getCategoryDetailId())
-					.name(categoryDetail.getName())
-					.imgSrc(categoryDetail.getImgSrc())
-					.count(rotenFoods.get(categoryDetail).size())
-					.build()
+				TopThrownWithCount.create(categoryDetail, thrownFoods.get(categoryDetail).size())
 			);
 		}
 		Collections.sort(rotenRank, (o1, o2) -> Integer.compare(o2.getCount(), o1.getCount()));
 
-		return StatisticsResponse.builder()
-			.total(totalPrice)
-			.spend(priceResponse)
-			.eaten(countEatenAndRoten.get(FoodDeleteType.EATEN) != null ? countEatenAndRoten.get(FoodDeleteType.EATEN) : 0)
-			.thrown(countEatenAndRoten.get(FoodDeleteType.THROWN) != null ? countEatenAndRoten.get(FoodDeleteType.THROWN) : 0)
-			.topEaten(eatenRank.stream().map(TopEaten::createByTopEatenWithCount).limit(5).toList())
-			.topThrown(rotenRank.stream().map(TopThrown::createByTopThrownWithCount).limit(5).toList())
-			.build();
+		return StatisticsResponse.create(
+			totalPrice,
+			priceResponse,
+			countEatenAndRoten,
+			eatenRank,
+			rotenRank
+		);
+	}
+
+	private boolean checkYearAndMonth(User user, Integer year, Integer month){
+		if((year >= user.getCreatedAt().getYear() && year <= LocalDateTime.now().getYear())
+			|| (month >= 1 && month <= LocalDateTime.now().getMonth().getValue())){
+			return true;
+		}
+		return false;
 	}
 }
