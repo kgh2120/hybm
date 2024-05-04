@@ -1,11 +1,12 @@
 package com.dragontrain.md.domain.food.infra;
 
-import com.dragontrain.md.domain.food.domain.CategoryBig;
-import com.dragontrain.md.domain.statistics.service.dto.BigCategoryPriceInfo;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
+import com.dragontrain.md.domain.food.domain.CategoryBig;
+import com.dragontrain.md.domain.statistics.service.dto.BigCategoryPriceInfo;
 
 public interface CategoryBigJpaRepository extends JpaRepository<CategoryBig, Integer> {
 	@Query("select new com.dragontrain.md.domain.statistics.service.dto.BigCategoryPriceInfo" +

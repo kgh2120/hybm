@@ -49,13 +49,11 @@ public class FoodController {
 		return ResponseEntity.ok(foodService.getBarcodeInfo(barcode));
 	}
 
-
 	@GetMapping("/category")
 	public ResponseEntity<List<CategoryInfoResponse>> getCategoryInfo() {
 
 		return ResponseEntity.ok(foodService.getCategoryInfo());
 	}
-
 
 	@GetMapping("/expiration")
 	public ResponseEntity<ExpectedExpirationDate> getExpectedExpirationDate(@RequestParam int year,
@@ -96,12 +94,11 @@ public class FoodController {
 
 	@PutMapping("/{foodId}")
 	public ResponseEntity<Void> updateFood(@PathVariable Long foodId,
-										   @AuthenticationPrincipal User user,
-										   @RequestBody FoodInfoRequest foodInfoRequest) {
+		@AuthenticationPrincipal User user,
+		@RequestBody FoodInfoRequest foodInfoRequest) {
 		foodService.updateFood(foodId, user, foodInfoRequest);
 		return ResponseEntity.ok().build();
 	}
-
 
 	@PostMapping
 	public ResponseEntity<Void> registerFood(@Validated @RequestBody FoodRegister request,

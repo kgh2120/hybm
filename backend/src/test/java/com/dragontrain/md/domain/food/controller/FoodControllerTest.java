@@ -23,7 +23,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.dragontrain.md.domain.food.controller.response.BarcodeInfo;
 import com.dragontrain.md.domain.food.controller.response.ExpectedExpirationDate;
-import com.dragontrain.md.domain.food.exception.FoodErrorCode;
 import com.dragontrain.md.domain.food.exception.FoodException;
 import com.dragontrain.md.domain.food.service.FoodService;
 

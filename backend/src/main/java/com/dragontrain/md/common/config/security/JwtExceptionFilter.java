@@ -63,7 +63,6 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
 		}
 
 		sendResponse(response, errorResponse.getHttpStatus(), objectMapper.writeValueAsString(errorResponse));
-		;
 	}
 
 	private void sendResponse(HttpServletResponse response, HttpStatus httpStatus,

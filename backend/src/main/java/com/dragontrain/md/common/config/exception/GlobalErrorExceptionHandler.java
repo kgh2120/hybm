@@ -63,9 +63,9 @@ public class GlobalErrorExceptionHandler {
 		MissingRequestCookieException missingRequestCookieException, HttpServletRequest request) {
 		log.warn("missingRequestCookieException 발생!!", missingRequestCookieException);
 
-
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-			.body(ErrorResponse.createErrorResponse(GlobalErrorCode.COOKIE_MISSING, "쿠키 [" + missingRequestCookieException.getCookieName() + "] 의 값이 넘어오지 않았습니다.",
+			.body(ErrorResponse.createErrorResponse(GlobalErrorCode.COOKIE_MISSING,
+				"쿠키 [" + missingRequestCookieException.getCookieName() + "] 의 값이 넘어오지 않았습니다.",
 				request.getRequestURI()));
 	}
 

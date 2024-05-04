@@ -1,12 +1,17 @@
 package com.dragontrain.md.domain.statistics.controller.response;
 
+import java.util.List;
+import java.util.Map;
+
 import com.dragontrain.md.domain.food.domain.FoodDeleteType;
 import com.dragontrain.md.domain.statistics.service.dto.TopEatenWithCount;
 import com.dragontrain.md.domain.statistics.service.dto.TopThrownWithCount;
-import lombok.*;
 
-import java.util.List;
-import java.util.Map;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -21,21 +26,20 @@ public class StatisticsResponse {
 	private List<TopThrown> topThrownDetailCategory;
 
 	public static StatisticsResponse create(Integer totalPrice,
-											List<SpendByBigCategory>spendByBigCategories,
-											Map<FoodDeleteType, Long> countEatenAndRoten,
-											List<TopEatenWithCount> eatenRank,
-											List<TopThrownWithCount> thrownRank)
-	{
+		List<SpendByBigCategory> spendByBigCategories,
+		Map<FoodDeleteType, Long> countEatenAndRoten,
+		List<TopEatenWithCount> eatenRank,
+		List<TopThrownWithCount> thrownRank) {
 		int eatenCount = 0;
 		int thrownCount = 0;
 
-		if(countEatenAndRoten.containsKey(FoodDeleteType.EATEN)
-			&& countEatenAndRoten.get(FoodDeleteType.EATEN) <= Integer.MAX_VALUE){
+		if (countEatenAndRoten.containsKey(FoodDeleteType.EATEN)
+			&& countEatenAndRoten.get(FoodDeleteType.EATEN) <= Integer.MAX_VALUE) {
 			eatenCount = countEatenAndRoten.get(FoodDeleteType.EATEN).intValue();
 		}
 
-		if(countEatenAndRoten.containsKey(FoodDeleteType.THROWN)
-			&& countEatenAndRoten.get(FoodDeleteType.THROWN) <= Integer.MAX_VALUE){
+		if (countEatenAndRoten.containsKey(FoodDeleteType.THROWN)
+			&& countEatenAndRoten.get(FoodDeleteType.THROWN) <= Integer.MAX_VALUE) {
 			thrownCount = countEatenAndRoten.get(FoodDeleteType.THROWN).intValue();
 		}
 

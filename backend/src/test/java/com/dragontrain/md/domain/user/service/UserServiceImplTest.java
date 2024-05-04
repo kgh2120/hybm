@@ -66,7 +66,7 @@ class UserServiceImplTest {
 		// when
 		assertThatThrownBy(() -> userService.reissueToken(refreshTokenValue))
 			.isInstanceOf(TokenException.class)
-				.hasFieldOrPropertyWithValue("errorCode", GlobalErrorCode.TOKEN_TYPE_MISS_MATCHED);
+			.hasFieldOrPropertyWithValue("errorCode", GlobalErrorCode.TOKEN_TYPE_MISS_MATCHED);
 		// then
 		then(userRepository).should(never()).findById(anyLong());
 		then(jwtProvider).should(never()).createAccessToken(anyLong());
@@ -83,13 +83,12 @@ class UserServiceImplTest {
 		given(jwtProvider.parseUserId(any()))
 			.willReturn(1L);
 
-
 		given(userRepository.findById(anyLong()))
 			.willReturn(Optional.empty());
 		// when
 		assertThatThrownBy(() -> userService.reissueToken(refreshTokenValue))
 			.isInstanceOf(UserException.class)
-				.hasFieldOrPropertyWithValue("errorCode", UserErrorCode.USER_RESOURCE_NOT_FOUND);
+			.hasFieldOrPropertyWithValue("errorCode", UserErrorCode.USER_RESOURCE_NOT_FOUND);
 		// then
 		then(jwtProvider).should(never()).createAccessToken(anyLong());
 		then(jwtProvider).should(never()).createRefreshToken(anyLong());

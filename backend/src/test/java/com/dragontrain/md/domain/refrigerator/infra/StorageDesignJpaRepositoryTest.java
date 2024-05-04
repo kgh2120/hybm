@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.dragontrain.md.domain.user.infra.UserJpaRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -21,7 +20,7 @@ import com.dragontrain.md.domain.refrigerator.domain.StorageStorageDesign;
 import com.dragontrain.md.domain.refrigerator.domain.StorageType;
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import com.dragontrain.md.domain.user.domain.User;
-
+import com.dragontrain.md.domain.user.infra.UserJpaRepository;
 
 @ActiveProfiles("test")
 @DataJpaTest

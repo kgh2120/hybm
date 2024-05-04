@@ -1,5 +1,13 @@
 package com.dragontrain.md.domain.food.infra;
 
+import java.time.LocalDateTime;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
 import com.dragontrain.md.domain.TestEntityFactory;
 import com.dragontrain.md.domain.food.domain.CategoryBig;
 import com.dragontrain.md.domain.food.domain.CategoryDetail;
@@ -13,15 +21,6 @@ import com.dragontrain.md.domain.refrigerator.infra.RefrigeratorJpaRepository;
 import com.dragontrain.md.domain.refrigerator.infra.StorageTypeJpaRepository;
 import com.dragontrain.md.domain.user.domain.User;
 import com.dragontrain.md.domain.user.infra.UserJpaRepository;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
-import java.time.LocalDateTime;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 class FoodJpaRepositoryTest {
@@ -50,12 +49,12 @@ class FoodJpaRepositoryTest {
 	private static TestEntityFactory testEntityFactory;
 
 	@BeforeAll
-	static void 장전(){
+	static void 장전() {
 		testEntityFactory = new TestEntityFactory();
 	}
 
 	@Test
-	void 먹거나_썩어서_삭제한음식획득_성공(){
+	void 먹거나_썩어서_삭제한음식획득_성공() {
 		User user = testEntityFactory.getTestUserEntity();
 		userJpaRepository.save(user);
 
@@ -73,20 +72,28 @@ class FoodJpaRepositoryTest {
 
 		storageTypeJpaRepository.save(StorageType.builder().storageType(StorageTypeId.COOL).typeName("cool").build());
 
-		for(int i = 0; i < 10; i++){
-			foodJpaRepository.save(testEntityFactory.getDeletedFood("f1", 5000, refrigerator, storageTypeJpaRepository.findById(StorageTypeId.COOL).get(), categoryDetail, LocalDateTime.now(), LocalDateTime.now(), FoodDeleteType.EATEN, LocalDateTime.now()));
+		for (int i = 0; i < 10; i++) {
+			foodJpaRepository.save(testEntityFactory.getDeletedFood("f1", 5000, refrigerator,
+				storageTypeJpaRepository.findById(StorageTypeId.COOL).get(), categoryDetail, LocalDateTime.now(),
+				LocalDateTime.now(), FoodDeleteType.EATEN, LocalDateTime.now()));
 		}
 
-		for(int i = 0; i < 5; i++){
-			foodJpaRepository.save(testEntityFactory.getDeletedFood("f2", 5000, refrigerator, storageTypeJpaRepository.findById(StorageTypeId.COOL).get(), categoryDetail, LocalDateTime.now(), LocalDateTime.now(), FoodDeleteType.THROWN, LocalDateTime.now()));
+		for (int i = 0; i < 5; i++) {
+			foodJpaRepository.save(testEntityFactory.getDeletedFood("f2", 5000, refrigerator,
+				storageTypeJpaRepository.findById(StorageTypeId.COOL).get(), categoryDetail, LocalDateTime.now(),
+				LocalDateTime.now(), FoodDeleteType.THROWN, LocalDateTime.now()));
 		}
 
-		for(int i = 0; i < 10; i++){
-			foodJpaRepository.save(testEntityFactory.getDeletedFood("f2", 5000, refrigerator, storageTypeJpaRepository.findById(StorageTypeId.COOL).get(), categoryDetail, LocalDateTime.now(), LocalDateTime.now(), FoodDeleteType.CLEAR, LocalDateTime.now()));
+		for (int i = 0; i < 10; i++) {
+			foodJpaRepository.save(testEntityFactory.getDeletedFood("f2", 5000, refrigerator,
+				storageTypeJpaRepository.findById(StorageTypeId.COOL).get(), categoryDetail, LocalDateTime.now(),
+				LocalDateTime.now(), FoodDeleteType.CLEAR, LocalDateTime.now()));
 		}
 
 		Assertions.assertEquals(foodJpaRepository.findAll().size(), 25);
-		Assertions.assertEquals(foodJpaRepository.findAllDeletedFoodByRefrigeratorIdAndTime(refrigerator.getRefrigeratorId(), LocalDateTime.now().getYear(), LocalDateTime.now().getMonth().getValue()).size(), 15);
+		Assertions.assertEquals(
+			foodJpaRepository.findAllDeletedFoodByRefrigeratorIdAndTime(refrigerator.getRefrigeratorId(),
+				LocalDateTime.now().getYear(), LocalDateTime.now().getMonth().getValue()).size(), 15);
 	}
 
 }
