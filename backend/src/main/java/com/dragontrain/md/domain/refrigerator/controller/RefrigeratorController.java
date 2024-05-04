@@ -1,5 +1,7 @@
 package com.dragontrain.md.domain.refrigerator.controller;
 
+import com.dragontrain.md.domain.refrigerator.controller.response.BadgeResponse;
+import com.dragontrain.md.domain.refrigerator.service.RefrigeratorService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class RefrigeratorController {
 
 	private final StorageStorageDesignService storageStorageDesignService;
+	private final RefrigeratorService refrigeratorService;
 
 	@GetMapping("/designs")
 	public ResponseEntity<StorageDesignsResponse> findAllRefrigeratorDesigns(
@@ -44,6 +47,12 @@ public class RefrigeratorController {
 		){
 		storageStorageDesignService.modifyAppliedStorageDesign(user, request);
 		return ResponseEntity.ok().build();
+	}
+
+	@GetMapping("/badges")
+	public ResponseEntity<BadgeResponse> getBadges(@AuthenticationPrincipal User user) {
+
+		return ResponseEntity.ok(refrigeratorService.getBadges(user));
 	}
 
 }
