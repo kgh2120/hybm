@@ -36,6 +36,10 @@ public enum GlobalErrorCode implements ErrorCode {
 	TOKEN_NOT_VERIFIED(HttpStatus.FORBIDDEN, "토큰의 시그내처가 유효하지 않습니다."), // v
 	TOKEN_MALFORMED(HttpStatus.FORBIDDEN, "토큰의 형식이 잘못되었습니다. 토큰은 [header].[payload].[secret]의 형식이어야 합니다."), // v
 	TOKEN_UNSUPPORTED(HttpStatus.FORBIDDEN, "지원하지 않는 종류의 토큰입니다."),
+	TOKEN_INVALID_KEY(HttpStatus.FORBIDDEN, "유효하지 않은 키입니다."),
+
+	COOKIE_MISSING(HttpStatus.BAD_REQUEST, "필요한 쿠키 값이 넘어오지 않았습니다."),
+	REFRESH_TOKEN_MISSING(HttpStatus.UNAUTHORIZED, "리프래시 토큰이 존재하지 않습니다. 다시 로그인해주세요."),
 
 	;
 

@@ -1,9 +1,7 @@
 package com.dragontrain.md.domain.food.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
-import org.hibernate.validator.constraints.Length;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dragontrain.md.common.config.constraint.Path;
+import com.dragontrain.md.domain.food.controller.request.FoodInfoRequest;
 import com.dragontrain.md.domain.food.controller.request.FoodRegister;
-import com.dragontrain.md.domain.food.controller.request.ReceiptEachRequest;
 import com.dragontrain.md.domain.food.controller.response.BarcodeInfo;
 import com.dragontrain.md.domain.food.controller.response.CategoryInfoResponse;
 import com.dragontrain.md.domain.food.controller.response.ExpectedExpirationDate;
@@ -34,7 +33,6 @@ import com.dragontrain.md.domain.user.domain.User;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -66,9 +64,9 @@ public class FoodController {
 		return ResponseEntity.ok(foodService.getExpectedExpirationDate(categoryDetailId, year, month, day));
 	}
 
-	@PostMapping("/getGeneralOCR")
-	public ResponseEntity<String> getGeneralOCR(@RequestBody String imgURL) {
-		return ResponseEntity.ok(foodService.callGeneralOCR(imgURL));
+	@PostMapping(value = "/getGeneralOCR", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+	public ResponseEntity<String> getGeneralOCR(@RequestPart("image") MultipartFile imgFile) {
+		return ResponseEntity.ok(foodService.callGeneralOCR(imgFile));
 	}
 
 	@PostMapping(value = "/getReceiptOCR", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
@@ -77,9 +75,9 @@ public class FoodController {
 	}
 
 	@PostMapping("/bill")
-	public ResponseEntity<Void> registerReceipt(@RequestBody List<ReceiptEachRequest> receiptEachRequests,
+	public ResponseEntity<Void> registerReceipt(@RequestBody List<FoodInfoRequest> foodInfoRequests,
 		@AuthenticationPrincipal User user) {
-		foodService.registerReceipt(receiptEachRequests, user);
+		foodService.registerReceipt(foodInfoRequests, user);
 		return ResponseEntity.ok().build();
 	}
 
@@ -94,6 +92,14 @@ public class FoodController {
 	public ResponseEntity<FoodDetailResponse> getFoodDetailInfo(@PathVariable Long foodId) {
 
 		return ResponseEntity.ok(foodService.getFoodDetailInfo(foodId));
+	}
+
+	@PutMapping("/{foodId}")
+	public ResponseEntity<Void> updateFood(@PathVariable Long foodId,
+										   @AuthenticationPrincipal User user,
+										   @RequestBody FoodInfoRequest foodInfoRequest) {
+		foodService.updateFood(foodId, user, foodInfoRequest);
+		return ResponseEntity.ok().build();
 	}
 
 

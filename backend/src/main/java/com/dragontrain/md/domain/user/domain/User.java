@@ -57,4 +57,8 @@ public class User {
 			.isDeleted(false)
 			.build();
 	}
+
+	public boolean isDeleted(){
+		return isDeleted;
+	}
 }

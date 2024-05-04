@@ -6,6 +6,7 @@ import org.springframework.context.MessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingRequestCookieException;
 import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -54,6 +55,17 @@ public class GlobalErrorExceptionHandler {
 		);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 			.body(ErrorResponse.createErrorResponse(GlobalErrorCode.BIND_ERROR, errorMessages.toString(),
+				request.getRequestURI()));
+	}
+
+	@ExceptionHandler(MissingRequestCookieException.class)
+	public ResponseEntity<ErrorResponse> handleMissingRequestCookieException(
+		MissingRequestCookieException missingRequestCookieException, HttpServletRequest request) {
+		log.warn("missingRequestCookieException 발생!!", missingRequestCookieException);
+
+
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+			.body(ErrorResponse.createErrorResponse(GlobalErrorCode.COOKIE_MISSING, "쿠키 [" + missingRequestCookieException.getCookieName() + "] 의 값이 넘어오지 않았습니다.",
 				request.getRequestURI()));
 	}
 
