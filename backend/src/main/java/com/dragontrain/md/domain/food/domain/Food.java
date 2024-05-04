@@ -3,6 +3,7 @@ package com.dragontrain.md.domain.food.domain;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.util.Objects;
 
 import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
 import com.dragontrain.md.domain.refrigerator.domain.StorageType;
@@ -113,5 +114,14 @@ public class Food {
 		Period period = this.expectedExpirationDate.until(now);
 
 		return period.getDays();
+	}
+
+	public boolean isDeleted(){
+		return Objects.nonNull(deletedAt);
+	}
+
+	public void delete(FoodDeleteType foodDeleteType, LocalDateTime localDateTime) {
+		this.deletedAt = localDateTime;
+		this.foodDeleteType = foodDeleteType;
 	}
 }

@@ -1,11 +1,16 @@
 package com.dragontrain.md.common.config.exception;
 
+import java.util.List;
+
+import org.springframework.context.MessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestHeaderException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -49,6 +54,36 @@ public class GlobalErrorExceptionHandler {
 		);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 			.body(ErrorResponse.createErrorResponse(GlobalErrorCode.BIND_ERROR, errorMessages.toString(),
+				request.getRequestURI()));
+	}
+
+	@ExceptionHandler(HandlerMethodValidationException.class)
+	public ResponseEntity<ErrorResponse> handleHandlerMethodValidationException(
+		HandlerMethodValidationException handlerMethodValidationException, HttpServletRequest request) {
+		log.warn("HandlerMethodValidationException 발생!!", handlerMethodValidationException);
+
+		StringBuilder sb = new StringBuilder();
+
+		List<? extends MessageSourceResolvable> errors = handlerMethodValidationException.getAllErrors();
+		for (MessageSourceResolvable e : errors) {
+			sb.append(e.getDefaultMessage()).append("\n");
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+			.body(ErrorResponse.createErrorResponse(GlobalErrorCode.BIND_ERROR, sb.toString(),
+				request.getRequestURI()));
+	}
+
+	@ExceptionHandler(MissingServletRequestParameterException.class)
+	public ResponseEntity<ErrorResponse> handleMissingServletRequestParameterException(
+		MissingServletRequestParameterException missingServletRequestParameterException, HttpServletRequest request) {
+		log.warn("MissingServletRequestParameterException 발생!!", missingServletRequestParameterException);
+
+		StringBuilder sb = new StringBuilder();
+		String missingParamName = missingServletRequestParameterException.getParameterName();
+		sb.append("[").append(missingParamName).append("] 을 전달해주세요.");
+
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+			.body(ErrorResponse.createErrorResponse(GlobalErrorCode.BIND_ERROR, sb.toString(),
 				request.getRequestURI()));
 	}
 }

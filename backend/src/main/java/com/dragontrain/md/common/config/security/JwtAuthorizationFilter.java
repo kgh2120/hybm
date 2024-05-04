@@ -49,6 +49,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 	private void setAuthenticated(String accessToken) {
 		Long userId = jwtProvider.parseUserId(accessToken);
 		User user = userService.loadUserByUserId(userId);
+		// TODO 삭제 검증..
 		SecurityContextHolder.getContext()
 			.setAuthentication(new UsernamePasswordAuthenticationToken(user, user.getUserId(), new ArrayList<>()));
 	}

@@ -1,5 +1,6 @@
 package com.dragontrain.md.domain.food.controller;
 
+import static com.dragontrain.md.common.config.exception.GlobalErrorCode.*;
 import static com.dragontrain.md.domain.food.exception.FoodErrorCode.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.*;
@@ -20,9 +21,9 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.dragontrain.md.common.config.exception.GlobalErrorCode;
 import com.dragontrain.md.domain.food.controller.response.BarcodeInfo;
 import com.dragontrain.md.domain.food.controller.response.ExpectedExpirationDate;
+import com.dragontrain.md.domain.food.exception.FoodErrorCode;
 import com.dragontrain.md.domain.food.exception.FoodException;
 import com.dragontrain.md.domain.food.service.FoodService;
 
@@ -264,7 +265,7 @@ class FoodControllerTest {
 				.with(csrf()))
 			.andExpectAll(
 				status().isBadRequest(),
-				jsonPath("$.errorName").value(GlobalErrorCode.BIND_ERROR.getErrorName()),
+				jsonPath("$.errorName").value(BIND_ERROR.getErrorName()),
 				jsonPath("$.errorMessage").value("ice, cool, cabinet에 해당하는 값을 입력해주세요.\n"),
 				jsonPath("$.path").value(url)
 			).andDo(print());
@@ -355,8 +356,181 @@ class FoodControllerTest {
 				.with(csrf()))
 			.andExpectAll(
 				status().isBadRequest(),
-				jsonPath("$.errorName").value(GlobalErrorCode.BIND_ERROR.getErrorName()),
+				jsonPath("$.errorName").value(BIND_ERROR.getErrorName()),
 				jsonPath("$.path").value(url)
 			).andDo(print());
 	}
+
+	@WithMockUser
+	@DisplayName("음식 처리 테스트 성공 - 먹은 경우")
+	@Test
+	void foodDeleteSuccessEatenTest() throws Exception {
+		// given
+		final String deleteType = "eaten";
+		final String path = "/api/foods/" + deleteType;
+		// when // then
+		mockMvc.perform(delete(path)
+				.param("foodId", "1", "2", "3", "4", "5")
+				.with(csrf()))
+			.andExpectAll(
+				status().isOk()
+			).andDo(print());
+	}
+
+	@WithMockUser
+	@DisplayName("음식 처리 테스트 성공 - 버린 경우")
+	@Test
+	void foodDeleteSuccessThrownTest() throws Exception {
+		// given
+		final String deleteType = "thrown";
+		final String path = "/api/foods/" + deleteType;
+		// when // then
+		mockMvc.perform(delete(path)
+				.param("foodId", "1", "2", "3", "4", "5")
+				.with(csrf()))
+			.andExpectAll(
+				status().isOk()
+			).andDo(print());
+	}
+
+	@WithMockUser
+	@DisplayName("음식 처리 테스트 실패 - 올바르지 못한 PathVariable을 입력한 경우")
+	@Test
+	void foodDeleteFailInvalidPathVariablesTest() throws Exception {
+		// given
+		final String deleteType = "clear";
+		final String path = "/api/foods/" + deleteType;
+		// when // then
+		mockMvc.perform(delete(path)
+				.param("foodId", "1", "2", "3", "4", "5")
+				.with(csrf()))
+			.andExpectAll(
+				status().isBadRequest(),
+				jsonPath("$.errorName").value(BIND_ERROR.getErrorName())
+			).andDo(print());
+	}
+
+	@WithMockUser
+	@DisplayName("음식 처리 테스트 실패 - FoodId가 사실 없는 경우")
+	@Test
+	void foodDeleteFailFoodIdNotFoundTest() throws Exception {
+		// given
+		final String deleteType = "eaten";
+		final String path = "/api/foods/" + deleteType;
+		willThrow(new FoodException(FOOD_NOT_FOUND))
+			.given(foodService)
+			.deleteFood(any(), any(), any());
+		// when // then
+		mockMvc.perform(delete(path)
+				.param("foodId", "1", "2", "3", "4", "5")
+				.with(csrf()))
+			.andExpectAll(
+				status().isNotFound(),
+				jsonPath("$.errorName").value(FOOD_NOT_FOUND.getErrorName()),
+				jsonPath("$.errorMessage").value(FOOD_NOT_FOUND.getErrorMessage())
+			).andDo(print());
+	}
+
+	@WithMockUser
+	@DisplayName("음식 처리 테스트 실패 - 음식이 이미 삭제된 경우")
+	@Test
+	void foodDeleteFailAlreadyDeletedTest() throws Exception {
+		// given
+		final String deleteType = "eaten";
+		final String path = "/api/foods/" + deleteType;
+		willThrow(new FoodException(ALREADY_DELETED_FOOD))
+			.given(foodService)
+			.deleteFood(any(), any(), any());
+		// when // then
+		mockMvc.perform(delete(path)
+				.param("foodId", "1", "2", "3", "4", "5")
+				.with(csrf()))
+			.andExpectAll(
+				status().isBadRequest(),
+				jsonPath("$.errorName").value(ALREADY_DELETED_FOOD.getErrorName()),
+				jsonPath("$.errorMessage").value(ALREADY_DELETED_FOOD.getErrorMessage())
+			).andDo(print());
+	}
+
+	@WithMockUser
+	@DisplayName("음식 처리 테스트 실패 - 내 음식이 아닌 경우")
+	@Test
+	void foodDeleteFailFoodIsNotMineTest() throws Exception {
+		// given
+		final String deleteType = "eaten";
+		final String path = "/api/foods/" + deleteType;
+		willThrow(new FoodException(INVALID_ACCESS))
+			.given(foodService)
+			.deleteFood(any(), any(), any());
+		// when // then
+		mockMvc.perform(delete(path)
+				.param("foodId", "1", "2", "3", "4", "5")
+				.with(csrf()))
+			.andExpectAll(
+				status().isForbidden(),
+				jsonPath("$.errorName").value(INVALID_ACCESS.getErrorName()),
+				jsonPath("$.errorMessage").value(INVALID_ACCESS.getErrorMessage())
+			).andDo(print());
+	}
+
+	@WithMockUser
+	@DisplayName("음식 처리 테스트 실패 - 처리할 음식이 없는 경우 (NULL)")
+	@Test
+	void foodDeleteFailFoodIsNullTest() throws Exception {
+		// given
+		final String deleteType = "eaten";
+		final String path = "/api/foods/" + deleteType;
+		willThrow(new FoodException(INVALID_ACCESS))
+			.given(foodService)
+			.deleteFood(any(), any(), any());
+		// when // then
+		mockMvc.perform(delete(path)
+				.with(csrf()))
+			.andExpectAll(
+				status().isBadRequest(),
+				jsonPath("$.errorName").value(BIND_ERROR.getErrorName())
+			).andDo(print());
+	}
+
+	@WithMockUser
+	@DisplayName("음식 처리 테스트 실패 - 처리할 음식이 없는 경우 (BLANK)")
+	@Test
+	void foodDeleteFailFoodIsEmptyTest() throws Exception {
+		// given
+		final String deleteType = "eaten";
+		final String path = "/api/foods/" + deleteType;
+		willThrow(new FoodException(INVALID_ACCESS))
+			.given(foodService)
+			.deleteFood(any(), any(), any());
+		// when // then
+		mockMvc.perform(delete(path)
+				.param("foodId", "")
+				.with(csrf()))
+			.andExpectAll(
+				status().isBadRequest(),
+				jsonPath("$.errorName").value(BIND_ERROR.getErrorName())
+			).andDo(print());
+	}
+
+	@WithMockUser
+	@DisplayName("음식 처리 테스트 실패 - 동일한 FoodId가 중복된 경우")
+	@Test
+	void foodDeleteFailFoodIdDuplicatedTest() throws Exception {
+		// given
+		final String deleteType = "eaten";
+		final String path = "/api/foods/" + deleteType;
+		willThrow(new FoodException(DUPLICATED_FOOD_ID))
+			.given(foodService)
+			.deleteFood(any(), any(), any());
+		// when // then
+		mockMvc.perform(delete(path)
+				.param("foodId", "1", "1")
+				.with(csrf()))
+			.andExpectAll(
+				status().isBadRequest(),
+				jsonPath("$.errorName").value(DUPLICATED_FOOD_ID.getErrorName()),
+				jsonPath("$.errorMessage").value(DUPLICATED_FOOD_ID.getErrorMessage())
+			).andDo(print());
+	}
+
 }

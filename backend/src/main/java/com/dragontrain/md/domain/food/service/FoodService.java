@@ -20,4 +20,5 @@ public interface FoodService {
 	FoodStorageResponse getFoodStorage(String storage, User user);
 	List<CategoryInfoResponse> getCategoryInfo();
 	FoodDetailResponse getFoodDetailInfo(Long foodId);
+	void deleteFood(String deleteType, Long[] foodId, User user);
 }

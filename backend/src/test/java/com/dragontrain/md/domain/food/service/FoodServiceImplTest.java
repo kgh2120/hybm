@@ -6,10 +6,8 @@ import static org.mockito.BDDMockito.*;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.stream.LongStream;
 
-import com.dragontrain.md.domain.food.service.port.BarcodeRepository;
-import com.dragontrain.md.domain.food.service.port.CategoryDetailRepository;
-import com.dragontrain.md.domain.food.service.port.FoodRepository;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,8 +23,12 @@ import com.dragontrain.md.domain.food.controller.response.ExpectedExpirationDate
 import com.dragontrain.md.domain.food.domain.Barcode;
 import com.dragontrain.md.domain.food.domain.CategoryBig;
 import com.dragontrain.md.domain.food.domain.CategoryDetail;
+import com.dragontrain.md.domain.food.domain.Food;
 import com.dragontrain.md.domain.food.exception.FoodErrorCode;
 import com.dragontrain.md.domain.food.exception.FoodException;
+import com.dragontrain.md.domain.food.service.port.BarcodeRepository;
+import com.dragontrain.md.domain.food.service.port.CategoryDetailRepository;
+import com.dragontrain.md.domain.food.service.port.FoodRepository;
 import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
 import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorErrorCode;
 import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorException;
@@ -396,4 +398,163 @@ class FoodServiceImplTest {
 		then(foodRepository).should(never()).save(any());
 	}
 
+	@DisplayName("음식 처리 테스트 성공")
+	@Test
+	void foodDeletedSuccessTest() throws Exception {
+		//given
+		final String deleteType = "eaten";
+		Long[] foodIds = LongStream.range(1, 5).boxed().toArray(Long[]::new);
+		User givenUser = User.builder()
+			.userId(1L)
+			.build();
+
+		Refrigerator givenRefrigerator = Refrigerator.builder()
+			.build();
+
+		given(timeService.localDateTimeNow())
+			.willReturn(LocalDateTime.of(2024, 5, 4, 13, 25));
+
+		given(refrigeratorRepository.findByUserId(anyLong()))
+			.willReturn(Optional.of(givenRefrigerator));
+
+		for (long foodId : foodIds) {
+			given(foodRepository.findById(foodId))
+				.willReturn(Optional.of(Food.builder()
+					.foodId(foodId)
+					.refrigerator(givenRefrigerator)
+					.build()));
+		}
+		//when
+		foodService.deleteFood(deleteType, foodIds, givenUser);
+		//then
+
+	}
+
+	@DisplayName("음식 처리 테스트 실패 - 음식 아이디가 중복된 경우")
+	@Test
+	void foodDeletedFailFoodIdDuplicatedTest() throws Exception {
+		//given
+		final String deleteType = "eaten";
+		Long[] foodIds = new Long[] {1L, 1L, 1L};
+		User givenUser = User.builder()
+			.userId(1L)
+			.build();
+		//when then
+		assertThatThrownBy(() -> foodService.deleteFood(deleteType, foodIds, givenUser))
+			.isInstanceOf(FoodException.class)
+			.hasFieldOrPropertyWithValue("errorCode", FoodErrorCode.DUPLICATED_FOOD_ID);
+	}
+
+	@DisplayName("음식 처리 테스트 실패 - 냉장고를 찾을 수 없는 경우")
+	@Test
+	void foodDeletedFailRefrigeratorNotFoundedTest() throws Exception {
+		//given
+		final String deleteType = "eaten";
+		Long[] foodIds = LongStream.range(1, 5).boxed().toArray(Long[]::new);
+		User givenUser = User.builder()
+			.userId(1L)
+			.build();
+
+		given(refrigeratorRepository.findByUserId(anyLong()))
+			.willReturn(Optional.empty());
+
+		//when
+		assertThatThrownBy(() -> foodService.deleteFood(deleteType, foodIds, givenUser))
+			.isInstanceOf(RefrigeratorException.class)
+			.hasFieldOrPropertyWithValue("errorCode", RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND);
+		//then
+	}
+
+	@DisplayName("음식 처리 테스트 실패 - 음식 찾을 수 없는 경우")
+	@Test
+	void foodDeletedFailFoodNotFoundedTest() throws Exception {
+		//given
+		final String deleteType = "eaten";
+		Long[] foodIds = LongStream.range(1, 5).boxed().toArray(Long[]::new);
+		User givenUser = User.builder()
+			.userId(1L)
+			.build();
+
+		Refrigerator givenRefrigerator = Refrigerator.builder()
+			.build();
+		given(refrigeratorRepository.findByUserId(anyLong()))
+			.willReturn(Optional.of(givenRefrigerator));
+
+		given(foodRepository.findById(anyLong()))
+			.willReturn(Optional.empty());
+
+		//when
+		assertThatThrownBy(() -> foodService.deleteFood(deleteType, foodIds, givenUser))
+			.isInstanceOf(FoodException.class)
+			.hasFieldOrPropertyWithValue("errorCode", FoodErrorCode.FOOD_NOT_FOUND);
+
+	}
+
+	@DisplayName("음식 처리 테스트 실패 - 음식이 이미 삭제된 경우")
+	@Test
+	void foodDeletedFailFoodAlreadyDeletedTest() throws Exception {
+		//given
+		final String deleteType = "eaten";
+		Long[] foodIds = LongStream.range(1, 5).boxed().toArray(Long[]::new);
+		User givenUser = User.builder()
+			.userId(1L)
+			.build();
+
+		Refrigerator givenRefrigerator = Refrigerator.builder()
+			.build();
+
+		given(timeService.localDateTimeNow())
+			.willReturn(LocalDateTime.of(2024, 5, 4, 13, 25));
+
+		given(refrigeratorRepository.findByUserId(anyLong()))
+			.willReturn(Optional.of(givenRefrigerator));
+
+		given(foodRepository.findById(anyLong()))
+			.willReturn(Optional.of(Food.builder()
+				.deletedAt(LocalDateTime.of(2024, 5, 3, 12, 45))
+				.foodId(1L)
+				.refrigerator(givenRefrigerator)
+				.build()));
+
+		//when
+		assertThatThrownBy(() -> foodService.deleteFood(deleteType, foodIds, givenUser))
+			.isInstanceOf(FoodException.class)
+			.hasFieldOrPropertyWithValue("errorCode", FoodErrorCode.ALREADY_DELETED_FOOD);
+	}
+
+	@DisplayName("음식 처리 테스트 실패 - 음식이 내 것이 아닌 경우")
+	@Test
+	void foodDeletedFailFoodIsNotMineTest() throws Exception {
+		//given
+		final String deleteType = "eaten";
+		Long[] foodIds = LongStream.range(1, 5).boxed().toArray(Long[]::new);
+		User givenUser = User.builder()
+			.userId(1L)
+			.build();
+
+		Refrigerator givenRefrigerator = Refrigerator.builder()
+			.refrigeratorId(1L)
+			.build();
+
+		Refrigerator elseRefrigerator = Refrigerator.builder()
+			.refrigeratorId(2L)
+			.build();
+
+		given(timeService.localDateTimeNow())
+			.willReturn(LocalDateTime.of(2024, 5, 4, 13, 25));
+
+		given(refrigeratorRepository.findByUserId(anyLong()))
+			.willReturn(Optional.of(givenRefrigerator));
+
+		given(foodRepository.findById(anyLong()))
+			.willReturn(Optional.of(Food.builder()
+				.foodId(1L)
+				.refrigerator(elseRefrigerator)
+				.build()));
+
+		//when
+		assertThatThrownBy(() -> foodService.deleteFood(deleteType, foodIds, givenUser))
+			.isInstanceOf(FoodException.class)
+			.hasFieldOrPropertyWithValue("errorCode", FoodErrorCode.INVALID_ACCESS);
+	}
 }
