@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.Objects;
 
+import com.dragontrain.md.domain.food.exception.FoodErrorCode;
+import com.dragontrain.md.domain.food.exception.FoodException;
 import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
 import com.dragontrain.md.domain.refrigerator.domain.StorageType;
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
@@ -121,6 +123,9 @@ public class Food {
 	}
 
 	public void delete(FoodDeleteType foodDeleteType, LocalDateTime localDateTime) {
+		if(!Objects.isNull(deletedAt))
+			throw new FoodException(FoodErrorCode.ALREADY_DELETED_FOOD);
+
 		this.deletedAt = localDateTime;
 		this.foodDeleteType = foodDeleteType;
 	}

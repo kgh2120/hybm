@@ -79,6 +79,12 @@ public class FoodServiceImpl implements FoodService {
 	@Value("${secret.ocr.document.api-url}")
 	private String RECEIPT_API_URL;
 
+	private static void validateDuplicateFoodIds(Long[] foodIds) {
+		Set<Long> foodIdSet = new HashSet<>(List.of(foodIds));
+		if (foodIdSet.size() != foodIds.length)
+			throw new FoodException(FoodErrorCode.DUPLICATED_FOOD_ID);
+	}
+
 	// 이미지로 OCR General을 요청하는 Component
 	@Override
 	public String callGeneralOCR(String imgURL) {
@@ -320,9 +326,7 @@ public class FoodServiceImpl implements FoodService {
 
 		// ids 중복 있는지 검증
 
-		Set<Long> foodIdSet = new HashSet<>(List.of(foodIds));
-		if (foodIdSet.size() != foodIds.length)
-			throw new FoodException(FoodErrorCode.DUPLICATED_FOOD_ID);
+		validateDuplicateFoodIds(foodIds);
 
 		FoodDeleteType foodDeleteType = FoodDeleteType.valueOf(deleteType.toUpperCase());
 
@@ -334,11 +338,7 @@ public class FoodServiceImpl implements FoodService {
 			(foodId) -> {
 				Food food = foodRepository.findById(foodId)
 					.orElseThrow(() -> new FoodException(FoodErrorCode.FOOD_NOT_FOUND));
-				if (food.isDeleted()) {
-					throw new FoodException(FoodErrorCode.ALREADY_DELETED_FOOD);
-				}
-				// food의 냉장고가 내꺼 맞는지
-				if (!refrigerator.equals(food.getRefrigerator()))
+				if (!refrigerator.isMyFood(food))
 					throw new FoodException(FoodErrorCode.INVALID_ACCESS);
 				food.delete(foodDeleteType, deletedTime);
 			}
