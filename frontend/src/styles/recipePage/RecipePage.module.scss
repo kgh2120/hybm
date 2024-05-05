@@ -94,19 +94,18 @@
               > div {
                 display: flex;
                 gap: 12px;
-                width: 100%;  
-                margin: 1% 0;              
+                width: 100%;
+                margin: 1% 0;
               }
 
               > p {
                 color: $color-line;
                 font-size: $font-sm;
-                margin: 1% 0;              
+                margin: 1% 0;
                 position: fix;
               }
             }
           }
-          
         }
       }
     }
