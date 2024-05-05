@@ -3,7 +3,6 @@ package com.dragontrain.md.domain.user.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dragontrain.md.common.config.exception.CustomException;
 import com.dragontrain.md.common.config.exception.GlobalErrorCode;
 import com.dragontrain.md.common.config.exception.TokenException;
 import com.dragontrain.md.common.config.jwt.JwtProvider;

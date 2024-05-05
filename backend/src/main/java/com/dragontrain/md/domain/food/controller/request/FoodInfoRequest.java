@@ -1,9 +1,10 @@
 package com.dragontrain.md.domain.food.controller.request;
 
-import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
-import lombok.*;
-
-import java.time.LocalDate;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter

@@ -19,7 +19,12 @@ public enum FoodErrorCode implements ErrorCode {
 	STORAGE_NOT_FOUND(HttpStatus.NOT_FOUND, "저장고 종류를 찾을 수 없습니다"),
 	FOOD_NOT_FOUND(HttpStatus.NOT_FOUND, "식품 정보를 찾을 수 없습니다"),
 	CATEGORY_DETAIL_NOT_FOUND(HttpStatus.NOT_FOUND, "소분류를 찾을 수 없습니다"),
-	EXPIRATION_DATE_NOT_FOUND(HttpStatus.NOT_FOUND, "예상 소비기한 정보가 존재하지 않습니다. 직접 기입해주세요");
+	EXPIRATION_DATE_NOT_FOUND(HttpStatus.NOT_FOUND, "예상 소비기한 정보가 존재하지 않습니다. 직접 기입해주세요"),
+	INVALID_ACCESS(HttpStatus.FORBIDDEN, "음식에 접근할 권한이 없습니다"),
+	ALREADY_DELETED_FOOD(HttpStatus.BAD_REQUEST, "이미 삭제된 음식입니다"),
+	DUPLICATED_FOOD_ID(HttpStatus.BAD_REQUEST, "음식 아이디가 중복되었습니다"),
+
+	;
 
 	private final HttpStatus httpStatus;
 	private final String errorMessage;

@@ -58,7 +58,7 @@ public class User {
 			.build();
 	}
 
-	public boolean isDeleted(){
+	public boolean isDeleted() {
 		return isDeleted;
 	}
 }

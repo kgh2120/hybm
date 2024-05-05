@@ -13,10 +13,10 @@ import lombok.Getter;
 @Getter
 public abstract class AbstractCustomOAuth2Client implements OAuth2User {
 
-	private SocialLoginType socialLoginType;
-	private String userEmail;
+	private final SocialLoginType socialLoginType;
+	private final String userEmail;
 	private Long userId;
-	private OAuth2User originOAuth2User;
+	private final OAuth2User originOAuth2User;
 
 	public AbstractCustomOAuth2Client(SocialLoginType socialLoginType, String userEmail, OAuth2User originOAuth2User) {
 		this.socialLoginType = socialLoginType;

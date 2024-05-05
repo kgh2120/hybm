@@ -1,12 +1,14 @@
 package com.dragontrain.md.domain.food.infra;
 
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
 import com.dragontrain.md.domain.food.domain.CategoryBig;
 import com.dragontrain.md.domain.food.service.port.CategoryBigRepository;
 import com.dragontrain.md.domain.statistics.service.dto.BigCategoryPriceInfo;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Repository

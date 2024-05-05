@@ -72,7 +72,6 @@ class UserControllerTest {
 			).andDo(print());
 	}
 
-
 	@WithMockUser
 	@DisplayName("토큰 재발행 테스트 실패 - 쿠키가 리프래시 토큰이 아닌 경우")
 	@Test
