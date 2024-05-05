@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.dragontrain.md.domain.food.domain.*;
+import com.dragontrain.md.domain.notice.domain.Notice;
+import com.dragontrain.md.domain.notice.domain.NoticeType;
 import com.dragontrain.md.domain.refrigerator.service.dto.AppliedStorageDesign;
 import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignResponse;
 import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignsResponse;
@@ -236,6 +238,31 @@ public class TestEntityFactory {
 			.deletedAt(deletedAt)
 			.isManual(Boolean.FALSE)
 			.expectedExpirationDate(LocalDate.now())
+			.build();
+	}
+
+	public Notice getNotice(String content, Boolean isChecked,
+							NoticeType noticeType, Food food){
+		return Notice.builder()
+			.content(content)
+			.isChecked(isChecked)
+			.type(noticeType)
+			.food(food)
+			.createdAt(LocalDateTime.now())
+			.updatedAt(LocalDateTime.now())
+			.build();
+	}
+
+	public Notice getDeletedNotice(String content, Boolean isChecked,
+								   NoticeType noticeType, Food food){
+		return Notice.builder()
+			.content(content)
+			.isChecked(isChecked)
+			.type(noticeType)
+			.food(food)
+			.createdAt(LocalDateTime.now())
+			.updatedAt(LocalDateTime.now())
+			.deletedAt(LocalDateTime.now())
 			.build();
 	}
 }
