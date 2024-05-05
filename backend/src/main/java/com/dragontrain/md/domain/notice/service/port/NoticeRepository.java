@@ -5,5 +5,5 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
 public interface NoticeRepository {
-	Slice<Notice> findAllNotDeletedNotice(Pageable pageable);
+	Slice<Notice> findAllNotDeletedNotice(Long refrigeratorId, Pageable pageable);
 }

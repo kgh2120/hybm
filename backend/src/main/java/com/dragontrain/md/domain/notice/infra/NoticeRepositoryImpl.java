@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 public class NoticeRepositoryImpl implements NoticeRepository {
 	private final NoticeJpaRepository noticeJpaRepository;
 	@Override
-	public Slice<Notice> findAllNotDeletedNotice(Pageable pageable) {
-		return noticeJpaRepository.findAllByDeletedAtIsNull(pageable);
+	public Slice<Notice> findAllNotDeletedNotice(Long refrigeratorId, Pageable pageable) {
+		return noticeJpaRepository.findAllNotDeletedNotice(refrigeratorId, pageable);
 	}
 }
