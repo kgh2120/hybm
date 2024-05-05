@@ -20,7 +20,7 @@ function LandingPage() {
     <div className={styles.wrapper}>
       <img src={logo} alt="서비스 로고" />
       <div>
-        <div className={styles.sub_header}>알림함 다녀오셨어요?</div>
+        <div className={styles.sub_header}>마트 다녀오셨어요?</div>
         <div>Have You Been To the Mart?</div>
       </div>
       <div className={styles.auth_btn}>
