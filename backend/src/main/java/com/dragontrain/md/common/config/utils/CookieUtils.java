@@ -2,6 +2,7 @@ package com.dragontrain.md.common.config.utils;
 
 import java.util.Arrays;
 
+import org.springframework.http.ResponseCookie;
 import org.springframework.util.ObjectUtils;
 
 import jakarta.servlet.http.Cookie;
@@ -10,7 +11,7 @@ public class CookieUtils {
 
 	private static final String COOKIE_KEY_REFRESH_TOKEN = "refresh_token";
 	private static final String COOKIE_KEY_ACCESS_TOKEN = "access_token";
-	private static final String COOKIE_ATTRIBUTE_NAME_SAME_SITE = "same-site";
+	private static final String COOKIE_ATTRIBUTE_NAME_SAME_SITE = "SameSite";
 	private static final String COOKIE_SAME_SITE_NONE = "none";
 	private static final String COOKIE_REFRESH_TOKEN_PATH = "/api/users/reissue";
 	private static final String COOKIE_ACCESS_TOKEN_PATH = "/";
