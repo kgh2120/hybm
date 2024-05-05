@@ -1,20 +1,16 @@
 package com.dragontrain.md.domain.refrigerator.service;
 
-import com.dragontrain.md.domain.TestEntityFactory;
-import com.dragontrain.md.domain.refrigerator.controller.request.ModifyAppliedStorageDesign;
-import com.dragontrain.md.domain.refrigerator.controller.request.ModifyAppliedStorageDesignRequest;
-import com.dragontrain.md.domain.refrigerator.infra.StorageDesignJpaRepository;
-import com.dragontrain.md.domain.refrigerator.service.dto.AppliedStorageDesign;
-import com.dragontrain.md.domain.refrigerator.domain.*;
-import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorException;
-import com.dragontrain.md.domain.refrigerator.exception.StorageDesignException;
-import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
-import com.dragontrain.md.domain.refrigerator.service.port.StorageStorageDesignRepository;
-import com.dragontrain.md.domain.user.domain.User;
+import static org.mockito.ArgumentMatchers.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -25,14 +21,21 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.*;
-import java.util.function.Function;
-import java.util.function.Predicate;
-
-import static org.mockito.ArgumentMatchers.any;
+import com.dragontrain.md.domain.TestEntityFactory;
+import com.dragontrain.md.domain.refrigerator.controller.request.ModifyAppliedStorageDesign;
+import com.dragontrain.md.domain.refrigerator.controller.request.ModifyAppliedStorageDesignRequest;
 import com.dragontrain.md.domain.refrigerator.domain.Level;
 import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
+import com.dragontrain.md.domain.refrigerator.domain.StorageDesign;
+import com.dragontrain.md.domain.refrigerator.domain.StorageStorageDesign;
+import com.dragontrain.md.domain.refrigerator.domain.StorageType;
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
+import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorException;
+import com.dragontrain.md.domain.refrigerator.exception.StorageDesignException;
+import com.dragontrain.md.domain.refrigerator.service.dto.AppliedStorageDesign;
+import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
+import com.dragontrain.md.domain.refrigerator.service.port.StorageStorageDesignRepository;
+import com.dragontrain.md.domain.user.domain.User;
 
 @ExtendWith(MockitoExtension.class)
 class StorageStorageDesignServiceImplTest {
@@ -64,7 +67,7 @@ class StorageStorageDesignServiceImplTest {
 			.willReturn(Optional.of(refrigerator));
 
 		BDDMockito.given(storageStorageDesignRepository.findAllStorageDesign(any()))
-			.willReturn(Arrays.asList(testEntityFactory.getTestMyStorageDesignResponse(1, "냉장칸")));
+			.willReturn(Collections.singletonList(testEntityFactory.getTestMyStorageDesignResponse(1, "냉장칸")));
 
 		Assertions.assertDoesNotThrow(() -> storageDesignService.findAllStorageDesign(user));
 		Assertions.assertEquals(storageDesignService.findAllStorageDesign(user).getCool().size(), 1);
@@ -93,10 +96,10 @@ class StorageStorageDesignServiceImplTest {
 	}
 
 	@Test
-	void 중복포지션요청_실패(){
+	void 중복포지션요청_실패() {
 		User user = testEntityFactory.getTestUserEntity();
 		List<ModifyAppliedStorageDesign> masds = new ArrayList<>();
-		for(int i = 1; i <= 3; i++){
+		for (int i = 1; i <= 3; i++) {
 			masds.add(
 				ModifyAppliedStorageDesign.builder()
 					.designId(i)
@@ -106,20 +109,20 @@ class StorageStorageDesignServiceImplTest {
 		}
 
 		ModifyAppliedStorageDesignRequest request = ModifyAppliedStorageDesignRequest.builder()
-					.request(masds)
-					.build();
+			.request(masds)
+			.build();
 
 		Assertions.assertThrows(StorageDesignException.class
-			,() -> storageDesignService.modifyAppliedStorageDesign(user, request));
+			, () -> storageDesignService.modifyAppliedStorageDesign(user, request));
 	}
 
 	@Test
-	void 냉장고찾기_실패(){
+	void 냉장고찾기_실패() {
 		User user = testEntityFactory.getTestUserEntity();
 
 		List<ModifyAppliedStorageDesign> masds = new ArrayList<>();
 		int designId = 1;
-		for(StorageTypeId typeId : StorageTypeId.values()){
+		for (StorageTypeId typeId : StorageTypeId.values()) {
 			masds.add(
 				ModifyAppliedStorageDesign.builder()
 					.designId(designId++)
@@ -141,12 +144,12 @@ class StorageStorageDesignServiceImplTest {
 	}
 
 	@Test
-	void 보유하지_않거나_없는_디자인_실패(){
+	void 보유하지_않거나_없는_디자인_실패() {
 		User user = testEntityFactory.getTestUserEntity();
 
 		List<ModifyAppliedStorageDesign> masds = new ArrayList<>();
 		int designId = 1;
-		for(StorageTypeId typeId : StorageTypeId.values()){
+		for (StorageTypeId typeId : StorageTypeId.values()) {
 			masds.add(
 				ModifyAppliedStorageDesign.builder()
 					.designId(designId++)
@@ -173,12 +176,12 @@ class StorageStorageDesignServiceImplTest {
 	}
 
 	@Test
-	void 디자인과_위치매핑_실패(){
+	void 디자인과_위치매핑_실패() {
 		User user = testEntityFactory.getTestUserEntity();
 
 		List<ModifyAppliedStorageDesign> masds = new ArrayList<>();
 		int designId = 1;
-		for(StorageTypeId typeId : StorageTypeId.values()){
+		for (StorageTypeId typeId : StorageTypeId.values()) {
 			masds.add(
 				ModifyAppliedStorageDesign.builder()
 					.designId(designId++)
@@ -198,25 +201,31 @@ class StorageStorageDesignServiceImplTest {
 			.willReturn(Optional.of(refrigerator));
 
 		List<StorageStorageDesign> SSDs = new ArrayList<>();
-		StorageDesign sdCOOL = testEntityFactory.getTestMineUseDesign(StorageType.builder().storageType(StorageTypeId.COOL).build());
-		StorageDesign sdICE = testEntityFactory.getTestMineUseDesign(StorageType.builder().storageType(StorageTypeId.ICE).build());
-		StorageDesign sdCABINET = testEntityFactory.getTestMineUseDesign(StorageType.builder().storageType(StorageTypeId.CABINET).build());
+		StorageDesign sdCOOL = testEntityFactory.getTestMineUseDesign(
+			StorageType.builder().storageType(StorageTypeId.COOL).build());
+		StorageDesign sdICE = testEntityFactory.getTestMineUseDesign(
+			StorageType.builder().storageType(StorageTypeId.ICE).build());
+		StorageDesign sdCABINET = testEntityFactory.getTestMineUseDesign(
+			StorageType.builder().storageType(StorageTypeId.CABINET).build());
 
-		SSDs.add(testEntityFactory.getTestStorageStorageDesignApplied(StorageType.builder().storageType(StorageTypeId.COOL).build(), sdCOOL, refrigerator));
-		SSDs.add(testEntityFactory.getTestStorageStorageDesignApplied(StorageType.builder().storageType(StorageTypeId.ICE).build(), sdICE, refrigerator));
-		SSDs.add(testEntityFactory.getTestStorageStorageDesignApplied(StorageType.builder().storageType(StorageTypeId.CABINET).build(), sdCABINET, refrigerator));
+		SSDs.add(testEntityFactory.getTestStorageStorageDesignApplied(
+			StorageType.builder().storageType(StorageTypeId.COOL).build(), sdCOOL, refrigerator));
+		SSDs.add(testEntityFactory.getTestStorageStorageDesignApplied(
+			StorageType.builder().storageType(StorageTypeId.ICE).build(), sdICE, refrigerator));
+		SSDs.add(testEntityFactory.getTestStorageStorageDesignApplied(
+			StorageType.builder().storageType(StorageTypeId.CABINET).build(), sdCABINET, refrigerator));
 
 		Assertions.assertThrows(StorageDesignException.class,
 			() -> storageDesignService.modifyAppliedStorageDesign(user, request));
 	}
 
 	@Test
-	void 디자인변경_성공(){
+	void 디자인변경_성공() {
 		User user = testEntityFactory.getTestUserEntity(1L);
 
 		List<ModifyAppliedStorageDesign> masds = new ArrayList<>();
 		int designId = 1;
-		for(StorageTypeId typeId : StorageTypeId.values()){
+		for (StorageTypeId typeId : StorageTypeId.values()) {
 			masds.add(
 				ModifyAppliedStorageDesign.builder()
 					.designId(designId++)
@@ -234,21 +243,28 @@ class StorageStorageDesignServiceImplTest {
 
 		List<StorageStorageDesign> SSDs = new ArrayList<>();
 		designId = 1;
-		StorageDesign sdICE = testEntityFactory.getTestMineUseDesign(designId++, StorageType.builder().storageType(StorageTypeId.ICE).build());
-		StorageDesign sdCOOL = testEntityFactory.getTestMineUseDesign(designId++, StorageType.builder().storageType(StorageTypeId.COOL).build());
-		StorageDesign sdCABINET = testEntityFactory.getTestMineUseDesign(designId, StorageType.builder().storageType(StorageTypeId.CABINET).build());
+		StorageDesign sdICE = testEntityFactory.getTestMineUseDesign(designId++,
+			StorageType.builder().storageType(StorageTypeId.ICE).build());
+		StorageDesign sdCOOL = testEntityFactory.getTestMineUseDesign(designId++,
+			StorageType.builder().storageType(StorageTypeId.COOL).build());
+		StorageDesign sdCABINET = testEntityFactory.getTestMineUseDesign(designId,
+			StorageType.builder().storageType(StorageTypeId.CABINET).build());
 
-		SSDs.add(testEntityFactory.getTestStorageStorageDesignApplied(StorageType.builder().storageType(StorageTypeId.ICE).build(), sdICE, refrigerator));
-		SSDs.add(testEntityFactory.getTestStorageStorageDesignApplied(StorageType.builder().storageType(StorageTypeId.COOL).build(), sdCOOL, refrigerator));
-		SSDs.add(testEntityFactory.getTestStorageStorageDesignApplied(StorageType.builder().storageType(StorageTypeId.CABINET).build(), sdCABINET, refrigerator));
+		SSDs.add(testEntityFactory.getTestStorageStorageDesignApplied(
+			StorageType.builder().storageType(StorageTypeId.ICE).build(), sdICE, refrigerator));
+		SSDs.add(testEntityFactory.getTestStorageStorageDesignApplied(
+			StorageType.builder().storageType(StorageTypeId.COOL).build(), sdCOOL, refrigerator));
+		SSDs.add(testEntityFactory.getTestStorageStorageDesignApplied(
+			StorageType.builder().storageType(StorageTypeId.CABINET).build(), sdCABINET, refrigerator));
 
 		List<StorageStorageDesign> newDesigns = new ArrayList<>();
 		designId = 1;
-		for(StorageTypeId storageTypeId : StorageTypeId.values()){
+		for (StorageTypeId storageTypeId : StorageTypeId.values()) {
 			newDesigns.add(
 				testEntityFactory.getTestStorageStorageDesignApplied(
 					StorageType.builder().storageType(storageTypeId).build(),
-					testEntityFactory.getTestMineUseDesign(designId++, StorageType.builder().storageType(storageTypeId).build()),
+					testEntityFactory.getTestMineUseDesign(designId++,
+						StorageType.builder().storageType(storageTypeId).build()),
 					refrigerator
 				)
 			);

@@ -5,7 +5,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dragontrain.md.domain.food.domain.*;
+import com.dragontrain.md.domain.food.domain.CategoryBig;
+import com.dragontrain.md.domain.food.domain.CategoryDetail;
+import com.dragontrain.md.domain.food.domain.Food;
+import com.dragontrain.md.domain.food.domain.FoodDeleteType;
+import com.dragontrain.md.domain.food.domain.FoodStatus;
 import com.dragontrain.md.domain.notice.domain.Notice;
 import com.dragontrain.md.domain.notice.domain.NoticeType;
 import com.dragontrain.md.domain.refrigerator.service.dto.AppliedStorageDesign;
@@ -32,7 +36,7 @@ public class TestEntityFactory {
 			.build();
 	}
 
-	public User getTestUserEntity(Long id){
+	public User getTestUserEntity(Long id) {
 		return User.builder()
 			.userId(id)
 			.email("ssafy@ssafy.com")
@@ -191,14 +195,14 @@ public class TestEntityFactory {
 			.build();
 	}
 
-	public CategoryBig getCategoryBig(String name, String imgSrc){
+	public CategoryBig getCategoryBig(String name, String imgSrc) {
 		return CategoryBig.builder()
 			.name(name)
 			.imgSrc(imgSrc)
 			.build();
 	}
 
-	public CategoryDetail getCategoryDetail(String name, String imgSrc, CategoryBig categoryBig){
+	public CategoryDetail getCategoryDetail(String name, String imgSrc, CategoryBig categoryBig) {
 		return CategoryDetail.builder()
 			.name(name)
 			.imgSrc(imgSrc)
@@ -207,8 +211,9 @@ public class TestEntityFactory {
 			.build();
 	}
 
-	public Food getFood(String name, Integer price, Refrigerator refrigerator, StorageType type, CategoryDetail categoryDetail
-	, LocalDateTime createdAt, LocalDateTime updatedAt){
+	public Food getFood(String name, Integer price, Refrigerator refrigerator, StorageType type,
+		CategoryDetail categoryDetail
+		, LocalDateTime createdAt, LocalDateTime updatedAt) {
 		return Food.builder()
 			.name(name)
 			.price(price)
@@ -223,8 +228,9 @@ public class TestEntityFactory {
 			.build();
 	}
 
-	public Food getDeletedFood(String name, Integer price, Refrigerator refrigerator, StorageType type, CategoryDetail categoryDetail
-		, LocalDateTime createdAt, LocalDateTime updatedAt, FoodDeleteType foodDeleteType, LocalDateTime deletedAt){
+	public Food getDeletedFood(String name, Integer price, Refrigerator refrigerator, StorageType type,
+		CategoryDetail categoryDetail
+		, LocalDateTime createdAt, LocalDateTime updatedAt, FoodDeleteType foodDeleteType, LocalDateTime deletedAt) {
 		return Food.builder()
 			.name(name)
 			.price(price)

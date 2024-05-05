@@ -60,11 +60,11 @@ public class StorageStorageDesign {
 			.build();
 	}
 
-	public void dettach(){
+	public void dettach() {
 		this.isApplied = Boolean.FALSE;
 	}
 
-	public void attach(){
+	public void attach() {
 		this.isApplied = Boolean.TRUE;
 	}
 

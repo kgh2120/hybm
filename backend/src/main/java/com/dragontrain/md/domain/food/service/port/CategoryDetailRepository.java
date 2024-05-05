@@ -1,6 +1,5 @@
 package com.dragontrain.md.domain.food.service.port;
 
-import java.util.List;
 import java.util.Optional;
 
 import com.dragontrain.md.domain.food.domain.CategoryDetail;

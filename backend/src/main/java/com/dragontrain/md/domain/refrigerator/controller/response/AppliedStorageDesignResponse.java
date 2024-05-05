@@ -1,7 +1,12 @@
 package com.dragontrain.md.domain.refrigerator.controller.response;
 
 import com.dragontrain.md.domain.refrigerator.service.dto.AppliedStorageDesign;
-import lombok.*;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -11,7 +16,7 @@ public class AppliedStorageDesignResponse {
 	private Integer id;
 	private String imgSrc;
 
-	public static AppliedStorageDesignResponse createByAppliedStorageDesign(AppliedStorageDesign appliedStorageDesign){
+	public static AppliedStorageDesignResponse createByAppliedStorageDesign(AppliedStorageDesign appliedStorageDesign) {
 		return AppliedStorageDesignResponse.builder()
 			.id(appliedStorageDesign.getId())
 			.imgSrc(appliedStorageDesign.getImgSrc())

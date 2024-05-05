@@ -29,10 +29,12 @@ public class CookieUtils {
 	public static Cookie deleteCookie(String key, String value, String path) {
 		return makeCookie(key, value, path, 0);
 	}
-	public static Cookie deleteAccessTokenCookie(){
+
+	public static Cookie deleteAccessTokenCookie() {
 		return makeAccessTokenCookie("", 0);
 	}
-	public static Cookie deleteRefreshTokenCookie(){
+
+	public static Cookie deleteRefreshTokenCookie() {
 		return makeRefreshTokenCookie("", 0);
 	}
 
@@ -45,7 +47,8 @@ public class CookieUtils {
 	}
 
 	public static Cookie findAccessTokenCookie(Cookie[] cookies) {
-		if(ObjectUtils.isEmpty(cookies)) return null;
+		if (ObjectUtils.isEmpty(cookies))
+			return null;
 
 		return Arrays.stream(cookies).filter(cookie -> cookie.getName().equals(COOKIE_KEY_ACCESS_TOKEN))
 			.findAny()
@@ -53,7 +56,8 @@ public class CookieUtils {
 	}
 
 	public static Cookie findRefreshToken(Cookie[] cookies) {
-		if(ObjectUtils.isEmpty(cookies)) return null;
+		if (ObjectUtils.isEmpty(cookies))
+			return null;
 
 		return Arrays.stream(cookies).filter(cookie -> cookie.getName().equals(COOKIE_KEY_ACCESS_TOKEN))
 			.findAny()

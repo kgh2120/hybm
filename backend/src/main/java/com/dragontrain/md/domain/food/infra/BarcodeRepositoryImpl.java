@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 public class BarcodeRepositoryImpl implements BarcodeRepository {
 
 	private final BarcodeJpaRepository barcodeJpaRepository;
+
 	@Override
 	public Optional<Barcode> findByBarcodeId(Long barcodeId) {
 		return barcodeJpaRepository.findById(barcodeId);

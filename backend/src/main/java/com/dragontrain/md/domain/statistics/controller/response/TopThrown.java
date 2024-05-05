@@ -1,7 +1,12 @@
 package com.dragontrain.md.domain.statistics.controller.response;
 
 import com.dragontrain.md.domain.statistics.service.dto.TopThrownWithCount;
-import lombok.*;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -12,7 +17,7 @@ public class TopThrown {
 	private String name;
 	private String imgSrc;
 
-	public static TopThrown createByTopThrownWithCount(TopThrownWithCount topThrownWithCount){
+	public static TopThrown createByTopThrownWithCount(TopThrownWithCount topThrownWithCount) {
 		return TopThrown.builder()
 			.detailCategoryId(topThrownWithCount.getCategoryDetailId())
 			.name(topThrownWithCount.getName())

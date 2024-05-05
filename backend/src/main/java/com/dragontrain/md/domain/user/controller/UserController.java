@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dragontrain.md.common.config.exception.CustomException;
 import com.dragontrain.md.common.config.exception.ErrorResponse;
 import com.dragontrain.md.common.config.exception.GlobalErrorCode;
 import com.dragontrain.md.common.config.exception.TokenException;
@@ -50,9 +49,11 @@ public class UserController {
 	}
 
 	@PostMapping("/reissue")
-	public ResponseEntity<Void> reissueTokens(@CookieValue(value = "refresh_token", required = false) Cookie refreshTokenCookie, HttpServletResponse response){
+	public ResponseEntity<Void> reissueTokens(
+		@CookieValue(value = "refresh_token", required = false) Cookie refreshTokenCookie,
+		HttpServletResponse response) {
 
-		if(Objects.isNull(refreshTokenCookie))
+		if (Objects.isNull(refreshTokenCookie))
 			throw new TokenException(GlobalErrorCode.REFRESH_TOKEN_MISSING);
 
 		Tokens tokens = userService.reissueToken(refreshTokenCookie.getValue());

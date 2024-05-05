@@ -1,5 +1,16 @@
 package com.dragontrain.md.domain.food.infra;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
 import com.dragontrain.md.domain.TestEntityFactory;
 import com.dragontrain.md.domain.food.domain.CategoryBig;
 import com.dragontrain.md.domain.food.domain.CategoryDetail;
@@ -13,16 +24,6 @@ import com.dragontrain.md.domain.refrigerator.infra.RefrigeratorJpaRepository;
 import com.dragontrain.md.domain.refrigerator.infra.StorageTypeJpaRepository;
 import com.dragontrain.md.domain.user.domain.User;
 import com.dragontrain.md.domain.user.infra.UserJpaRepository;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @DataJpaTest
 class CategoryBigJpaRepositoryTest {
@@ -51,12 +52,12 @@ class CategoryBigJpaRepositoryTest {
 	private static TestEntityFactory testEntityFactory;
 
 	@BeforeAll
-	static void 장전(){
+	static void 장전() {
 		testEntityFactory = new TestEntityFactory();
 	}
 
 	@Test
-	void 대분류별_가격수집_성공(){
+	void 대분류별_가격수집_성공() {
 		User user = testEntityFactory.getTestUserEntity();
 		userJpaRepository.save(user);
 		Level level = testEntityFactory.getTestLevelEntity(1, 1);
@@ -86,31 +87,41 @@ class CategoryBigJpaRepositoryTest {
 		categoryDetailJpaRepository.saveAll(Arrays.asList(first, second, third, otherDetail));
 
 		List<Food> foods = new ArrayList<>();
-		for(int i = 0; i < 10; i++) {
-			foods.add(testEntityFactory.getFood(Integer.toString(i + 1000), 5000, refrigerator, cool, first, LocalDateTime.now(), LocalDateTime.now()));
+		for (int i = 0; i < 10; i++) {
+			foods.add(testEntityFactory.getFood(Integer.toString(i + 1000), 5000, refrigerator, cool, first,
+				LocalDateTime.now(), LocalDateTime.now()));
 		}
 
-		for(int i = 0; i < 5; i++){
-			foods.add(testEntityFactory.getFood(Integer.toString(i + 2000), 5000, refrigerator, cool, second, LocalDateTime.now(), LocalDateTime.now()));
+		for (int i = 0; i < 5; i++) {
+			foods.add(testEntityFactory.getFood(Integer.toString(i + 2000), 5000, refrigerator, cool, second,
+				LocalDateTime.now(), LocalDateTime.now()));
 		}
 
-		for(int i = 0; i < 3; i++){
-			foods.add(testEntityFactory.getFood(Integer.toString(i + 3000), 5000, refrigerator, cool, third, LocalDateTime.now(), LocalDateTime.now()));
+		for (int i = 0; i < 3; i++) {
+			foods.add(testEntityFactory.getFood(Integer.toString(i + 3000), 5000, refrigerator, cool, third,
+				LocalDateTime.now(), LocalDateTime.now()));
 		}
 
-		for(int i = 0; i < 10; i++){
-			foods.add(testEntityFactory.getFood("다른냉장고", 5000, otherRefrigerator, cool, otherDetail, LocalDateTime.now(), LocalDateTime.now()));
+		for (int i = 0; i < 10; i++) {
+			foods.add(
+				testEntityFactory.getFood("다른냉장고", 5000, otherRefrigerator, cool, otherDetail, LocalDateTime.now(),
+					LocalDateTime.now()));
 		}
 
-		for(int i = 0; i < 5; i++){
-			foods.add(testEntityFactory.getFood("한달전", 9999, refrigerator, cool, third, LocalDateTime.now().minusMonths(1), LocalDateTime.now().minusMonths(1)));
+		for (int i = 0; i < 5; i++) {
+			foods.add(
+				testEntityFactory.getFood("한달전", 9999, refrigerator, cool, third, LocalDateTime.now().minusMonths(1),
+					LocalDateTime.now().minusMonths(1)));
 		}
 
 		foodJpaRepository.saveAll(foods);
 
-		Assertions.assertEquals(categoryBigJpaRepository.findAllBigGroupAndSpend(refrigerator.getRefrigeratorId(), LocalDateTime.now().getYear(), LocalDateTime.now().getMonth().getValue()).size(), 18);
-		Assertions.assertEquals(categoryBigJpaRepository.findAllBigGroupAndSpend(refrigerator.getRefrigeratorId(), LocalDateTime.now().getYear(), LocalDateTime.now().getMonth().getValue() - 1).size(), 5);
-		Assertions.assertEquals(categoryBigJpaRepository.findAllBigGroupAndSpend(refrigerator.getRefrigeratorId(), LocalDateTime.now().getYear(), LocalDateTime.now().getMonth().getValue() - 2).size(), 0);
+		Assertions.assertEquals(categoryBigJpaRepository.findAllBigGroupAndSpend(refrigerator.getRefrigeratorId(),
+			LocalDateTime.now().getYear(), LocalDateTime.now().getMonth().getValue()).size(), 18);
+		Assertions.assertEquals(categoryBigJpaRepository.findAllBigGroupAndSpend(refrigerator.getRefrigeratorId(),
+			LocalDateTime.now().getYear(), LocalDateTime.now().getMonth().getValue() - 1).size(), 5);
+		Assertions.assertEquals(categoryBigJpaRepository.findAllBigGroupAndSpend(refrigerator.getRefrigeratorId(),
+			LocalDateTime.now().getYear(), LocalDateTime.now().getMonth().getValue() - 2).size(), 0);
 	}
 
 }

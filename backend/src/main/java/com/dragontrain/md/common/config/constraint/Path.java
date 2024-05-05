@@ -9,8 +9,8 @@ import jakarta.validation.Constraint;
 
 @Target({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = EnumTypeValidator.class)
-public @interface EnumType {
+@Constraint(validatedBy = PathValidator.class)
+public @interface Path {
 
 	String message() default "올바르지 못한 PathVariable을 입력했습니다.";
 
@@ -18,6 +18,5 @@ public @interface EnumType {
 
 	Class[] payload() default {};
 
-	Class targetEnum();
-
+	String[] candidates();
 }

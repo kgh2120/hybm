@@ -1,7 +1,12 @@
 package com.dragontrain.md.domain.statistics.controller.response;
 
 import com.dragontrain.md.domain.statistics.service.dto.TopEatenWithCount;
-import lombok.*;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -12,7 +17,7 @@ public class TopEaten {
 	private String name;
 	private String imgSrc;
 
-	public static TopEaten createByTopEatenWithCount(TopEatenWithCount topEatenWithCount){
+	public static TopEaten createByTopEatenWithCount(TopEatenWithCount topEatenWithCount) {
 		return TopEaten.builder()
 			.detailCategoryId(topEatenWithCount.getCategoryDetailId())
 			.name(topEatenWithCount.getName())
