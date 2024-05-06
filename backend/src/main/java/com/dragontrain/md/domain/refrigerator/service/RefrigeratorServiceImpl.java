@@ -43,14 +43,13 @@ public class RefrigeratorServiceImpl
 	@Transactional
 	@Override
 	public void createInitialRefrigerator(Long userId) {
-		// userId 가져오기
-		// TODO findById에서 isDelete check 해야 함.
 		User user = userRepository.findById(userId)
 			.orElseThrow(() -> new UserException(UserErrorCode.USER_RESOURCE_NOT_FOUND,
 				"user id " + userId + " is not founded"));
 
-		if(user.isDeleted())
+		if (user.isDeleted()) {
 			throw new UserException(UserErrorCode.ACCESS_DELETED_USER);
+		}
 
 		registerDefaultStorageDesign(saveRefrigerator(user));
 	}
