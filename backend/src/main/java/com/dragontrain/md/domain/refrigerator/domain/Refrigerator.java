@@ -2,6 +2,7 @@ package com.dragontrain.md.domain.refrigerator.domain;
 
 import java.time.LocalDateTime;
 
+import com.dragontrain.md.domain.food.domain.Food;
 import com.dragontrain.md.domain.user.domain.User;
 
 import jakarta.persistence.Column;
@@ -64,6 +65,10 @@ public class Refrigerator {
 			.user(user)
 			.level(level)
 			.build();
+	}
+
+	public boolean isMyFood(Food food) {
+		return equals(food.getRefrigerator());
 	}
 
 }

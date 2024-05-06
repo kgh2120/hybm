@@ -1,8 +1,12 @@
 package com.dragontrain.md.domain.food.controller.response;
 
-import lombok.*;
-
 import java.util.List;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
@@ -15,9 +19,9 @@ public class FoodStorageResponse {
 	private List<FoodStorage> rotten;
 
 	public static FoodStorageResponse create(List<FoodStorage> fresh,
-											 List<FoodStorage> warning,
-											 List<FoodStorage> danger,
-											 List<FoodStorage> rotten) {
+		List<FoodStorage> warning,
+		List<FoodStorage> danger,
+		List<FoodStorage> rotten) {
 
 		return FoodStorageResponse.builder()
 			.fresh(fresh)

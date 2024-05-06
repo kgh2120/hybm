@@ -3,16 +3,14 @@ package com.dragontrain.md.domain.food.domain;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.util.Objects;
 
-import com.dragontrain.md.domain.food.controller.request.FoodInfoRequest;
 import com.dragontrain.md.domain.food.exception.FoodErrorCode;
 import com.dragontrain.md.domain.food.exception.FoodException;
-import com.dragontrain.md.domain.food.service.port.CategoryDetailRepository;
 import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
 import com.dragontrain.md.domain.refrigerator.domain.StorageType;
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 
-import com.dragontrain.md.domain.refrigerator.service.port.StorageTypeRepository;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -101,10 +99,10 @@ public class Food {
 	}
 
 	public Food update(String name,
-					   CategoryDetail categoryDetail,
-					   Integer price,
-					   LocalDate expectedExpirationDate,
-					   StorageTypeId storageType) {
+		CategoryDetail categoryDetail,
+		Integer price,
+		LocalDate expectedExpirationDate,
+		StorageTypeId storageType) {
 
 		this.name = name;
 		this.categoryDetail = categoryDetail;
@@ -138,5 +136,17 @@ public class Food {
 		Period period = this.expectedExpirationDate.until(now);
 
 		return period.getDays();
+	}
+
+	public boolean isDeleted() {
+		return Objects.nonNull(deletedAt);
+	}
+
+	public void delete(FoodDeleteType foodDeleteType, LocalDateTime localDateTime) {
+		if (!Objects.isNull(deletedAt))
+			throw new FoodException(FoodErrorCode.ALREADY_DELETED_FOOD);
+
+		this.deletedAt = localDateTime;
+		this.foodDeleteType = foodDeleteType;
 	}
 }

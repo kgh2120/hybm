@@ -1,20 +1,20 @@
 package com.dragontrain.md.domain.food.infra;
 
-import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
 
-import com.dragontrain.md.domain.food.domain.Food;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
-import java.util.Optional;
+import com.dragontrain.md.domain.food.domain.Food;
+import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 
 public interface FoodJpaRepository extends JpaRepository<Food, Long> {
 
 	@Query("SELECT f FROM Food f WHERE f.refrigerator.refrigeratorId = :refrigeratorId" +
 			" AND f.storageType.storageType = :storageType" +
 	 		" AND f.deletedAt IS NULL")
-	List<Food> findAllByRefrigerator_RefrigeratorIdAndStorageType_StorageType(Long refrigeratorId, StorageTypeId storageType);
+	List<Food> findAllByRefrigerator_RefrigeratorIdAndStorageType_StorageType(Long refrigeratorId,
+		StorageTypeId storageType);
 
 	@Query("select f from Food f join f.refrigerator r" +
 		" where r.refrigeratorId=:refrigeratorId and (f.foodDeleteType='EATEN' or f.foodDeleteType='THROWN')" +
