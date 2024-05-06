@@ -9,3 +9,13 @@ export async function getLoginStatus() {
     console.log(e);
   }
 }
+
+export async function getLevelAndExp() {
+  try {
+    const res = await instance.get("/api/levels");
+    console.log(res);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+}

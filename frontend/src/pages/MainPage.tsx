@@ -4,32 +4,26 @@ import modernCool from "../assets/modernCool.png";
 import modernCabinet from "../assets/modernCabinet.png";
 import background from "../assets/background.png";
 import recipe from "../assets/recipe.png";
-import barBackground from "../assets/barBackground.png";
-import barHeart from "../assets/barHeart.png";
-import expBar from "../assets/expBar.png";
 import trashCan from "../assets/trashCan.png";
-import notification from "../assets/notification.png";
 import { Link } from "react-router-dom";
-// import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 // import { getFoodCategoryList } from "../api/foodApi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../components/common/Modal";
-import NotificationModal from "../components/mainPage/NotificationModal";
 import LevelUpModal from "../components/mainPage/LevelUpModal";
+import ExpBar from '../components/common/ExpBar';
+import { getIsNewNotification } from '../api/notificationApi';
+import { deleteAllFood, getBigCategoryList } from '../api/foodApi';
+import useFoodStore from '../stores/useFoodStore';
+import { getCurrentDesign } from '../api/fridgeApi';
+import ConfirmModal from '../components/common/ConfirmModal';
 
 function MainPage() {
-  const [isNotificationModalOpen, setIsNotificationModalOpen] =
-    useState(false);
+  
+  const { setBigCategoryList } = useFoodStore();
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
-
-  const handleOpenNotificationModal = () => {
-    setIsNotificationModalOpen(true);
-  };
-
-  const handleCloseNotificationModal = () => {
-    setIsNotificationModalOpen(false);
-  };
-
+  const [isDeleteAllFoodConfirmModalOpen, setIsDeleteAllFoodConfirmModalOpen] = useState(false);
+  
   // const handleOpenLevelUpModal = () => {
   //   setIsLevelUpModalOpen(true);
   // };
@@ -55,43 +49,64 @@ function MainPage() {
   // }
 
   // console.log(foodCategoryList);
+
+  // const { data: isNewNotification, isPending: isNewNotificationPending, isError: isNewNotificationError } = useQuery({
+  //   queryKey: ["isNewNotification"],
+  //   queryFn: getIsNewNotification,
+  // })
+
+  // if (isNewNotificationPending) {
+  //   return <div>isNewNofication Loding...</div>;
+  // }
+  // if (isNewNotificationError) {
+  //   return <div>isNewNofication error</div>;
+  // }
+  
+
+  // const { data: currentDesign, isPending: isCurrentDesignPending, isError: isCurrentDesignError } = useQuery({
+  //   queryKey: ["currentDesign"],
+  //   queryFn: getCurrentDesign,
+  // })
+
+  const { data: bigCategoryList, isPending: isBigCategoryListPending, isError: isBigCategoryListError } = useQuery({
+    queryKey: ["isNewNotification"],
+    queryFn: getBigCategoryList,
+  })
+
+  const { mutate: mutateDeleteAllFood } = useMutation({
+    mutationFn: deleteAllFood,
+    onSuccess: () => {
+      setIsDeleteAllFoodConfirmModalOpen(false)
+    }
+  })
+  
+  const handleDeleteAllFood = () => {
+    mutateDeleteAllFood()
+  }
+
+  const closeDeleteAllFoodConfirmModal = () => {
+    setIsDeleteAllFoodConfirmModalOpen(false)
+  }
+  useEffect(() => {
+    if (bigCategoryList) {
+      setBigCategoryList(bigCategoryList);
+    }
+  }, [bigCategoryList])
+
+  if (isBigCategoryListPending) {
+    return <div>MainPage Loding...</div>;
+  } 
+
+  if (isBigCategoryListError) {
+    return <div>bigCategoryList error</div>;
+  } 
+  // else if (isCurrentDesignError) {
+  //   return <div>currentDesign error</div>;
+  // }
+
   return (
     <div className={styles.wrapper}>
-      <div className={styles.bar_box}>
-        <div className={styles.bar_sub_box}>
-          <img
-            className={styles.bar_background}
-            src={barBackground}
-            alt="경험치바 배경이미지"
-          />
-          <div className={styles.bar_heart_box}>
-            <div className={styles.bar_heart_sub_box}>
-              <img
-                className={styles.bar_heart}
-                src={barHeart}
-                alt="하트이미지"
-              />
-              <span>2</span>
-            </div>
-          </div>
-
-          <img
-            className={styles.exp_bar}
-            src={expBar}
-            alt="경험치바 이미지"
-          />
-          <div className={styles.current_exp}></div>
-          <div
-            className={styles.notification_box}
-            onClick={handleOpenNotificationModal}
-          >
-            <div className={styles.notification_sub_box}>
-              <img src={notification} alt="알림 이미지" />
-              <div></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <ExpBar />
       <Link to="/storage/cabinet">
         <img
           className={styles.cabinet}
@@ -136,22 +151,19 @@ function MainPage() {
       </Link>
       <img
         className={styles.trash_can}
+        onClick={handleDeleteAllFood}
         src={trashCan}
         alt="쓰레기통 이미지"
       />
-      {isNotificationModalOpen && (
-        <Modal
-          title="알림함"
-          clickEvent={handleCloseNotificationModal}
-        >
-          <NotificationModal />
-        </Modal>
-      )}
+      
       {isLevelUpModalOpen && (
         <Modal title="레벨업!" clickEvent={handleCloseLevelUpModal}>
           <LevelUpModal />
         </Modal>
       )}
+      {isDeleteAllFoodConfirmModalOpen && 
+        <ConfirmModal content="모든 식품을 삭제하시겠습니까?" option1="삭제" option2="취소" option1Event={handleDeleteAllFood} option2Event={closeDeleteAllFoodConfirmModal} />
+      }
     </div>
   );
 }
