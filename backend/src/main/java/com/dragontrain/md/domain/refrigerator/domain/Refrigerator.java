@@ -3,6 +3,8 @@ package com.dragontrain.md.domain.refrigerator.domain;
 import java.time.LocalDateTime;
 
 import com.dragontrain.md.domain.food.domain.Food;
+import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorErrorCode;
+import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorException;
 import com.dragontrain.md.domain.user.domain.User;
 
 import jakarta.persistence.Column;
@@ -71,4 +73,12 @@ public class Refrigerator {
 		return equals(food.getRefrigerator());
 	}
 
+	public void delete(LocalDateTime deletedAt) {
+		if (isDeleted) {
+			throw new RefrigeratorException(RefrigeratorErrorCode.ALREADY_DELETED_REFRIGERATOR);
+		}
+
+		this.deletedAt = deletedAt;
+		this.isDeleted = true;
+	}
 }
