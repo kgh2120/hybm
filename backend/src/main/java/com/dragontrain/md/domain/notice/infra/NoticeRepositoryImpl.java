@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Repository
 public class NoticeRepositoryImpl implements NoticeRepository {
@@ -19,5 +21,15 @@ public class NoticeRepositoryImpl implements NoticeRepository {
 	@Override
 	public Boolean existsNewNotice(Long refrigeratorId) {
 		return noticeJpaRepository.existsByFood_Refrigerator_RefrigeratorIdAndDeletedAtIsNullAndIsCheckedIsFalse(refrigeratorId);
+	}
+
+	@Override
+	public Optional<Notice> findByNoticeId(Long noticeId) {
+		return noticeJpaRepository.findByNoticeId(noticeId);
+	}
+
+	@Override
+	public void deleteNoticeById(Notice notice) {
+		noticeJpaRepository.delete(notice);
 	}
 }
