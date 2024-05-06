@@ -69,7 +69,7 @@ public class User {
 		if (isDeleted) {
 			throw new UserException(UserErrorCode.ACCESS_DELETED_USER);
 		}
-
+		this.updatedAt = now;
 		this.deletedAt = now;
 		this.isDeleted = true;
 	}

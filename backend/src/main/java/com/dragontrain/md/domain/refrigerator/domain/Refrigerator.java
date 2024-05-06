@@ -73,12 +73,12 @@ public class Refrigerator {
 		return equals(food.getRefrigerator());
 	}
 
-	public void delete(LocalDateTime deletedAt) {
+	public void delete(LocalDateTime now) {
 		if (isDeleted) {
 			throw new RefrigeratorException(RefrigeratorErrorCode.ALREADY_DELETED_REFRIGERATOR);
 		}
-
-		this.deletedAt = deletedAt;
+		this.updatedAt = now;
+		this.deletedAt = now;
 		this.isDeleted = true;
 	}
 }
