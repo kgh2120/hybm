@@ -15,4 +15,9 @@ public class NoticeRepositoryImpl implements NoticeRepository {
 	public Slice<Notice> findAllNotDeletedNotice(Long refrigeratorId, Pageable pageable) {
 		return noticeJpaRepository.findAllNotDeletedNotice(refrigeratorId, pageable);
 	}
+
+	@Override
+	public Boolean existsNewNotice(Long refrigeratorId) {
+		return noticeJpaRepository.existsByFood_Refrigerator_RefrigeratorIdAndDeletedAtIsNullAndIsCheckedIsFalse(refrigeratorId);
+	}
 }
