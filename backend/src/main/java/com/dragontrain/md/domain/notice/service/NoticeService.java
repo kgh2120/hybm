@@ -9,4 +9,6 @@ public interface NoticeService {
 	AllNoticeResponse findAllNotDeletedNotice(User user, Pageable pageable);
 
 	HasnewNoticeResponse existsNewNotice(User user);
+
+	void deleteNotice(User user, Long noticeId);
 }
