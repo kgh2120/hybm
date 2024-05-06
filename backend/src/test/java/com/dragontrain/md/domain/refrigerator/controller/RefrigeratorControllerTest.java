@@ -21,7 +21,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.dragontrain.md.domain.TestEntityFactory;
+import com.dragontrain.md.setting.TestEntityFactory;
 import com.dragontrain.md.domain.refrigerator.controller.response.AppliedStorageDesignsResponse;
 import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignResponse;
 import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignsResponse;
