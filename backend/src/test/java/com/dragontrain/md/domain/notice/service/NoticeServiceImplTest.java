@@ -1,12 +1,17 @@
 package com.dragontrain.md.domain.notice.service;
 
+import com.dragontrain.md.common.service.TimeService;
 import com.dragontrain.md.domain.TestEntityFactory;
+import com.dragontrain.md.domain.food.domain.CategoryBig;
 import com.dragontrain.md.domain.food.domain.CategoryDetail;
 import com.dragontrain.md.domain.food.domain.Food;
 import com.dragontrain.md.domain.notice.controller.response.AllNoticeResponse;
 import com.dragontrain.md.domain.notice.domain.Notice;
 import com.dragontrain.md.domain.notice.domain.NoticeType;
+import com.dragontrain.md.domain.notice.exception.NoticeException;
 import com.dragontrain.md.domain.notice.service.port.NoticeRepository;
+import com.dragontrain.md.domain.refrigerator.domain.Level;
+import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
 import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
 import com.dragontrain.md.domain.user.domain.User;
 import org.junit.jupiter.api.Assertions;
@@ -40,6 +45,9 @@ class NoticeServiceImplTest {
 	@Mock
 	private RefrigeratorRepository refrigeratorRepository;
 
+	@Mock
+	private TimeService timeService;
+
 	@InjectMocks
 	private NoticeServiceImpl noticeService;
 
@@ -69,5 +77,58 @@ class NoticeServiceImplTest {
 		AllNoticeResponse allNoticeResponse = noticeService.findAllNotDeletedNotice(user, pageable);
 		Assertions.assertEquals(allNoticeResponse.getNotice().size(), 10);
 		Assertions.assertEquals(allNoticeResponse.getHasNext(), false);
+	}
+
+	@WithMockUser
+	@Test
+	void 내알림삭제_성공(){
+		User user = testEntityFactory.getTestUserEntity(1L);
+		Refrigerator refrigerator = testEntityFactory.getTestRefrigerator(1L, user, Boolean.FALSE, null);
+		Food food = testEntityFactory.getFood("음식", 9999, refrigerator, null, null, timeService.localDateTimeNow(), timeService.localDateTimeNow());
+		Notice notice = testEntityFactory.getNotice("알림", Boolean.TRUE, NoticeType.TO_DANGER, food);
+
+		BDDMockito.given(noticeRepository.findByNoticeId(any()))
+			.willReturn(Optional.of(notice));
+
+		BDDMockito.given(refrigeratorRepository.findByUserId(any()))
+			.willReturn(Optional.of(refrigerator));
+
+		Assertions.assertDoesNotThrow(() -> noticeService.deleteNotice(user, 1L));
+	}
+
+	@WithMockUser
+	@Test
+	void 남의알림삭제_실패(){
+		User user = testEntityFactory.getTestUserEntity(1L);
+		User otherUser = testEntityFactory.getTestUserEntity(2L);
+		Refrigerator refrigerator = testEntityFactory.getTestRefrigerator(1L, user, Boolean.FALSE, null);
+		Refrigerator otherRefrigerator = testEntityFactory.getTestRefrigerator(2L, otherUser, Boolean.FALSE, null);
+		Food otherFood = testEntityFactory.getFood("남의음식", 9999, otherRefrigerator, null, null, timeService.localDateTimeNow(), timeService.localDateTimeNow());
+		Notice otherNotice = testEntityFactory.getNotice("알림", Boolean.TRUE, NoticeType.TO_DANGER, otherFood);
+
+		BDDMockito.given(noticeRepository.findByNoticeId(any()))
+			.willReturn(Optional.of(otherNotice));
+
+		BDDMockito.given(refrigeratorRepository.findByUserId(any()))
+			.willReturn(Optional.of(refrigerator));
+
+		Assertions.assertThrows(NoticeException.class, () -> noticeService.deleteNotice(user, 1L));
+	}
+
+	@WithMockUser
+	@Test
+	void 삭제된알림삭제_실패(){
+		User user = testEntityFactory.getTestUserEntity(1L);
+		Refrigerator refrigerator = testEntityFactory.getTestRefrigerator(1L, user, Boolean.FALSE, null);
+		Food food = testEntityFactory.getFood("음식", 9999, refrigerator, null, null, timeService.localDateTimeNow(), timeService.localDateTimeNow());
+		Notice notice = testEntityFactory.getDeletedNotice("알림", Boolean.TRUE, NoticeType.TO_DANGER, food);
+
+		BDDMockito.given(noticeRepository.findByNoticeId(any()))
+			.willReturn(Optional.of(notice));
+
+		BDDMockito.given(refrigeratorRepository.findByUserId(any()))
+			.willReturn(Optional.of(refrigerator));
+
+		Assertions.assertThrows(NoticeException.class, () -> noticeService.deleteNotice(user, 1L));
 	}
 }
