@@ -5,11 +5,6 @@
   justify-content: center;
   align-items: center;
 
-  img {
-    display: block;
-    margin-bottom: 10px;
-  }
-
   div {
     font-size: 12px;
   }
@@ -24,9 +19,5 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
-    button {
-      background-color: transparent;
-    }
   }
 }

@@ -8,6 +8,19 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "NanumBarunGothic";
+  font-style: normal;
+  font-weight: 700;
+  src: url("//fastly.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot");
+  src: url("//fastly.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix")
+      format("embedded-opentype"),
+    url("//fastly.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff")
+      format("woff"),
+    url("//fastly.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf")
+      format("truetype");
+}
+
 * {
   padding: 0px;
   margin: 0px;

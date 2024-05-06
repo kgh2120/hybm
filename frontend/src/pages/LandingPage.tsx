@@ -1,7 +1,8 @@
 import styles from "../styles/landingPage/LandingPage.module.css";
 import logo from "../assets/extra-logo.png";
-import naverBtn from "../assets/naverBtn.png";
-import kakaoBtn from "../assets/kakaoBtn.png";
+import naverBtn from "../assets/naver.png";
+import kakaoBtn from "../assets/kakao.png";
+import CustomButton from "../components/landingPage/CustomButton";
 
 function LandingPage() {
   const naverLogin = () => {
@@ -24,12 +25,14 @@ function LandingPage() {
         <div>Have You Been To the Mart?</div>
       </div>
       <div className={styles.auth_btn}>
-        <button type="button" onClick={naverLogin}>
+        <CustomButton option="naver" onClick={naverLogin}>
           <img src={naverBtn} alt="네이버 버튼" />
-        </button>
-        <button type="button" onClick={kakaoLogin}>
+          <span>네이버로 시작하기</span>
+        </CustomButton>
+        <CustomButton option="kakao" onClick={kakaoLogin}>
           <img src={kakaoBtn} alt="카카오 버튼" />
-        </button>
+          <span>카카오로 시작하기</span>
+        </CustomButton>
       </div>
     </div>
   );

@@ -5,10 +5,6 @@
   justify-content: center;
   align-items: center;
 }
-.wrapper img {
-  display: block;
-  margin-bottom: 10px;
-}
 .wrapper div {
   font-size: 12px;
 }
@@ -21,7 +17,4 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-.wrapper .auth_btn button {
-  background-color: transparent;
 }/*# sourceMappingURL=LandingPage.module.css.map */

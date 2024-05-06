@@ -1,0 +1,36 @@
+
+.button_wrapper {
+    width: 100vw;
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+  
+    button {
+      background-color: transparent;
+      padding: 10px 20px 10px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+  
+      img {
+        width: 35px;
+      }
+  
+      span {
+        font-family: "NanumBarunGothic";
+    }
+  
+      &.naver {
+        background-color: #03C75A;
+        color: #ffffff;
+      }
+  
+      &.kakao {
+        background-color: #FEE500;
+        color: rgba(0, 0, 0, 0.7);
+      }
+    }
+  }
+  
