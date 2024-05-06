@@ -43,12 +43,7 @@ class NoticeServiceImplTest {
 	@InjectMocks
 	private NoticeServiceImpl noticeService;
 
-	private static TestEntityFactory testEntityFactory;
-
-	@BeforeAll
-	static void 장전(){
-		testEntityFactory = new TestEntityFactory();
-	}
+	private TestEntityFactory testEntityFactory = new TestEntityFactory();
 
 	@WithMockUser
 	@Test
@@ -63,7 +58,7 @@ class NoticeServiceImplTest {
 		}
 
 		Pageable pageable = PageRequest.of(1, 10);
-		Slice<Notice> noticeSlice = new testSlice(notices, pageable, false);
+		Slice<Notice> noticeSlice = new SliceImpl<>(notices, pageable, false);
 
 		BDDMockito.given(refrigeratorRepository.findByUserId(any()))
 			.willReturn(Optional.of(testEntityFactory.getTestRefrigerator(1L, null, Boolean.FALSE, null)));
@@ -74,11 +69,5 @@ class NoticeServiceImplTest {
 		AllNoticeResponse allNoticeResponse = noticeService.findAllNotDeletedNotice(user, pageable);
 		Assertions.assertEquals(allNoticeResponse.getNotice().size(), 10);
 		Assertions.assertEquals(allNoticeResponse.getHasNext(), false);
-	}
-
-	private class testSlice extends SliceImpl<Notice>{
-		public testSlice(List<Notice> content, Pageable pageable, boolean hasNext) {
-			super(content, pageable, hasNext);
-		}
 	}
 }

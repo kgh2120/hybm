@@ -43,12 +43,7 @@ class StorageDesignJpaRepositoryTest {
 	@Autowired
 	private LevelJpaRepository levelJpaRepository;
 
-	private static TestEntityFactory testEntityFactory;
-
-	@BeforeAll
-	static void 장전() {
-		testEntityFactory = new TestEntityFactory();
-	}
+	private TestEntityFactory testEntityFactory = new TestEntityFactory();
 
 	@Test
 	void 냉장고디자인전체조회_성공() throws Exception {

@@ -25,12 +25,7 @@ class RefrigeratorJpaRepositoryTest {
 	@Autowired
 	private LevelJpaRepository levelJpaRepository;
 
-	private static TestEntityFactory testEntityFactory;
-
-	@BeforeAll
-	static void 장전() {
-		testEntityFactory = new TestEntityFactory();
-	}
+	private TestEntityFactory testEntityFactory = new TestEntityFactory();
 
 	@Test
 	void 유저아이디로_냉장고조회_성공() {

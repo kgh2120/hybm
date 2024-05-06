@@ -60,12 +60,7 @@ class NoticeJpaRepositoryTest {
 	@Autowired
 	private StorageTypeJpaRepository storageTypeJpaRepository;
 
-	private static TestEntityFactory testEntityFactory;
-
-	@BeforeAll
-	static void 장전(){
-		testEntityFactory = new TestEntityFactory();
-	}
+	private TestEntityFactory testEntityFactory = new TestEntityFactory();
 
 	@Test
 	void 알림전체조회_성공(){

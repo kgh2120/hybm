@@ -42,12 +42,7 @@ class RefrigeratorControllerTest {
 	@InjectMocks
 	private RefrigeratorController refrigeratorController;
 
-	private static TestEntityFactory testEntityFactory;
-
-	@BeforeAll
-	static void 장전() {
-		testEntityFactory = new TestEntityFactory();
-	}
+	private TestEntityFactory testEntityFactory = new TestEntityFactory();
 
 	@WithMockUser
 	@Test
