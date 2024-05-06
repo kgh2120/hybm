@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getLoginStatus } from "../api/userApi";
 import useAuthStore from "../stores/useAuthStore";
+import { useEffect } from 'react';
 
 function AuthCallback() {
   const { setIsLogin } = useAuthStore();
@@ -25,6 +26,7 @@ function AuthCallback() {
     setIsLogin(true);
     navigate("/");
   }
+
   return <></>;
 }
 

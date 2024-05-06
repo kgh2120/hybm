@@ -66,7 +66,7 @@ function App() {
     {
       path: "/",
       element: <AuthenticatedRoute />,
-      errorElement: <ErrorPage />,
+      // errorElement: <ErrorPage />,
       children: [
         {
           path: "/landing",
