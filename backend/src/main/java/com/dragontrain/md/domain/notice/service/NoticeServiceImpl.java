@@ -1,6 +1,7 @@
 package com.dragontrain.md.domain.notice.service;
 
 import com.dragontrain.md.domain.notice.controller.response.AllNoticeResponse;
+import com.dragontrain.md.domain.notice.controller.response.HasnewNoticeResponse;
 import com.dragontrain.md.domain.notice.service.port.NoticeRepository;
 import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorErrorCode;
 import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorException;
@@ -23,6 +24,17 @@ public class NoticeServiceImpl implements NoticeService{
 			.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND))
 			.getRefrigeratorId()
 				, pageable
+			)
+		);
+	}
+
+	@Override
+	public HasnewNoticeResponse existsNewNotice(User user) {
+		return HasnewNoticeResponse.create(
+			noticeRepository.existsNewNotice(
+				refrigeratorRepository.findByUserId(user.getUserId())
+					.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND))
+					.getRefrigeratorId()
 			)
 		);
 	}
