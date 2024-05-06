@@ -9,9 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -28,6 +26,15 @@ public class NoticeController {
 	@GetMapping("/hasnew")
 	public ResponseEntity<HasnewNoticeResponse> existsNewNotice(@AuthenticationPrincipal User user){
 		return ResponseEntity.ok(noticeService.existsNewNotice(user));
+	}
+
+	@DeleteMapping
+	public ResponseEntity<Void> deleteNotice(
+		@AuthenticationPrincipal User user,
+		@RequestParam @NotNull Long noticeId
+	){
+		noticeService.deleteNotice(user, noticeId);
+		return ResponseEntity.ok().build();
 	}
 
 }
