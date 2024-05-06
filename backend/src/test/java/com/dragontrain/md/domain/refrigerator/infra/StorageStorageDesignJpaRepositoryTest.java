@@ -44,8 +44,6 @@ class StorageStorageDesignJpaRepositoryTest {
 	@Autowired
 	private LevelJpaRepository levelJpaRepository;
 
-	private static TestEntityFactory testEntityFactory;
-
 	private User user;
 	private Level level;
 	private StorageType cool;
@@ -59,10 +57,10 @@ class StorageStorageDesignJpaRepositoryTest {
 	private StorageStorageDesign storageStorageDesignApplied;
 	private StorageStorageDesign storageStorageDesignNotApplied;
 
+	private TestEntityFactory testEntityFactory = new TestEntityFactory();
+
 	@BeforeEach
 	void 장전() {
-		testEntityFactory = new TestEntityFactory();
-
 		user = testEntityFactory.getTestUserEntity();
 		userJpaRepository.save(user);
 
