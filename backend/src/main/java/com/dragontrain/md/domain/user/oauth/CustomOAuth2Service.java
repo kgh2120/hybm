@@ -7,6 +7,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import com.dragontrain.md.common.config.event.Events;
+import com.dragontrain.md.common.service.EventPublisher;
 import com.dragontrain.md.common.service.TimeService;
 import com.dragontrain.md.domain.user.domain.SocialLoginType;
 import com.dragontrain.md.domain.user.domain.User;
@@ -23,6 +24,7 @@ public class CustomOAuth2Service extends DefaultOAuth2UserService {
 
 	private final UserRepository userRepository;
 	private final TimeService timeService;
+	private final EventPublisher eventPublisher;
 
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -40,7 +42,7 @@ public class CustomOAuth2Service extends DefaultOAuth2UserService {
 
 	public User saveUser(String email, SocialLoginType socialLoginType) {
 		User user = userRepository.save(User.create(email, socialLoginType, timeService.localDateTimeNow()));
-		Events.raise(new UserCreated(user.getUserId()));
+		eventPublisher.publish(new UserCreated(user.getUserId()));
 		return user;
 	}
 }
