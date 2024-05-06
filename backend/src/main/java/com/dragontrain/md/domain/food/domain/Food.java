@@ -113,6 +113,11 @@ public class Food {
 		return this;
 	}
 
+	public void clear() {
+		this.deletedAt = LocalDateTime.now();
+		this.foodDeleteType = FoodDeleteType.CLEAR;
+	}
+
 	private static FoodStatus calculateFoodStatus(LocalDate expectedExpirationDate, LocalDate now) {
 		Period period = expectedExpirationDate.until(now);
 

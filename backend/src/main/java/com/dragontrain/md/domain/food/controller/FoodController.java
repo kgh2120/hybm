@@ -115,4 +115,12 @@ public class FoodController {
 		foodService.deleteFood(deleteType, foodId, user);
 		return ResponseEntity.ok().build();
 	}
+
+	@PutMapping("/clear")
+	public ResponseEntity<Void> clearRefrigerator(@AuthenticationPrincipal User user) {
+
+		foodService.clearRefrigerator(user);
+		return ResponseEntity.ok().build();
+	}
+
 }
