@@ -1,15 +1,15 @@
 package com.dragontrain.md.domain.food.infra;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Repository;
 
 import com.dragontrain.md.domain.food.domain.Food;
 import com.dragontrain.md.domain.food.service.port.FoodRepository;
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
-import java.util.Optional;
-
 
 @RequiredArgsConstructor
 @Repository
@@ -18,7 +18,13 @@ public class FoodRepositoryImpl implements FoodRepository {
 
 	@Override
 	public List<Food> findAllByRefrigeratorIdAndFoodStorage(Long refrigeratorId, StorageTypeId storageType) {
-		return foodJpaRepository.findAllByRefrigerator_RefrigeratorIdAndStorageType_StorageType(refrigeratorId, storageType);
+		return foodJpaRepository.findAllByRefrigerator_RefrigeratorIdAndStorageType_StorageType(refrigeratorId,
+			storageType);
+	}
+
+	@Override
+	public List<Food> findAllByRefrigeratorId(Long refrigeratorId) {
+		return foodJpaRepository.findAllByRefrigerator_RefrigeratorId(refrigeratorId);
 	}
 
 	@Override

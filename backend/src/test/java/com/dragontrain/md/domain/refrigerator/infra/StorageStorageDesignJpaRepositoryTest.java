@@ -1,10 +1,10 @@
 package com.dragontrain.md.domain.refrigerator.infra;
 
-import com.dragontrain.md.domain.TestEntityFactory;
-import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignResponse;
-import com.dragontrain.md.domain.refrigerator.domain.*;
-import com.dragontrain.md.domain.user.domain.User;
-import com.dragontrain.md.domain.user.infra.UserJpaRepository;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,10 +12,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import com.dragontrain.md.domain.TestEntityFactory;
+import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignResponse;
+import com.dragontrain.md.domain.refrigerator.domain.Level;
+import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
+import com.dragontrain.md.domain.refrigerator.domain.StorageDesign;
+import com.dragontrain.md.domain.refrigerator.domain.StorageStorageDesign;
+import com.dragontrain.md.domain.refrigerator.domain.StorageType;
+import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
+import com.dragontrain.md.domain.user.domain.User;
+import com.dragontrain.md.domain.user.infra.UserJpaRepository;
 
 @ActiveProfiles("test")
 @DataJpaTest
@@ -54,20 +60,20 @@ class StorageStorageDesignJpaRepositoryTest {
 	private StorageStorageDesign storageStorageDesignNotApplied;
 
 	@BeforeEach
-	void 장전(){
+	void 장전() {
 		testEntityFactory = new TestEntityFactory();
 
 		user = testEntityFactory.getTestUserEntity();
 		userJpaRepository.save(user);
 
-		if(levelJpaRepository.findAll().isEmpty()) {
+		if (levelJpaRepository.findAll().isEmpty()) {
 			level = testEntityFactory.getTestLevelEntity(1, 1);
 			levelJpaRepository.save(level);
 		} else {
 			level = levelJpaRepository.findByLevel(1).get();
 		}
 
-		if(storageTypeJpaRepository.findAll().isEmpty()) {
+		if (storageTypeJpaRepository.findAll().isEmpty()) {
 			storageTypeJpaRepository.saveAll(testEntityFactory.getAllTestStorageTypes());
 		}
 		cool = storageTypeJpaRepository.findById(StorageTypeId.COOL).get();
@@ -75,7 +81,7 @@ class StorageStorageDesignJpaRepositoryTest {
 		refrigerator = testEntityFactory.getTestRefrigerator(user, Boolean.FALSE, level);
 		refrigeratorJpaRepository.save(refrigerator);
 
-		if(storageDesignJpaRepository.findAll().isEmpty()) {
+		if (storageDesignJpaRepository.findAll().isEmpty()) {
 			storageDesignCoolMine = testEntityFactory.getTestMineNotUseDesign(cool);
 			storageDesignCoolNotMine = testEntityFactory.getTestNotMineStorageDesign(cool);
 			storageDesignCoolMineApplied = testEntityFactory.getTestMineUseDesign(cool);
@@ -91,15 +97,16 @@ class StorageStorageDesignJpaRepositoryTest {
 			storageDesignCoolMineApplied = storageDesignJpaRepository.findByStorageDesignId(sdMineAppliedId).get();
 		}
 
-
-			storageStorageDesignApplied = testEntityFactory.getTestStorageStorageDesignApplied(cool, storageDesignCoolMineApplied, refrigerator);
-			storageStorageDesignNotApplied = testEntityFactory.getTestStorageStorageDesignNotApplied(cool, storageDesignCoolMine, refrigerator);
-			storageStorageDesignJpaRepository.save(storageStorageDesignApplied);
-			storageStorageDesignJpaRepository.save(storageStorageDesignNotApplied);
+		storageStorageDesignApplied = testEntityFactory.getTestStorageStorageDesignApplied(cool,
+			storageDesignCoolMineApplied, refrigerator);
+		storageStorageDesignNotApplied = testEntityFactory.getTestStorageStorageDesignNotApplied(cool,
+			storageDesignCoolMine, refrigerator);
+		storageStorageDesignJpaRepository.save(storageStorageDesignApplied);
+		storageStorageDesignJpaRepository.save(storageStorageDesignNotApplied);
 	}
 
 	@Test
-	void 냉장고디자인전체조회_성공() throws Exception{
+	void 냉장고디자인전체조회_성공() throws Exception {
 
 		Assertions.assertEquals(levelJpaRepository.findAll().size(), 1);
 		Assertions.assertEquals(storageTypeJpaRepository.findAll().size(), 3);
@@ -107,9 +114,11 @@ class StorageStorageDesignJpaRepositoryTest {
 		Assertions.assertEquals(storageDesignJpaRepository.findAll().size(), 3);
 		Assertions.assertEquals(storageStorageDesignJpaRepository.findAll().size(), 2);
 
-		Assertions.assertEquals(storageStorageDesignJpaRepository.findAllStorageDesign(refrigerator.getRefrigeratorId()).size(), 3);
+		Assertions.assertEquals(
+			storageStorageDesignJpaRepository.findAllStorageDesign(refrigerator.getRefrigeratorId()).size(), 3);
 
-		Map<Boolean, List<StorageDesignResponse>> mineNotMine = storageStorageDesignJpaRepository.findAllStorageDesign(refrigerator.getRefrigeratorId())
+		Map<Boolean, List<StorageDesignResponse>> mineNotMine = storageStorageDesignJpaRepository.findAllStorageDesign(
+				refrigerator.getRefrigeratorId())
 			.stream()
 			.collect(Collectors.groupingBy(StorageDesignResponse::getHas));
 
@@ -118,7 +127,7 @@ class StorageStorageDesignJpaRepositoryTest {
 	}
 
 	@Test
-	void 현재적용디자인조회_성공() throws Exception{
+	void 현재적용디자인조회_성공() throws Exception {
 
 		Assertions.assertEquals(levelJpaRepository.findAll().size(), 1);
 		Assertions.assertEquals(storageTypeJpaRepository.findAll().size(), 3);
@@ -126,11 +135,12 @@ class StorageStorageDesignJpaRepositoryTest {
 		Assertions.assertEquals(storageDesignJpaRepository.findAll().size(), 3);
 		Assertions.assertEquals(storageStorageDesignJpaRepository.findAll().size(), 2);
 
-		Assertions.assertEquals(storageStorageDesignJpaRepository.findAllAppliedStorageDesign(refrigerator.getRefrigeratorId()).size(), 1);
+		Assertions.assertEquals(
+			storageStorageDesignJpaRepository.findAllAppliedStorageDesign(refrigerator.getRefrigeratorId()).size(), 1);
 	}
 
 	@Test
-	void 냉장고_적용디자인_확인_성공() throws Exception{
+	void 냉장고_적용디자인_확인_성공() throws Exception {
 		List<StorageStorageDesign> appliedStorageStorageDesigns = storageStorageDesignJpaRepository.findAllByRefrigerator_RefrigeratorIdAndIsApplied(
 			refrigerator.getRefrigeratorId(), Boolean.TRUE
 		);
@@ -144,7 +154,7 @@ class StorageStorageDesignJpaRepositoryTest {
 	}
 
 	@Test
-	void 냉장고와_디자인에_따라_저장고저장고디자인찾기_성공(){
+	void 냉장고와_디자인에_따라_저장고저장고디자인찾기_성공() {
 		List<StorageStorageDesign> storageStorageDesigns = storageStorageDesignJpaRepository.findAllStorageStorageDesignByRefrigeratorIdAndDesignIds(
 			refrigerator.getRefrigeratorId(), Arrays.asList(sdMineId, sdMineAppliedId));
 
@@ -152,7 +162,7 @@ class StorageStorageDesignJpaRepositoryTest {
 	}
 
 	@Test
-	void 냉장고_적용여부에_따라_저장고저장고디자인찾기_성공(){
+	void 냉장고_적용여부에_따라_저장고저장고디자인찾기_성공() {
 		List<StorageStorageDesign> appliedStorageStorageDesigns = storageStorageDesignJpaRepository.findAllByRefrigerator_RefrigeratorIdAndIsApplied(
 			refrigerator.getRefrigeratorId(), Boolean.TRUE);
 		Assertions.assertEquals(appliedStorageStorageDesigns.size(), 1);

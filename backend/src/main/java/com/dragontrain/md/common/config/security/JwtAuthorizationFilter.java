@@ -33,15 +33,15 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
 		FilterChain filterChain) throws ServletException, IOException {
-			Cookie accessTokenCookie = CookieUtils.findAccessTokenCookie(request.getCookies());
-			if (!Objects.isNull(accessTokenCookie)) {
-				String accessToken = accessTokenCookie.getValue();
-				if (jwtProvider.isRefreshToken(accessToken)) {
-					throw new TokenException(GlobalErrorCode.TOKEN_TYPE_MISS_MATCHED,
-						"[AUTHORIZATION] refresh token is used ");
-				}
-				setAuthenticated(accessToken);
+		Cookie accessTokenCookie = CookieUtils.findAccessTokenCookie(request.getCookies());
+		if (!Objects.isNull(accessTokenCookie)) {
+			String accessToken = accessTokenCookie.getValue();
+			if (jwtProvider.isRefreshToken(accessToken)) {
+				throw new TokenException(GlobalErrorCode.TOKEN_TYPE_MISS_MATCHED,
+					"[AUTHORIZATION] refresh token is used ");
 			}
+			setAuthenticated(accessToken);
+		}
 
 		filterChain.doFilter(request, response);
 	}
@@ -49,6 +49,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 	private void setAuthenticated(String accessToken) {
 		Long userId = jwtProvider.parseUserId(accessToken);
 		User user = userService.loadUserByUserId(userId);
+		// TODO 삭제 검증..
 		SecurityContextHolder.getContext()
 			.setAuthentication(new UsernamePasswordAuthenticationToken(user, user.getUserId(), new ArrayList<>()));
 	}

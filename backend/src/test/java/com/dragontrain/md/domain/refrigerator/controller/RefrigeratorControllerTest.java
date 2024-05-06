@@ -22,12 +22,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.dragontrain.md.domain.TestEntityFactory;
-import com.dragontrain.md.domain.refrigerator.service.dto.AppliedStorageDesign;
 import com.dragontrain.md.domain.refrigerator.controller.response.AppliedStorageDesignsResponse;
 import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignResponse;
 import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignsResponse;
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import com.dragontrain.md.domain.refrigerator.service.StorageStorageDesignService;
+import com.dragontrain.md.domain.refrigerator.service.dto.AppliedStorageDesign;
 
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(controllers = RefrigeratorController.class)

@@ -1,12 +1,14 @@
 package com.dragontrain.md.domain.refrigerator.infra;
 
+import java.util.Optional;
+
+import org.springframework.stereotype.Repository;
+
 import com.dragontrain.md.domain.refrigerator.domain.StorageType;
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import com.dragontrain.md.domain.refrigerator.service.port.StorageTypeRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Repository

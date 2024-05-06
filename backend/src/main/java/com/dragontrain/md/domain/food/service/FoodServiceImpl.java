@@ -1,7 +1,6 @@
 package com.dragontrain.md.domain.food.service;
 
 import com.dragontrain.md.domain.food.controller.request.FoodInfoRequest;
-import com.dragontrain.md.domain.food.controller.response.*;
 import com.dragontrain.md.domain.food.domain.CategoryBig;
 import com.dragontrain.md.domain.food.domain.Food;
 import com.dragontrain.md.domain.food.service.port.BarcodeRepository;
@@ -9,10 +8,8 @@ import com.dragontrain.md.domain.food.service.port.CategoryBigRepository;
 import com.dragontrain.md.domain.food.service.port.CategoryDetailRepository;
 import com.dragontrain.md.domain.food.service.port.FoodRepository;
 import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
-import com.dragontrain.md.domain.refrigerator.domain.StorageType;
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
-import com.dragontrain.md.domain.refrigerator.service.port.StorageTypeRepository;
 import com.dragontrain.md.domain.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,16 +19,18 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import java.time.DateTimeException;
-import java.time.LocalDate;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,13 +38,22 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.dragontrain.md.common.service.TimeService;
 import com.dragontrain.md.domain.food.controller.request.FoodRegister;
+import com.dragontrain.md.domain.food.controller.response.BarcodeInfo;
+import com.dragontrain.md.domain.food.controller.response.CategoryInfoDetail;
+import com.dragontrain.md.domain.food.controller.response.CategoryInfoResponse;
+import com.dragontrain.md.domain.food.controller.response.ExpectedExpirationDate;
+import com.dragontrain.md.domain.food.controller.response.FoodDetailResponse;
+import com.dragontrain.md.domain.food.controller.response.FoodStorage;
+import com.dragontrain.md.domain.food.controller.response.FoodStorageResponse;
+import com.dragontrain.md.domain.food.controller.response.ReceiptProduct;
+import com.dragontrain.md.domain.food.controller.response.ReceiptProducts;
 import com.dragontrain.md.domain.food.domain.Barcode;
 import com.dragontrain.md.domain.food.domain.CategoryDetail;
+import com.dragontrain.md.domain.food.domain.FoodDeleteType;
 import com.dragontrain.md.domain.food.exception.FoodErrorCode;
 import com.dragontrain.md.domain.food.exception.FoodException;
 import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorErrorCode;
 import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorException;
-
 
 @Slf4j
 @Service
@@ -53,6 +61,13 @@ import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorException;
 @Transactional(readOnly = true)
 public class FoodServiceImpl implements FoodService {
 
+	private final RefrigeratorRepository refrigeratorRepository;
+	private final FoodRepository foodRepository;
+	private final CategoryDetailRepository categoryDetailRepository;
+	private final CategoryBigRepository categoryBigRepository;
+	private final BarcodeRepository barcodeRepository;
+	private final CrawlService crawlService;
+	private final TimeService timeService;
 
 	// OCR General 형식의 SECRET key, API URL
 	@Value("${secret.ocr.general.service-key}")
@@ -66,17 +81,11 @@ public class FoodServiceImpl implements FoodService {
 	@Value("${secret.ocr.document.api-url}")
 	private String RECEIPT_API_URL;
 
-
-	private final RefrigeratorRepository refrigeratorRepository;
-	private final FoodRepository foodRepository;
-	private final CategoryDetailRepository categoryDetailRepository;
-	private final CategoryBigRepository categoryBigRepository;
-	private final BarcodeRepository barcodeRepository;
-	private final StorageTypeRepository storageTypeRepository;
-	private final CrawlService crawlService;
-	private final TimeService timeService;
-
-
+	private static void validateDuplicateFoodIds(Long[] foodIds) {
+		Set<Long> foodIdSet = new HashSet<>(List.of(foodIds));
+		if (foodIdSet.size() != foodIds.length)
+			throw new FoodException(FoodErrorCode.DUPLICATED_FOOD_ID);
+	}
 
 	// 이미지로 OCR General을 요청하는 Component
 	@Override
@@ -264,7 +273,6 @@ public class FoodServiceImpl implements FoodService {
 		return receiptProducts;
 	}
 
-
 	@Override
 	public void registerReceipt(List<FoodInfoRequest> foodInfoRequests, User user) {
 
@@ -287,7 +295,6 @@ public class FoodServiceImpl implements FoodService {
 
 	}
 
-
 	@Override
 	public List<CategoryInfoResponse> getCategoryInfo() {
 		List<CategoryInfoResponse> categoryInfoResponseList = new ArrayList<>();
@@ -308,7 +315,7 @@ public class FoodServiceImpl implements FoodService {
 				categoryBig.getName(),
 				categoryBig.getImgSrc(),
 				categoryInfoDetails
-				);
+			);
 			categoryInfoResponseList.add(categoryInfoResponse);
 		}
 
@@ -342,6 +349,31 @@ public class FoodServiceImpl implements FoodService {
 		foodRepository.save(updatedFood);
 	}
 
+	@Transactional
+	@Override
+	public void deleteFood(String deleteType, Long[] foodIds, User user) {
+
+		// ids 중복 있는지 검증
+
+		validateDuplicateFoodIds(foodIds);
+
+		FoodDeleteType foodDeleteType = FoodDeleteType.valueOf(deleteType.toUpperCase());
+
+		Refrigerator refrigerator = refrigeratorRepository.findByUserId(user.getUserId())
+			.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND));
+		// food에 대해서 검증
+		LocalDateTime deletedTime = timeService.localDateTimeNow();
+		Arrays.stream(foodIds).forEach(
+			(foodId) -> {
+				Food food = foodRepository.findById(foodId)
+					.orElseThrow(() -> new FoodException(FoodErrorCode.FOOD_NOT_FOUND));
+				if (!refrigerator.isMyFood(food))
+					throw new FoodException(FoodErrorCode.INVALID_ACCESS);
+				food.delete(foodDeleteType, deletedTime);
+			}
+		);
+
+	}
 
 	@Override
 	public BarcodeInfo getBarcodeInfo(Long barcode) {
@@ -396,6 +428,7 @@ public class FoodServiceImpl implements FoodService {
 			storageTypeId, refrigerator, timeService.localDateTimeNow(), request.getIsManual()));
 	}
 
+
 	@Override
 	public FoodStorageResponse getFoodStorage(String storage, User user) {
 		Refrigerator refrigerator = refrigeratorRepository.findByUserId(user.getUserId())
@@ -431,6 +464,21 @@ public class FoodServiceImpl implements FoodService {
 	}
 
 
+	@Transactional
+	@Override
+	public void clearRefrigerator(User user) {
+
+		Refrigerator refrigerator = refrigeratorRepository.findByUserId(user.getUserId())
+			.orElseThrow(() -> new FoodException(FoodErrorCode.REFRIGERATOR_NOT_FOUND));
+
+		List<Food> foods = foodRepository.findAllByRefrigeratorId(refrigerator.getRefrigeratorId());
+		for (Food food : foods) {
+			food.clear();
+			foodRepository.save(food);
+		}
+
+	}
+
 
 	private LocalDate makeLocalDate(int year, int month, int day) {
 		try {
@@ -447,4 +495,5 @@ public class FoodServiceImpl implements FoodService {
 			throw new FoodException(FoodErrorCode.INVALID_DATE_FORMAT);
 		}
 	}
+
 }

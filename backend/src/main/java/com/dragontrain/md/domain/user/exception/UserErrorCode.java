@@ -19,8 +19,6 @@ public enum UserErrorCode implements ErrorCode {
 	USER_RESOURCE_NOT_FOUND(HttpStatus.NOT_FOUND, "유저 정보가 존재하지 않습니다"),
 	ACCESS_DELETED_USER(HttpStatus.FORBIDDEN, "이미 삭제된 유저입니다"),
 
-
-
 	;
 
 	private final HttpStatus httpStatus;

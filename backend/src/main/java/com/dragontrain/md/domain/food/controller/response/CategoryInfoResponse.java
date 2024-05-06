@@ -1,8 +1,12 @@
 package com.dragontrain.md.domain.food.controller.response;
 
-import lombok.*;
-
 import java.util.List;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
@@ -15,9 +19,9 @@ public class CategoryInfoResponse {
 	private List<CategoryInfoDetail> categoryDetails;
 
 	public static CategoryInfoResponse create(Integer categoryBigId,
-											  String name,
-											  String bigCategoryImgSrc,
-											  List<CategoryInfoDetail> categoryDetails) {
+		String name,
+		String bigCategoryImgSrc,
+		List<CategoryInfoDetail> categoryDetails) {
 		return CategoryInfoResponse.builder()
 			.categoryBigId(categoryBigId)
 			.name(name)
