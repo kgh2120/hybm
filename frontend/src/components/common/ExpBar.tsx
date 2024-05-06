@@ -30,8 +30,7 @@ function ExpBar() {
     queryFn: getLevelAndExp,
   });
 
-  const currentExpPercent =
-    (levelAndExp.currentExp / levelAndExp.maxExp) * 100;
+  
 
   if (isLevelAndExpPending) {
     return <div>is level and exp Loding...</div>;
@@ -39,6 +38,10 @@ function ExpBar() {
   if (isLevelAndExpError) {
     return <div>get level and exp error</div>;
   }
+
+  const currentExpPercent =
+    (levelAndExp.currentExp / levelAndExp.maxExp) * 100;
+    
   return (
     <div className={styles.bar_box}>
       <div className={styles.bar_sub_box}>

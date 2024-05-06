@@ -37,3 +37,16 @@ export async function deleteAllFood() {
   }
 }
 
+export async function getExpiredDate(categoryId: number) {
+  const currentDate = new Date();
+const year = currentDate.getFullYear();
+const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+const day = String(currentDate.getDate()).padStart(2, '0');
+  try {
+    const res = await instance.get(`/api/foods/expiration?categoryDetailId=${categoryId}&&year=${year}&&month=${month}&&day=${day}`);
+    console.log(res);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+}
