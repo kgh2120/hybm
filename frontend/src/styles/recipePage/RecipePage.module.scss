@@ -1,0 +1,113 @@
+@import "../common/_common";
+
+.wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .page_header {
+    @include modal-title;
+    width: 100%;
+
+    span {
+      @include modal-title;
+      position: relative;
+    }
+
+    .home_img {
+      width: 20px;
+      aspect-ratio: 1/1;
+      position: absolute;
+      left: 20px;
+    }
+  }
+
+  .white_background {
+    background-color: white;
+    width: 90%;
+    height: 90%;
+    overflow-y: scroll;
+    padding: 5%;
+    margin: 1%;
+
+    .content {
+      .sub_title {
+        text-align: start;
+        font-size: $font-lg;
+        text-decoration: {
+          line: underline;
+          color: $color-point;
+          thickness: 2px;
+        }
+        text-underline-offset: 6px;
+        margin: 10% 0;
+      }
+
+      .sub_content {
+        p {
+          font-size: $font-md;
+          line-height: 150%;
+          > span {
+            color: $color-point;
+          }
+        }
+
+        .main_section {
+          @include center;
+          flex-direction: column;
+          gap: 12px;
+          width: 100%;
+          margin: 3% 0;
+
+          .section_title {
+            position: relative;
+            width: 100%;
+
+            > h2 {
+              font-size: $font-lg;
+              color: $color-text;
+              text-shadow: $font-shadow;
+              position: absolute;
+              top: 5px;
+              left: 5px;
+              font-weight: 100;
+              background-color: white;
+            }
+          }
+
+          > section {
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            overflow-x: scroll;
+
+            .section_content {
+              @include center;
+              width: 100%;
+              flex-direction: column;
+              gap: 5px;
+
+              > div {
+                display: flex;
+                gap: 12px;
+                width: 100%;
+                margin: 1% 0;
+              }
+
+              > p {
+                color: $color-line;
+                font-size: $font-sm;
+                margin: 1% 0;
+                position: fix;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
