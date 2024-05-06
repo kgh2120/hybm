@@ -1,7 +1,6 @@
 package com.dragontrain.md.domain.food.service;
 
 import com.dragontrain.md.domain.food.controller.request.FoodInfoRequest;
-import com.dragontrain.md.domain.food.controller.response.*;
 import com.dragontrain.md.domain.food.domain.CategoryBig;
 import com.dragontrain.md.domain.food.domain.Food;
 import com.dragontrain.md.domain.food.service.port.BarcodeRepository;
@@ -9,13 +8,9 @@ import com.dragontrain.md.domain.food.service.port.CategoryBigRepository;
 import com.dragontrain.md.domain.food.service.port.CategoryDetailRepository;
 import com.dragontrain.md.domain.food.service.port.FoodRepository;
 import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
-import com.dragontrain.md.domain.refrigerator.domain.StorageType;
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
-import com.dragontrain.md.domain.refrigerator.service.port.StorageTypeRepository;
 import com.dragontrain.md.domain.user.domain.User;
-import com.dragontrain.md.domain.user.exception.UserErrorCode;
-import com.dragontrain.md.domain.user.exception.UserException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,7 +37,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dragontrain.md.common.service.TimeService;
-import com.dragontrain.md.domain.food.controller.request.FoodInfoRequest;
 import com.dragontrain.md.domain.food.controller.request.FoodRegister;
 import com.dragontrain.md.domain.food.controller.response.BarcodeInfo;
 import com.dragontrain.md.domain.food.controller.response.CategoryInfoDetail;
@@ -54,26 +48,12 @@ import com.dragontrain.md.domain.food.controller.response.FoodStorageResponse;
 import com.dragontrain.md.domain.food.controller.response.ReceiptProduct;
 import com.dragontrain.md.domain.food.controller.response.ReceiptProducts;
 import com.dragontrain.md.domain.food.domain.Barcode;
-import com.dragontrain.md.domain.food.domain.CategoryBig;
 import com.dragontrain.md.domain.food.domain.CategoryDetail;
-import com.dragontrain.md.domain.food.domain.Food;
 import com.dragontrain.md.domain.food.domain.FoodDeleteType;
 import com.dragontrain.md.domain.food.exception.FoodErrorCode;
 import com.dragontrain.md.domain.food.exception.FoodException;
-import com.dragontrain.md.domain.food.service.port.BarcodeRepository;
-import com.dragontrain.md.domain.food.service.port.CategoryBigRepository;
-import com.dragontrain.md.domain.food.service.port.CategoryDetailRepository;
-import com.dragontrain.md.domain.food.service.port.FoodRepository;
-import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
-import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorErrorCode;
 import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorException;
-import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
-import com.dragontrain.md.domain.refrigerator.service.port.StorageTypeRepository;
-import com.dragontrain.md.domain.user.domain.User;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -86,7 +66,6 @@ public class FoodServiceImpl implements FoodService {
 	private final CategoryDetailRepository categoryDetailRepository;
 	private final CategoryBigRepository categoryBigRepository;
 	private final BarcodeRepository barcodeRepository;
-	private final StorageTypeRepository storageTypeRepository;
 	private final CrawlService crawlService;
 	private final TimeService timeService;
 
@@ -107,16 +86,6 @@ public class FoodServiceImpl implements FoodService {
 		if (foodIdSet.size() != foodIds.length)
 			throw new FoodException(FoodErrorCode.DUPLICATED_FOOD_ID);
 	}
-
-	private final RefrigeratorRepository refrigeratorRepository;
-	private final FoodRepository foodRepository;
-	private final CategoryDetailRepository categoryDetailRepository;
-	private final CategoryBigRepository categoryBigRepository;
-	private final BarcodeRepository barcodeRepository;
-	private final CrawlService crawlService;
-	private final TimeService timeService;
-
-
 
 	// 이미지로 OCR General을 요청하는 Component
 	@Override
