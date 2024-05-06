@@ -54,6 +54,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void signOut(User user) {
 		user.delete(timeService.localDateTimeNow());
+		userRepository.save(user);
 		eventPublisher.publish(new UserDeleted(user.getUserId()));
 	}
 }
