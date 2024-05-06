@@ -4,7 +4,9 @@ import java.util.Objects;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,7 @@ import com.dragontrain.md.common.config.exception.GlobalErrorCode;
 import com.dragontrain.md.common.config.exception.TokenException;
 import com.dragontrain.md.common.config.jwt.Token;
 import com.dragontrain.md.common.config.utils.CookieUtils;
+import com.dragontrain.md.domain.user.domain.User;
 import com.dragontrain.md.domain.user.service.Tokens;
 import com.dragontrain.md.domain.user.service.UserService;
 
@@ -64,6 +67,16 @@ public class UserController {
 		response.addCookie(CookieUtils.makeAccessTokenCookie(accessToken.getValue(), accessToken.getTtlToSecond()));
 		response.addCookie(CookieUtils.makeRefreshTokenCookie(refreshToken.getValue(), refreshToken.getTtlToSecond()));
 
+		return ResponseEntity.ok().build();
+	}
+
+	@DeleteMapping("/sign-out")
+	public ResponseEntity<Void> signOut(@AuthenticationPrincipal User user, HttpServletResponse response){
+
+		userService.signOut(user);
+
+		response.addCookie(CookieUtils.deleteAccessTokenCookie());
+		response.addCookie(CookieUtils.deleteRefreshTokenCookie());
 		return ResponseEntity.ok().build();
 	}
 }

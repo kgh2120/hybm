@@ -3,6 +3,7 @@ package com.dragontrain.md.domain.user.service;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +16,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.dragontrain.md.common.config.exception.GlobalErrorCode;
 import com.dragontrain.md.common.config.exception.TokenException;
 import com.dragontrain.md.common.config.jwt.JwtProvider;
+import com.dragontrain.md.common.service.EventPublisher;
+import com.dragontrain.md.common.service.TimeService;
 import com.dragontrain.md.domain.user.domain.User;
+import com.dragontrain.md.domain.user.event.UserDeleted;
 import com.dragontrain.md.domain.user.exception.UserErrorCode;
 import com.dragontrain.md.domain.user.exception.UserException;
 
@@ -27,6 +31,8 @@ class UserServiceImplTest {
 
 	@Mock
 	UserRepository userRepository;
+	@Mock EventPublisher eventPublisher;
+	@Mock TimeService timeService;
 
 	@InjectMocks
 	UserServiceImpl userService;
@@ -118,6 +124,38 @@ class UserServiceImplTest {
 		// then
 		then(jwtProvider).should(never()).createAccessToken(anyLong());
 		then(jwtProvider).should(never()).createRefreshToken(anyLong());
+	}
+
+	@DisplayName("회원 삭제 테스트 성공")
+	@Test
+	void signOutSuccessTest() throws Exception{
+	    //given
+		User mockUser = User.builder()
+			.isDeleted(false)
+			.userId(1L)
+			.build();
+		given(timeService.localDateTimeNow())
+			.willReturn(LocalDateTime.of(2024,5,6,13,0));
+		//when
+		userService.signOut(mockUser);
+	    //then
+		then(eventPublisher).should(times(1)).publish(new UserDeleted(mockUser.getUserId()));
+	}
+
+	@DisplayName("회원 삭제 테스트 실패")
+	@Test
+	void signOutFailTest() throws Exception{
+		//given
+		User mockUser = User.builder()
+			.isDeleted(true)
+			.userId(1L)
+			.build();
+		given(timeService.localDateTimeNow())
+			.willReturn(LocalDateTime.of(2024,5,6,13,0));
+		//when //then
+		assertThatThrownBy(() -> userService.signOut(mockUser))
+			.isInstanceOf(UserException.class)
+			.hasFieldOrPropertyWithValue("errorCode", UserErrorCode.ACCESS_DELETED_USER);
 	}
 
 }
