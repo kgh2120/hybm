@@ -66,6 +66,7 @@ public class Notice {
 			throw new NoticeException(NoticeErrorCode.ALREADY_DELETED_NOTICE);
 		}
 
+		this.updatedAt = deleteTime;
 		this.deletedAt = deleteTime;
 	}
 }

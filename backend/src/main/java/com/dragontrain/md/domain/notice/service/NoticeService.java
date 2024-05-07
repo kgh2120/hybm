@@ -11,4 +11,6 @@ public interface NoticeService {
 	HasnewNoticeResponse existsNewNotice(User user);
 
 	void deleteNotice(User user, Long noticeId);
+
+	void deleteAllNotice(User user);
 }
