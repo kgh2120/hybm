@@ -12,6 +12,4 @@ public interface NoticeRepository {
 	Boolean existsNewNotice(Long refrigeratorId);
 
 	Optional<Notice> findByNoticeId(Long noticeId);
-
-	void deleteNoticeById(Notice notice);
 }

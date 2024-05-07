@@ -27,9 +27,4 @@ public class NoticeRepositoryImpl implements NoticeRepository {
 	public Optional<Notice> findByNoticeId(Long noticeId) {
 		return noticeJpaRepository.findByNoticeId(noticeId);
 	}
-
-	@Override
-	public void deleteNoticeById(Notice notice) {
-		noticeJpaRepository.delete(notice);
-	}
 }
