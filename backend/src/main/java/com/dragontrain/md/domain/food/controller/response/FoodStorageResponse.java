@@ -13,20 +13,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class FoodStorageResponse {
-	private List<FoodStorage> fresh;
-	private List<FoodStorage> warning;
-	private List<FoodStorage> danger;
 	private List<FoodStorage> rotten;
+	private List<FoodStorage> danger;
+	private List<FoodStorage> warning;
+	private List<FoodStorage> fresh;
 
-	public static FoodStorageResponse create(List<FoodStorage> fresh,
-		List<FoodStorage> warning,
+	public static FoodStorageResponse create(List<FoodStorage> rotten,
 		List<FoodStorage> danger,
-		List<FoodStorage> rotten) {
+		List<FoodStorage> warning,
+		List<FoodStorage> fresh
+		) {
 
 		return FoodStorageResponse.builder()
-			.fresh(fresh)
-			.warning(warning)
+			.rotten(rotten)
 			.danger(danger)
-			.rotten(rotten).build();
+			.warning(warning)
+			.fresh(fresh)
+			.build();
 	}
 }
