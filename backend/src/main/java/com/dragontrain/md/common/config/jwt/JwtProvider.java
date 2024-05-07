@@ -63,7 +63,7 @@ public class JwtProvider {
 			.issuedAt(now)
 			.expiration(new Date(now.getTime() + jwtProperties.getRefreshTokenTtl()))
 			.signWith(secretKey)
-			.compact(), jwtProperties.getAccessTokenTtl());
+			.compact(), jwtProperties.getRefreshTokenTtl());
 	}
 
 	public Long parseUserId(String token) throws JwtException {

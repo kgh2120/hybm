@@ -1,16 +1,13 @@
 package com.dragontrain.md.domain.notice.service;
 
-import com.dragontrain.md.domain.TestEntityFactory;
-import com.dragontrain.md.domain.food.domain.CategoryDetail;
-import com.dragontrain.md.domain.food.domain.Food;
-import com.dragontrain.md.domain.notice.controller.response.AllNoticeResponse;
-import com.dragontrain.md.domain.notice.domain.Notice;
-import com.dragontrain.md.domain.notice.domain.NoticeType;
-import com.dragontrain.md.domain.notice.service.port.NoticeRepository;
-import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
-import com.dragontrain.md.domain.user.domain.User;
+import static org.mockito.ArgumentMatchers.*;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.BDDMockito;
@@ -23,13 +20,16 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
 import org.springframework.security.test.context.support.WithMockUser;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
+import com.dragontrain.md.domain.food.domain.CategoryDetail;
+import com.dragontrain.md.domain.food.domain.Food;
+import com.dragontrain.md.domain.notice.controller.response.AllNoticeResponse;
+import com.dragontrain.md.domain.notice.domain.Notice;
+import com.dragontrain.md.domain.notice.domain.NoticeType;
+import com.dragontrain.md.domain.notice.service.port.NoticeRepository;
+import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
+import com.dragontrain.md.domain.user.domain.User;
+import com.dragontrain.md.setting.TestEntityFactory;
 
 @ExtendWith(MockitoExtension.class)
 class NoticeServiceImplTest {

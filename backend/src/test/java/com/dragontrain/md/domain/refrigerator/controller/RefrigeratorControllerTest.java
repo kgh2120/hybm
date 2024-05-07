@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Arrays;
 import java.util.List;
 
+import com.dragontrain.md.domain.refrigerator.service.RefrigeratorService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +22,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.dragontrain.md.domain.TestEntityFactory;
+import com.dragontrain.md.setting.TestEntityFactory;
 import com.dragontrain.md.domain.refrigerator.controller.response.AppliedStorageDesignsResponse;
 import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignResponse;
 import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignsResponse;
@@ -29,7 +30,7 @@ import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import com.dragontrain.md.domain.refrigerator.service.StorageStorageDesignService;
 import com.dragontrain.md.domain.refrigerator.service.dto.AppliedStorageDesign;
 
-@ExtendWith(MockitoExtension.class)
+
 @WebMvcTest(controllers = RefrigeratorController.class)
 class RefrigeratorControllerTest {
 
@@ -38,6 +39,9 @@ class RefrigeratorControllerTest {
 
 	@MockBean
 	private StorageStorageDesignService storageStorageDesignService;
+
+	@MockBean
+	private RefrigeratorService refrigeratorService;
 
 	@InjectMocks
 	private RefrigeratorController refrigeratorController;

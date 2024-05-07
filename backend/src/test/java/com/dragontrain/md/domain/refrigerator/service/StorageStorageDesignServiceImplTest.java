@@ -21,7 +21,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.dragontrain.md.domain.TestEntityFactory;
+import com.dragontrain.md.setting.TestEntityFactory;
 import com.dragontrain.md.domain.refrigerator.controller.request.ModifyAppliedStorageDesign;
 import com.dragontrain.md.domain.refrigerator.controller.request.ModifyAppliedStorageDesignRequest;
 import com.dragontrain.md.domain.refrigerator.domain.Level;
