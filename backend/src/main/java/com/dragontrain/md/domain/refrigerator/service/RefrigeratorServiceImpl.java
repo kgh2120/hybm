@@ -1,9 +1,7 @@
 package com.dragontrain.md.domain.refrigerator.service;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.dragontrain.md.domain.refrigerator.controller.request.BadgeRequest;
@@ -75,15 +73,29 @@ public class RefrigeratorServiceImpl
 			.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND))
 			.getRefrigeratorId();
 
+		int len = badgeRequests.size();
+		Set<Integer> badgeIds = new HashSet<>();
+		Set<Integer> positions = new HashSet<>();
 		badgeRequests.forEach(badgeRequest -> {
-			Optional<RefrigeratorBadge> oldBadge = refrigeratorBadgeRepository.findByPosition(refrigeratorId, badgeRequest.getPosition());
-			if (oldBadge.isPresent()) {
-				oldBadge.get().detachBadge();
-				refrigeratorBadgeRepository.save(oldBadge.get());
+			badgeIds.add(badgeRequest.getBadgeId());
+			positions.add(badgeRequest.getPosition());
+		});
+		// BadgeId, position 중복값 검사
+		if ((badgeIds.size() != len) || (positions.size() != len)) {
+			throw new RefrigeratorException(RefrigeratorErrorCode.INVALID_BADGE_REQUEST);
+		}
+		// 중복값 1~8이 아닌 경우 검사
+		badgeRequests.forEach(badgeRequest -> {
+			if (badgeRequest.getPosition() < 1 || badgeRequest.getPosition() > 8) {
+				throw new RefrigeratorException(RefrigeratorErrorCode.INVALID_BADGE_POSITION);
 			}
+			refrigeratorBadgeRepository.findByPosition(refrigeratorId, badgeRequest.getPosition())
+				.ifPresent (ob -> {
+					ob.detachBadge();
+					refrigeratorBadgeRepository.save(ob);
+			});
 			RefrigeratorBadge newBadge = refrigeratorBadgeRepository.findByBadgeId(refrigeratorId, badgeRequest.getBadgeId())
-				.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND));
-			newBadge.detachBadge();
+				.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.BADGE_NOT_FOUND));
 			newBadge.attachBadge(badgeRequest.getPosition());
 			refrigeratorBadgeRepository.save(newBadge);
 		});
