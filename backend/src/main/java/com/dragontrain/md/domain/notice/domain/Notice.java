@@ -1,9 +1,12 @@
 package com.dragontrain.md.domain.notice.domain;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import com.dragontrain.md.domain.food.domain.Food;
 
+import com.dragontrain.md.domain.notice.exception.NoticeErrorCode;
+import com.dragontrain.md.domain.notice.exception.NoticeException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -53,4 +56,16 @@ public class Notice {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "food_id")
 	private Food food;
+
+	public boolean isDeleted(){
+		return Objects.nonNull(this.deletedAt);
+	}
+
+	public void delete(LocalDateTime deleteTime){
+		if(isDeleted()){
+			throw new NoticeException(NoticeErrorCode.ALREADY_DELETED_NOTICE);
+		}
+
+		this.deletedAt = deleteTime;
+	}
 }
