@@ -39,10 +39,12 @@ public class StorageStorageDesign {
 
 	@MapsId("storageDesignId")
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "storage_design_id")
 	private StorageDesign storageDesign;
 
 	@MapsId("refrigeratorId")
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "refrigerator_id")
 	private Refrigerator refrigerator;
 
 	public static StorageStorageDesign create(Refrigerator refrigerator, StorageDesign storageDesign,
