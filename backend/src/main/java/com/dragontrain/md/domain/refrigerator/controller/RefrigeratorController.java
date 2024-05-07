@@ -1,6 +1,7 @@
 package com.dragontrain.md.domain.refrigerator.controller;
 
 import com.dragontrain.md.domain.refrigerator.controller.request.BadgeRequest;
+import com.dragontrain.md.domain.refrigerator.controller.response.AttachedBadgeResponse;
 import com.dragontrain.md.domain.refrigerator.controller.response.BadgeResponse;
 import com.dragontrain.md.domain.refrigerator.service.RefrigeratorService;
 import org.springframework.http.ResponseEntity;
@@ -61,6 +62,11 @@ public class RefrigeratorController {
 	) {
 		refrigeratorService.switchBadges(badgeRequests, user);
 		return ResponseEntity.ok().build();
+	}
+
+	@GetMapping("/badges/attached")
+	public ResponseEntity<List<AttachedBadgeResponse>> getAttachedBadges(@AuthenticationPrincipal User user) {
+		return ResponseEntity.ok(refrigeratorService.getAttachedBadges(user));
 	}
 
 }

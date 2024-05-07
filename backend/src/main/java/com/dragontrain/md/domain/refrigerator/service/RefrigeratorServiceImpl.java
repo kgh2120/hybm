@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.dragontrain.md.domain.refrigerator.controller.request.BadgeRequest;
+import com.dragontrain.md.domain.refrigerator.controller.response.AttachedBadgeResponse;
 import com.dragontrain.md.domain.refrigerator.controller.response.BadgeInfo;
 import com.dragontrain.md.domain.refrigerator.controller.response.BadgeResponse;
 import com.dragontrain.md.domain.refrigerator.domain.*;
@@ -21,6 +22,8 @@ import com.dragontrain.md.domain.user.exception.UserException;
 import com.dragontrain.md.domain.user.service.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+
+import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -101,6 +104,16 @@ public class RefrigeratorServiceImpl
 		});
 	}
 
+	@Override
+	public List<AttachedBadgeResponse> getAttachedBadges(User user) {
+		List<RefrigeratorBadge> attachedBadges = refrigeratorBadgeRepository.findAllAttachedBadges(
+			refrigeratorRepository.findByUserId(user.getUserId())
+				.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND))
+				.getRefrigeratorId()
+		);
+		return attachedBadges.stream().map(AttachedBadgeResponse::create).toList();
+	}
+
 	@Transactional
 	@Override
 	public void deleteRefrigerator(Long userId) {
@@ -134,6 +147,6 @@ public class RefrigeratorServiceImpl
 		return Arrays.stream(StorageTypeId.values()).map(id -> storageDesignRepository
 			.findStorageDesignByLevelAndType(1, id)
 			.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.STORAGE_DESIGN_RESOURCE_NOT_FOUND))
-		).collect(Collectors.toList());
+		).collect(toList());
 	}
 }

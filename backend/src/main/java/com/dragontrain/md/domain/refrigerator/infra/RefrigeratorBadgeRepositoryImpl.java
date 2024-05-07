@@ -25,6 +25,11 @@ public class RefrigeratorBadgeRepositoryImpl implements RefrigeratorBadgeReposit
 	}
 
 	@Override
+	public List<RefrigeratorBadge> findAllAttachedBadges(Long refrigeratorId) {
+		return refrigeratorBadgeJpaRepository.findAllAttachedBadges(refrigeratorId);
+	}
+
+	@Override
 	public Optional<RefrigeratorBadge> findByBadgeId(Long refrigeratorId, Integer badgeId) {
 		return refrigeratorBadgeJpaRepository.findByRefrigeratorBadgeId_RefrigeratorIdAndRefrigeratorBadgeId_BadgeId(
 			refrigeratorId, badgeId
