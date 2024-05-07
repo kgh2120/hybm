@@ -1,14 +1,9 @@
+@import "../common/common";
+
 .wrapper {
   height: 100%;
-  display: flex;
+  @include center;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  img {
-    display: block;
-    margin-bottom: 10px;
-  }
 
   div {
     font-size: 12px;
@@ -20,13 +15,7 @@
 
   .auth_btn {
     margin-top: 40px;
-    display: flex;
+    @include center;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    button {
-      background-color: transparent;
-    }
   }
 }
