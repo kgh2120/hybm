@@ -3,9 +3,10 @@ package com.dragontrain.md.domain.refrigerator.service;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.dragontrain.md.domain.refrigerator.controller.request.BadgeRequest;
 import com.dragontrain.md.domain.refrigerator.controller.response.BadgeInfo;
 import com.dragontrain.md.domain.refrigerator.controller.response.BadgeResponse;
 import com.dragontrain.md.domain.refrigerator.domain.*;
@@ -63,6 +64,26 @@ public class RefrigeratorServiceImpl
 		return BadgeResponse.create(badgeInfos);
 	}
 
+	@Override
+	public void switchBadges(List<BadgeRequest> badgeRequests, User user) {
+		Long refrigeratorId = refrigeratorRepository.findByUserId(user.getUserId())
+			.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND))
+			.getRefrigeratorId();
+
+		badgeRequests.forEach(badgeRequest -> {
+			Optional<RefrigeratorBadge> oldBadge = refrigeratorBadgeRepository.findByPosition(refrigeratorId, badgeRequest.getPosition());
+			if (oldBadge.isPresent()) {
+				oldBadge.get().detachBadge();
+				refrigeratorBadgeRepository.save(oldBadge.get());
+			}
+			RefrigeratorBadge newBadge = refrigeratorBadgeRepository.findByBadgeId(refrigeratorId, badgeRequest.getBadgeId())
+				.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND));
+			newBadge.detachBadge();
+			newBadge.attachBadge(badgeRequest.getPosition());
+			refrigeratorBadgeRepository.save(newBadge);
+		});
+	}
+
 	private Refrigerator saveRefrigerator(User user) {
 		Refrigerator refrigerator = Refrigerator.create(user, getDefaultLevel(), timeService.localDateTimeNow());
 		refrigeratorRepository.save(refrigerator);
@@ -88,4 +109,5 @@ public class RefrigeratorServiceImpl
 			.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.STORAGE_DESIGN_RESOURCE_NOT_FOUND))
 		).collect(Collectors.toList());
 	}
+
 }

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RequiredArgsConstructor
@@ -21,5 +22,17 @@ public class RefrigeratorBadgeRepositoryImpl implements RefrigeratorBadgeReposit
 	@Override
 	public List<RefrigeratorBadge> findAllByRefrigeratorId(Long refrigeratorId) {
 		return refrigeratorBadgeJpaRepository.findAllByRefrigerator_RefrigeratorId(refrigeratorId);
+	}
+
+	@Override
+	public Optional<RefrigeratorBadge> findByBadgeId(Long refrigeratorId, Integer badgeId) {
+		return refrigeratorBadgeJpaRepository.findByRefrigeratorBadgeId_RefrigeratorIdAndRefrigeratorBadgeId_BadgeId(
+			refrigeratorId, badgeId
+		);
+	}
+
+	@Override
+	public Optional<RefrigeratorBadge> findByPosition(Long refrigeratorId, Integer position) {
+		return refrigeratorBadgeJpaRepository.findByRefrigeratorBadgeId_RefrigeratorIdAndPosition(refrigeratorId, position);
 	}
 }
