@@ -71,11 +71,5 @@ public class NoticeServiceImpl implements NoticeService{
 		);
 
 		notices.forEach(notice -> notice.delete(timeService.localDateTimeNow()));
-		notices.forEach(notice -> {
-			System.out.println(notice.getDeletedAt());
-			if(!notice.isDeleted()){
-				throw new NoticeException(NoticeErrorCode.NOT_DELETED);
-			}
-		});
 	}
 }
