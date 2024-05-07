@@ -71,7 +71,7 @@ class NoticeServiceImplTest {
 		BDDMockito.given(refrigeratorRepository.findByUserId(any()))
 			.willReturn(Optional.of(testEntityFactory.getTestRefrigerator(1L, null, Boolean.FALSE, null)));
 
-		BDDMockito.given(noticeRepository.findAllNotDeletedNotice(any(), any()))
+		BDDMockito.given(noticeRepository.findAllNotDeletedNoticeByPage(any(), any()))
 			.willReturn(noticeSlice);
 
 		AllNoticeResponse allNoticeResponse = noticeService.findAllNotDeletedNotice(user, pageable);
@@ -130,5 +130,29 @@ class NoticeServiceImplTest {
 			.willReturn(Optional.of(refrigerator));
 
 		Assertions.assertThrows(NoticeException.class, () -> noticeService.deleteNotice(user, 1L));
+	}
+
+	@WithMockUser
+	@Test
+	void 내_모든_알림삭제_성공(){
+		User user = testEntityFactory.getTestUserEntity(1L);
+		Refrigerator refrigerator = testEntityFactory.getTestRefrigerator(1L, user, Boolean.FALSE, null);
+		List<Notice> notices = new ArrayList<>();
+		for(int i = 0; i < 10; i++){
+			notices.add(
+				testEntityFactory.getNotice("알림", Boolean.TRUE, NoticeType.TO_DANGER, null)
+			);
+		}
+
+		BDDMockito.given(refrigeratorRepository.findByUserId(any()))
+			.willReturn(Optional.of(refrigerator));
+
+		BDDMockito.given(noticeRepository.findAllNotDeletedNotice(any()))
+			.willReturn(notices);
+
+		BDDMockito.given(timeService.localDateTimeNow())
+				.willReturn(LocalDateTime.now());
+
+		Assertions.assertDoesNotThrow(() -> noticeService.deleteAllNotice(user));
 	}
 }
