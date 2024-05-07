@@ -35,5 +35,5 @@ public class Recipe {
 	private String author;
 
 	@OneToMany(mappedBy = "recipe")
-	private List<RecipeFood> recipeFoodList = new ArrayList<>();
+	private List<RecipeFood> recipeFoodList;
 }
