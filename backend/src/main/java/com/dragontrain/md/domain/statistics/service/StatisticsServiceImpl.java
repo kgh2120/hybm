@@ -1,10 +1,7 @@
 package com.dragontrain.md.domain.statistics.service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -56,11 +53,16 @@ public class StatisticsServiceImpl implements StatisticsService {
 			));
 
 		int totalPrice = 0;
+		boolean hasEmptyPrice = false;
 		List<SpendByBigCategory> priceResult = new ArrayList<>();
 		for (String bigCategory : infos.keySet()) {
 			int sum = 0;
 			for (BigCategoryPriceInfo info : infos.get(bigCategory)) {
-				sum += info.getMoney();
+				if(Objects.isNull(info.getMoney())){
+					hasEmptyPrice = true;
+				} else {
+					sum += info.getMoney();
+				}
 			}
 			totalPrice += sum;
 			priceResult.add(
@@ -124,6 +126,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 
 		return StatisticsResponse.create(
 			totalPrice,
+			hasEmptyPrice,
 			priceResponse,
 			countEatenAndRoten,
 			eatenRank,

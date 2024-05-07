@@ -12,7 +12,7 @@ public interface FoodJpaRepository extends JpaRepository<Food, Long> {
 
 	@Query("SELECT f FROM Food f WHERE f.refrigerator.refrigeratorId = :refrigeratorId" +
 			" AND f.storageType.storageType = :storageType" +
-	 		" AND f.deletedAt IS NULL")
+	 		" AND f.deletedAt IS NULL ORDER BY f.expectedExpirationDate")
 	List<Food> findAllByRefrigerator_RefrigeratorIdAndStorageType_StorageType(Long refrigeratorId,
 		StorageTypeId storageType);
 
