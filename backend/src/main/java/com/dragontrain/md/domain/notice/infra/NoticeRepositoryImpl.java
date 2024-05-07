@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -14,8 +15,8 @@ import java.util.Optional;
 public class NoticeRepositoryImpl implements NoticeRepository {
 	private final NoticeJpaRepository noticeJpaRepository;
 	@Override
-	public Slice<Notice> findAllNotDeletedNotice(Long refrigeratorId, Pageable pageable) {
-		return noticeJpaRepository.findAllNotDeletedNotice(refrigeratorId, pageable);
+	public Slice<Notice> findAllNotDeletedNoticeByPage(Long refrigeratorId, Pageable pageable) {
+		return noticeJpaRepository.findAllNotDeletedNoticeByPage(refrigeratorId, pageable);
 	}
 
 	@Override
@@ -29,7 +30,7 @@ public class NoticeRepositoryImpl implements NoticeRepository {
 	}
 
 	@Override
-	public void deleteNoticeById(Notice notice) {
-		noticeJpaRepository.delete(notice);
+	public List<Notice> findAllNotDeletedNotice(Long refrigeratorId) {
+		return noticeJpaRepository.findAllByFood_Refrigerator_RefrigeratorIdAndDeletedAtIsNull(refrigeratorId);
 	}
 }
