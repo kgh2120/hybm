@@ -1,9 +1,10 @@
 import styles from "../../styles/common/CategoryBox.module.css";
-import search from "../../assets/search.png";
+// import search from "../../assets/images/search.png";
+import search from "../../assets/images/search.png";
 import { ChangeEvent, useEffect, useState } from "react";
 import useFoodStore from "../../stores/useFoodStore";
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { getExpiredDate } from '../../api/foodApi';
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getExpiredDate } from "../../api/foodApi";
 
 interface Category {
   categoryId: number;
@@ -36,8 +37,7 @@ function CategoryBox() {
 
   const { mutate: mutateGetExpiredDate } = useMutation({
     mutationFn: getExpiredDate,
-    
-  })
+  });
 
   const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -48,7 +48,7 @@ function CategoryBox() {
     const newName = `${category.name}(${category.bigName})`;
     setName(newName);
     const categoryId = category.categoryId;
-    mutateGetExpiredDate(categoryId)
+    mutateGetExpiredDate(categoryId);
   };
 
   useEffect(() => {

@@ -1,12 +1,12 @@
 import styles from "../../styles/common/WhiteSection.module.css";
-import clip from "../../assets/clip.png";
+import clip from "../../assets/images/clip.png";
 import ItemBox from "./ItemBox";
 
-interface propsType {
+interface WhiteSectionProps {
   title: string;
 }
 
-function WhiteSection({ title }: propsType) {
+function WhiteSection({ title }: WhiteSectionProps) {
   return (
     <section className={styles.wrapper}>
       <div>
@@ -19,7 +19,6 @@ function WhiteSection({ title }: propsType) {
         <ItemBox name="기본찬장" content="" option="active" />
         <ItemBox name="기본찬장" content="" option="active" />
         <ItemBox name="기본찬장" content="" option="active" />
-        
       </section>
     </section>
   );

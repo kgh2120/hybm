@@ -1,29 +1,31 @@
 import styles from "../styles/mainPage/MainPage.module.css";
-import modernIce from "../assets/modernIce.png";
-import modernCool from "../assets/modernCool.png";
-import modernCabinet from "../assets/modernCabinet.png";
-import background from "../assets/background.png";
-import recipe from "../assets/recipe.png";
-import trashCan from "../assets/trashCan.png";
+import modernIce from "../assets/images/modernIce.png";
+import modernCool from "../assets/images/modernCool.png";
+import modernCabinet from "../assets/images/modernCabinet.png";
+import background from "../assets/images/background.png";
+import recipe from "../assets/images/recipe.png";
+import trashCan from "../assets/images/trashCan.png";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 // import { getFoodCategoryList } from "../api/foodApi";
 import { useEffect, useState } from "react";
 import Modal from "../components/common/Modal";
 import LevelUpModal from "../components/mainPage/LevelUpModal";
-import ExpBar from '../components/common/ExpBar';
-import { getIsNewNotification } from '../api/notificationApi';
-import { deleteAllFood, getBigCategoryList } from '../api/foodApi';
-import useFoodStore from '../stores/useFoodStore';
-import { getCurrentDesign } from '../api/fridgeApi';
-import ConfirmModal from '../components/common/ConfirmModal';
+import ExpBar from "../components/common/ExpBar";
+import { getIsNewNotification } from "../api/notificationApi";
+import { deleteAllFood, getBigCategoryList } from "../api/foodApi";
+import useFoodStore from "../stores/useFoodStore";
+import { getCurrentDesign } from "../api/fridgeApi";
+import ConfirmModal from "../components/common/ConfirmModal";
 
 function MainPage() {
-  
   const { setBigCategoryList } = useFoodStore();
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
-  const [isDeleteAllFoodConfirmModalOpen, setIsDeleteAllFoodConfirmModalOpen] = useState(false);
-  
+  const [
+    isDeleteAllFoodConfirmModalOpen,
+    setIsDeleteAllFoodConfirmModalOpen,
+  ] = useState(false);
+
   // const handleOpenLevelUpModal = () => {
   //   setIsLevelUpModalOpen(true);
   // };
@@ -61,45 +63,48 @@ function MainPage() {
   // if (isNewNotificationError) {
   //   return <div>isNewNofication error</div>;
   // }
-  
 
   // const { data: currentDesign, isPending: isCurrentDesignPending, isError: isCurrentDesignError } = useQuery({
   //   queryKey: ["currentDesign"],
   //   queryFn: getCurrentDesign,
   // })
 
-  const { data: bigCategoryList, isPending: isBigCategoryListPending, isError: isBigCategoryListError } = useQuery({
+  const {
+    data: bigCategoryList,
+    isPending: isBigCategoryListPending,
+    isError: isBigCategoryListError,
+  } = useQuery({
     queryKey: ["isNewNotification"],
     queryFn: getBigCategoryList,
-  })
+  });
 
   const { mutate: mutateDeleteAllFood } = useMutation({
     mutationFn: deleteAllFood,
     onSuccess: () => {
-      setIsDeleteAllFoodConfirmModalOpen(false)
-    }
-  })
-  
+      setIsDeleteAllFoodConfirmModalOpen(false);
+    },
+  });
+
   const handleDeleteAllFood = () => {
-    mutateDeleteAllFood()
-  }
+    mutateDeleteAllFood();
+  };
 
   const closeDeleteAllFoodConfirmModal = () => {
-    setIsDeleteAllFoodConfirmModalOpen(false)
-  }
+    setIsDeleteAllFoodConfirmModalOpen(false);
+  };
   useEffect(() => {
     if (bigCategoryList) {
       setBigCategoryList(bigCategoryList);
     }
-  }, [bigCategoryList])
+  }, [bigCategoryList]);
 
   if (isBigCategoryListPending) {
     return <div>MainPage Loding...</div>;
-  } 
+  }
 
   if (isBigCategoryListError) {
     return <div>bigCategoryList error</div>;
-  } 
+  }
   // else if (isCurrentDesignError) {
   //   return <div>currentDesign error</div>;
   // }
@@ -155,15 +160,21 @@ function MainPage() {
         src={trashCan}
         alt="쓰레기통 이미지"
       />
-      
+
       {isLevelUpModalOpen && (
         <Modal title="레벨업!" clickEvent={handleCloseLevelUpModal}>
           <LevelUpModal />
         </Modal>
       )}
-      {isDeleteAllFoodConfirmModalOpen && 
-        <ConfirmModal content="모든 식품을 삭제하시겠습니까?" option1="삭제" option2="취소" option1Event={handleDeleteAllFood} option2Event={closeDeleteAllFoodConfirmModal} />
-      }
+      {isDeleteAllFoodConfirmModalOpen && (
+        <ConfirmModal
+          content="모든 식품을 삭제하시겠습니까?"
+          option1="삭제"
+          option2="취소"
+          option1Event={handleDeleteAllFood}
+          option2Event={closeDeleteAllFoodConfirmModal}
+        />
+      )}
     </div>
   );
 }

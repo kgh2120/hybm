@@ -3,9 +3,9 @@ import Modal from "../components/common/Modal";
 import CreateFoodModal from "../components/storagePage/CreateFoodModal";
 import styles from "../styles/storagePage/StoragePage.module.css";
 import { Link, useParams } from "react-router-dom";
-import home from "../assets/home.png";
-import edit from "../assets/edit.png";
-import plus from "../assets/plus.png";
+import home from "../assets/images/home.png";
+import edit from "../assets/images/edit.png";
+import plus from "../assets/images/plus.png";
 import ItemBox from "../components/common/ItemBox";
 
 function StoragePage() {
@@ -41,7 +41,7 @@ function StoragePage() {
             <h2>소비기한 지남 (D+)😥</h2>
           </div>
           <section style={{ border: "2px solid #a9a9a9" }}>
-            <ItemBox name="기본찬장" content="" option="report" />
+            <ItemBox name="기본찬장" content="d-7" option="report" />
             <ItemBox name="기본찬장" content="" option="report" />
             <ItemBox name="기본찬장" content="" option="report" />
             <ItemBox name="기본찬장" content="" option="report" />
@@ -51,7 +51,7 @@ function StoragePage() {
             <h2>위험! (D-3)</h2>
           </div>
           <section style={{ border: "2px solid #ffa7a7" }}>
-            <ItemBox name="기본찬장" content="" option="report" />
+            <ItemBox name="기본찬장" content="d-7" option="report" />
             <ItemBox name="기본찬장" content="" option="report" />
             <ItemBox name="기본찬장" content="" option="report" />
             <ItemBox name="기본찬장" content="" option="report" />
@@ -61,7 +61,7 @@ function StoragePage() {
             <h2>경고 (D-7)</h2>
           </div>
           <section style={{ border: "2px solid #ffd66a" }}>
-            <ItemBox name="기본찬장" content="" option="report" />
+            <ItemBox name="기본찬장" content="d-7" option="report" />
             <ItemBox name="기본찬장" content="" option="report" />
             <ItemBox name="기본찬장" content="" option="report" />
             <ItemBox name="기본찬장" content="" option="report" />
@@ -71,7 +71,7 @@ function StoragePage() {
             <h2>신선😊</h2>
           </div>
           <section style={{ border: "2px solid #7dd086" }}>
-            <ItemBox name="기본찬장" content="" option="report" />
+            <ItemBox name="기본찬장" content="d-7" option="report" />
             <ItemBox name="기본찬장" content="" option="report" />
             <ItemBox name="기본찬장" content="" option="report" />
             <ItemBox name="기본찬장" content="" option="report" />

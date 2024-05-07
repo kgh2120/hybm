@@ -1,12 +1,12 @@
-import meat from "../../assets/meat.png";
+import meat from "../../assets/images/meat.png";
 import styles from "../../styles/common/ItemBox.module.css";
 
-interface propsType {
+interface ItemBoxProps {
   name: string;
   content: string;
   option: string;
 }
-function ItemBox({ name, content, option = "active" }: propsType) {
+function ItemBox({ name, content, option = "active" }: ItemBoxProps) {
   return (
     <article className={styles.wrapper}>
       {option === "inactive" ? (

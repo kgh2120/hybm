@@ -1,7 +1,7 @@
 import Button from "../common/Button";
 import styles from "../../styles/storagePage/CreateFoodModal.module.css";
-import barcode from "../../assets/barcode.png";
-import camera from "../../assets/camera.png";
+import barcode from "../../assets/images/barcode.png";
+import camera from "../../assets/images/camera.png";
 // import { useInput } from "../../hooks/useInput";
 import FoodSection from "../common/FoodSection";
 // import { useState } from "react";
@@ -16,12 +16,15 @@ function CreateFoodModal() {
   return (
     <div className={styles.wrapper}>
       <section className={styles.main_section}>
-
         {/* <FoodSection name={name} changeName={changeName} price={price} setPrice={setPrice}/> */}
         <FoodSection />
         <section className={styles.btn_section}>
-          <div><img src={barcode} alt="바코드아이콘" /></div>
-          <div><img src={camera} alt="카메라아이콘" /></div>
+          <div>
+            <img src={barcode} alt="바코드아이콘" />
+          </div>
+          <div>
+            <img src={camera} alt="카메라아이콘" />
+          </div>
           <div></div>
         </section>
       </section>

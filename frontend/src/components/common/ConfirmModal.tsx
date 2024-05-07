@@ -1,7 +1,7 @@
 import styles from "../../styles/common/ConfirmModal.module.css";
 import Button from "./Button";
 
-interface propsType {
+interface ConfirmModalProps {
   content: string;
   option1: string;
   option2: string;
@@ -14,7 +14,7 @@ function ConfirmModal({
   option2,
   option1Event,
   option2Event,
-}: propsType) {
+}: ConfirmModalProps) {
   return (
     <div className={styles.wrapper}>
       <span>{content}</span>

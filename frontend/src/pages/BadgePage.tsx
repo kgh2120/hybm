@@ -2,7 +2,7 @@ import MainPage from "./MainPage";
 import styles from "../styles/designPage/DesignPage.module.css";
 import WhiteSection from "../components/common/WhiteSection";
 import Button from "../components/common/Button";
-import rightArrow from "../assets/rightArrow.png";
+import rightArrow from "../assets/images/rightArrow.png";
 import { Link } from "react-router-dom";
 
 function BadgePage() {

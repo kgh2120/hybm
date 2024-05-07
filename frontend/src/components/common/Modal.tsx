@@ -1,12 +1,12 @@
 import styles from '../../styles/common/Modal.module.css';
 import Header from './Header';
 
-interface propsType {
+interface ModalProps {
   title: string;
   clickEvent: () => void;
   children: JSX.Element;
 }
-function Modal({ title, clickEvent, children }: propsType) {
+function Modal({ title, clickEvent, children }: ModalProps) {
   return (
     <>
       <div className={styles.modal}>

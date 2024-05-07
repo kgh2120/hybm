@@ -1,9 +1,9 @@
 import { useState } from "react";
 import styles from "../../styles/common/ExpBar.module.css";
-import barBackground from "../../assets/barBackground.png";
-import barHeart from "../../assets/barHeart.png";
-import expBar from "../../assets/expBar.png";
-import notification from "../../assets/notification.png";
+import barBackground from "../../assets/images/barBackground.png";
+import barHeart from "../../assets/images/barHeart.png";
+import expBar from "../../assets/images/expBar.png";
+import notification from "../../assets/images/notification.png";
 import Modal from "./Modal";
 import NotificationModal from "../mainPage/NotificationModal";
 import { getLevelAndExp } from "../../api/userApi";
@@ -30,8 +30,6 @@ function ExpBar() {
     queryFn: getLevelAndExp,
   });
 
-  
-
   if (isLevelAndExpPending) {
     return <div>is level and exp Loding...</div>;
   }
@@ -41,7 +39,7 @@ function ExpBar() {
 
   const currentExpPercent =
     (levelAndExp.currentExp / levelAndExp.maxExp) * 100;
-    
+
   return (
     <div className={styles.bar_box}>
       <div className={styles.bar_sub_box}>
