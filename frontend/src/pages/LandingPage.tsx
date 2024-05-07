@@ -1,5 +1,5 @@
 import styles from "../styles/landingPage/LandingPage.module.css";
-import logo from "../assets/extra-logo.png";
+import logo from "../assets/logo.png";
 import naverBtn from "../assets/naver.png";
 import kakaoBtn from "../assets/kakao.png";
 import CustomButton from "../components/landingPage/CustomButton";
