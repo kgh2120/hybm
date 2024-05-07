@@ -1,11 +1,23 @@
-@font-face {
+/* @font-face {
   font-family: "PFStardust";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/PFStardust.woff")
     format("woff");
-  /* src: url("https://ccdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/PFStardust.woff")
-    format("woff"); */
   font-weight: normal;
   font-style: normal;
+} */
+
+@font-face {
+  font-family: "PFStardust";
+  src: url("./assets/fonts/PFStardust\ 1.3.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AppleSDGothicNeoR00";
+  font-style: normal;
+  font-weight: 700;
+  src: url("./assets/fonts/AppleSDGothicNeoR.ttf");
 }
 
 * {
@@ -85,7 +97,7 @@ button {
   background-color: white;
 }
 
-body > div {
+body>div {
   height: 100%;
 }
 
