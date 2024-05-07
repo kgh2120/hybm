@@ -84,8 +84,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 			priceResponse = priceResult;
 		}
 
-		List<Food> foods = foodRepository.findAllDeletedFoodByRefrigeratorIdAndTime(refrigerator.getRefrigeratorId(),
-			year, month);
+		List<Food> foods = foodRepository.findAllDeletedFoodByRefrigeratorIdAndTime(refrigerator.getRefrigeratorId(), year, month);
 
 		Map<FoodDeleteType, Long> countEatenAndRoten = foods.stream()
 			.collect(Collectors.groupingBy(

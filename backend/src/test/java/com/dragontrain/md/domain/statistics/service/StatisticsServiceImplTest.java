@@ -44,12 +44,7 @@ class StatisticsServiceImplTest {
 	@InjectMocks
 	private StatisticsServiceImpl statisticsService;
 
-	private static TestEntityFactory testEntityFactory;
-
-	@BeforeAll
-	static void 장전() {
-		testEntityFactory = new TestEntityFactory();
-	}
+	private TestEntityFactory testEntityFactory = new TestEntityFactory();
 
 	@Test
 	void 월간통계획득_성공() {

@@ -47,7 +47,7 @@ public class Notice {
 	private LocalDateTime deletedAt;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "type", columnDefinition = "varchar(8)", nullable = false)
+	@Column(name = "type", columnDefinition = "varchar(9)", nullable = false)
 	private NoticeType type;
 
 	@ManyToOne(fetch = FetchType.LAZY)

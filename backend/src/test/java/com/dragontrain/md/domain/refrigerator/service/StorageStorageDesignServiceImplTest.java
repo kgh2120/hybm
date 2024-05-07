@@ -49,12 +49,7 @@ class StorageStorageDesignServiceImplTest {
 	@InjectMocks
 	private StorageStorageDesignServiceImpl storageDesignService;
 
-	private static TestEntityFactory testEntityFactory;
-
-	@BeforeAll
-	static void 장전() {
-		testEntityFactory = new TestEntityFactory();
-	}
+	private TestEntityFactory testEntityFactory = new TestEntityFactory();
 
 	@Test
 	void 모든_디자인_찾기() {
