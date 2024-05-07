@@ -1,8 +1,6 @@
 package com.dragontrain.md.domain.notice.service;
 
 import com.dragontrain.md.common.service.TimeService;
-import com.dragontrain.md.domain.TestEntityFactory;
-import com.dragontrain.md.domain.food.domain.CategoryBig;
 import com.dragontrain.md.domain.food.domain.CategoryDetail;
 import com.dragontrain.md.domain.food.domain.Food;
 import com.dragontrain.md.domain.notice.controller.response.AllNoticeResponse;
@@ -10,7 +8,6 @@ import com.dragontrain.md.domain.notice.domain.Notice;
 import com.dragontrain.md.domain.notice.domain.NoticeType;
 import com.dragontrain.md.domain.notice.exception.NoticeException;
 import com.dragontrain.md.domain.notice.service.port.NoticeRepository;
-import com.dragontrain.md.domain.refrigerator.domain.Level;
 import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
 import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
 import com.dragontrain.md.domain.user.domain.User;
@@ -34,15 +31,6 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
 import org.springframework.security.test.context.support.WithMockUser;
 
-
-import com.dragontrain.md.domain.food.domain.CategoryDetail;
-import com.dragontrain.md.domain.food.domain.Food;
-import com.dragontrain.md.domain.notice.controller.response.AllNoticeResponse;
-import com.dragontrain.md.domain.notice.domain.Notice;
-import com.dragontrain.md.domain.notice.domain.NoticeType;
-import com.dragontrain.md.domain.notice.service.port.NoticeRepository;
-import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
-import com.dragontrain.md.domain.user.domain.User;
 import com.dragontrain.md.setting.TestEntityFactory;
 
 @ExtendWith(MockitoExtension.class)
