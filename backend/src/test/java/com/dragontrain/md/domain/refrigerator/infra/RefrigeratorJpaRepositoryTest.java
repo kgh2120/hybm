@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.dragontrain.md.domain.TestEntityFactory;
+import com.dragontrain.md.setting.TestEntityFactory;
 import com.dragontrain.md.domain.refrigerator.domain.Level;
 import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
 import com.dragontrain.md.domain.user.domain.User;

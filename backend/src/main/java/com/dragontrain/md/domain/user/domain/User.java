@@ -2,6 +2,9 @@ package com.dragontrain.md.domain.user.domain;
 
 import java.time.LocalDateTime;
 
+import com.dragontrain.md.domain.user.exception.UserErrorCode;
+import com.dragontrain.md.domain.user.exception.UserException;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -60,5 +63,14 @@ public class User {
 
 	public boolean isDeleted() {
 		return isDeleted;
+	}
+
+	public void delete(LocalDateTime now) {
+		if (isDeleted) {
+			throw new UserException(UserErrorCode.ACCESS_DELETED_USER);
+		}
+		this.updatedAt = now;
+		this.deletedAt = now;
+		this.isDeleted = true;
 	}
 }

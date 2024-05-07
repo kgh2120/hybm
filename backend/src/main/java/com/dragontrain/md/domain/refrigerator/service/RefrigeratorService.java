@@ -5,5 +5,7 @@ import com.dragontrain.md.domain.user.domain.User;
 
 public interface RefrigeratorService {
 	void createInitialRefrigerator(Long userId);
+
+	void deleteRefrigerator(Long userId);
 	BadgeResponse getBadges(User suer);
 }

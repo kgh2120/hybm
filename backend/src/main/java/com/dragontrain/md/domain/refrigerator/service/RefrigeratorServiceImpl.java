@@ -24,7 +24,7 @@ import com.dragontrain.md.domain.user.service.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 @Service
 public class RefrigeratorServiceImpl
 	implements RefrigeratorService {
@@ -37,13 +37,17 @@ public class RefrigeratorServiceImpl
 	private final StorageStorageDesignRepository storageStorageDesignRepository;
 	private final TimeService timeService;
 
+	@Transactional
 	@Override
 	public void createInitialRefrigerator(Long userId) {
-		// userId 가져오기
-		// TODO findById에서 isDelete check 해야 함.
 		User user = userRepository.findById(userId)
 			.orElseThrow(() -> new UserException(UserErrorCode.USER_RESOURCE_NOT_FOUND,
 				"user id " + userId + " is not founded"));
+
+		if (user.isDeleted()) {
+			throw new UserException(UserErrorCode.ACCESS_DELETED_USER);
+		}
+
 		registerDefaultStorageDesign(saveRefrigerator(user));
 	}
 
@@ -61,6 +65,16 @@ public class RefrigeratorServiceImpl
 			.map(BadgeInfo::create).toList();
 
 		return BadgeResponse.create(badgeInfos);
+	}
+
+	@Transactional
+	@Override
+	public void deleteRefrigerator(Long userId) {
+
+		Refrigerator refrigerator = refrigeratorRepository.findByUserId(userId)
+			.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND));
+
+		refrigerator.delete(timeService.localDateTimeNow());
 	}
 
 	private Refrigerator saveRefrigerator(User user) {
