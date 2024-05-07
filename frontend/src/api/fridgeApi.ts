@@ -1,6 +1,6 @@
 import instance from "./axios";
 
-export async function getDesignList() {
+const getDesignList = async () => {
   try {
     const res = await instance.get("/api/refrigerators/designs");
     console.log(res);
@@ -10,12 +10,14 @@ export async function getDesignList() {
   }
 }
 
-export async function getCurrentDesign() {
+const getCurrentDesign = async () => {
   try {
     const res = await instance.get("/api/refrigerators/designs/using");
     console.log(res);
-    return res;
+    return res.data;
   } catch (e) {
     console.log(e);
   }
 }
+
+export { getDesignList, getCurrentDesign }

@@ -18,6 +18,17 @@ import useFoodStore from "../stores/useFoodStore";
 import { getCurrentDesign } from "../api/fridgeApi";
 import ConfirmModal from "../components/common/ConfirmModal";
 
+interface Storage {
+  id: number;
+  imgSrc: string;
+}
+
+interface CurrentDesign {
+  ice: Storage;
+  cool: Storage;
+  cabinet: Storage;
+}
+
 function MainPage() {
   const { setBigCategoryList } = useFoodStore();
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
@@ -64,10 +75,10 @@ function MainPage() {
   //   return <div>isNewNofication error</div>;
   // }
 
-  // const { data: currentDesign, isPending: isCurrentDesignPending, isError: isCurrentDesignError } = useQuery({
-  //   queryKey: ["currentDesign"],
-  //   queryFn: getCurrentDesign,
-  // })
+  const { data: currentDesign, isPending: isCurrentDesignPending, isError: isCurrentDesignError } = useQuery<CurrentDesign>({
+    queryKey: ["currentDesign"],
+    queryFn: getCurrentDesign,
+  })
 
   const {
     data: bigCategoryList,
@@ -98,24 +109,24 @@ function MainPage() {
     }
   }, [bigCategoryList]);
 
-  if (isBigCategoryListPending) {
+  if (isBigCategoryListPending || isCurrentDesignPending) {
     return <div>MainPage Loding...</div>;
   }
 
   if (isBigCategoryListError) {
     return <div>bigCategoryList error</div>;
   }
-  // else if (isCurrentDesignError) {
-  //   return <div>currentDesign error</div>;
-  // }
-
+  else if (isCurrentDesignError) {
+    return <div>currentDesign error</div>;
+  }
+  console.log(currentDesign)
   return (
     <div className={styles.wrapper}>
       <ExpBar />
       <Link to="/storage/cabinet">
         <img
           className={styles.cabinet}
-          src={modernCabinet}
+          src={currentDesign.cabinet.imgSrc}
           alt="찬장이미지"
         />
       </Link>
@@ -129,14 +140,14 @@ function MainPage() {
       <Link to="/storage/cool">
         <img
           className={styles.cool}
-          src={modernCool}
+          src={currentDesign.cool.imgSrc}
           alt="냉장이미지"
         />
       </Link>
       <Link to="/storage/ice">
         <img
           className={styles.ice}
-          src={modernIce}
+          src={currentDesign.ice.imgSrc}
           alt="냉동이미지"
         />
       </Link>
