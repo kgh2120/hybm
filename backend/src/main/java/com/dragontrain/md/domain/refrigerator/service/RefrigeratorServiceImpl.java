@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.dragontrain.md.domain.refrigerator.controller.request.BadgeRequest;
+import com.dragontrain.md.domain.refrigerator.controller.response.AttachedBadgeResponse;
 import com.dragontrain.md.domain.refrigerator.controller.response.BadgeInfo;
 import com.dragontrain.md.domain.refrigerator.controller.response.BadgeResponse;
 import com.dragontrain.md.domain.refrigerator.domain.*;
@@ -99,6 +100,26 @@ public class RefrigeratorServiceImpl
 			newBadge.attachBadge(badgeRequest.getPosition());
 			refrigeratorBadgeRepository.save(newBadge);
 		});
+	}
+
+	@Override
+	public List<AttachedBadgeResponse> getAttachedBadges(User user) {
+		List<RefrigeratorBadge> attachedBadges = refrigeratorBadgeRepository.findAllAttachedBadges(
+			refrigeratorRepository.findByUserId(user.getUserId())
+				.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND))
+				.getRefrigeratorId()
+		);
+		List<AttachedBadgeResponse> attachedBadgesResponses = new ArrayList<>();
+		attachedBadges.forEach(ab -> {
+			attachedBadgesResponses.add(
+				AttachedBadgeResponse.builder()
+					.badgeId(ab.getRefrigeratorBadgeId().getBadgeId())
+					.src(ab.getBadge().getImgSrc())
+					.position(ab.getPosition())
+					.build()
+			);
+		});
+		return attachedBadgesResponses;
 	}
 
 	@Transactional

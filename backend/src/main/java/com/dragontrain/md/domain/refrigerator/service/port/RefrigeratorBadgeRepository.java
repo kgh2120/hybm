@@ -9,6 +9,7 @@ public interface RefrigeratorBadgeRepository {
 
 	void save(RefrigeratorBadge refrigeratorBadge);
 	List<RefrigeratorBadge> findAllByRefrigeratorId(Long refrigeratorId);
+	List<RefrigeratorBadge> findAllAttachedBadges(Long refrigeratorId);
 	Optional<RefrigeratorBadge> findByBadgeId(Long refrigeratorId, Integer badgeId);
 	Optional<RefrigeratorBadge> findByPosition(Long refrigeratorId, Integer position);
 }
