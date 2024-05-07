@@ -11,12 +11,9 @@ import useFoodStore from "../stores/useFoodStore";
 function ReceiptPage() {
   const { bigCategoryList } = useFoodStore();
   console.log(bigCategoryList);
-  // const [name, changeName] = useInput("닭고기");
-  // const [categoryId, changeCategoryId] = useInput("닭고기");
-  // const [price, setPrice] = useState(0);
-  // const [expiredDate, changeExpiredDate] = useInput("닭고기");
-  // const [location, changeLocation] = useInput("닭고기");
-  // const [isManual, changeIsManual] = useInput("닭고기");
+  const handleTemp = () => {
+    
+  }
 
   return (
     <div className={styles.wrapper}>
@@ -31,7 +28,7 @@ function ReceiptPage() {
           <FoodSection />
           <FoodSection />
         </section>
-        <Button content="완료" color="red" />
+        <Button content="완료" color="red" onClick={handleTemp}/>
       </div>
     </div>
   );

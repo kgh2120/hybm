@@ -24,12 +24,12 @@ function ConfirmModal({
             <Button
               content={option1}
               color="red"
-              clickEvent={option1Event}
+              onClick={option1Event}
             />
             <Button
               content={option2}
               color="white"
-              clickEvent={option2Event}
+              onClick={option2Event}
             />
           </div>
         </div>

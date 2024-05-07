@@ -3,11 +3,11 @@ import styles from "../../styles/common/Button.module.css";
 interface ButtonProps {
   content: string;
   color: string;
-  clickEvent: () => void;
+  onClick: () => void;
 }
-function Button({content, color, clickEvent}: ButtonProps) {
+function Button({content, color, onClick}: ButtonProps) {
   return (
-    <button className={color === 'red' ? styles.red_button : styles.white_button} onClick={clickEvent}>{content}</button>
+    <button className={color === 'red' ? styles.red_button : styles.white_button} onClick={onClick}>{content}</button>
   )
 }
 

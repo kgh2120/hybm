@@ -65,7 +65,7 @@ function NotificationModal({ isNewNotification }: NotificationModalProps) {
       >
         알림함 비우기
       </button>
-      {notificationList.notice.map((notification) => {
+      {notificationList.notice.map((notification: any) => {
         <NotificationItem
           foodId={notification.foodId}
           noticeId={notification.noticeId}

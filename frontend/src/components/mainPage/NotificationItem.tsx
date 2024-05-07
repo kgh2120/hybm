@@ -23,7 +23,7 @@ function NotificationItem({
   createdAt,
 }: NotificationItemProps) {
   const formattedDate = formatDate(createdAt);
-
+  console.log(isChecked)
   const { mutate: mutateDeleteNotification } = useMutation({
     mutationFn: deleteNotification,
     onSuccess: () => {

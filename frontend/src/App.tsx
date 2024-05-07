@@ -3,7 +3,6 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
-import ErrorPage from "./pages/ErrorPage";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import MainPage from "./pages/MainPage";
 import ReportPage from "./pages/ReportPage";

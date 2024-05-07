@@ -3,21 +3,8 @@ import styles from "../../styles/common/CategoryBox.module.css";
 import search from "../../assets/images/search.png";
 import { ChangeEvent, useEffect, useState } from "react";
 import useFoodStore from "../../stores/useFoodStore";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { getExpiredDate } from "../../api/foodApi";
-
-interface Category {
-  categoryId: number;
-  name: string;
-  categoryImgSrc: string;
-}
-
-interface BigCategory {
-  categoryBigId: number;
-  name: string;
-  bigCategoryImgSrc: string;
-  categoryDetails: Category[];
-}
 
 interface FilteredCategory {
   categoryImgSrc: string;
