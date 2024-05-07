@@ -1,23 +1,22 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import styles from "../../styles/landingPage/CustomButton.module.css";
 
 interface CustomButtonProps {
   children: ReactNode;
-  option?: "kakao" | "naver";
-  onClick?: (e: React.MouseEvent) => void;
+  option: string;
+  onClick: () => void;
 }
 
 function CustomButton({
   children,
-  option = "kakao",
+  option,
+  onClick,
 }: CustomButtonProps) {
   return (
     <div className={styles.button_wrapper}>
-      {option === "naver" ? (
-        <button className={styles.naver}>{children}</button>
-      ) : (
-        <button className={styles.kakao}>{children}</button>
-      )}
+      <button className={styles[option]} onClick={onClick}>
+        {children}
+      </button>
     </div>
   );
 }
