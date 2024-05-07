@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class NoticeServiceImpl implements NoticeService{
@@ -24,7 +26,7 @@ public class NoticeServiceImpl implements NoticeService{
 	@Override
 	public AllNoticeResponse findAllNotDeletedNotice(User user, Pageable pageable) {
 		return AllNoticeResponse.create(
-			noticeRepository.findAllNotDeletedNotice(
+			noticeRepository.findAllNotDeletedNoticeByPage(
 				refrigeratorRepository.findByUserId(user.getUserId())
 			.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND))
 			.getRefrigeratorId()
@@ -58,5 +60,22 @@ public class NoticeServiceImpl implements NoticeService{
 		}
 
 		notice.delete(timeService.localDateTimeNow());
+	}
+
+	@Override
+	public void deleteAllNotice(User user) {
+		List<Notice> notices = noticeRepository.findAllNotDeletedNotice(
+			refrigeratorRepository.findByUserId(user.getUserId())
+				.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND))
+				.getRefrigeratorId()
+		);
+
+		notices.forEach(notice -> notice.delete(timeService.localDateTimeNow()));
+		notices.forEach(notice -> {
+			System.out.println(notice.getDeletedAt());
+			if(!notice.isDeleted()){
+				throw new NoticeException(NoticeErrorCode.NOT_DELETED);
+			}
+		});
 	}
 }
