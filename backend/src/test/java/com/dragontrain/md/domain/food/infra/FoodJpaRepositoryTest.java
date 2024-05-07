@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import com.dragontrain.md.domain.TestEntityFactory;
+import com.dragontrain.md.setting.TestEntityFactory;
 import com.dragontrain.md.domain.food.domain.CategoryBig;
 import com.dragontrain.md.domain.food.domain.CategoryDetail;
 import com.dragontrain.md.domain.food.domain.FoodDeleteType;

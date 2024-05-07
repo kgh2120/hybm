@@ -19,6 +19,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.dragontrain.md.common.config.exception.TokenException;
 import com.dragontrain.md.common.config.jwt.Token;
 import com.dragontrain.md.common.config.utils.CookieUtils;
+import com.dragontrain.md.domain.user.exception.UserErrorCode;
+import com.dragontrain.md.domain.user.exception.UserException;
 import com.dragontrain.md.domain.user.service.Tokens;
 import com.dragontrain.md.domain.user.service.UserService;
 
@@ -93,5 +95,42 @@ class UserControllerTest {
 				jsonPath("$.errorMessage").value(TOKEN_TYPE_MISS_MATCHED.getErrorMessage())
 			).andDo(print());
 	}
+
+	@WithMockUser
+	@DisplayName("회원 탈퇴 테스트 성공")
+	@Test
+	void signOutSuccessTest() throws Exception{
+	    //given
+		final String path = "/api/users/sign-out";
+	    //when //then
+		mockMvc.perform(delete(path)
+			.with(csrf()))
+			.andExpectAll(
+				status().isOk(),
+				cookie().exists("access_token"),
+				cookie().exists("refresh_token")
+			).andDo(print());
+	}
+
+	@WithMockUser
+	@DisplayName("회원 탈퇴 테스트 실패 - 이미 삭제된 유저인 경우")
+	@Test
+	void signOutFailAlreadyDeletedUserTest() throws Exception{
+		//given
+		final String path = "/api/users/sign-out";
+		willThrow(new UserException(UserErrorCode.ACCESS_DELETED_USER))
+			.given(userService)
+			.signOut(any());
+		//when //then
+		mockMvc.perform(delete(path)
+				.with(csrf()))
+			.andExpectAll(
+				status().isForbidden(),
+				jsonPath("$.errorName").value(UserErrorCode.ACCESS_DELETED_USER.getErrorName()),
+				jsonPath("$.errorMessage").value(UserErrorCode.ACCESS_DELETED_USER.getErrorMessage())
+			).andDo(print());
+	}
+
+
 
 }

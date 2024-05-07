@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface RefrigeratorService {
 	void createInitialRefrigerator(Long userId);
+
+	void deleteRefrigerator(Long userId);
 	BadgeResponse getBadges(User suer);
 	void switchBadges(List<BadgeRequest> badgeRequests, User user);
 }

@@ -23,11 +23,11 @@ public class UserRepositoryImpl implements UserRepository {
 
 	@Override
 	public Optional<User> findByEmailAndSocialLoginType(String email, SocialLoginType socialLoginType) {
-		return jpaUserRepository.findByEmailAndSocialLoginType(email, socialLoginType);
+		return jpaUserRepository.findByEmailAndSocialLoginTypeAndIsDeletedFalse(email, socialLoginType);
 	}
 
 	@Override
 	public Optional<User> findById(Long userId) {
-		return jpaUserRepository.findById(userId);
+		return jpaUserRepository.findByUserIdAndIsDeletedFalse(userId);
 	}
 }
