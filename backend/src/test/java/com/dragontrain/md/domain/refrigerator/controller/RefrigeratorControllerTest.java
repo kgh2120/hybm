@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Arrays;
 import java.util.List;
 
+import com.dragontrain.md.domain.refrigerator.service.RefrigeratorService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +30,7 @@ import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import com.dragontrain.md.domain.refrigerator.service.StorageStorageDesignService;
 import com.dragontrain.md.domain.refrigerator.service.dto.AppliedStorageDesign;
 
-@ExtendWith(MockitoExtension.class)
+
 @WebMvcTest(controllers = RefrigeratorController.class)
 class RefrigeratorControllerTest {
 
@@ -38,6 +39,9 @@ class RefrigeratorControllerTest {
 
 	@MockBean
 	private StorageStorageDesignService storageStorageDesignService;
+
+	@MockBean
+	private RefrigeratorService refrigeratorService;
 
 	@InjectMocks
 	private RefrigeratorController refrigeratorController;
