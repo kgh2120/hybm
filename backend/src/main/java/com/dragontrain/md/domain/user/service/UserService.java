@@ -7,4 +7,6 @@ public interface UserService {
 	User loadUserByUserId(Long userId);
 
 	Tokens reissueToken(String refreshTokenCookieValue);
+
+	void signOut(User user);
 }

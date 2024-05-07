@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
@@ -31,9 +32,11 @@ public class RecipeFood {
 
 	@MapsId("recipeId")
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "recipe_id", columnDefinition = "int")
 	private Recipe recipe;
 
 	@MapsId("categoryDetailId")
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "category_detail_id", columnDefinition = "int")
 	private CategoryDetail categoryDetail;
 }

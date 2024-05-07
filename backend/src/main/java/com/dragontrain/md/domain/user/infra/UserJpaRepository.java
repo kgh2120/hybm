@@ -9,5 +9,7 @@ import com.dragontrain.md.domain.user.domain.User;
 
 public interface UserJpaRepository extends JpaRepository<User, Long> {
 
-	Optional<User> findByEmailAndSocialLoginType(String email, SocialLoginType socialLoginType);
+	Optional<User> findByEmailAndSocialLoginTypeAndIsDeletedFalse(String email, SocialLoginType socialLoginType);
+
+	Optional<User> findByUserIdAndIsDeletedFalse(Long userId);
 }
