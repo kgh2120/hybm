@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class StatisticsResponse {
 	private Integer totalSpend;
+	private Boolean hasEmptyPrice;
 	private List<SpendByBigCategory> spendByBigCategory;
 	private Integer eatenCount;
 	private Integer thrownCount;
@@ -26,6 +27,7 @@ public class StatisticsResponse {
 	private List<TopThrown> topThrownDetailCategory;
 
 	public static StatisticsResponse create(Integer totalPrice,
+		Boolean hasEmptyPrice,
 		List<SpendByBigCategory> spendByBigCategories,
 		Map<FoodDeleteType, Long> countEatenAndRoten,
 		List<TopEatenWithCount> eatenRank,
@@ -45,6 +47,7 @@ public class StatisticsResponse {
 
 		return StatisticsResponse.builder()
 			.totalSpend(totalPrice)
+			.hasEmptyPrice(hasEmptyPrice)
 			.spendByBigCategory(spendByBigCategories)
 			.eatenCount(eatenCount)
 			.thrownCount(thrownCount)
