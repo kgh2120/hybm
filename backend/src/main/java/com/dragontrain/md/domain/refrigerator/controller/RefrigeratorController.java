@@ -1,14 +1,11 @@
 package com.dragontrain.md.domain.refrigerator.controller;
 
+import com.dragontrain.md.domain.refrigerator.controller.request.BadgeRequest;
 import com.dragontrain.md.domain.refrigerator.controller.response.BadgeResponse;
 import com.dragontrain.md.domain.refrigerator.service.RefrigeratorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.dragontrain.md.domain.refrigerator.controller.request.ModifyAppliedStorageDesignRequest;
 import com.dragontrain.md.domain.refrigerator.controller.response.AppliedStorageDesignsResponse;
@@ -17,6 +14,8 @@ import com.dragontrain.md.domain.refrigerator.service.StorageStorageDesignServic
 import com.dragontrain.md.domain.user.domain.User;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -53,6 +52,15 @@ public class RefrigeratorController {
 	public ResponseEntity<BadgeResponse> getBadges(@AuthenticationPrincipal User user) {
 
 		return ResponseEntity.ok(refrigeratorService.getBadges(user));
+	}
+
+	@PutMapping("/badges")
+	public ResponseEntity<Void> switchBadges(
+		@RequestBody List<BadgeRequest> badgeRequests,
+		@AuthenticationPrincipal User user
+	) {
+		refrigeratorService.switchBadges(badgeRequests, user);
+		return ResponseEntity.ok().build();
 	}
 
 }

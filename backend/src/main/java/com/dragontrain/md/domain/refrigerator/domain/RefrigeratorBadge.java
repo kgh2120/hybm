@@ -46,4 +46,13 @@ public class RefrigeratorBadge {
 	@Column(name = "is_attached", columnDefinition = "boolean default false", nullable = false)
 	private Boolean isAttached;
 
+	public void detachBadge() {
+		this.position = null;
+		this.isAttached = false;
+	}
+
+	public void attachBadge(Integer position) {
+		this.position = position;
+		this.isAttached = true;
+	}
 }
