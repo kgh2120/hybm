@@ -103,6 +103,7 @@ class StatisticsServiceImplTest {
 		Assertions.assertEquals(statisticsResponse.getTopEatenDetailCategory().size(), 5);
 		Assertions.assertEquals(statisticsResponse.getTopThrownDetailCategory().size(), 5);
 		Assertions.assertEquals(statisticsResponse.getSpendByBigCategory().size(), 6);
+		Assertions.assertEquals(statisticsResponse.getHasEmptyPrice(), Boolean.FALSE);
 		Assertions.assertEquals(statisticsResponse.getEatenCount(), 420);
 		Assertions.assertEquals(statisticsResponse.getThrownCount(), 420);
 		Assertions.assertEquals(statisticsResponse.getTotalSpend(), 4200000);
