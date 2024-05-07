@@ -1,6 +1,7 @@
 import instance from "./axios";
 
-export async function getCurrentBadgeList() {
+// 부착한 배지 조회
+const getCurrentBadgeList = async () => {
   try {
     const res = await instance.get("/api/refrigerators/badges/attached");
     console.log(res);
@@ -9,3 +10,5 @@ export async function getCurrentBadgeList() {
     console.log(e);
   }
 }
+
+export { getCurrentBadgeList }
