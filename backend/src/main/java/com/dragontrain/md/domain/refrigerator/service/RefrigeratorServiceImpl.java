@@ -23,6 +23,8 @@ import com.dragontrain.md.domain.user.service.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import static java.util.stream.Collectors.toList;
+
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
@@ -109,17 +111,7 @@ public class RefrigeratorServiceImpl
 				.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND))
 				.getRefrigeratorId()
 		);
-		List<AttachedBadgeResponse> attachedBadgesResponses = new ArrayList<>();
-		attachedBadges.forEach(ab -> {
-			attachedBadgesResponses.add(
-				AttachedBadgeResponse.builder()
-					.badgeId(ab.getRefrigeratorBadgeId().getBadgeId())
-					.src(ab.getBadge().getImgSrc())
-					.position(ab.getPosition())
-					.build()
-			);
-		});
-		return attachedBadgesResponses;
+		return attachedBadges.stream().map(AttachedBadgeResponse::create).toList();
 	}
 
 	@Transactional
@@ -155,6 +147,6 @@ public class RefrigeratorServiceImpl
 		return Arrays.stream(StorageTypeId.values()).map(id -> storageDesignRepository
 			.findStorageDesignByLevelAndType(1, id)
 			.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.STORAGE_DESIGN_RESOURCE_NOT_FOUND))
-		).collect(Collectors.toList());
+		).collect(toList());
 	}
 }
