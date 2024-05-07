@@ -453,14 +453,14 @@ public class FoodServiceImpl implements FoodService {
 				dDay);
 
 			switch (food.getFoodStatus()) {
-				case FRESH -> fresh.add(foodStorage);
-				case WARNING -> warning.add(foodStorage);
-				case DANGER -> danger.add(foodStorage);
 				case ROTTEN -> rotten.add(foodStorage);
+				case DANGER -> danger.add(foodStorage);
+				case WARNING -> warning.add(foodStorage);
+				case FRESH -> fresh.add(foodStorage);
 			}
 		}
 
-		return FoodStorageResponse.create(fresh, warning, danger, rotten);
+		return FoodStorageResponse.create(rotten, danger, warning, fresh);
 	}
 
 

@@ -119,7 +119,7 @@ public class Food {
 	}
 
 	private static FoodStatus calculateFoodStatus(LocalDate expectedExpirationDate, LocalDate now) {
-		Period period = expectedExpirationDate.until(now);
+		Period period = now.until(expectedExpirationDate);
 
 		int days = period.getDays();
 		if (days <= 0) {
@@ -133,7 +133,7 @@ public class Food {
 	}
 
 	public Integer getDDay(LocalDate expectedExpirationDate, LocalDate now) {
-		Period period = this.expectedExpirationDate.until(now);
+		Period period = expectedExpirationDate.until(now);
 
 		return period.getDays();
 	}
