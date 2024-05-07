@@ -29,12 +29,12 @@ public class RefrigeratorBadge {
 
 	@MapsId("badgeId")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "badge_id")
+	@JoinColumn(name = "badge_id", columnDefinition = "smallint", nullable = false)
 	private Badge badge;
 
 	@MapsId("refrigeratorId")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "refrigerator_id")
+	@JoinColumn(name = "refrigerator_id", columnDefinition = "bigint", nullable = false)
 	private Refrigerator refrigerator;
 
 	@Column(name = "created_at", columnDefinition = "datetime", nullable = false)

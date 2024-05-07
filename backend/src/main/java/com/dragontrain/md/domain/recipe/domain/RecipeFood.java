@@ -32,11 +32,11 @@ public class RecipeFood {
 
 	@MapsId("recipeId")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "recipe_id")
+	@JoinColumn(name = "recipe_id", columnDefinition = "int")
 	private Recipe recipe;
 
 	@MapsId("categoryDetailId")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "category_detail_id")
+	@JoinColumn(name = "category_detail_id", columnDefinition = "int")
 	private CategoryDetail categoryDetail;
 }
