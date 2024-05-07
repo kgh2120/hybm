@@ -6,8 +6,11 @@ import home from "../assets/home.png";
 // import { useInput } from "../hooks/useInput";
 // import { useState } from "react";
 import FoodSection from "../components/common/FoodSection";
+import useFoodStore from '../stores/useFoodStore';
 
 function ReceiptPage() {
+  const { bigCategoryList } = useFoodStore();
+  console.log(bigCategoryList)
   // const [name, changeName] = useInput("닭고기");
   // const [categoryId, changeCategoryId] = useInput("닭고기");
   // const [price, setPrice] = useState(0);
