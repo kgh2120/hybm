@@ -34,7 +34,7 @@ function NotificationModal({ isNewNotification }: NotificationModalProps) {
     isPending: isNotificationListPending,
     isError: isNotificationListError,
   } = useQuery({
-    queryKey: ["isNewNotification"],
+    queryKey: ["notificationList"],
     queryFn: getNotificationList,
   });
 
@@ -65,7 +65,7 @@ function NotificationModal({ isNewNotification }: NotificationModalProps) {
       >
         알림함 비우기
       </button>
-      {notificationList.map((notification) => {
+      {notificationList.notice.map((notification) => {
         <NotificationItem
           foodId={notification.foodId}
           noticeId={notification.noticeId}

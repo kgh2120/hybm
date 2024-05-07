@@ -15,7 +15,6 @@ const getDesignList = async () => {
 const getCurrentDesign = async () => {
   try {
     const res = await instance.get("/api/refrigerators/designs/using");
-    console.log(res);
     return res.data;
   } catch (e) {
     console.log(e);

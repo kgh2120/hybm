@@ -8,7 +8,7 @@ const getIsNewNotification = async () => {
   } catch (e) {
     console.log(e);
   }
-}
+};
 
 // 알텅텅(전부삭제)
 const deleteAllNotification = async () => {
@@ -18,7 +18,7 @@ const deleteAllNotification = async () => {
   } catch (e) {
     console.log(e);
   }
-}
+};
 
 // 알림 전체 조회(확인한 것도)
 const getNotificationList = async () => {
@@ -29,23 +29,27 @@ const getNotificationList = async () => {
         size: 20,
       },
     });
-    console.log(res);
-    return res.data
+    console.log("notice:", res);
+    return res.data;
   } catch (e) {
     console.log(e);
   }
-}
+};
 
 // 알림 삭제
 const deleteNotification = async (noticeId: number) => {
   try {
-    const res = await instance.delete(`/api/notices/${noticeId}`, {
-    });
+    const res = await instance.delete(`/api/notices/${noticeId}`, {});
     console.log(res);
-    return res.data
+    return res.data;
   } catch (e) {
     console.log(e);
   }
-}
+};
 
-export { getIsNewNotification, deleteAllNotification, getNotificationList, deleteNotification }
+export {
+  getIsNewNotification,
+  deleteAllNotification,
+  getNotificationList,
+  deleteNotification,
+};

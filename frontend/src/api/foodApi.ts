@@ -4,7 +4,6 @@ import instance from './axios';
 const getBigCategoryList = async () => {
   try {
     const res = await instance.get("/api/foods/category");
-    console.log(res);
     return res.data;
   } catch (e) {
     console.log(e);

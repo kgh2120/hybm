@@ -15,7 +15,6 @@ const getLoginStatus = async () => {
 const getLevelAndExp = async () => {
   try {
     const res = await instance.get("/api/levels");
-    console.log(res);
     return res.data;
   } catch (e) {
     console.log(e);
