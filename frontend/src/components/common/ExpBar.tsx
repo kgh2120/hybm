@@ -8,6 +8,7 @@ import Modal from "./Modal";
 import NotificationModal from "../mainPage/NotificationModal";
 import { getLevelAndExp } from "../../api/userApi";
 import { useQuery } from "@tanstack/react-query";
+import { getIsNewNotification } from '../../api/notificationApi';
 
 function ExpBar() {
   const [isNotificationModalOpen, setIsNotificationModalOpen] =
@@ -30,11 +31,22 @@ function ExpBar() {
     queryFn: getLevelAndExp,
   });
 
-  if (isLevelAndExpPending) {
-    return <div>is level and exp Loding...</div>;
+  const {
+    data: isNewNotification,
+    isPending: isNewNotificationPending,
+    isError: isNewNotificationError,
+  } = useQuery<boolean>({
+    queryKey: ["isNewNotification"],
+    queryFn: getIsNewNotification,
+  });
+
+  if (isLevelAndExpPending || isNewNotificationPending) {
+    return <div>levelBar Loding...</div>;
   }
   if (isLevelAndExpError) {
     return <div>get level and exp error</div>;
+  } else if (isNewNotificationError) {
+    return <div>get isNewNotification error</div>;
   }
 
   const currentExpPercent =
@@ -82,7 +94,7 @@ function ExpBar() {
         >
           <div className={styles.notification_sub_box}>
             <img src={notification} alt="알림 이미지" />
-            <div></div>
+            {isNewNotification && <div></div>}
           </div>
         </div>
       </div>
@@ -91,7 +103,7 @@ function ExpBar() {
           title="알림함"
           clickEvent={handleCloseNotificationModal}
         >
-          <NotificationModal />
+          <NotificationModal isNewNotification={isNewNotification}/>
         </Modal>
       )}
     </div>

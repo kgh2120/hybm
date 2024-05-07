@@ -8,7 +8,11 @@ import {
 import ConfirmModal from "../common/ConfirmModal";
 import { useState } from "react";
 
-function NotificationModal() {
+interface NotificationModalProps {
+  isNewNotification: boolean;
+}
+
+function NotificationModal({ isNewNotification }: NotificationModalProps) {
   const [
     isDeleteNotificationConfirmModalOpen,
     setIsDeleteNotificationConfirmModalOpen,
@@ -52,7 +56,7 @@ function NotificationModal() {
   if (isNotificationListError) {
     return <div>notificationList Error...</div>;
   }
-
+  console.log(isNewNotification)
   return (
     <div className={styles.notification_modal_wrapper}>
       <button

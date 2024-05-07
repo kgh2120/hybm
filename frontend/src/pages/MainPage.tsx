@@ -1,18 +1,13 @@
 import styles from "../styles/mainPage/MainPage.module.css";
-import modernIce from "../assets/images/modernIce.png";
-import modernCool from "../assets/images/modernCool.png";
-import modernCabinet from "../assets/images/modernCabinet.png";
 import background from "../assets/images/background.png";
 import recipe from "../assets/images/recipe.png";
 import trashCan from "../assets/images/trashCan.png";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
-// import { getFoodCategoryList } from "../api/foodApi";
 import { useEffect, useState } from "react";
 import Modal from "../components/common/Modal";
 import LevelUpModal from "../components/mainPage/LevelUpModal";
 import ExpBar from "../components/common/ExpBar";
-import { getIsNewNotification } from "../api/notificationApi";
 import { deleteAllFood, getBigCategoryList } from "../api/foodApi";
 import useFoodStore from "../stores/useFoodStore";
 import { getCurrentDesign } from "../api/fridgeApi";
@@ -45,40 +40,14 @@ function MainPage() {
     setIsLevelUpModalOpen(false);
   };
 
-  // const {
-  //   data: foodCategoryList,
-  //   isPending: isFoodCategoryListPending,
-  //   isError: isFoodCategoryListError,
-  // } = useQuery({
-  //   queryKey: ["foodCategoryList"],
-  //   queryFn: getFoodCategoryList,
-  // });
-
-  // if (isFoodCategoryListPending) {
-  //   return <div>isLoding...</div>;
-  // }
-  // if (isFoodCategoryListError) {
-  //   return <div>error</div>;
-  // }
-
-  // console.log(foodCategoryList);
-
-  // const { data: isNewNotification, isPending: isNewNotificationPending, isError: isNewNotificationError } = useQuery({
-  //   queryKey: ["isNewNotification"],
-  //   queryFn: getIsNewNotification,
-  // })
-
-  // if (isNewNotificationPending) {
-  //   return <div>isNewNofication Loding...</div>;
-  // }
-  // if (isNewNotificationError) {
-  //   return <div>isNewNofication error</div>;
-  // }
-
-  const { data: currentDesign, isPending: isCurrentDesignPending, isError: isCurrentDesignError } = useQuery<CurrentDesign>({
+  const {
+    data: currentDesign,
+    isPending: isCurrentDesignPending,
+    isError: isCurrentDesignError,
+  } = useQuery<CurrentDesign>({
     queryKey: ["currentDesign"],
     queryFn: getCurrentDesign,
-  })
+  });
 
   const {
     data: bigCategoryList,
@@ -103,6 +72,11 @@ function MainPage() {
   const closeDeleteAllFoodConfirmModal = () => {
     setIsDeleteAllFoodConfirmModalOpen(false);
   };
+
+  const handleOpenDeleteAllFoodConfirmModal = () => {
+    setIsDeleteAllFoodConfirmModalOpen(true);
+  }
+
   useEffect(() => {
     if (bigCategoryList) {
       setBigCategoryList(bigCategoryList);
@@ -115,11 +89,10 @@ function MainPage() {
 
   if (isBigCategoryListError) {
     return <div>bigCategoryList error</div>;
-  }
-  else if (isCurrentDesignError) {
+  } else if (isCurrentDesignError) {
     return <div>currentDesign error</div>;
   }
-  console.log(currentDesign)
+
   return (
     <div className={styles.wrapper}>
       <ExpBar />
@@ -167,7 +140,7 @@ function MainPage() {
       </Link>
       <img
         className={styles.trash_can}
-        onClick={handleDeleteAllFood}
+        onClick={handleOpenDeleteAllFoodConfirmModal}
         src={trashCan}
         alt="쓰레기통 이미지"
       />

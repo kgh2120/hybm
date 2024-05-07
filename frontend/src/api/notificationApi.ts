@@ -4,7 +4,7 @@ import instance from "./axios";
 const getIsNewNotification = async () => {
   try {
     const res = await instance.get("/api/notices/hasnew");
-    return res.data;
+    return res.data.hasNew;
   } catch (e) {
     console.log(e);
   }

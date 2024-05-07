@@ -16,21 +16,26 @@ function ConfirmModal({
   option2Event,
 }: ConfirmModalProps) {
   return (
-    <div className={styles.wrapper}>
-      <span>{content}</span>
-      <div className={styles.button_box}>
-        <Button
-          content={option1}
-          color="red"
-          clickEvent={option1Event}
-        />
-        <Button
-          content={option2}
-          color="white"
-          clickEvent={option2Event}
-        />
+    <>
+      <div className={styles.modal}>
+        <div className={styles.modal_content}>
+          <span>{content}</span>
+          <div className={styles.button_box}>
+            <Button
+              content={option1}
+              color="red"
+              clickEvent={option1Event}
+            />
+            <Button
+              content={option2}
+              color="white"
+              clickEvent={option2Event}
+            />
+          </div>
+        </div>
       </div>
-    </div>
+      <div className={styles.overlay}></div>
+    </>
   );
 }
 
