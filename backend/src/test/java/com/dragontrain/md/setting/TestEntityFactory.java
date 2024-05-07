@@ -1,4 +1,4 @@
-package com.dragontrain.md.domain;
+package com.dragontrain.md.setting;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
