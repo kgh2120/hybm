@@ -108,9 +108,9 @@ class NoticeJpaRepositoryTest {
 		}
 		noticeJpaRepository.saveAll(notices);
 
-		Slice<Notice> res1 = noticeJpaRepository.findAllNotDeletedNotice(refrigerator.getRefrigeratorId(), PageRequest.of(0, 20));
-		Slice<Notice> res2 = noticeJpaRepository.findAllNotDeletedNotice(refrigerator.getRefrigeratorId(), PageRequest.of(0, 35));
-		Slice<Notice> res3 = noticeJpaRepository.findAllNotDeletedNotice(refrigerator.getRefrigeratorId(), PageRequest.of(0, 40));
+		Slice<Notice> res1 = noticeJpaRepository.findAllNotDeletedNoticeByPage(refrigerator.getRefrigeratorId(), PageRequest.of(0, 20));
+		Slice<Notice> res2 = noticeJpaRepository.findAllNotDeletedNoticeByPage(refrigerator.getRefrigeratorId(), PageRequest.of(0, 35));
+		Slice<Notice> res3 = noticeJpaRepository.findAllNotDeletedNoticeByPage(refrigerator.getRefrigeratorId(), PageRequest.of(0, 40));
 
 		Assertions.assertEquals(res1.getSize(), 20);
 		Assertions.assertEquals(res1.hasNext(), true);
@@ -149,6 +149,15 @@ class NoticeJpaRepositoryTest {
 		noticeJpaRepository.save(noticeJpaRepository.save(testEntityFactory.getNotice("미확인알림", Boolean.FALSE, NoticeType.TO_DANGER, otherFood)));
 		noticeJpaRepository.save(noticeJpaRepository.save(testEntityFactory.getNotice("확인알림", Boolean.TRUE, NoticeType.TO_DANGER, otherFood)));
 		Assertions.assertEquals(noticeJpaRepository.existsByFood_Refrigerator_RefrigeratorIdAndDeletedAtIsNullAndIsCheckedIsFalse(refrigerator.getRefrigeratorId()), Boolean.FALSE);
+	}
+
+	@Test
+	void 내_삭제되지_않은_알림조회_성공(){
+		noticeJpaRepository.save(testEntityFactory.getNotice("확인알림", Boolean.TRUE, NoticeType.TO_DANGER, food));
+		noticeJpaRepository.save(testEntityFactory.getNotice("확인알림", Boolean.TRUE, NoticeType.TO_DANGER, food));
+		noticeJpaRepository.save(testEntityFactory.getDeletedNotice("확인알림", Boolean.TRUE, NoticeType.TO_DANGER, food));
+
+		Assertions.assertEquals(noticeJpaRepository.findAllByFood_Refrigerator_RefrigeratorIdAndDeletedAtIsNull(refrigerator.getRefrigeratorId()).size(), 2);
 	}
 
 }
