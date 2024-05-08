@@ -1,5 +1,6 @@
 package com.dragontrain.md.domain.food.service.port;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,4 +18,6 @@ public interface FoodRepository {
 	void save(Food food);
 
 	List<Food> findAllDeletedFoodByRefrigeratorIdAndTime(Long refrigeratorId, Integer year, Integer month);
+
+	List<Food> findFoodByDDay(int dDay, LocalDate now);
 }

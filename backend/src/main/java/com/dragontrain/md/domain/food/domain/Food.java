@@ -149,4 +149,15 @@ public class Food {
 		this.deletedAt = localDateTime;
 		this.foodDeleteType = foodDeleteType;
 	}
+
+	public void changeStatus(FoodStatus foodStatus, LocalDateTime localDateTime){
+		if (!Objects.isNull(deletedAt))
+			throw new FoodException(FoodErrorCode.ALREADY_DELETED_FOOD);
+
+		if (this.foodStatus.equals(foodStatus)) {
+			throw new FoodException(FoodErrorCode.ALREADY_THAT_STATUS);
+		}
+		this.foodStatus = foodStatus;
+		this.updatedAt = localDateTime;
+	}
 }
