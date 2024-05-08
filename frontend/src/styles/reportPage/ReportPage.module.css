@@ -106,6 +106,14 @@
 .wrapper .content .top_five p > span {
   color: #e5333e;
 }
+.wrapper .content .top_five .is_empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10% 0;
+  color: #e5333e;
+  width: 100%;
+}
 .wrapper .content .top_five .item_boxes {
   display: flex;
   align-items: center;

@@ -120,6 +120,13 @@
         color: $color-point;
       }
 
+      .is_empty {
+        @include center;
+        margin: 10% 0;
+        color: $color-point;
+        width: 100%;
+      }
+
       .item_boxes {
         @include center;
         margin: 3%;

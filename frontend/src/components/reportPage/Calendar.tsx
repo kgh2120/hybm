@@ -1,13 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "../../styles/reportPage/Calendar.module.css";
+import { useQuery } from "@tanstack/react-query";
+import { getUserSignUpDate } from "../../api/userApi";
 
 interface CustomHeaderProps {
   date: Date;
   decreaseYear: () => void;
   increaseYear: () => void;
+}
+
+interface HandleDateChangeProps {
+  selectedYear: number;
+  selectedMonth: number;
+}
+
+interface DateProps {
+  year: number;
+  month: number;
+  onDateChange: ({
+    selectedYear,
+    selectedMonth,
+  }: HandleDateChangeProps) => void;
 }
 
 function CustomHeader({
@@ -33,19 +49,55 @@ function CustomHeader({
   );
 }
 
-function MyDatePicker() {
+function MyDatePicker({ year, month, onDateChange }: DateProps) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(
-    new Date()
+    new Date(year, month - 1)
   );
+
+  // axios 요청 불러오기
+  const {
+    data: userSignUpDate,
+    isPending: isUserSignUpPending,
+    isError: isUserSignUpDateError,
+    refetch: refetchUserSignUpDate,
+  } = useQuery({
+    queryKey: ["UserSignUpDate"],
+    queryFn: getUserSignUpDate,
+  });
+
+  useEffect(() => {
+    refetchUserSignUpDate();
+  }, [refetchUserSignUpDate]);
+
+  if (isUserSignUpPending) {
+    return <div>데이터 가져오는 중...</div>;
+  }
+
+  if (isUserSignUpDateError) {
+    return <div>에러나는 중...</div>;
+  }
+
+  const handleDateChange = (date: Date | null) => {
+    if (date) {
+      const selectedYear = date.getFullYear();
+      const selectedMonth = date.getMonth() + 1;
+      onDateChange({ selectedYear, selectedMonth });
+    }
+  };
 
   return (
     <DatePicker
       showMonthYearPicker
       shouldCloseOnSelect
       selected={selectedDate}
-      onChange={(date) => setSelectedDate(date)}
+      onChange={(date) => {
+        setSelectedDate(date);
+        handleDateChange(date);
+      }}
       dateFormat="yyyy년 MM월"
-      minDate={new Date("2023.12")}
+      minDate={
+        new Date(`${userSignUpDate.year}-${userSignUpDate.month}-01`)
+      }
       maxDate={new Date()}
       className={styles.date_picker}
       renderCustomHeader={({ date, decreaseYear, increaseYear }) => (
