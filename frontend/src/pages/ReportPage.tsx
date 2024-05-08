@@ -62,7 +62,6 @@ function ReportPage() {
   });
 
   useEffect(() => {
-    console.log(year, month);
     // year 또는 month가 변경될 때마다 데이터를 다시 가져옴
     refetchReportData();
   }, [year, month, refetchReportData]);
@@ -298,7 +297,7 @@ function ReportPage() {
                             name={food.name}
                             content=""
                             option="report"
-                            imgSrc=""
+                            imgSrc={food.imgSrc}
                           />
                         )
                       )}
@@ -321,6 +320,7 @@ function ReportPage() {
                             name={food.name}
                             content=""
                             option="report"
+                            imgSrc={food.imgSrc}
                           />
                         )
                       )}
