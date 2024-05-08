@@ -114,7 +114,7 @@
   color: #e5333e;
   width: 100%;
 }
-.wrapper .content .top_five .item_boxes {
+.wrapper .content .top_five .item_box_list {
   display: flex;
   align-items: center;
   justify-content: center;

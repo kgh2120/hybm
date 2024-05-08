@@ -255,19 +255,17 @@ function ReportPage() {
                   />
                 )}
               </div>
-              {reportData.hasEmptyPrice ? (
+              {reportData.hasEmptyPrice && (
                 <p className={styles.alert}>
                   3월에 가격을 정하지 않은 항목이 있어요!
                 </p>
-              ) : (
-                <></>
               )}
             </div>
           )}
         </div>
         <div className={styles.content}>
           <div className={styles.sub_title}>내 식품 통계</div>
-          {eatenCount + thrownCount === 0 ? (
+          {eatenCount === 0 && thrownCount === 0 ? (
             <div>
               데이터가 없을 때 텅포넌트 들어올 곳!!!!!!!!!!!!!
             </div>
@@ -289,12 +287,11 @@ function ReportPage() {
                       먹은 음식이 없습니다
                     </div>
                   ) : (
-                    <div className={styles.item_boxes}>
-                      {Array.from(
-                        reportData.topEatenDetailCategory,
-                        (food, index) => (
+                    <div className={styles.item_box_list}>
+                      {reportData.topEatenDetailCategory.map(
+                        (food: DetailCategoryType, idx: number) => (
                           <ItemBox
-                            key={index}
+                            key={idx}
                             name={food.name}
                             content=""
                             option="report"
@@ -312,12 +309,11 @@ function ReportPage() {
                       버린 음식이 없습니다
                     </div>
                   ) : (
-                    <div className={styles.item_boxes}>
-                      {Array.from(
-                        reportData.topThrownDetailCategory,
-                        (food, index) => (
+                    <div className={styles.item_box_list}>
+                      {reportData.topThrownDetailCategory.map(
+                        (food: DetailCategoryType, idx: number) => (
                           <ItemBox
-                            key={index}
+                            key={idx}
                             name={food.name}
                             content=""
                             option="report"

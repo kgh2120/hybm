@@ -50,7 +50,7 @@ function CustomHeader({
 }
 
 function MyDatePicker({ year, month, onDateChange }: MyDateProps) {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(
+  const [selectedDate, setSelectedDate] = useState<Date>(
     new Date(year, month - 1)
   );
 
@@ -72,14 +72,11 @@ function MyDatePicker({ year, month, onDateChange }: MyDateProps) {
     return <div>에러나는 중...</div>;
   }
 
-  // null 값 없을 수도 있음
-  const handleDateChange = (date: Date | null) => {
-    if (date) {
+  const handleDateChange = (date: Date) => {
       setSelectedDate(date);
       const selectedYear = date.getFullYear();
       const selectedMonth = date.getMonth() + 1;
       onDateChange({ selectedYear, selectedMonth });
-    }
   };
 
   return (
@@ -88,7 +85,8 @@ function MyDatePicker({ year, month, onDateChange }: MyDateProps) {
       shouldCloseOnSelect
       selected={selectedDate}
       onChange={(date) => {
-        handleDateChange(date);
+        // ts에서 null체크 하려고 해서 넣은 as Date
+        handleDateChange(date as Date);
       }}
       dateFormat="yyyy년 MM월"
       minDate={
