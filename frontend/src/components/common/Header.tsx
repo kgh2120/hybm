@@ -10,7 +10,7 @@ function Header({ title }: HeaderProps) {
   return (
     <header className={styles.wrapper}>
       <h1>{title}</h1>
-      <img className={styles.line} src={line} alt="" />
+      <img className={styles.line} src={line} alt="홈 이미지" />
     </header>
   );
 }

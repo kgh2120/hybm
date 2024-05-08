@@ -1,5 +1,4 @@
 import styles from "../../styles/mainPage/NotificationModal.module.css";
-import meat from "../../assets/images/meat.png";
 import { formatDate } from "../../utils/formatting";
 import { deleteNotification } from "../../api/notificationApi";
 import { useMutation } from "@tanstack/react-query";
@@ -23,7 +22,7 @@ function NotificationItem({
   createdAt,
 }: NotificationItemProps) {
   const formattedDate = formatDate(createdAt);
-  console.log(isChecked)
+  console.log(isChecked);
   const { mutate: mutateDeleteNotification } = useMutation({
     mutationFn: deleteNotification,
     onSuccess: () => {
@@ -58,7 +57,7 @@ function NotificationItem({
     <div className={styles.notification_item}>
       <div className={styles.main_section}>
         <div className={styles.image_section}>
-          <img src={meat} alt={foodImgSrc} />
+          <img src={foodImgSrc} alt="음식 이미지" />
         </div>
         <div className={styles.content_section}>
           <span>{content}</span>

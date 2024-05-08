@@ -36,8 +36,7 @@
           color: white;
           font-size: $font-lg;
           font-weight: 700;
-          text-shadow: -1px 0px black, 0px 1px black, 1px 0px black,
-            0px -1px black;
+          @include font-shadow(black);
         }
       }
     }

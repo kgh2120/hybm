@@ -17,10 +17,7 @@ function DesignPage() {
     queryFn: getDesignList,
   });
 
-  const handleTemp = () => {
-    
-  }
-  console.log(designList)
+  console.log(designList);
   if (isdesignListPending) {
     return <div>designList Loding...</div>;
   }
@@ -36,10 +33,14 @@ function DesignPage() {
         <WhiteSection title="찬장" />
         <WhiteSection title="냉장" />
         <WhiteSection title="냉동" />
-        <Button content="적용" color="red" onClick={handleTemp}/>
+        <Button content="적용" color="red" onClick={() => {}} />
       </section>
       <Link to="/badge">
-        <img className={styles.left_arrow} src={leftArrow} alt="" />
+        <img
+          className={styles.left_arrow}
+          src={leftArrow}
+          alt="왼쪽화살표 이미지"
+        />
       </Link>
     </div>
   );

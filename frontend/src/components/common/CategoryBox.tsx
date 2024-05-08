@@ -39,11 +39,6 @@ function CategoryBox() {
   };
 
   useEffect(() => {
-    if (selectedCategory !== null) {
-    }
-  }, [selectedCategory]);
-
-  useEffect(() => {
     if (name.length >= 1) {
       changeFilteredCategoryList();
     } else {
@@ -57,7 +52,7 @@ function CategoryBox() {
     }
   }, [name]);
 
-  function changeFilteredCategoryList() {
+  const changeFilteredCategoryList = () => {
     const updatedCategoryList = bigCategoryList.flatMap(
       (category) => {
         const filteredDetails = category.categoryDetails.filter(
@@ -72,7 +67,7 @@ function CategoryBox() {
       }
     );
     setFilteredCategoryList(updatedCategoryList);
-  }
+  };
 
   return (
     <div className={styles.category_box}>
@@ -87,7 +82,7 @@ function CategoryBox() {
       <img
         className={styles.category_search_img}
         src={search}
-        alt=""
+        alt="돋보기 이미지"
       />
       <section className={styles.filtered_category_list_section}>
         {filteredCategoryList.map((category) => (

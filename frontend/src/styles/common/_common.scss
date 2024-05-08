@@ -7,7 +7,6 @@ $font-sm: 11px;
 $font-md: 13px;
 $font-lg: 15px;
 $font-xl: 20px;
-$font-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
 
 @mixin modal-title {
   color: $color-text;
@@ -31,8 +30,13 @@ $font-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
   justify-content: center;
 }
 
+@mixin font-shadow($color) {
+  text-shadow: -1px 0px $color, 0px 1px $color, 1px 0px $color,
+    0px -1px $color;
+}
+
 @mixin input-text {
-  text-shadow: $font-shadow;
-        font-size: $font-md;
-      color: $color-text;
+  @include font-shadow(white);
+  font-size: $font-md;
+  color: $color-text;
 }

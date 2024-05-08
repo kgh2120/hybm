@@ -13,15 +13,15 @@ import useFoodStore from "../stores/useFoodStore";
 import { getCurrentDesign } from "../api/fridgeApi";
 import ConfirmModal from "../components/common/ConfirmModal";
 
-interface Storage {
+interface StorageType {
   id: number;
   imgSrc: string;
 }
 
-interface CurrentDesign {
-  ice: Storage;
-  cool: Storage;
-  cabinet: Storage;
+interface CurrentDesignType {
+  ice: StorageType;
+  cool: StorageType;
+  cabinet: StorageType;
 }
 
 function MainPage() {
@@ -44,7 +44,7 @@ function MainPage() {
     data: currentDesign,
     isPending: isCurrentDesignPending,
     isError: isCurrentDesignError,
-  } = useQuery<CurrentDesign>({
+  } = useQuery<CurrentDesignType>({
     queryKey: ["currentDesign"],
     queryFn: getCurrentDesign,
   });

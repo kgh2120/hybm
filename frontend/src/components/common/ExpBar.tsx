@@ -10,6 +10,9 @@ import { getLevelAndExp } from "../../api/userApi";
 import { useQuery } from "@tanstack/react-query";
 import { getIsNewNotification } from '../../api/notificationApi';
 
+interface IsNewNotificationType {
+  hasNew: boolean;
+}
 function ExpBar() {
   const [isNotificationModalOpen, setIsNotificationModalOpen] =
     useState(false);
@@ -35,7 +38,7 @@ function ExpBar() {
     data: isNewNotification,
     isPending: isNewNotificationPending,
     isError: isNewNotificationError,
-  } = useQuery<boolean>({
+  } = useQuery<IsNewNotificationType>({
     queryKey: ["isNewNotification"],
     queryFn: getIsNewNotification,
   });
@@ -94,7 +97,7 @@ function ExpBar() {
         >
           <div className={styles.notification_sub_box}>
             <img src={notification} alt="알림 이미지" />
-            {isNewNotification && <div></div>}
+            {isNewNotification.hasNew && <div></div>}
           </div>
         </div>
       </div>
@@ -103,7 +106,7 @@ function ExpBar() {
           title="알림함"
           clickEvent={handleCloseNotificationModal}
         >
-          <NotificationModal isNewNotification={isNewNotification}/>
+          <NotificationModal isNewNotification={isNewNotification.hasNew}/>
         </Modal>
       )}
     </div>

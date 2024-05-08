@@ -7,10 +7,6 @@ import FoodSection from "../common/FoodSection";
 // import { useState } from "react";
 
 function CreateFoodModal() {
-  const handleTemp = () => {
-
-  }
-  
   return (
     <div className={styles.wrapper}>
       <section className={styles.main_section}>
@@ -64,7 +60,7 @@ function CreateFoodModal() {
           <input></input>
         </div>
       </section> */}
-      <Button content="완료" color="red" onClick={handleTemp}/>
+      <Button content="완료" color="red" onClick={() => {}}/>
     </div>
   );
 }

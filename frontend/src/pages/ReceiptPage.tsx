@@ -11,9 +11,6 @@ import useFoodStore from "../stores/useFoodStore";
 function ReceiptPage() {
   const { bigCategoryList } = useFoodStore();
   console.log(bigCategoryList);
-  const handleTemp = () => {
-    
-  }
 
   return (
     <div className={styles.wrapper}>
@@ -28,7 +25,7 @@ function ReceiptPage() {
           <FoodSection />
           <FoodSection />
         </section>
-        <Button content="완료" color="red" onClick={handleTemp}/>
+        <Button content="완료" color="red" onClick={() => {}} />
       </div>
     </div>
   );

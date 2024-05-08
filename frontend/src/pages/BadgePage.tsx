@@ -6,10 +6,6 @@ import rightArrow from "../assets/images/rightArrow.png";
 import { Link } from "react-router-dom";
 
 function BadgePage() {
-  const handleTemp = () => {
-
-  }
-  
   return (
     <div className={styles.wrapper}>
       <div className={styles.background}>
@@ -18,7 +14,7 @@ function BadgePage() {
       <section className={styles.white_section}>
         <WhiteSection title="보유 뱃지" />
         <WhiteSection title="미보유 뱃지" />
-        <Button content="적용" color="red" onClick={handleTemp}/>
+        <Button content="적용" color="red" onClick={() => {}}/>
       </section>
       <Link to="/design">
         <img className={styles.left_arrow} src={rightArrow} alt="" />

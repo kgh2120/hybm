@@ -1,30 +1,30 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-interface Category {
+interface CategoryType {
   categoryId: number;
   name: string;
   categoryImgSrc: string;
 }
 
-interface BigCategory {
+interface BigCategoryType {
   categoryBigId: number;
   name: string;
   bigCategoryImgSrc: string;
-  categoryDetails: Category[];
+  categoryDetails: CategoryType[];
 }
 
 interface FoodState {
-  bigCategoryList: BigCategory[];
+  bigCategoryList: BigCategoryType[];
 }
 
 interface FoodAction {
-  setBigCategoryList: (value: BigCategory[]) => void;
+  setBigCategoryList: (value: BigCategoryType[]) => void;
 }
 
 const useFoodStore = create(persist<FoodState & FoodAction>((set) => ({
   bigCategoryList: [],
-  setBigCategoryList: (value: BigCategory[]) => set({bigCategoryList: value}),
+  setBigCategoryList: (value: BigCategoryType[]) => set({bigCategoryList: value}),
 }),{ name: 'foodCategoryList' }))
 
 export default useFoodStore;
