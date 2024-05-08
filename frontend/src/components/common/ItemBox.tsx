@@ -1,29 +1,28 @@
-import meat from "../../assets/images/meat.png";
 import styles from "../../styles/common/ItemBox.module.css";
 
 interface ItemBoxProps {
   name: string;
   content: string;
   option: string;
+  imgSrc: string;
 }
-function ItemBox({ name, content, option = "active" }: ItemBoxProps) {
+function ItemBox({ name, content, option = "active", imgSrc }: ItemBoxProps) {
   return (
     <article className={styles.wrapper}>
       {option === "inactive" ? (
         <div className={styles.img_box}>
-          <div className={styles.img_gray_box}>
-            <img src={meat} alt="상품아이콘" />
-          </div>
+          <div className={styles.img_gray_box}></div>
+          <img src={imgSrc} alt="상품아이콘" />
         </div>
       ) : option === "report" ? (
         <div className={styles.report_img_box}>
           <div className={styles.img_white_box}>
-            <img src={meat} alt="상품아이콘" />
+            <img src={imgSrc} alt="상품아이콘" />
           </div>
         </div>
       ) : (
         <div className={styles.img_box}>
-          <img src={meat} alt="상품아이콘" />
+          <img src={imgSrc} alt="상품아이콘" />
         </div>
       )}
       <div className={styles.text_box}>

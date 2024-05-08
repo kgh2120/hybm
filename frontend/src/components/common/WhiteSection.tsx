@@ -15,10 +15,10 @@ function WhiteSection({ title }: WhiteSectionProps) {
       <img src={clip} alt="압정 이미지" />
 
       <section className={styles.main_section}>
-        <ItemBox name="기본찬장" content="" option="active" />
-        <ItemBox name="기본찬장" content="" option="active" />
-        <ItemBox name="기본찬장" content="" option="active" />
-        <ItemBox name="기본찬장" content="" option="active" />
+        <ItemBox name="기본찬장" content="" option="active" imgSrc=""/>
+        <ItemBox name="기본찬장" content="" option="active" imgSrc=""/>
+        <ItemBox name="기본찬장" content="" option="active" imgSrc=""/>
+        <ItemBox name="기본찬장" content="" option="active" imgSrc=""/>
       </section>
     </section>
   );

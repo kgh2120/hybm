@@ -42,26 +42,31 @@ function RecipePage() {
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
               </section>
               <div className={styles.section_title}>
@@ -72,26 +77,31 @@ function RecipePage() {
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
               </section>
               <div className={styles.section_title}>
@@ -102,26 +112,31 @@ function RecipePage() {
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
               </section>
             </section>

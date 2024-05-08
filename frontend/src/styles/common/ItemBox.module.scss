@@ -15,10 +15,8 @@
     position: relative;
 
     .img_gray_box {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      @include absolute-center;
+      z-index: 1;
       width: 60px;
       aspect-ratio: 1/1;
       border-radius: 50%;
@@ -55,10 +53,7 @@
     margin: 0 1px;
 
     .img_white_box {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      @include absolute-center;
       width: 45px;
       aspect-ratio: 1/1;
       border-radius: 50%;
