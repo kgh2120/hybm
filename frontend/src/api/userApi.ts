@@ -9,7 +9,18 @@ const getLoginStatus = async () => {
   } catch (e) {
     console.log(e);
   }
-}
+};
+
+// 가입한 년도와 월 조회
+const getUserSignUpDate = async () => {
+  try {
+    const res = await instance.get("/api/users/is-login");
+    console.log(res);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 // 레벨/경험치 조회
 const getLevelAndExp = async () => {
@@ -19,6 +30,6 @@ const getLevelAndExp = async () => {
   } catch (e) {
     console.log(e);
   }
-}
+};
 
-export { getLoginStatus, getLevelAndExp }
+export { getLoginStatus, getUserSignUpDate, getLevelAndExp };
