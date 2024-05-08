@@ -51,8 +51,7 @@ public class FoodController {
 
 	@GetMapping("/category")
 	public ResponseEntity<List<CategoryInfoResponse>> getCategoryInfo() {
-		List<CategoryInfoResponse> categoryInfo = foodService.getCategoryInfo();
-		return ResponseEntity.ok(categoryInfo);
+		return ResponseEntity.ok(foodService.getCategoryInfo());
 	}
 
 	@GetMapping("/expiration")
