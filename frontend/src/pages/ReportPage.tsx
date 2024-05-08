@@ -147,26 +147,31 @@ function ReportPage() {
                     name="기본찬장"
                     content=""
                     option="report"
+                    imgSrc=""
                   />
                   <ItemBox
                     name="기본찬장"
                     content=""
                     option="report"
+                    imgSrc=""
                   />
                   <ItemBox
                     name="기본찬장"
                     content=""
                     option="report"
+                    imgSrc=""
                   />
                   <ItemBox
                     name="기본찬장"
                     content=""
                     option="report"
+                    imgSrc=""
                   />
                   <ItemBox
                     name="기본찬장"
                     content=""
                     option="report"
+                    imgSrc=""
                   />
                 </div>
               </div>
@@ -177,26 +182,31 @@ function ReportPage() {
                     name="기본찬장"
                     content=""
                     option="report"
+                    imgSrc=""
                   />
                   <ItemBox
                     name="기본찬장"
                     content=""
                     option="report"
+                    imgSrc=""
                   />
                   <ItemBox
                     name="기본찬장"
                     content=""
                     option="report"
+                    imgSrc=""
                   />
                   <ItemBox
                     name="기본찬장"
                     content=""
                     option="report"
+                    imgSrc=""
                   />
                   <ItemBox
                     name="기본찬장"
                     content=""
                     option="report"
+                    imgSrc=""
                   />
                 </div>
               </div>

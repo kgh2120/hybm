@@ -10,6 +10,16 @@ const getBigCategoryList = async () => {
   }
 }
 
+// 내부 식품 칸별 조회
+const getFoodStorageItemList = async (storageName: string) => {
+  try {
+    const res = await instance.get(`/api/foods/storage/${storageName}`);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 interface DeleteFoodParams {
   foodIdList: number[];
   option: string;
@@ -53,4 +63,4 @@ const day = String(currentDate.getDate()).padStart(2, '0');
   }
 }
 
-export { getBigCategoryList, deleteFood, deleteAllFood, getExpiredDate }
+export { getFoodStorageItemList, getBigCategoryList, deleteFood, deleteAllFood, getExpiredDate }
