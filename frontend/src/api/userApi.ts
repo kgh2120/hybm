@@ -1,6 +1,6 @@
 import instance from "./axios";
 
-// 로그인 status 조회
+// 로그인 체크
 const getLoginStatus = async () => {
   try {
     const res = await instance.get("/api/users/is-login");
@@ -22,4 +22,14 @@ const getUserSignUpDate = async () => {
   }
 };
 
-export { getLoginStatus, getUserSignUpDate };
+// 레벨/경험치 조회
+const getLevelAndExp = async () => {
+  try {
+    const res = await instance.get("/api/levels");
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export { getLoginStatus, getUserSignUpDate, getLevelAndExp }

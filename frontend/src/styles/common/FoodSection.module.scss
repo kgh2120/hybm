@@ -55,29 +55,6 @@
         font-size: $font-lg;
       }
     }
-    .category_box {
-      @include input-text;
-      width: 80%;
-      background-color: $color-back;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      padding: 0px 5px;
-      .category_img {
-        width: 30px;
-        aspect-ratio: 1/1;
-      }
-      > input {
-        width: 85%;
-        background-color: transparent;
-        text-align: start;
-        height: 30px;
-        @include input-text;
-      }
-      .category_search_img {
-        width: 20px;
-        aspect-ratio: 1/1;
-      }
-    }
+    
   }
 }

@@ -25,6 +25,7 @@ function AuthCallback() {
     setIsLogin(true);
     navigate("/");
   }
+
   return <></>;
 }
 

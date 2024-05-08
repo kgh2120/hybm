@@ -3,15 +3,18 @@ import Modal from "../components/common/Modal";
 import CreateFoodModal from "../components/storagePage/CreateFoodModal";
 import styles from "../styles/storagePage/StoragePage.module.css";
 import { Link, useParams } from "react-router-dom";
-import home from "../assets/home.png";
-import edit from "../assets/edit.png";
-import plus from "../assets/plus.png";
+import home from "../assets/images/home.png";
+import edit from "../assets/images/edit.png";
+import plus from "../assets/images/plus.png";
 import ItemBox from "../components/common/ItemBox";
+import FoodStateSection from "../components/storagePage/FoodStateSection";
+import { getFoodStorageItemList } from "../api/foodApi";
+import { useQuery } from "@tanstack/react-query";
 
 function StoragePage() {
   const [isCreateFoodModalOpen, setIsCreateFoodModalOpen] =
     useState(false);
-  const { storageName } = useParams();
+  const { storageName } = useParams() as { storageName: string };
   const handleOpenCreateFoodModal = () => {
     setIsCreateFoodModalOpen(true);
   };
@@ -20,63 +23,76 @@ function StoragePage() {
     setIsCreateFoodModalOpen(false);
   };
 
-  let title = "냉동실";
-  if (storageName === "ice") {
-    title = "냉동실";
-  } else if (storageName === "cool") {
-    title = "냉장실";
-  } else if (storageName === "cabinet") {
-    title = "찬장";
+  const TITLE_LIST: { [key: string]: string } = {
+    ice: "냉동실",
+    cool: "냉장실",
+    cabinet: "찬장",
+  };
+
+  const SECTION_TITLE_LIST: { [key: string]: string } = {
+    rotten: "소비기한 지남 (D+)😥",
+    danger: "위험! (D-3)",
+    warning: "경고 (D-7)",
+    fresh: "신선😊",
+  };
+
+  interface FoodItemType {
+    foodId: number;
+    name: string;
+    categoryImgSrc: string;
+    dDay: number;
   }
+
+  // 내부 식품 칸별 조회 api
+  const {
+    data: foodStorageItemList,
+    isPending: isFoodStorageItemListPending,
+    isError: isFoodStorageItemListError,
+  } = useQuery({
+    queryKey: ["foodStorageItemList"],
+    queryFn: () => getFoodStorageItemList(storageName),
+  });
+
+  if (isFoodStorageItemListPending) {
+    return <div>isLoding...</div>;
+  }
+  if (isFoodStorageItemListError) {
+    return <div>error</div>;
+  }
+
+  console.log("아이템 리스트:", foodStorageItemList);
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.white_wrapper}>
-        <h1>{title}</h1>
+        <h1>{TITLE_LIST[storageName]}</h1>
         <Link to="/">
-          <img className={styles.home_img} src={home} alt="" />
+          <img
+            className={styles.home_img}
+            src={home}
+            alt="홈 이미지"
+          />
         </Link>
         <section className={styles.main_section}>
-          <div>
-            <h2>소비기한 지남 (D+)😥</h2>
-          </div>
-          <section style={{ border: "2px solid #a9a9a9" }}>
-            <ItemBox name="기본찬장" content="" option="report" />
-            <ItemBox name="기본찬장" content="" option="report" />
-            <ItemBox name="기본찬장" content="" option="report" />
-            <ItemBox name="기본찬장" content="" option="report" />
-            <ItemBox name="기본찬장" content="" option="report" />
-          </section>
-          <div>
-            <h2>위험! (D-3)</h2>
-          </div>
-          <section style={{ border: "2px solid #ffa7a7" }}>
-            <ItemBox name="기본찬장" content="" option="report" />
-            <ItemBox name="기본찬장" content="" option="report" />
-            <ItemBox name="기본찬장" content="" option="report" />
-            <ItemBox name="기본찬장" content="" option="report" />
-            <ItemBox name="기본찬장" content="" option="report" />
-          </section>
-          <div>
-            <h2>경고 (D-7)</h2>
-          </div>
-          <section style={{ border: "2px solid #ffd66a" }}>
-            <ItemBox name="기본찬장" content="" option="report" />
-            <ItemBox name="기본찬장" content="" option="report" />
-            <ItemBox name="기본찬장" content="" option="report" />
-            <ItemBox name="기본찬장" content="" option="report" />
-            <ItemBox name="기본찬장" content="" option="report" />
-          </section>
-          <div>
-            <h2>신선😊</h2>
-          </div>
-          <section style={{ border: "2px solid #7dd086" }}>
-            <ItemBox name="기본찬장" content="" option="report" />
-            <ItemBox name="기본찬장" content="" option="report" />
-            <ItemBox name="기본찬장" content="" option="report" />
-            <ItemBox name="기본찬장" content="" option="report" />
-            <ItemBox name="기본찬장" content="" option="report" />
-          </section>
+          {Object.keys(foodStorageItemList).map((sectionTitle) => (
+            <FoodStateSection
+              sectionTitle={SECTION_TITLE_LIST[sectionTitle]}
+              sectionClass={sectionTitle}
+            >
+              {foodStorageItemList[sectionTitle].map(
+                (item: FoodItemType) => (
+                  <ItemBox
+                    name={item.name}
+                    content={`D-${item.dDay}`}
+                    option={
+                      sectionTitle === "rotten" ? "inactive" : ""
+                    }
+                    imgSrc={item.categoryImgSrc}
+                  />
+                )
+              )}
+            </FoodStateSection>
+          ))}
         </section>
         <section className={styles.btn_section}>
           <div className={styles.btn_box}>

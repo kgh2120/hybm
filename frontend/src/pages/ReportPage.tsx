@@ -11,7 +11,7 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 import styles from "../styles/reportPage/ReportPage.module.css";
 import ItemBox from "../components/common/ItemBox";
 import MyDatePicker from "../components/reportPage/Calendar";
-import HomeBtn from "../assets/home.png";
+import HomeBtn from "../assets/images/home.png";
 import { getReportData } from "../api/report";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";

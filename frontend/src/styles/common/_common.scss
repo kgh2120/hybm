@@ -7,7 +7,6 @@ $font-sm: 11px;
 $font-md: 13px;
 $font-lg: 15px;
 $font-xl: 20px;
-$font-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
 
 @mixin modal-title {
   color: $color-text;
@@ -31,8 +30,43 @@ $font-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
   justify-content: center;
 }
 
+@mixin font-shadow($color) {
+  text-shadow: -1px 0px $color, 0px 1px $color, 1px 0px $color,
+    0px -1px $color;
+  
+}
+
 @mixin input-text {
-  text-shadow: $font-shadow;
-        font-size: $font-md;
-      color: $color-text;
+  @include font-shadow(white);
+  font-size: $font-md;
+  color: $color-text;
+}
+
+@mixin scroll-bar {
+  &::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba($color-line, 0.2);
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+    &:hover {
+      background-color: rgba($color-line, 0.4);
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: rgba(220, 220, 220, 0.7);
+    border-radius: 10px;
+    /* box-shadow: inset 0px 0px 5px white; */
+  }
+}
+
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

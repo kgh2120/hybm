@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styles from "../styles/recipePage/RecipePage.module.css";
-import HomeBtn from "../assets/home.png";
+import HomeBtn from "../assets/images/home.png";
 import ItemBox from "../components/common/ItemBox";
 import EmptyBox from "../components/common/EmptyBox";
 import RecipeBox from "../components/common/RecipeBox";
@@ -42,26 +42,31 @@ function RecipePage() {
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
               </section>
               <div className={styles.section_title}>
@@ -72,26 +77,31 @@ function RecipePage() {
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
               </section>
               <div className={styles.section_title}>
@@ -102,26 +112,31 @@ function RecipePage() {
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
+                  imgSrc=""
                 />
               </section>
             </section>

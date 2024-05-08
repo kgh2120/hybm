@@ -1,0 +1,39 @@
+@import "../common/common";
+
+.category_box {
+  @include input-text;
+  width: 80%;
+  background-color: $color-back;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0px 5px;
+  position: relative;
+  .category_img {
+    width: 30px;
+    aspect-ratio: 1/1;
+  }
+  > input {
+    width: 85%;
+    background-color: transparent;
+    text-align: start;
+    height: 30px;
+    @include input-text;
+  }
+  .category_search_img {
+    width: 20px;
+    aspect-ratio: 1/1;
+  }
+  .filtered_category_list_section {
+    border-radius: 5px;
+  position: absolute;
+  width: 100%;
+  top: 35px;
+  left: 0px;
+  background-color: $color-back;
+  @include center;
+  flex-direction: column;
+  gap: 5px;
+  overflow-y: auto;
+  }
+}
