@@ -238,9 +238,10 @@ class RefrigeratorServiceImplTest {
 	@Test
 	void eatenToGotBadgeSuccessTest() throws Exception{
 		//given
-		final Long userId = 1L;
 
-		Refrigerator refrigerator = Refrigerator.builder().build();
+		Refrigerator refrigerator = Refrigerator.builder().refrigeratorId(1L).build();
+
+		given(refrigeratorRepository.findById(refrigerator.getRefrigeratorId())).willReturn(Optional.of(refrigerator));
 
 		CategoryBig categoryBig = CategoryBig.builder()
 			.build();
