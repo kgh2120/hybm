@@ -1,4 +1,7 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+} from "@tanstack/react-query";
 import styles from "../../styles/mainPage/NotificationModal.module.css";
 import NotificationItem from "./NotificationItem";
 import {
@@ -6,13 +9,27 @@ import {
   getNotificationList,
 } from "../../api/notificationApi";
 import ConfirmModal from "../common/ConfirmModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
+import EmptySection from "../common/EmptySection";
 
 interface NotificationModalProps {
   isNewNotification: boolean;
 }
 
-function NotificationModal({ isNewNotification }: NotificationModalProps) {
+interface NotificationType {
+  foodId: number;
+  noticeId: number;
+  content: string;
+  isChecked: boolean;
+  foodImgSrc: string;
+  createdAt: string;
+}
+
+function NotificationModal({
+  isNewNotification,
+}: NotificationModalProps) {
+  const { ref, inView } = useInView();
   const [
     isDeleteNotificationConfirmModalOpen,
     setIsDeleteNotificationConfirmModalOpen,
@@ -21,8 +38,7 @@ function NotificationModal({ isNewNotification }: NotificationModalProps) {
   const { mutate: mutateDeleteAllNotification } = useMutation({
     mutationFn: deleteAllNotification,
     onSuccess: () => {
-      // navigate('/group');
-      // closeRewardModal()
+      closeDeleteNotificationConfirmModal();
     },
     onError: (error) => {
       console.error("에러났습니다.", error);
@@ -31,11 +47,20 @@ function NotificationModal({ isNewNotification }: NotificationModalProps) {
 
   const {
     data: notificationList,
-    isPending: isNotificationListPending,
-    isError: isNotificationListError,
-  } = useQuery({
+    status,
+    error,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery({
     queryKey: ["notificationList"],
     queryFn: getNotificationList,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      const nextPage = lastPage.length
+        ? allPages.length + 1
+        : undefined;
+      return nextPage;
+    },
   });
 
   const handleDeleteAllNotification = () => {
@@ -50,13 +75,25 @@ function NotificationModal({ isNewNotification }: NotificationModalProps) {
     setIsDeleteNotificationConfirmModalOpen(false);
   };
 
-  if (isNotificationListPending) {
-    return <div>notificationList Loading...</div>;
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, fetchNextPage]);
+
+  if (status === "pending") {
+    return <div>Loading...</div>;
   }
-  if (isNotificationListError) {
-    return <div>notificationList Error...</div>;
+  if (status === "error") {
+    return <div>Error: {error.message}</div>;
   }
-  console.log(isNewNotification)
+
+  const content = notificationList?.pages.map(
+    (notification: NotificationType) => {
+      <NotificationItem innerRef={ref} notification={notification} />;
+    }
+  );
+
   return (
     <div className={styles.notification_modal_wrapper}>
       <button
@@ -65,19 +102,11 @@ function NotificationModal({ isNewNotification }: NotificationModalProps) {
       >
         알림함 비우기
       </button>
-      {notificationList.notice.map((notification: any) => {
-        <NotificationItem
-          foodId={notification.foodId}
-          noticeId={notification.noticeId}
-          content={notification.content}
-          isChecked={notification.isChecked}
-          foodImgSrc={notification.foodImgSrc}
-          createdAt={notification.createdAt}
-        />;
-      })}
+      {!isNewNotification ? <EmptySection /> : <>{content}</>}
+
       {isDeleteNotificationConfirmModalOpen && (
         <ConfirmModal
-          content="정말로 삭제하시겠습니까?"
+          content="알림함을 비우시겠습니까?"
           option1="삭제"
           option2="취소"
           option1Event={handleDeleteAllNotification}

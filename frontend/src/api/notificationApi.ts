@@ -17,20 +17,23 @@ const deleteAllNotification = async () => {
     console.log(res);
   } catch (e) {
     console.log(e);
+    throw e;
   }
 };
 
+interface GetNotificationListParams {
+  pageParam: number;
+}
 // 알림 전체 조회(확인한 것도)
-const getNotificationList = async () => {
+const getNotificationList = async ({ pageParam }: GetNotificationListParams) => {
   try {
     const res = await instance.get("/api/notices", {
       params: {
-        page: 0,
+        page: pageParam,
         size: 20,
       },
     });
-    console.log("notice:", res);
-    return res.data;
+    return res.data.notice;
   } catch (e) {
     console.log(e);
   }
