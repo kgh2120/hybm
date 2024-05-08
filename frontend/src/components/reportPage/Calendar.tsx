@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -12,18 +12,18 @@ interface CustomHeaderProps {
   increaseYear: () => void;
 }
 
-interface HandleDateChangeProps {
+interface HandleDateChangeParams {
   selectedYear: number;
   selectedMonth: number;
 }
 
-interface DateProps {
+interface MyDateProps {
   year: number;
   month: number;
   onDateChange: ({
     selectedYear,
     selectedMonth,
-  }: HandleDateChangeProps) => void;
+  }: HandleDateChangeParams) => void;
 }
 
 function CustomHeader({
@@ -49,7 +49,7 @@ function CustomHeader({
   );
 }
 
-function MyDatePicker({ year, month, onDateChange }: DateProps) {
+function MyDatePicker({ year, month, onDateChange }: MyDateProps) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     new Date(year, month - 1)
   );
@@ -59,15 +59,10 @@ function MyDatePicker({ year, month, onDateChange }: DateProps) {
     data: userSignUpDate,
     isPending: isUserSignUpPending,
     isError: isUserSignUpDateError,
-    refetch: refetchUserSignUpDate,
   } = useQuery({
     queryKey: ["UserSignUpDate"],
     queryFn: getUserSignUpDate,
   });
-
-  useEffect(() => {
-    refetchUserSignUpDate();
-  }, [refetchUserSignUpDate]);
 
   if (isUserSignUpPending) {
     return <div>데이터 가져오는 중...</div>;
@@ -77,8 +72,10 @@ function MyDatePicker({ year, month, onDateChange }: DateProps) {
     return <div>에러나는 중...</div>;
   }
 
+  // null 값 없을 수도 있음
   const handleDateChange = (date: Date | null) => {
     if (date) {
+      setSelectedDate(date);
       const selectedYear = date.getFullYear();
       const selectedMonth = date.getMonth() + 1;
       onDateChange({ selectedYear, selectedMonth });
@@ -91,7 +88,6 @@ function MyDatePicker({ year, month, onDateChange }: DateProps) {
       shouldCloseOnSelect
       selected={selectedDate}
       onChange={(date) => {
-        setSelectedDate(date);
         handleDateChange(date);
       }}
       dateFormat="yyyy년 MM월"
