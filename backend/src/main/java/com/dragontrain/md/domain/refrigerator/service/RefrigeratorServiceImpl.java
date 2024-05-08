@@ -122,7 +122,7 @@ public class RefrigeratorServiceImpl
 		Badge badge = badgeRepository.findBadgeByCategoryBigId(categoryBigId)
 			.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.BADGE_NOT_FOUND));
 		if (refrigeratorBadgeRepository.existsByBadgeId(refrigeratorId, badge.getBadgeId())) {
-			throw new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND);
+			return;
 		}
 
 		RefrigeratorBadge refrigeratorBadge = RefrigeratorBadge.create(
