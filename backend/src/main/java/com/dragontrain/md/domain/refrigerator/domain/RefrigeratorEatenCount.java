@@ -15,17 +15,17 @@ public class RefrigeratorEatenCount {
 	@EmbeddedId
 	private RefrigeratorCategoryBigId refrigeratorCategoryBigId;
 
-	@Column(name = "eaten_count", columnDefinition = "tinyint")
+	@Column(name = "eaten_count", columnDefinition = "tinyint default 0", nullable = false)
 	private Integer eatenCount;
 
 	@MapsId("categoryBigId")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "category_big_id", columnDefinition = "tinyint")
+	@JoinColumn(name = "category_big_id", columnDefinition = "tinyint", nullable = false)
 	private CategoryBig categoryBig;
 
 	@MapsId("refrigeratorId")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "refrigerator_id",  columnDefinition = "bigint")
+	@JoinColumn(name = "refrigerator_id",  columnDefinition = "bigint", nullable = false)
 	private Refrigerator refrigerator;
 
 	public static RefrigeratorEatenCount create(Refrigerator refrigerator, CategoryBig categoryBig) {
