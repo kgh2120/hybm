@@ -116,6 +116,7 @@ public class RefrigeratorServiceImpl
 		return attachedBadges.stream().map(AttachedBadgeResponse::create).toList();
 	}
 
+	@Transactional
 	@Override
 	public void gotBadge(Refrigerator refrigerator, CategoryBig categoryBig) {
 		Badge badge = badgeRepository.findBadgeByCategoryBigId(categoryBig.getCategoryBigId())
