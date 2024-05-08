@@ -3,21 +3,56 @@ import styles from "../styles/designPage/DesignPage.module.css";
 import WhiteSection from "../components/common/WhiteSection";
 import Button from "../components/common/Button";
 import leftArrow from "../assets/images/leftArrow.png";
-import { Link } from "react-router-dom";
-import { getDesignList } from "../api/fridgeApi";
-import { useQuery } from "@tanstack/react-query";
+import { Link, useNavigate } from "react-router-dom";
+import { getDesignList, putDesign } from "../api/fridgeApi";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import useFridgeStore from "../stores/useFridgeStore";
+
+interface DesignType {
+  designImgSrc: string;
+  has: boolean;
+  isApplied: boolean;
+  level: number;
+  location: string;
+  name: string;
+  storageDesignId: number;
+}
+
+interface DesignListType {
+  cabinet: DesignType[];
+  cool: DesignType[];
+  ice: DesignType[];
+}
 
 function DesignPage() {
+  const navigate = useNavigate();
+  const { appliedDesign } = useFridgeStore();
   const {
     data: designList,
     isPending: isdesignListPending,
     isError: isdesignListError,
-  } = useQuery({
+  } = useQuery<DesignListType>({
     queryKey: ["designList"],
     queryFn: getDesignList,
   });
 
-  console.log(designList);
+  const { mutate: mutatePutDesign } = useMutation({
+    mutationFn: putDesign,
+    onSuccess: () => {
+      navigate("/");
+    },
+    onError: (error) => {
+      console.error("에러났습니다.", error);
+    },
+  });
+
+  const handlePutDesign = () => {
+    const iceDesignId = appliedDesign.ice.designId;
+    const coolDesignId = appliedDesign.cool.designId;
+    const cabinetDesignId = appliedDesign.cabinet.designId;
+    mutatePutDesign({ iceDesignId, coolDesignId, cabinetDesignId });
+  };
+
   if (isdesignListPending) {
     return <div>designList Loding...</div>;
   }
@@ -30,10 +65,23 @@ function DesignPage() {
         <MainPage />
       </div>
       <section className={styles.white_section}>
-        <WhiteSection title="찬장" />
-        <WhiteSection title="냉장" />
-        <WhiteSection title="냉동" />
-        <Button content="적용" color="red" onClick={() => {}} />
+        <WhiteSection title="찬장" designList={designList.cabinet} />
+        <WhiteSection title="냉장" designList={designList.cool} />
+        <WhiteSection title="냉동" designList={designList.ice} />
+        <div className={styles.button_box}>
+          <Button
+            content="적용"
+            color="red"
+            onClick={handlePutDesign}
+          />
+          <Link to="/">
+            <Button
+              content="홈으로"
+              color="white"
+              onClick={() => {}}
+            />
+          </Link>
+        </div>
       </section>
       <Link to="/badge">
         <img
