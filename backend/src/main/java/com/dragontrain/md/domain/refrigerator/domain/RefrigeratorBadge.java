@@ -46,6 +46,20 @@ public class RefrigeratorBadge {
 	@Column(name = "is_attached", columnDefinition = "boolean default false", nullable = false)
 	private Boolean isAttached;
 
+	public static RefrigeratorBadge create(Refrigerator refrigerator, Badge badge) {
+		return RefrigeratorBadge.builder()
+			.refrigeratorBadgeId(RefrigeratorBadgeId.builder()
+				.badgeId(badge.getBadgeId())
+				.refrigeratorId(refrigerator.getRefrigeratorId())
+				.build())
+			.badge(badge)
+			.refrigerator(refrigerator)
+			.createdAt(LocalDateTime.now())
+			.position(null)
+			.isAttached(false)
+			.build();
+	}
+
 	public void detachBadge() {
 		this.position = null;
 		this.isAttached = false;

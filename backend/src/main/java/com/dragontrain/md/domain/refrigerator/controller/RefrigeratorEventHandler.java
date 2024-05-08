@@ -1,5 +1,6 @@
 package com.dragontrain.md.domain.refrigerator.controller;
 
+import com.dragontrain.md.domain.refrigerator.event.GotBadge;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -25,5 +26,10 @@ public class RefrigeratorEventHandler {
 	@EventListener
 	public void handleUserCreatedEvent(UserDeleted userDeleted) {
 		refrigeratorService.deleteRefrigerator(userDeleted.getUserId());
+	}
+
+	@EventListener
+	public void handleGotBadgeEvent(GotBadge gotBadge) {
+		refrigeratorService.gotBadge(gotBadge.getRefrigerator(), gotBadge.getCategoryBig());
 	}
 }

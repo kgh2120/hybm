@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.dragontrain.md.domain.food.domain.CategoryBig;
 import com.dragontrain.md.domain.refrigerator.controller.request.BadgeRequest;
 import com.dragontrain.md.domain.refrigerator.controller.response.AttachedBadgeResponse;
 import com.dragontrain.md.domain.refrigerator.controller.response.BadgeInfo;
@@ -37,6 +38,7 @@ public class RefrigeratorServiceImpl
 	private final RefrigeratorBadgeRepository refrigeratorBadgeRepository;
 	private final StorageDesignRepository storageDesignRepository;
 	private final StorageStorageDesignRepository storageStorageDesignRepository;
+	private final BadgeRepository badgeRepository;
 	private final TimeService timeService;
 
 	@Transactional
@@ -112,6 +114,14 @@ public class RefrigeratorServiceImpl
 				.getRefrigeratorId()
 		);
 		return attachedBadges.stream().map(AttachedBadgeResponse::create).toList();
+	}
+
+	@Override
+	public void gotBadge(Refrigerator refrigerator, CategoryBig categoryBig) {
+		Badge badge = badgeRepository.findBadgeByCategoryBigId(categoryBig.getCategoryBigId())
+			.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.BADGE_NOT_FOUND));
+		RefrigeratorBadge refrigeratorBadge = RefrigeratorBadge.create(refrigerator, badge);
+		refrigeratorBadgeRepository.save(refrigeratorBadge);
 	}
 
 	@Transactional
