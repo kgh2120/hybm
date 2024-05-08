@@ -3,6 +3,7 @@ package com.dragontrain.md.domain.food.domain;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 import com.dragontrain.md.domain.food.exception.FoodErrorCode;
@@ -120,9 +121,7 @@ public class Food {
 	}
 
 	private static FoodStatus calculateFoodStatus(LocalDate expectedExpirationDate, LocalDate now) {
-		Period period = now.until(expectedExpirationDate);
-
-		int days = period.getDays();
+		long days = ChronoUnit.DAYS.between(now, expectedExpirationDate);
 		if (days <= 0) {
 			return FoodStatus.ROTTEN;
 		} else if (days <= 3) {
@@ -134,9 +133,7 @@ public class Food {
 	}
 
 	public Integer getDDay(LocalDate expectedExpirationDate, LocalDate now) {
-		Period period = expectedExpirationDate.until(now);
-
-		return period.getDays();
+		return (int)ChronoUnit.DAYS.between(expectedExpirationDate, now);
 	}
 
 	public boolean isDeleted() {
