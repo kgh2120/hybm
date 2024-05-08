@@ -33,4 +33,9 @@ public class NoticeRepositoryImpl implements NoticeRepository {
 	public List<Notice> findAllNotDeletedNotice(Long refrigeratorId) {
 		return noticeJpaRepository.findAllByFood_Refrigerator_RefrigeratorIdAndDeletedAtIsNull(refrigeratorId);
 	}
+
+	@Override
+	public void save(Notice notice) {
+		noticeJpaRepository.save(notice);
+	}
 }

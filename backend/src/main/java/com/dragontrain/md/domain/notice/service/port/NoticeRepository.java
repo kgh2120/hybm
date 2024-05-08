@@ -15,4 +15,6 @@ public interface NoticeRepository {
 	Optional<Notice> findByNoticeId(Long noticeId);
 
 	List<Notice> findAllNotDeletedNotice(Long refrigeratorId);
+
+	void save(Notice notice);
 }

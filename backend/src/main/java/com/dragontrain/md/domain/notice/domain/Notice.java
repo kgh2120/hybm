@@ -4,9 +4,10 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 import com.dragontrain.md.domain.food.domain.Food;
-
+import com.dragontrain.md.domain.food.domain.FoodStatus;
 import com.dragontrain.md.domain.notice.exception.NoticeErrorCode;
 import com.dragontrain.md.domain.notice.exception.NoticeException;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -57,15 +58,25 @@ public class Notice {
 	@JoinColumn(name = "food_id")
 	private Food food;
 
-	public boolean isDeleted(){
+	public static Notice create(Food food, String content, LocalDateTime now) {
+		return Notice.builder()
+			.food(food)
+			.isChecked(false)
+			.createdAt(now)
+			.updatedAt(now)
+			.content(content)
+			.type(food.getFoodStatus().equals(FoodStatus.DANGER) ? NoticeType.TO_DANGER : NoticeType.TO_ROTTEN)
+			.build();
+	}
+
+	public boolean isDeleted() {
 		return Objects.nonNull(this.deletedAt);
 	}
 
-	public void delete(LocalDateTime deleteTime){
-		if(isDeleted()){
+	public void delete(LocalDateTime deleteTime) {
+		if (isDeleted()) {
 			throw new NoticeException(NoticeErrorCode.ALREADY_DELETED_NOTICE);
 		}
-
 		this.updatedAt = deleteTime;
 		this.deletedAt = deleteTime;
 	}
