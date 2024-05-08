@@ -60,7 +60,7 @@ function MyDatePicker({ year, month, onDateChange }: MyDatePickerProps) {
     isPending: isUserSignUpPending,
     isError: isUserSignUpDateError,
   } = useQuery({
-    queryKey: ["UserSignUpDate"],
+    queryKey: ["userSignUpDate"],
     queryFn: getUserSignUpDate,
   });
 
