@@ -32,6 +32,7 @@ import java.util.UUID;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -295,6 +296,7 @@ public class FoodServiceImpl implements FoodService {
 
 	}
 
+	@Cacheable("categoryInfo")
 	@Override
 	public List<CategoryInfoResponse> getCategoryInfo() {
 		List<CategoryInfoResponse> categoryInfoResponseList = new ArrayList<>();
