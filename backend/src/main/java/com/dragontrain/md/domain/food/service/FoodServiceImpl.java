@@ -11,7 +11,6 @@ import com.dragontrain.md.domain.food.service.port.CategoryDetailRepository;
 import com.dragontrain.md.domain.food.service.port.FoodRepository;
 import com.dragontrain.md.domain.refrigerator.controller.RefrigeratorEventHandler;
 import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
-import com.dragontrain.md.domain.refrigerator.domain.RefrigeratorCategoryBigId;
 import com.dragontrain.md.domain.refrigerator.domain.RefrigeratorEatenCount;
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import com.dragontrain.md.domain.refrigerator.event.GotBadge;
@@ -298,7 +297,7 @@ public class FoodServiceImpl implements FoodService {
 			StorageTypeId location = StorageTypeId.valueOf(foodInfoRequest.getLocation());
 
 			Food food = Food.create(name, categoryDetail, price, expectedExpirationDate,
-				location, refrigerator, LocalDateTime.now(), true);
+				location, refrigerator, timeService.localDateTimeNow(), true);
 
 			foodRepository.save(food);
 		}
@@ -407,7 +406,7 @@ public class FoodServiceImpl implements FoodService {
 		);
 		refrigeratorEatenCount.eaten();
 		if (refrigeratorEatenCount.getEatenCount().equals(10)) {
-			eventPublisher.publish(new GotBadge(refrigerator, categoryBig));
+			eventPublisher.publish(new GotBadge(refrigerator.getRefrigeratorId(), categoryBig.getCategoryBigId()));
 		}
 		refrigeratorEatenCountRepository.save(refrigeratorEatenCount);
 

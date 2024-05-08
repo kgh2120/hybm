@@ -118,10 +118,19 @@ public class RefrigeratorServiceImpl
 
 	@Transactional
 	@Override
-	public void gotBadge(Refrigerator refrigerator, CategoryBig categoryBig) {
-		Badge badge = badgeRepository.findBadgeByCategoryBigId(categoryBig.getCategoryBigId())
+	public void gotBadge(Long refrigeratorId, Integer categoryBigId) {
+		Badge badge = badgeRepository.findBadgeByCategoryBigId(categoryBigId)
 			.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.BADGE_NOT_FOUND));
-		RefrigeratorBadge refrigeratorBadge = RefrigeratorBadge.create(refrigerator, badge);
+		if (refrigeratorBadgeRepository.existsByBadgeId(refrigeratorId, badge.getBadgeId())) {
+			throw new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND);
+		}
+
+		RefrigeratorBadge refrigeratorBadge = RefrigeratorBadge.create(
+			refrigeratorRepository.findById(refrigeratorId)
+				.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND)),
+			badge,
+			timeService.localDateTimeNow()
+		);
 		refrigeratorBadgeRepository.save(refrigeratorBadge);
 	}
 

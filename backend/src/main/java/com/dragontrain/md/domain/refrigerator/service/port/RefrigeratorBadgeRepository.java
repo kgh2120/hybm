@@ -12,4 +12,5 @@ public interface RefrigeratorBadgeRepository {
 	List<RefrigeratorBadge> findAllAttachedBadges(Long refrigeratorId);
 	Optional<RefrigeratorBadge> findByBadgeId(Long refrigeratorId, Integer badgeId);
 	Optional<RefrigeratorBadge> findByPosition(Long refrigeratorId, Integer position);
+	Boolean existsByBadgeId(Long refrigeratorId, Integer badgeId);
 }

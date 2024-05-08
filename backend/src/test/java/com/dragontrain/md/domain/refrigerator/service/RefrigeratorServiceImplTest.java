@@ -254,7 +254,7 @@ class RefrigeratorServiceImplTest {
 		RefrigeratorBadge refrigeratorBadge = RefrigeratorBadge.builder().build();
 
 		// when
-		refrigeratorService.gotBadge(refrigerator, categoryBig);
+		refrigeratorService.gotBadge(refrigerator.getRefrigeratorId(), categoryBig.getCategoryBigId());
 
 		// then
 		then(refrigeratorBadgeRepository).should().save(any());

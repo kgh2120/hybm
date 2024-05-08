@@ -9,6 +9,6 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public class GotBadge implements Event {
-	private final Refrigerator refrigerator;
-	private final CategoryBig categoryBig;
+	private final Long refrigeratorId;
+	private final Integer categoryBigId;
 }

@@ -40,4 +40,9 @@ public class RefrigeratorBadgeRepositoryImpl implements RefrigeratorBadgeReposit
 	public Optional<RefrigeratorBadge> findByPosition(Long refrigeratorId, Integer position) {
 		return refrigeratorBadgeJpaRepository.findByRefrigeratorBadgeId_RefrigeratorIdAndPosition(refrigeratorId, position);
 	}
+
+	@Override
+	public Boolean existsByBadgeId(Long refrigeratorId, Integer badgeId) {
+		return refrigeratorBadgeJpaRepository.existsByRefrigeratorBadgeId_RefrigeratorIdAndRefrigeratorBadgeId_BadgeId(refrigeratorId, badgeId);
+	}
 }

@@ -17,4 +17,6 @@ public interface RefrigeratorBadgeJpaRepository extends JpaRepository<Refrigerat
 	Optional<RefrigeratorBadge> findByRefrigeratorBadgeId_RefrigeratorIdAndRefrigeratorBadgeId_BadgeId(Long refrigeratorId, Integer badgeId);
 
 	Optional<RefrigeratorBadge> findByRefrigeratorBadgeId_RefrigeratorIdAndPosition(Long refrigeratorId, Integer position);
+
+	Boolean existsByRefrigeratorBadgeId_RefrigeratorIdAndRefrigeratorBadgeId_BadgeId(Long refrigeratorId, Integer badgeId);
 }

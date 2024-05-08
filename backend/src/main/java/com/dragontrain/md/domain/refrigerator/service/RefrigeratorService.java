@@ -16,5 +16,5 @@ public interface RefrigeratorService {
 	BadgeResponse getBadges(User user);
 	void switchBadges(List<BadgeRequest> badgeRequests, User user);
 	List<AttachedBadgeResponse> getAttachedBadges(User user);
-	void gotBadge(Refrigerator refrigerator, CategoryBig categoryBig);
+	void gotBadge(Long refrigeratorId, Integer categoryBigId);
 }
