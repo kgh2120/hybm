@@ -17,7 +17,7 @@ interface HandleDateChangeParams {
   selectedMonth: number;
 }
 
-interface MyDateProps {
+interface MyDatePickerProps {
   year: number;
   month: number;
   onDateChange: ({
@@ -49,7 +49,7 @@ function CustomHeader({
   );
 }
 
-function MyDatePicker({ year, month, onDateChange }: MyDateProps) {
+function MyDatePicker({ year, month, onDateChange }: MyDatePickerProps) {
   const [selectedDate, setSelectedDate] = useState<Date>(
     new Date(year, month - 1)
   );
