@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,15 +19,23 @@ class FoodTest {
 
 		LocalDate now = LocalDate.of(2024, 5, 2);
 		LocalDate yes = LocalDate.of(2024, 5, 1);
-		LocalDate tom = LocalDate.of(2024, 5, 3);
+		LocalDate tom = LocalDate.of(2024, 6, 3);
 		// when
 		Period until = now.until(yes);
 		int days = until.getDays();
 		System.out.println(days);
 
+
 		Period untilT = now.until(tom);
+
 		int daysT = untilT.getDays();
 		System.out.println(daysT);
+
+		long between = ChronoUnit.DAYS.between(now, tom);
+		System.out.println(between);
+
+		long between2 = ChronoUnit.DAYS.between(now, now);
+		System.out.println(between2);
 		// then
 	}
 

@@ -3,6 +3,7 @@ package com.dragontrain.md.domain.food.domain;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 import com.dragontrain.md.domain.food.exception.FoodErrorCode;
@@ -76,6 +77,7 @@ public class Food {
 	@JoinColumn(name = "storage_type")
 	private StorageType storageType;
 
+	@Enumerated(EnumType.STRING)
 	@Column(name = "status", columnDefinition = "varchar(7)", nullable = false)
 	private FoodStatus foodStatus;
 
@@ -119,9 +121,7 @@ public class Food {
 	}
 
 	private static FoodStatus calculateFoodStatus(LocalDate expectedExpirationDate, LocalDate now) {
-		Period period = now.until(expectedExpirationDate);
-
-		int days = period.getDays();
+		long days = ChronoUnit.DAYS.between(now, expectedExpirationDate);
 		if (days <= 0) {
 			return FoodStatus.ROTTEN;
 		} else if (days <= 3) {
@@ -133,9 +133,7 @@ public class Food {
 	}
 
 	public Integer getDDay(LocalDate expectedExpirationDate, LocalDate now) {
-		Period period = expectedExpirationDate.until(now);
-
-		return period.getDays();
+		return (int)ChronoUnit.DAYS.between(expectedExpirationDate, now);
 	}
 
 	public boolean isDeleted() {
@@ -143,10 +141,23 @@ public class Food {
 	}
 
 	public void delete(FoodDeleteType foodDeleteType, LocalDateTime localDateTime) {
-		if (!Objects.isNull(deletedAt))
+		if (!Objects.isNull(deletedAt)) {
 			throw new FoodException(FoodErrorCode.ALREADY_DELETED_FOOD);
+		}
 
 		this.deletedAt = localDateTime;
 		this.foodDeleteType = foodDeleteType;
+	}
+
+	public void changeStatus(FoodStatus foodStatus, LocalDateTime localDateTime){
+		if (!Objects.isNull(deletedAt)) {
+			throw new FoodException(FoodErrorCode.ALREADY_DELETED_FOOD);
+		}
+
+		if (this.foodStatus.equals(foodStatus)) {
+			throw new FoodException(FoodErrorCode.ALREADY_THAT_STATUS);
+		}
+		this.foodStatus = foodStatus;
+		this.updatedAt = localDateTime;
 	}
 }

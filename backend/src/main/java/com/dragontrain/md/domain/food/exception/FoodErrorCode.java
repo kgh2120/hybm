@@ -23,6 +23,7 @@ public enum FoodErrorCode implements ErrorCode {
 	INVALID_ACCESS(HttpStatus.FORBIDDEN, "음식에 접근할 권한이 없습니다"),
 	ALREADY_DELETED_FOOD(HttpStatus.BAD_REQUEST, "이미 삭제된 음식입니다"),
 	DUPLICATED_FOOD_ID(HttpStatus.BAD_REQUEST, "음식 아이디가 중복되었습니다"),
+	ALREADY_THAT_STATUS(HttpStatus.CONFLICT, "음식이 이미 해당 상태입니다")
 
 	;
 

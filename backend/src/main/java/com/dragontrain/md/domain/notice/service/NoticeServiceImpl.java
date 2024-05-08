@@ -1,6 +1,7 @@
 package com.dragontrain.md.domain.notice.service;
 
 import com.dragontrain.md.common.service.TimeService;
+import com.dragontrain.md.domain.food.domain.Food;
 import com.dragontrain.md.domain.notice.controller.response.AllNoticeResponse;
 import com.dragontrain.md.domain.notice.controller.response.HasnewNoticeResponse;
 import com.dragontrain.md.domain.notice.domain.Notice;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -23,6 +25,7 @@ public class NoticeServiceImpl implements NoticeService{
 	private final NoticeRepository noticeRepository;
 	private final RefrigeratorRepository refrigeratorRepository;
 	private final TimeService timeService;
+	private final NoticeContentParser noticeContentParser;
 	@Override
 	public AllNoticeResponse findAllNotDeletedNotice(User user, Pageable pageable) {
 		return AllNoticeResponse.create(
@@ -71,5 +74,12 @@ public class NoticeServiceImpl implements NoticeService{
 		);
 
 		notices.forEach(notice -> notice.delete(timeService.localDateTimeNow()));
+	}
+
+	@Override
+	public void saveNotices(List<Food> foods) {
+		LocalDateTime now = timeService.localDateTimeNow();
+		foods.forEach(food ->
+			noticeRepository.save(Notice.create(food, noticeContentParser.parseNoticeContent(food),now )));
 	}
 }
