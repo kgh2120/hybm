@@ -76,6 +76,7 @@ public class Food {
 	@JoinColumn(name = "storage_type")
 	private StorageType storageType;
 
+	@Enumerated(EnumType.STRING)
 	@Column(name = "status", columnDefinition = "varchar(7)", nullable = false)
 	private FoodStatus foodStatus;
 
