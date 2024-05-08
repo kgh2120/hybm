@@ -17,6 +17,7 @@ import com.dragontrain.md.common.config.exception.GlobalErrorCode;
 import com.dragontrain.md.common.config.exception.TokenException;
 import com.dragontrain.md.common.config.jwt.Token;
 import com.dragontrain.md.common.config.utils.CookieUtils;
+import com.dragontrain.md.domain.user.controller.response.LoginResponse;
 import com.dragontrain.md.domain.user.domain.User;
 import com.dragontrain.md.domain.user.service.Tokens;
 import com.dragontrain.md.domain.user.service.UserService;
@@ -34,12 +35,12 @@ public class UserController {
 	private final UserService userService;
 
 	@GetMapping("/is-login")
-	public ResponseEntity<Void> isLogin() {
-		return ResponseEntity.ok().build();
+	public ResponseEntity<LoginResponse> isLogin(@AuthenticationPrincipal User user) {
+		return ResponseEntity.ok(LoginResponse.of(user.getCreatedAt()));
 	}
 
 	@GetMapping("/login-fail")
-	public ResponseEntity<ErrorResponse> failLogin(HttpServletRequest request) {
+	public ResponseEntity<ErrorResponse> failLogin() {
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
 			.body(ErrorResponse.createErrorResponse(GlobalErrorCode.UNAUTHORIZED_ACCESS, "/"));
 	}
