@@ -1,11 +1,7 @@
 package com.dragontrain.md.domain.refrigerator.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.dragontrain.md.domain.food.domain.CategoryBig;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,4 +29,8 @@ public class Badge {
 
 	@Column(name = "badge_require", columnDefinition = "varchar(255)", nullable = false)
 	private String badgeRequire;
+
+	@JoinColumn(name = "category_big")
+	@OneToOne(fetch = FetchType.LAZY)
+	private CategoryBig categoryBig;
 }

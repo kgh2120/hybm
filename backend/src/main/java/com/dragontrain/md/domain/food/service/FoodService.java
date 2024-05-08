@@ -39,4 +39,6 @@ public interface FoodService {
 	void clearRefrigerator(User user);
 
 	void deleteFood(String deleteType, Long[] foodId, User user);
+
+	void raiseEatenCount(Long userId, Long foodId);
 }

@@ -23,4 +23,9 @@ public class RefrigeratorRepositoryImpl implements RefrigeratorRepository {
 	public Optional<Refrigerator> findByUserId(Long userId) {
 		return refrigeratorJpaRepository.findByUser_UserId(userId);
 	}
+
+	@Override
+	public Optional<Refrigerator> findById(Long refrigeratorId) {
+		return refrigeratorJpaRepository.findById(refrigeratorId);
+	}
 }

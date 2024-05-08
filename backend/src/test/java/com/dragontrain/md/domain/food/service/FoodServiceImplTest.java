@@ -8,6 +8,11 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.stream.LongStream;
 
+import com.dragontrain.md.common.service.EventPublisher;
+import com.dragontrain.md.domain.food.event.EatenCountRaised;
+import com.dragontrain.md.domain.food.service.port.CategoryBigRepository;
+import com.dragontrain.md.domain.refrigerator.domain.RefrigeratorEatenCount;
+import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorEatenCountRepository;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,6 +49,14 @@ class FoodServiceImplTest {
 	FoodRepository foodRepository;
 	@Mock
 	CategoryDetailRepository categoryDetailRepository;
+	//
+	@Mock
+	CategoryBigRepository categoryBigRepository;
+	@Mock
+	RefrigeratorEatenCountRepository refrigeratorEatenCountRepository;
+	@Mock
+	EventPublisher eventPublisher;
+	//
 	@Mock
 	BarcodeRepository barcodeRepository;
 	@Mock
@@ -557,4 +570,93 @@ class FoodServiceImplTest {
 			.isInstanceOf(FoodException.class)
 			.hasFieldOrPropertyWithValue("errorCode", FoodErrorCode.INVALID_ACCESS);
 	}
+
+	@DisplayName("음식 먹음 후 카운트 이벤트 보내는지 테스트 성공")
+	@Test
+	void foodDeletedAndPublishEventSuccessTest() throws Exception {
+		//given
+		final String deleteType = "eaten";
+		Long[] foodIds = LongStream.range(1, 5).boxed().toArray(Long[]::new);
+		User givenUser = User.builder()
+			.userId(1L)
+			.build();
+
+		Refrigerator givenRefrigerator = Refrigerator.builder()
+			.build();
+
+		CategoryBig givenCategoryBig = CategoryBig.builder().build();
+
+		CategoryDetail givenCategoryDetail = CategoryDetail.builder()
+			.categoryBig(givenCategoryBig)
+			.build();
+
+		given(timeService.localDateTimeNow())
+			.willReturn(LocalDateTime.of(2024, 5, 4, 13, 25));
+
+		given(refrigeratorRepository.findByUserId(anyLong()))
+			.willReturn(Optional.of(givenRefrigerator));
+
+		for (long foodId : foodIds) {
+			given(foodRepository.findById(foodId))
+				.willReturn(Optional.of(Food.builder()
+					.foodId(foodId)
+					.categoryDetail(givenCategoryDetail)
+					.refrigerator(givenRefrigerator)
+					.build()));
+
+		}
+		//when
+		foodService.deleteFood(deleteType, foodIds, givenUser);
+		//then
+		then(eventPublisher).should(times(4)).publish(any());
+	}
+
+	@DisplayName("먹음 카운트 증가 성공 및 이벤트 전송 테스트")
+	@Test
+	void EatenCountRaisedEventSuccessTest() throws Exception {
+		//given
+		User givenUser = User.builder()
+			.userId(1L)
+			.build();
+
+		Refrigerator givenRefrigerator = Refrigerator.builder()
+			.build();
+
+		CategoryBig givenCategoryBig = CategoryBig.builder()
+			.categoryBigId(1)
+			.build();
+
+		CategoryDetail givenCategoryDetail = CategoryDetail.builder()
+			.categoryBig(givenCategoryBig)
+			.build();
+
+		Food givenFood = Food.builder()
+			.foodId(1L)
+			.categoryDetail(givenCategoryDetail)
+			.refrigerator(givenRefrigerator).build();
+
+		given(refrigeratorRepository.findByUserId(anyLong()))
+			.willReturn(Optional.of(givenRefrigerator));
+
+		given(foodRepository.findById(anyLong()))
+			.willReturn(Optional.of(givenFood));
+
+		RefrigeratorEatenCount givenRefrigeratorEatenCount = RefrigeratorEatenCount.builder()
+			.eatenCount(9).build();
+
+		given(refrigeratorEatenCountRepository.findByRefrigeratorIdAndCategoryBigId(
+			givenRefrigerator.getRefrigeratorId(),
+			givenCategoryBig.getCategoryBigId()))
+			.willReturn(Optional.of(givenRefrigeratorEatenCount));
+
+		//when
+		foodService.raiseEatenCount(givenUser.getUserId(), givenFood.getFoodId());
+
+		//then
+		assertThat(givenRefrigeratorEatenCount.getEatenCount()).isEqualTo(10);
+		then(eventPublisher).should(times(1)).publish(any());
+
+	}
+
+
 }

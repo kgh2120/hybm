@@ -1,14 +1,20 @@
 package com.dragontrain.md.domain.food.service;
 
+import com.dragontrain.md.common.service.EventPublisher;
 import com.dragontrain.md.domain.food.controller.request.FoodInfoRequest;
 import com.dragontrain.md.domain.food.domain.CategoryBig;
 import com.dragontrain.md.domain.food.domain.Food;
+import com.dragontrain.md.domain.food.event.EatenCountRaised;
 import com.dragontrain.md.domain.food.service.port.BarcodeRepository;
 import com.dragontrain.md.domain.food.service.port.CategoryBigRepository;
 import com.dragontrain.md.domain.food.service.port.CategoryDetailRepository;
 import com.dragontrain.md.domain.food.service.port.FoodRepository;
+import com.dragontrain.md.domain.refrigerator.controller.RefrigeratorEventHandler;
 import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
+import com.dragontrain.md.domain.refrigerator.domain.RefrigeratorEatenCount;
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
+import com.dragontrain.md.domain.refrigerator.event.GotBadge;
+import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorEatenCountRepository;
 import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
 import com.dragontrain.md.domain.user.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -67,8 +73,11 @@ public class FoodServiceImpl implements FoodService {
 	private final CategoryDetailRepository categoryDetailRepository;
 	private final CategoryBigRepository categoryBigRepository;
 	private final BarcodeRepository barcodeRepository;
+	private final RefrigeratorEatenCountRepository refrigeratorEatenCountRepository;
 	private final CrawlService crawlService;
 	private final TimeService timeService;
+	private final RefrigeratorEventHandler refrigeratorEventHandler;
+	private final EventPublisher eventPublisher;
 
 	// OCR General 형식의 SECRET key, API URL
 	@Value("${secret.ocr.general.service-key}")
@@ -289,7 +298,7 @@ public class FoodServiceImpl implements FoodService {
 			StorageTypeId location = StorageTypeId.valueOf(foodInfoRequest.getLocation());
 
 			Food food = Food.create(name, categoryDetail, price, expectedExpirationDate,
-				location, refrigerator, LocalDateTime.now(), true);
+				location, refrigerator, timeService.localDateTimeNow(), true);
 
 			foodRepository.save(food);
 		}
@@ -355,6 +364,8 @@ public class FoodServiceImpl implements FoodService {
 	@Override
 	public void deleteFood(String deleteType, Long[] foodIds, User user) {
 
+		Long userId = user.getUserId();
+
 		// ids 중복 있는지 검증
 
 		validateDuplicateFoodIds(foodIds);
@@ -371,9 +382,35 @@ public class FoodServiceImpl implements FoodService {
 					.orElseThrow(() -> new FoodException(FoodErrorCode.FOOD_NOT_FOUND));
 				if (!refrigerator.isMyFood(food))
 					throw new FoodException(FoodErrorCode.INVALID_ACCESS);
+				if (foodDeleteType.equals(FoodDeleteType.EATEN)) {
+					eventPublisher.publish(new EatenCountRaised(userId, foodId));
+				}
 				food.delete(foodDeleteType, deletedTime);
 			}
 		);
+
+	}
+
+	@Transactional
+	@Override
+	public void raiseEatenCount(Long userId, Long foodId) {
+		Refrigerator refrigerator = refrigeratorRepository.findByUserId(userId)
+			.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND));
+
+		CategoryBig categoryBig = foodRepository.findById(foodId)
+			.orElseThrow(() -> new FoodException(FoodErrorCode.FOOD_NOT_FOUND))
+			.getCategoryDetail().getCategoryBig();
+
+		RefrigeratorEatenCount refrigeratorEatenCount = refrigeratorEatenCountRepository.findByRefrigeratorIdAndCategoryBigId(
+			refrigerator.getRefrigeratorId(), categoryBig.getCategoryBigId()
+		).orElseGet(
+			() -> RefrigeratorEatenCount.create(refrigerator, categoryBig)
+		);
+		refrigeratorEatenCount.eaten();
+		if (refrigeratorEatenCount.getEatenCount().equals(10)) {
+			eventPublisher.publish(new GotBadge(refrigerator.getRefrigeratorId(), categoryBig.getCategoryBigId()));
+		}
+		refrigeratorEatenCountRepository.save(refrigeratorEatenCount);
 
 	}
 
