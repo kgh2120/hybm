@@ -30,6 +30,6 @@ const getLevelAndExp = async () => {
   } catch (e) {
     console.log(e);
   }
-}
+};
 
-export { getLoginStatus, getUserSignUpDate, getLevelAndExp }
+export { getLoginStatus, getUserSignUpDate, getLevelAndExp };

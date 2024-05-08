@@ -298,6 +298,7 @@ function ReportPage() {
                             name={food.name}
                             content=""
                             option="report"
+                            imgSrc=""
                           />
                         )
                       )}
