@@ -1,10 +1,10 @@
 import styles from "../../styles/mainPage/LevelUpModal.module.css";
 
-interface propsType {
+interface LevelUpItemProps {
     content: string;
     imgSrc: string;
 }
-function LevelUpItem({ content, imgSrc }: propsType) {
+function LevelUpItem({ content, imgSrc }: LevelUpItemProps) {
   return (
     <div className={styles.item}>
             <div className={styles.item_img_box}>

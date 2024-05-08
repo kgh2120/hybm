@@ -1,12 +1,13 @@
-import styles from '../../styles/common/Button.module.css'
+import styles from "../../styles/common/Button.module.css";
 
-interface propsType {
+interface ButtonProps {
   content: string;
   color: string;
+  onClick: () => void;
 }
-function Button({content, color}: propsType) {
+function Button({content, color, onClick}: ButtonProps) {
   return (
-    <button className={color === 'red' ? styles.red_button : styles.white_button}>{content}</button>
+    <button className={color === 'red' ? styles.red_button : styles.white_button} onClick={onClick}>{content}</button>
   )
 }
 

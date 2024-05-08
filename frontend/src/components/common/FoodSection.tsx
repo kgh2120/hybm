@@ -1,19 +1,8 @@
-// import { ChangeEvent } from "react";
 import styles from "../../styles/common/FoodSection.module.css";
-// import { formatPrice } from "../../utils/formatting";
+import CategoryBox from './CategoryBox';
 import ExpiryDateSelector from "./ExpiryDateSelector";
-import meat from "../../assets/meat.png";
-import search from "../../assets/search.png";
-
-// interface propsType {
-//   name: string | number | boolean | ((e: React.ChangeEvent<HTMLInputElement>) => void)
-//   changeName: string | number | boolean | ((e: React.ChangeEvent<HTMLInputElement>) => void)
-//   price: string | number | boolean | ((e: React.ChangeEvent<HTMLInputElement>) => void)
-//   setPrice: React.Dispatch<React.SetStateAction<number | string>>;
-// }
 
 function FoodSection() {
-  
   // const handleChangePrice = (e: ChangeEvent<HTMLInputElement>) => {
   //   const updatedPrice = e.target.value.replace(/[^0-9]/g, ""); // 숫자 이외의 문자 제거
   //   setPrice(updatedPrice);
@@ -27,19 +16,7 @@ function FoodSection() {
       </article>
       <article className={styles.food_option_box}>
         <span>분류</span>
-        <div className={styles.category_box}>
-          <img className={styles.category_img} src={meat} alt="" />
-          <input
-            type="text"
-            // value={formatPrice(price)}
-            // onChange={handleChangePrice}
-          />
-          <img
-            className={styles.category_search_img}
-            src={search}
-            alt=""
-          />
-        </div>
+        <CategoryBox />
       </article>
       <article className={styles.food_option_box}>
         <span>소비기한</span>

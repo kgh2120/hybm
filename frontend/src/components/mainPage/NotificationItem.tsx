@@ -1,24 +1,84 @@
 import styles from "../../styles/mainPage/NotificationModal.module.css";
-import meat from "../../assets/meat.png";
+import { formatDate } from "../../utils/formatting";
+import { deleteNotification } from "../../api/notificationApi";
+import { useMutation } from "@tanstack/react-query";
+import { deleteFood } from "../../api/foodApi";
 
-function NotificationItem() {
+interface NotificationItemProps {
+  foodId: number;
+  noticeId: number;
+  content: string;
+  isChecked: boolean;
+  foodImgSrc: string;
+  createdAt: string;
+}
+
+function NotificationItem({
+  foodId,
+  noticeId,
+  content,
+  isChecked,
+  foodImgSrc,
+  createdAt,
+}: NotificationItemProps) {
+  const formattedDate = formatDate(createdAt);
+  console.log(isChecked);
+  const { mutate: mutateDeleteNotification } = useMutation({
+    mutationFn: deleteNotification,
+    onSuccess: () => {
+      // navigate('/group');
+      // closeRewardModal()
+    },
+    onError: (error) => {
+      console.error("에러났습니다.", error);
+    },
+  });
+
+  const { mutate: mutateDeleteFood } = useMutation({
+    mutationFn: deleteFood,
+    onSuccess: () => {
+      // navigate('/group');
+      // closeRewardModal()
+    },
+    onError: (error) => {
+      console.error("에러났습니다.", error);
+    },
+  });
+
+  const handleDeleteNotification = () => {
+    mutateDeleteNotification(noticeId);
+  };
+
+  const handleDeleteFood = (option: string) => {
+    mutateDeleteFood({ foodIdList: [foodId], option });
+  };
+
   return (
     <div className={styles.notification_item}>
       <div className={styles.main_section}>
         <div className={styles.image_section}>
-          <img src={meat} alt="" />
+          <img src={foodImgSrc} alt="음식 이미지" />
         </div>
         <div className={styles.content_section}>
-          <span>'냉장고'에서 '닭다리'가 3일 남았습니다.</span>
+          <span>{content}</span>
           <div>
-            <span>2024.04.22</span>
+            <span>{formattedDate}</span>
             <div>
-              <button>이미 먹었어요</button>
-              <button>버렸어요</button>
+              <button onClick={() => handleDeleteFood("eaten")}>
+                이미 먹었어요
+              </button>
+              <button onClick={() => handleDeleteFood("thrown")}>
+                버렸어요
+              </button>
             </div>
           </div>
         </div>
-        <div className={styles.button_section}>x</div>
+        <div
+          className={styles.button_section}
+          onClick={handleDeleteNotification}
+        >
+          x
+        </div>
       </div>
     </div>
   );

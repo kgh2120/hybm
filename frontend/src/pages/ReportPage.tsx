@@ -11,7 +11,7 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 import styles from "../styles/reportPage/ReportPage.module.css";
 import ItemBox from "../components/common/ItemBox";
 import MyDatePicker from "../components/reportPage/Calendar";
-import HomeBtn from "../assets/home.png";
+import HomeBtn from "../assets/images/home.png";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -143,22 +143,61 @@ function ReportPage() {
               <div>
                 <p>먹은 것 Top 5</p>
                 <div className={styles.item_boxes}>
-                  <ItemBox name="기본찬장" content="" option="report" />
-                  <ItemBox name="기본찬장" content="" option="report" />
-                  <ItemBox name="기본찬장" content="" option="report" />
-                  <ItemBox name="기본찬장" content="" option="report" />
-                  <ItemBox name="기본찬장" content="" option="report" />
-              
+                  <ItemBox
+                    name="기본찬장"
+                    content=""
+                    option="report"
+                  />
+                  <ItemBox
+                    name="기본찬장"
+                    content=""
+                    option="report"
+                  />
+                  <ItemBox
+                    name="기본찬장"
+                    content=""
+                    option="report"
+                  />
+                  <ItemBox
+                    name="기본찬장"
+                    content=""
+                    option="report"
+                  />
+                  <ItemBox
+                    name="기본찬장"
+                    content=""
+                    option="report"
+                  />
                 </div>
               </div>
               <div>
                 <p>버린 것 Top 5</p>
                 <div className={styles.item_boxes}>
-                <ItemBox name="기본찬장" content="" option="report" />
-                  <ItemBox name="기본찬장" content="" option="report" />
-                  <ItemBox name="기본찬장" content="" option="report" />
-                  <ItemBox name="기본찬장" content="" option="report" />
-                  <ItemBox name="기본찬장" content="" option="report" />
+                  <ItemBox
+                    name="기본찬장"
+                    content=""
+                    option="report"
+                  />
+                  <ItemBox
+                    name="기본찬장"
+                    content=""
+                    option="report"
+                  />
+                  <ItemBox
+                    name="기본찬장"
+                    content=""
+                    option="report"
+                  />
+                  <ItemBox
+                    name="기본찬장"
+                    content=""
+                    option="report"
+                  />
+                  <ItemBox
+                    name="기본찬장"
+                    content=""
+                    option="report"
+                  />
                 </div>
               </div>
             </div>

@@ -1,4 +1,4 @@
-import addBtn from "../../assets/addBtn.png";
+import addBtn from "../../assets/images/addBtn.png";
 import styles from "../../styles/common/EmptyBox.module.css";
 
 function EmptyBox() {

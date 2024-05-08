@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styles from "../styles/recipePage/RecipePage.module.css";
-import HomeBtn from "../assets/home.png";
+import HomeBtn from "../assets/images/home.png";
 import ItemBox from "../components/common/ItemBox";
 import EmptyBox from "../components/common/EmptyBox";
 import RecipeBox from "../components/common/RecipeBox";

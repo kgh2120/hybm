@@ -1,6 +1,6 @@
 import styles from "../../styles/mainPage/LevelUpModal.module.css";
-import meat from '../../assets/meat.png'
-import lock from '../../assets/lock.png'
+import meat from "../../assets/images/meat.png";
+import lock from "../../assets/images/lock.png";
 // import LevelUpItem from "./LevelUpItem";
 
 function LevelUpModal() {

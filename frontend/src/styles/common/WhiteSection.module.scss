@@ -16,7 +16,7 @@
       font-size: $font-lg;
       color: $color-text;
       font-weight: 100;
-      text-shadow: $font-shadow;
+      @include font-shadow(white);
     }
   }
   .main_section {
