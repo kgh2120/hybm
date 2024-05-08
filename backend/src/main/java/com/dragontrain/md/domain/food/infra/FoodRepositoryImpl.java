@@ -53,7 +53,7 @@ public class FoodRepositoryImpl implements FoodRepository {
 	public List<Food> findFoodByDDay(int dDay, LocalDate now) {
 		return jpaQueryFactory.selectFrom(food)
 			.where(food.expectedExpirationDate.eq(now.plusDays(dDay))
-				.and(food.deletedAt.isNotNull()))
+				.and(food.deletedAt.isNull()))
 			.fetch();
 	}
 }
