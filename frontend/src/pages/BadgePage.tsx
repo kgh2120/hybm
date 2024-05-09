@@ -1,11 +1,11 @@
 import MainPage from "./MainPage";
 import styles from "../styles/designPage/DesignPage.module.css";
-// import WhiteSection from "../components/common/WhiteSection";
 import Button from "../components/common/Button";
 import rightArrow from "../assets/images/rightArrow.png";
 import { Link } from "react-router-dom";
 import { getBadgeList } from "../api/badgeApi";
 import { useQuery } from "@tanstack/react-query";
+import BadgeWhiteSection from '../components/badgePage/BadgeWhiteSection';
 
 interface BadgeType {
   badgeId: number;
@@ -31,7 +31,6 @@ function BadgePage() {
     queryFn: getBadgeList,
   });
 
-  console.log(badgeList)
   if (isBadgeListPending) {
     return <div>Loading...</div>;
   }
@@ -44,8 +43,8 @@ function BadgePage() {
         <MainPage />
       </div>
       <section className={styles.white_section}>
-        {/* <WhiteSection title="보유 뱃지" />
-        <WhiteSection title="미보유 뱃지" /> */}
+        <BadgeWhiteSection title="보유 뱃지" badgeList={badgeList.has} option="has"/>
+        <BadgeWhiteSection title="미보유 뱃지" badgeList={badgeList.hasnot} option="hasnot"/>
         <div className={styles.button_box}>
           <Button content="적용" color="red" onClick={() => {}} />
           <Link to="/">
@@ -58,7 +57,7 @@ function BadgePage() {
         </div>
       </section>
       <Link to="/design">
-        <img className={styles.left_arrow} src={rightArrow} alt="" />
+        <img className={styles.left_arrow} src={rightArrow} alt="오른쪽화살표 이미지" />
       </Link>
     </div>
   );

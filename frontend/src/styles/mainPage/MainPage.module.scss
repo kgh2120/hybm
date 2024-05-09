@@ -1,4 +1,11 @@
 @import "../common/common";
+@mixin badge($left, $bottom) {
+  width: 40px;
+  position: absolute;
+  left: $left;
+  bottom: $bottom;
+  z-index: 50;
+}
 
 .wrapper {
   position: relative;
@@ -65,52 +72,32 @@
   .recipe {
     position: absolute;
     z-index: 6;
-    // opacity: 0;
     bottom: 290px;
     left: 105px;
     width: 60px;
   }
-  // .cabinet_btn {
-  //   position: absolute;
-  //   // top: 40px;
-  //   top: 35px;
-  //   left: -1px;
-  //   width: 170px;
-  //   height: 180px;
-  //   border-radius: 50%;
-  //   cursor: pointer;
-  //   // width: 170px;
-  //   z-index: 10;
-  //   background-color: red;
-  //   opacity: 0;
-  // }
-
-  //   .set {
-  //     height: 720px;
-  //     // display: flex;
-  //     // flex-direction: column;
-  //     position: relative;
-  //     .cabinet {
-  //     //   position: absolute;
-  //     //   top: 10px;
-  //     //   left: 0px;
-  //       width: 30%;
-  //     }
-  //     .cool {
-  //       position: absolute;
-  //       top: 150px;
-  //       left: 0px;
-  //       width: 40%;
-  //     }
-  //     .ice {
-  //       position: absolute;
-  //       top: 450px;
-  //       left: 0px;
-  //       width: 40%;
-  //     }
-  //   }
-  //   img {
-  //     width: 100px;
-  //     height: 200px;
-  //   }
+  .badge1 {
+    @include badge(60px, 400px);
+  }
+  .badge2 {
+    @include badge(120px, 450px);
+  }
+  .badge3 {
+    @include badge(0px, 350px);
+  }
+  .badge4 {
+    @include badge(60px, 300px);
+  }
+  .badge5 {
+    @include badge(60px, 180px);
+  }
+  .badge6 {
+    @include badge(120px, 200px);
+  }
+  .badge7 {
+    @include badge(60px, 70px);
+  }
+  .badge8 {
+    @include badge(130px, 100px);
+  }
 }

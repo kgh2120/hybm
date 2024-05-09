@@ -65,4 +65,60 @@
   bottom: 290px;
   left: 105px;
   width: 60px;
+}
+.wrapper .badge1 {
+  width: 40px;
+  position: absolute;
+  left: 60px;
+  bottom: 400px;
+  z-index: 50;
+}
+.wrapper .badge2 {
+  width: 40px;
+  position: absolute;
+  left: 120px;
+  bottom: 450px;
+  z-index: 50;
+}
+.wrapper .badge3 {
+  width: 40px;
+  position: absolute;
+  left: 0px;
+  bottom: 350px;
+  z-index: 50;
+}
+.wrapper .badge4 {
+  width: 40px;
+  position: absolute;
+  left: 60px;
+  bottom: 300px;
+  z-index: 50;
+}
+.wrapper .badge5 {
+  width: 40px;
+  position: absolute;
+  left: 60px;
+  bottom: 180px;
+  z-index: 50;
+}
+.wrapper .badge6 {
+  width: 40px;
+  position: absolute;
+  left: 120px;
+  bottom: 200px;
+  z-index: 50;
+}
+.wrapper .badge7 {
+  width: 40px;
+  position: absolute;
+  left: 60px;
+  bottom: 70px;
+  z-index: 50;
+}
+.wrapper .badge8 {
+  width: 40px;
+  position: absolute;
+  left: 130px;
+  bottom: 100px;
+  z-index: 50;
 }/*# sourceMappingURL=MainPage.module.css.map */
