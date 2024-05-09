@@ -305,7 +305,7 @@ public class FoodServiceImpl implements FoodService {
 
 	}
 
-	@Cacheable("categoryInfo")
+	@Cacheable("category")
 	@Override
 	public List<CategoryInfoResponse> getCategoryInfo() {
 		List<CategoryInfoResponse> categoryInfoResponseList = new ArrayList<>();
