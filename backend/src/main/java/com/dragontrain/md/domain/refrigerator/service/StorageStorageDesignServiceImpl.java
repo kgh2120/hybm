@@ -7,6 +7,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dragontrain.md.domain.refrigerator.controller.request.ModifyAppliedStorageDesignRequest;
 import com.dragontrain.md.domain.refrigerator.controller.response.AppliedStorageDesignsResponse;
@@ -24,7 +25,9 @@ import com.dragontrain.md.domain.user.domain.User;
 
 import lombok.RequiredArgsConstructor;
 
+
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 @Service
 public class StorageStorageDesignServiceImpl implements StorageStorageDesignService {
 
@@ -53,6 +56,7 @@ public class StorageStorageDesignServiceImpl implements StorageStorageDesignServ
 		);
 	}
 
+	@Transactional
 	@Override
 	public void modifyAppliedStorageDesign(User user, ModifyAppliedStorageDesignRequest request) {
 		// request로 온 position이 이상한값이면 에러
