@@ -63,7 +63,8 @@ public class FoodRepositoryImpl implements FoodRepository {
 		return jpaQueryFactory.selectFrom(food)
 			.where(food.foodStatus.eq(FoodStatus.DANGER)
 				.and(food.refrigerator.refrigeratorId.eq(refrigeratorId))
-				.and(food.storageType.storageType.eq(storageTypeId)))
+				.and(food.storageType.storageType.eq(storageTypeId))
+				.and(food.deletedAt.isNull()))
 			.orderBy(food.expectedExpirationDate.asc())
 			.fetch();
 	}
