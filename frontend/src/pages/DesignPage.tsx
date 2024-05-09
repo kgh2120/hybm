@@ -59,6 +59,7 @@ function DesignPage() {
   if (isdesignListError) {
     return <div>designList error</div>;
   }
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.background}>

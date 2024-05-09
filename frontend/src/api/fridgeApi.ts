@@ -16,8 +16,9 @@ const getCurrentDesign = async () => {
   try {
     const res = await instance.get(
       "/api/refrigerators/designs/using"
-    );
-    return res.data;
+      );
+      console.log("적용한디자인:",res)
+      return res.data;
   } catch (e) {
     console.log(e);
   }
@@ -34,12 +35,14 @@ const putDesign = async ({
   coolDesignId,
   cabinetDesignId,
 }: PutDesignProps) => {
-  const data = [
-    { position: "ice", designId: iceDesignId },
-    { position: "cool", designId: coolDesignId },
-    { position: "cabinet", designId: cabinetDesignId },
-  ];
+  const data = {request: [
+    { position: "ICE", designId: iceDesignId },
+    { position: "COOL", designId: coolDesignId },
+    { position: "CABINET", designId: cabinetDesignId },
+  ]
+};
   try {
+    console.log("변경할 데이터:", data)
     const res = await instance.put("/api/refrigerators/designs", data);
     return res;
   } catch (e) {

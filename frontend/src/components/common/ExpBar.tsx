@@ -53,7 +53,7 @@ function ExpBar() {
   }
 
   const currentExpPercent =
-    (levelAndExp.currentExp / levelAndExp.maxExp) * 100;
+    Math.round((levelAndExp.currentExp / levelAndExp.maxExp) * 100);
 
   return (
     <div className={styles.bar_box}>
