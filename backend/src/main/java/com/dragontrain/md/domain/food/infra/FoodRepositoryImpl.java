@@ -7,6 +7,7 @@ import java.time.temporal.TemporalAmount;
 import java.util.List;
 import java.util.Optional;
 
+import com.dragontrain.md.domain.food.domain.FoodStatus;
 import org.springframework.stereotype.Repository;
 
 import com.dragontrain.md.domain.food.domain.Food;
@@ -54,6 +55,16 @@ public class FoodRepositoryImpl implements FoodRepository {
 		return jpaQueryFactory.selectFrom(food)
 			.where(food.expectedExpirationDate.eq(now.plusDays(dDay))
 				.and(food.deletedAt.isNull()))
+			.fetch();
+	}
+
+	@Override
+	public List<Food> findDangerFoodByRefrigeratorIdAndStorage(Long refrigeratorId, StorageTypeId storageTypeId) {
+		return jpaQueryFactory.selectFrom(food)
+			.where(food.foodStatus.eq(FoodStatus.DANGER)
+				.and(food.refrigerator.refrigeratorId.eq(refrigeratorId))
+				.and(food.storageType.storageType.eq(storageTypeId)))
+			.orderBy(food.expectedExpirationDate.asc())
 			.fetch();
 	}
 }
