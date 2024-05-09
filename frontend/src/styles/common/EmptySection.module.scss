@@ -16,17 +16,17 @@
     }
   }
 
-  .content {
+  .content_box {
     @include center;
     flex-direction: column;
     gap: 4px;
 
-    .context1 {
+    .content1 {
       font-size: 15px;
       color: $color-text;
     }
 
-    .context2 {
+    .content2 {
       font-size: 11px;
       color: $color-line;
     }
