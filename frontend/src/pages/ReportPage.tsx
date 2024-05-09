@@ -15,6 +15,7 @@ import HomeBtn from "../assets/images/home.png";
 import { getReportData } from "../api/reportApi";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
+import EmptySection from "../components/common/EmptySection";
 
 interface FoodType {
   bigCategory: string;
@@ -225,7 +226,10 @@ function ReportPage() {
           <div className={styles.sub_title}>내 지출 통계</div>
           {spendByBigCategory.length === 0 ? (
             <div>
-              여기 비어있으면 텅포넌트 들어와야대!!!!!!!!!!!!!
+              <EmptySection
+                content1="아직 통계를 낼 데이터가 없어요"
+                content2="냉장고에 식품을 등록하면 이 곳에서 볼 수 있습니다"
+              />
             </div>
           ) : (
             <div className={styles.sub_content}>
@@ -267,7 +271,10 @@ function ReportPage() {
           <div className={styles.sub_title}>내 식품 통계</div>
           {eatenCount === 0 && thrownCount === 0 ? (
             <div>
-              데이터가 없을 때 텅포넌트 들어올 곳!!!!!!!!!!!!!
+              <EmptySection
+                content1="아직 통계를 낼 데이터가 없어요"
+                content2="먹거나 버린 음식이 있으면 이 곳에서 볼 수 있습니다"
+              />
             </div>
           ) : (
             <div className={styles.sub_content}>
