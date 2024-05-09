@@ -9,7 +9,9 @@ import com.dragontrain.md.domain.food.service.port.CategoryBigRepository;
 import com.dragontrain.md.domain.statistics.service.dto.BigCategoryPriceInfo;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Repository
 public class CategoryBigRepositoryImpl implements CategoryBigRepository {
@@ -18,7 +20,6 @@ public class CategoryBigRepositoryImpl implements CategoryBigRepository {
 
 	@Override
 	public List<CategoryBig> findAll() {
-
 		return categoryBigJpaRepository.findAll();
 	}
 
