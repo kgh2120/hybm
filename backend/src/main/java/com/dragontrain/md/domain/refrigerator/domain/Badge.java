@@ -30,7 +30,7 @@ public class Badge {
 	@Column(name = "badge_require", columnDefinition = "varchar(255)", nullable = false)
 	private String badgeRequire;
 
-	@JoinColumn(name = "category_big")
+	@JoinColumn(name = "category_big_id")
 	@OneToOne(fetch = FetchType.LAZY)
 	private CategoryBig categoryBig;
 }
