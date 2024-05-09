@@ -4,7 +4,6 @@ import instance from "./axios";
 const getDesignList = async () => {
   try {
     const res = await instance.get("/api/refrigerators/designs");
-    console.log(res);
     return res.data;
   } catch (e) {
     console.log(e);
@@ -17,7 +16,6 @@ const getCurrentDesign = async () => {
     const res = await instance.get(
       "/api/refrigerators/designs/using"
       );
-      console.log("적용한디자인:",res)
       return res.data;
   } catch (e) {
     console.log(e);
@@ -42,7 +40,6 @@ const putDesign = async ({
   ]
 };
   try {
-    console.log("변경할 데이터:", data)
     const res = await instance.put("/api/refrigerators/designs", data);
     return res;
   } catch (e) {

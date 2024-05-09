@@ -5,7 +5,6 @@ import DesignItemBox from "./DesignItemBox";
 interface DesignType {
   designImgSrc: string;
   has: boolean;
-  isApplied: boolean;
   level: number;
   location: string;
   name: string;
@@ -35,7 +34,6 @@ function WhiteSection({ title, designList }: WhiteSectionProps) {
               content=""
               option={design.has ? "active" : "inactive"}
               imgSrc={design.designImgSrc}
-              isApplied={design.isApplied}
               level={design.level}
               location={design.location}
             />

@@ -4,7 +4,6 @@ import instance from "./axios";
 const getLoginStatus = async () => {
   try {
     const res = await instance.get("/api/users/is-login");
-    console.log(res);
     return res.status;
   } catch (e) {
     console.log(e);
@@ -15,7 +14,6 @@ const getLoginStatus = async () => {
 const getUserSignUpDate = async () => {
   try {
     const res = await instance.get("/api/users/is-login");
-    console.log(res);
     return res.data;
   } catch (e) {
     console.log(e);
