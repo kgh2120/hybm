@@ -15,6 +15,12 @@
   flex-direction: column;
   gap: 5px;
 }
+.wrapper .white_section .button_box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
 
 .left_arrow {
   width: 25px;

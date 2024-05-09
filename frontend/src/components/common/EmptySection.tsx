@@ -22,3 +22,4 @@ function EmptySection({ content1, content2 }: EmptySectionType) {
 }
 
 export default EmptySection;
+

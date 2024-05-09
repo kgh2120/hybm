@@ -55,23 +55,25 @@
 }
 .bar_box .bar_sub_box .exp_bar_box .exp_bar_sub_box .current_exp {
   width: 100%;
-  height: 5px;
-  top: 2px;
+  height: 8px;
+  top: -5px;
   position: absolute;
   left: 0;
   background-color: #fda2cd;
 }
 .bar_box .bar_sub_box .exp_bar_box .exp_bar_sub_box .exp_bar {
   width: 100%;
-  height: 8px;
-  top: 0;
+  height: 11px;
+  top: -7px;
   position: absolute;
   left: 0;
+  z-index: 1;
 }
 .bar_box .bar_sub_box .exp_bar_box .exp_bar_sub_box .exp_content {
-  top: 50%;
+  top: 150%;
   position: absolute;
-  left: 50%;
+  left: 26%;
+  width: 100%;
   transform: translate(-50%, -50%);
   font-size: 11px;
   color: black;

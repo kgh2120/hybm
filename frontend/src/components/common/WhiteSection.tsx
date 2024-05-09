@@ -1,12 +1,22 @@
 import styles from "../../styles/common/WhiteSection.module.css";
 import clip from "../../assets/images/clip.png";
-import ItemBox from "./ItemBox";
+import DesignItemBox from "./DesignItemBox";
+
+interface DesignType {
+  designImgSrc: string;
+  has: boolean;
+  level: number;
+  location: string;
+  name: string;
+  storageDesignId: number;
+}
 
 interface WhiteSectionProps {
   title: string;
+  designList: DesignType[];
 }
 
-function WhiteSection({ title }: WhiteSectionProps) {
+function WhiteSection({ title, designList }: WhiteSectionProps) {
   return (
     <section className={styles.wrapper}>
       <div>
@@ -15,10 +25,20 @@ function WhiteSection({ title }: WhiteSectionProps) {
       <img src={clip} alt="압정 이미지" />
 
       <section className={styles.main_section}>
-        <ItemBox name="기본찬장" content="" option="active" imgSrc=""/>
-        <ItemBox name="기본찬장" content="" option="active" imgSrc=""/>
-        <ItemBox name="기본찬장" content="" option="active" imgSrc=""/>
-        <ItemBox name="기본찬장" content="" option="active" imgSrc=""/>
+        {designList.map((design: DesignType) => {
+          return (
+            <DesignItemBox
+              key={design.storageDesignId}
+              designId={design.storageDesignId}
+              name={design.name}
+              content=""
+              option={design.has ? "active" : "inactive"}
+              imgSrc={design.designImgSrc}
+              level={design.level}
+              location={design.location}
+            />
+          );
+        })}
       </section>
     </section>
   );

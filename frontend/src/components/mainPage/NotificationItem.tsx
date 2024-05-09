@@ -4,7 +4,7 @@ import { deleteNotification } from "../../api/notificationApi";
 import { useMutation } from "@tanstack/react-query";
 import { deleteFood } from "../../api/foodApi";
 
-interface NotificationItemProps {
+interface NotificationType {
   foodId: number;
   noticeId: number;
   content: string;
@@ -13,14 +13,23 @@ interface NotificationItemProps {
   createdAt: string;
 }
 
+interface NotificationItemProps {
+  notification: NotificationType;
+  innerRef: React.Ref<HTMLParagraphElement>;
+}
+
 function NotificationItem({
-  foodId,
-  noticeId,
-  content,
-  isChecked,
-  foodImgSrc,
-  createdAt,
+  notification,
+  innerRef,
 }: NotificationItemProps) {
+  const {
+    foodId,
+    noticeId,
+    content,
+    isChecked,
+    foodImgSrc,
+    createdAt,
+  } = notification;
   const formattedDate = formatDate(createdAt);
   console.log(isChecked);
   const { mutate: mutateDeleteNotification } = useMutation({
@@ -54,7 +63,7 @@ function NotificationItem({
   };
 
   return (
-    <div className={styles.notification_item}>
+    <div className={styles.notification_item} ref={innerRef}>
       <div className={styles.main_section}>
         <div className={styles.image_section}>
           <img src={foodImgSrc} alt="음식 이미지" />

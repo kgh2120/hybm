@@ -13,6 +13,10 @@
     @include center;
     flex-direction: column;
     gap: 5px;
+    .button_box {
+      @include center;
+      gap: 8px;
+    }
   }
 }
 

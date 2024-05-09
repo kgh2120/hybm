@@ -12,6 +12,8 @@ import { deleteAllFood, getBigCategoryList } from "../api/foodApi";
 import useFoodStore from "../stores/useFoodStore";
 import { getCurrentDesign } from "../api/fridgeApi";
 import ConfirmModal from "../components/common/ConfirmModal";
+import { getCurrentBadgeList } from "../api/badgeApi";
+import useFridgeStore from "../stores/useFridgeStore";
 
 interface StorageType {
   id: number;
@@ -26,6 +28,7 @@ interface CurrentDesignType {
 
 function MainPage() {
   const { setBigCategoryList } = useFoodStore();
+  const { appliedDesign, setAppliedDesign } = useFridgeStore();
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
   const [
     isDeleteAllFoodConfirmModalOpen,
@@ -58,6 +61,16 @@ function MainPage() {
     queryFn: getBigCategoryList,
   });
 
+  const {
+    data: currentBadge,
+    isPending: iscurrentBadgePending,
+    isError: iscurrentBadgeError,
+  } = useQuery({
+    queryKey: ["currentBadge"],
+    queryFn: getCurrentBadgeList,
+  });
+
+  console.log(currentBadge);
   const { mutate: mutateDeleteAllFood } = useMutation({
     mutationFn: deleteAllFood,
     onSuccess: () => {
@@ -75,7 +88,7 @@ function MainPage() {
 
   const handleOpenDeleteAllFoodConfirmModal = () => {
     setIsDeleteAllFoodConfirmModalOpen(true);
-  }
+  };
 
   useEffect(() => {
     if (bigCategoryList) {
@@ -83,13 +96,29 @@ function MainPage() {
     }
   }, [bigCategoryList]);
 
-  if (isBigCategoryListPending || isCurrentDesignPending) {
+  useEffect(() => {
+    if (currentDesign) {
+      setAppliedDesign({
+        ice: { imgSrc: currentDesign.ice.imgSrc, designId: currentDesign.ice.id },
+        cool: { imgSrc: currentDesign.cool.imgSrc, designId: currentDesign.cool.id },
+        cabinet: { imgSrc: currentDesign.cabinet.imgSrc, designId: currentDesign.cabinet.id },
+      });
+    }
+  }, [currentDesign]);
+
+  if (
+    isBigCategoryListPending ||
+    isCurrentDesignPending ||
+    iscurrentBadgePending
+  ) {
     return <div>MainPage Loding...</div>;
   }
 
   if (isBigCategoryListError) {
     return <div>bigCategoryList error</div>;
   } else if (isCurrentDesignError) {
+    return <div>currentDesign error</div>;
+  } else if (iscurrentBadgeError) {
     return <div>currentDesign error</div>;
   }
 
@@ -99,7 +128,7 @@ function MainPage() {
       <Link to="/storage/cabinet">
         <img
           className={styles.cabinet}
-          src={currentDesign.cabinet.imgSrc}
+          src={appliedDesign.cabinet.imgSrc}
           alt="찬장이미지"
         />
       </Link>
@@ -113,14 +142,14 @@ function MainPage() {
       <Link to="/storage/cool">
         <img
           className={styles.cool}
-          src={currentDesign.cool.imgSrc}
+          src={appliedDesign.cool.imgSrc}
           alt="냉장이미지"
         />
       </Link>
       <Link to="/storage/ice">
         <img
           className={styles.ice}
-          src={currentDesign.ice.imgSrc}
+          src={appliedDesign.ice.imgSrc}
           alt="냉동이미지"
         />
       </Link>

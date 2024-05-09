@@ -11,7 +11,6 @@ const getReportData = async ({ year, month }: GetReportDataParams) => {
     const res = await instance.get(
       `/api/statistics/month?year=${year}&&month=${month}`
     );
-    console.log(res);
     return res.data;
   } catch (e) {
     console.log(e);
