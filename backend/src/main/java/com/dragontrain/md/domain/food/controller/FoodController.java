@@ -2,6 +2,7 @@ package com.dragontrain.md.domain.food.controller;
 
 import java.util.List;
 
+import com.dragontrain.md.domain.food.controller.response.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,12 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.dragontrain.md.common.config.constraint.Path;
 import com.dragontrain.md.domain.food.controller.request.FoodInfoRequest;
 import com.dragontrain.md.domain.food.controller.request.FoodRegister;
-import com.dragontrain.md.domain.food.controller.response.BarcodeInfo;
-import com.dragontrain.md.domain.food.controller.response.CategoryInfoResponse;
-import com.dragontrain.md.domain.food.controller.response.ExpectedExpirationDate;
-import com.dragontrain.md.domain.food.controller.response.FoodDetailResponse;
-import com.dragontrain.md.domain.food.controller.response.FoodStorageResponse;
-import com.dragontrain.md.domain.food.controller.response.ReceiptProducts;
 import com.dragontrain.md.domain.food.service.FoodService;
 import com.dragontrain.md.domain.user.domain.User;
 
@@ -84,6 +79,13 @@ public class FoodController {
 
 		return ResponseEntity.ok(foodService.getFoodStorage(storage, user));
 	}
+
+	@GetMapping("/danger")
+	public ResponseEntity<DangerFoodResponse> getDangerFoods(@AuthenticationPrincipal User user) {
+
+		return ResponseEntity.ok(foodService.getDanger(user));
+	}
+
 
 	@GetMapping("/{foodId}")
 	public ResponseEntity<FoodDetailResponse> getFoodDetailInfo(@PathVariable Long foodId) {

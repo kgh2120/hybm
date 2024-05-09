@@ -20,4 +20,6 @@ public interface FoodRepository {
 	List<Food> findAllDeletedFoodByRefrigeratorIdAndTime(Long refrigeratorId, Integer year, Integer month);
 
 	List<Food> findFoodByDDay(int dDay, LocalDate now);
+
+	List<Food> findDangerFoodByRefrigeratorIdAndStorage(Long refrigeratorId, StorageTypeId storageTypeId);
 }
