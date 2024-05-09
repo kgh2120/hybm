@@ -2,6 +2,7 @@ package com.dragontrain.md.domain.food.service;
 
 import com.dragontrain.md.common.service.EventPublisher;
 import com.dragontrain.md.domain.food.controller.request.FoodInfoRequest;
+import com.dragontrain.md.domain.food.controller.response.*;
 import com.dragontrain.md.domain.food.domain.CategoryBig;
 import com.dragontrain.md.domain.food.domain.Food;
 import com.dragontrain.md.domain.food.event.EatenCountRaised;
@@ -12,8 +13,10 @@ import com.dragontrain.md.domain.food.service.port.FoodRepository;
 import com.dragontrain.md.domain.refrigerator.controller.RefrigeratorEventHandler;
 import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
 import com.dragontrain.md.domain.refrigerator.domain.RefrigeratorEatenCount;
+import com.dragontrain.md.domain.refrigerator.domain.StorageType;
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import com.dragontrain.md.domain.refrigerator.event.GotBadge;
+import com.dragontrain.md.domain.refrigerator.infra.StorageTypeRepositoryImpl;
 import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorEatenCountRepository;
 import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
 import com.dragontrain.md.domain.user.domain.User;
@@ -45,15 +48,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.dragontrain.md.common.service.TimeService;
 import com.dragontrain.md.domain.food.controller.request.FoodRegister;
-import com.dragontrain.md.domain.food.controller.response.BarcodeInfo;
-import com.dragontrain.md.domain.food.controller.response.CategoryInfoDetail;
-import com.dragontrain.md.domain.food.controller.response.CategoryInfoResponse;
-import com.dragontrain.md.domain.food.controller.response.ExpectedExpirationDate;
-import com.dragontrain.md.domain.food.controller.response.FoodDetailResponse;
-import com.dragontrain.md.domain.food.controller.response.FoodStorage;
-import com.dragontrain.md.domain.food.controller.response.FoodStorageResponse;
-import com.dragontrain.md.domain.food.controller.response.ReceiptProduct;
-import com.dragontrain.md.domain.food.controller.response.ReceiptProducts;
 import com.dragontrain.md.domain.food.domain.Barcode;
 import com.dragontrain.md.domain.food.domain.CategoryDetail;
 import com.dragontrain.md.domain.food.domain.FoodDeleteType;
@@ -78,6 +72,7 @@ public class FoodServiceImpl implements FoodService {
 	private final TimeService timeService;
 	private final RefrigeratorEventHandler refrigeratorEventHandler;
 	private final EventPublisher eventPublisher;
+	private final StorageTypeRepositoryImpl storageTypeRepositoryImpl;
 
 	// OCR General 형식의 SECRET key, API URL
 	@Value("${secret.ocr.general.service-key}")
@@ -305,7 +300,7 @@ public class FoodServiceImpl implements FoodService {
 
 	}
 
-	@Cacheable("categoryInfo")
+	@Cacheable("category")
 	@Override
 	public List<CategoryInfoResponse> getCategoryInfo() {
 		List<CategoryInfoResponse> categoryInfoResponseList = new ArrayList<>();
@@ -500,6 +495,32 @@ public class FoodServiceImpl implements FoodService {
 		}
 
 		return FoodStorageResponse.create(rotten, danger, warning, fresh);
+	}
+
+
+	@Override
+	public DangerFoodResponse getDanger(User user) {
+
+		List<FoodStorage> ICE = getDangerByStorage(user, StorageTypeId.ICE);
+		List<FoodStorage> COOL = getDangerByStorage(user, StorageTypeId.COOL);
+		List<FoodStorage> CABINET = getDangerByStorage(user, StorageTypeId.CABINET);
+
+		return DangerFoodResponse.builder()
+			.ICE(ICE)
+			.COOL(COOL)
+			.CABINET(CABINET)
+			.build();
+	}
+
+
+	private List<FoodStorage> getDangerByStorage(User user, StorageTypeId storageTypeId) {
+		List<Food> foods = foodRepository.findDangerFoodByRefrigeratorIdAndStorage(
+			refrigeratorRepository.findByUserId(user.getUserId())
+				.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND))
+				.getRefrigeratorId(),
+			storageTypeId
+		);
+		return foods.stream().map(f -> FoodStorage.of(f,timeService.localDateNow())).toList();
 	}
 
 

@@ -2,16 +2,11 @@ package com.dragontrain.md.domain.food.service;
 
 import java.util.List;
 
+import com.dragontrain.md.domain.food.controller.response.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dragontrain.md.domain.food.controller.request.FoodInfoRequest;
 import com.dragontrain.md.domain.food.controller.request.FoodRegister;
-import com.dragontrain.md.domain.food.controller.response.BarcodeInfo;
-import com.dragontrain.md.domain.food.controller.response.CategoryInfoResponse;
-import com.dragontrain.md.domain.food.controller.response.ExpectedExpirationDate;
-import com.dragontrain.md.domain.food.controller.response.FoodDetailResponse;
-import com.dragontrain.md.domain.food.controller.response.FoodStorageResponse;
-import com.dragontrain.md.domain.food.controller.response.ReceiptProducts;
 import com.dragontrain.md.domain.user.domain.User;
 
 public interface FoodService {
@@ -31,6 +26,8 @@ public interface FoodService {
 	FoodStorageResponse getFoodStorage(String storage, User user);
 
 	List<CategoryInfoResponse> getCategoryInfo();
+
+	DangerFoodResponse getDanger(User user);
 
 	FoodDetailResponse getFoodDetailInfo(Long foodId);
 
