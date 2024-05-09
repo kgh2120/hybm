@@ -1,6 +1,6 @@
 import MainPage from "./MainPage";
 import styles from "../styles/designPage/DesignPage.module.css";
-import WhiteSection from "../components/common/WhiteSection";
+// import WhiteSection from "../components/common/WhiteSection";
 import Button from "../components/common/Button";
 import rightArrow from "../assets/images/rightArrow.png";
 import { Link } from "react-router-dom";
@@ -31,6 +31,7 @@ function BadgePage() {
     queryFn: getBadgeList,
   });
 
+  console.log(badgeList)
   if (isBadgeListPending) {
     return <div>Loading...</div>;
   }
@@ -43,8 +44,8 @@ function BadgePage() {
         <MainPage />
       </div>
       <section className={styles.white_section}>
-        <WhiteSection title="보유 뱃지" />
-        <WhiteSection title="미보유 뱃지" />
+        {/* <WhiteSection title="보유 뱃지" />
+        <WhiteSection title="미보유 뱃지" /> */}
         <div className={styles.button_box}>
           <Button content="적용" color="red" onClick={() => {}} />
           <Link to="/">

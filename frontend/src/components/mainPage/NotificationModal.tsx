@@ -102,7 +102,7 @@ function NotificationModal({
       >
         알림함 비우기
       </button>
-      {!isNewNotification ? <EmptySection /> : <>{content}</>}
+      {!isNewNotification ? <EmptySection content1="" content2=""/> : <>{content}</>}
 
       {isDeleteNotificationConfirmModalOpen && (
         <ConfirmModal
