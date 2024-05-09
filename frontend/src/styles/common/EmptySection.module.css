@@ -1,0 +1,31 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 10%;
+  gap: 5px;
+}
+.wrapper .header {
+  display: flex;
+  align-items: center;
+}
+.wrapper .header > h1 {
+  font-size: 40px;
+  font-weight: normal;
+}
+.wrapper .content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+}
+.wrapper .content .context1 {
+  font-size: 15px;
+  color: #666666;
+}
+.wrapper .content .context2 {
+  font-size: 11px;
+  color: #c9c9c9;
+}/*# sourceMappingURL=EmptySection.module.css.map */
