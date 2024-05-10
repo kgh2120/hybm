@@ -95,10 +95,21 @@ public class NoticeServiceImpl implements NoticeService{
 		foods.forEach(food -> notices.add(Notice.create(food, noticeContentParser.parseNoticeContent(food), now)));
 		noticeRepository.saveAll(notices);
 
+		FirebaseMessaging.getInstance().sendEachAsync(getMessageByNotices(notices));
+	}
+
+	@Override
+	public void saveFCMToken(User user, String token) {
+		stringRedisTemplate.opsForValue().set(user.getUserId().toString(), token);
+	}
+
+	private List<Message> getMessageByNotices(List<Notice> notices){
 		List<Message> messages = new ArrayList<>();
+
 		notices.forEach(notice -> {
 			String token = stringRedisTemplate.opsForValue().get(notice.getFood().getRefrigerator().getUser().getUserId().toString());
 			try {
+				System.out.println(objectMapper.writeValueAsString(NoticeResponse.createByNotice(notice)));
 				messages.add(
 					Message.builder()
 						.setToken(token)
@@ -109,12 +120,6 @@ public class NoticeServiceImpl implements NoticeService{
 				throw new NoticeException(NoticeErrorCode.CANT_CONVERT_NOTION_TO_JSON);
 			}
 		});
-
-		FirebaseMessaging.getInstance().sendEachAsync(messages);
-	}
-
-	@Override
-	public void saveFCMToken(User user, String token) {
-		stringRedisTemplate.opsForValue().set(user.getUserId().toString(), token);
+		return messages;
 	}
 }
