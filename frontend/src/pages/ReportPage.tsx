@@ -303,6 +303,7 @@ function ReportPage() {
                             content=""
                             option="report"
                             imgSrc={food.imgSrc}
+                            onClick={() => {}}
                           />
                         )
                       )}
@@ -325,6 +326,7 @@ function ReportPage() {
                             content=""
                             option="report"
                             imgSrc={food.imgSrc}
+                            onClick={() => {}}
                           />
                         )
                       )}
