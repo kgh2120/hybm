@@ -110,11 +110,11 @@ public class FileServiceImpl implements FileService{
 				for (String ingredientName : foodArray) {
 					if (isName) {
 						ingredientName = ingredientName.replaceAll("\\d.*", "").replace("|", "");
-						if (ingredientRepository.existsByName(ingredientName)) {
-							continue;
-						}
-						Integer categoryDetailId = categoryDetailRepository.findByName(ingredientName))
-						ingredientRepository.save(ingredientName,);
+//						if (ingredientRepository.existsByName(ingredientName)) {
+//							continue;
+//						}
+//						Integer categoryDetailId = categoryDetailRepository.findByName(ingredientName);
+						ingredientRepository.save(ingredientName, null);
 						foodnames.add(ingredientName);
 						isName = false;
 					}
