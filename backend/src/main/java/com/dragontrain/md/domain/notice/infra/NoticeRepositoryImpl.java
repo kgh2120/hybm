@@ -38,4 +38,9 @@ public class NoticeRepositoryImpl implements NoticeRepository {
 	public void save(Notice notice) {
 		noticeJpaRepository.save(notice);
 	}
+
+	@Override
+	public void saveAll(List<Notice> notices) {
+		noticeJpaRepository.saveAll(notices);
+	}
 }
