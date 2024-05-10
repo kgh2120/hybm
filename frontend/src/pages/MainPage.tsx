@@ -70,6 +70,7 @@ function MainPage() {
     queryFn: getCurrentBadgeList,
   });
 
+  console.log(currentBadge);
   const { mutate: mutateDeleteAllFood } = useMutation({
     mutationFn: deleteAllFood,
     onSuccess: () => {
