@@ -12,11 +12,19 @@ import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorErrorCode;
 import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorException;
 import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
 import com.dragontrain.md.domain.user.domain.User;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.Message;
+import com.google.firebase.messaging.Notification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -26,6 +34,8 @@ public class NoticeServiceImpl implements NoticeService{
 	private final RefrigeratorRepository refrigeratorRepository;
 	private final TimeService timeService;
 	private final NoticeContentParser noticeContentParser;
+	private final RedisTemplate<String, String> stringRedisTemplate;
+	private final ObjectMapper objectMapper;
 	@Override
 	public AllNoticeResponse findAllNotDeletedNotice(User user, Pageable pageable) {
 		return AllNoticeResponse.create(
@@ -79,7 +89,31 @@ public class NoticeServiceImpl implements NoticeService{
 	@Override
 	public void saveNotices(List<Food> foods) {
 		LocalDateTime now = timeService.localDateTimeNow();
-		foods.forEach(food ->
-			noticeRepository.save(Notice.create(food, noticeContentParser.parseNoticeContent(food),now )));
+		List<Notice> notices = new ArrayList<>();
+
+		foods.forEach(food -> notices.add(Notice.create(food, noticeContentParser.parseNoticeContent(food), now)));
+		noticeRepository.saveAll(notices);
+
+		List<Message> messages = new ArrayList<>();
+		notices.forEach(notice -> {
+			String token = stringRedisTemplate.opsForValue().get(notice.getFood().getRefrigerator().getUser().getUserId().toString());
+			try {
+				messages.add(
+					Message.builder()
+						.setToken(token)
+						.putData("notice", objectMapper.writeValueAsString(notice))
+						.build()
+				);
+			} catch (JsonProcessingException e){
+				throw new NoticeException(NoticeErrorCode.CANT_CONVERT_NOTION_TO_JSON);
+			}
+		});
+
+		FirebaseMessaging.getInstance().sendEachAsync(messages);
+	}
+
+	@Override
+	public void saveFCMToken(User user, String token) {
+		stringRedisTemplate.opsForValue().set(user.getUserId().toString(), token);
 	}
 }
