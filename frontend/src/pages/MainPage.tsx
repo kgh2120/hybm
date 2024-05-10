@@ -99,9 +99,18 @@ function MainPage() {
   useEffect(() => {
     if (currentDesign) {
       setAppliedDesign({
-        ice: { imgSrc: currentDesign.ice.imgSrc, designId: currentDesign.ice.id },
-        cool: { imgSrc: currentDesign.cool.imgSrc, designId: currentDesign.cool.id },
-        cabinet: { imgSrc: currentDesign.cabinet.imgSrc, designId: currentDesign.cabinet.id },
+        ice: {
+          imgSrc: currentDesign.ice.imgSrc,
+          designId: currentDesign.ice.id,
+        },
+        cool: {
+          imgSrc: currentDesign.cool.imgSrc,
+          designId: currentDesign.cool.id,
+        },
+        cabinet: {
+          imgSrc: currentDesign.cabinet.imgSrc,
+          designId: currentDesign.cabinet.id,
+        },
       });
     }
   }, [currentDesign]);
