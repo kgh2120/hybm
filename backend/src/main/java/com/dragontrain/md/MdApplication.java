@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+
 @ConfigurationPropertiesScan("com.dragontrain.md")
 @EnableScheduling
 @SpringBootApplication

@@ -5,9 +5,10 @@ import com.dragontrain.md.common.config.event.Event;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-@Getter
 @RequiredArgsConstructor
-public class GotBadge implements Event {
+@Getter
+public class ExpAcquired implements Event {
+
 	private final Long userId;
-	private final Integer categoryBigId;
+	private final Integer exp;
 }

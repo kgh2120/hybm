@@ -1,4 +1,4 @@
-package com.dragontrain.md.common.config;
+package com.dragontrain.md.common.config.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

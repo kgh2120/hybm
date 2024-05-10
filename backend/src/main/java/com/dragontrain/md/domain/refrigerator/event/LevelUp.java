@@ -2,12 +2,15 @@ package com.dragontrain.md.domain.refrigerator.event;
 
 import com.dragontrain.md.common.config.event.Event;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-@Getter
+@EqualsAndHashCode
 @RequiredArgsConstructor
-public class GotBadge implements Event {
+@Getter
+public class LevelUp implements Event {
+
 	private final Long userId;
-	private final Integer categoryBigId;
+	private final Integer level;
 }
