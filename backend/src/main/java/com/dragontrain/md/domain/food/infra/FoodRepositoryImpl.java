@@ -3,7 +3,6 @@ package com.dragontrain.md.domain.food.infra;
 import static com.dragontrain.md.domain.food.domain.QFood.*;
 
 import java.time.LocalDate;
-import java.time.temporal.TemporalAmount;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,7 +10,6 @@ import com.dragontrain.md.domain.food.domain.FoodStatus;
 import org.springframework.stereotype.Repository;
 
 import com.dragontrain.md.domain.food.domain.Food;
-import com.dragontrain.md.domain.food.domain.QFood;
 import com.dragontrain.md.domain.food.service.port.FoodRepository;
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import com.querydsl.jpa.impl.JPAQueryFactory;

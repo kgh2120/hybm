@@ -1,8 +1,5 @@
 package com.dragontrain.md.domain.recipe.domain;
 
-import com.dragontrain.md.domain.food.domain.CategoryDetail;
-
-import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -21,22 +18,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "tbl_recipe_food")
-public class RecipeFood {
+@Table(name = "tbl_recipe_ingredient")
+public class RecipeIngredient {
 
 	@EmbeddedId
-	private RecipeFoodId recipeFoodId;
-
-	@Column(name = "ingredient_name", columnDefinition = "varchar(100)", nullable = false)
-	private String ingredientName;
+	private RecipeIngredientId recipeIngredientId;
 
 	@MapsId("recipeId")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "recipe_id", columnDefinition = "int")
 	private Recipe recipe;
 
-	@MapsId("categoryDetailId")
+	@MapsId("ingredientId")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "category_detail_id", columnDefinition = "int")
-	private CategoryDetail categoryDetail;
+	@JoinColumn(name = "ingredient_id", columnDefinition = "int")
+	private Ingredient ingredient;
 }
