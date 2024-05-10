@@ -24,10 +24,11 @@ public class IngredientRepositoryImpl implements IngredientRepository {
 		template.update(sql, name, categoryDetailId);
 	}
 
-//	@Override
-//	public boolean existsByName(String name) {
-//		String sql = "SELECT * FROM tbl_ingredient WHERE ingredient_name = ?";
-//	}
+	@Override
+	public boolean existsByName(String name) {
+		String sql = "SELECT * FROM tbl_ingredient WHERE ingredient_name = ?";
+		return template.query(sql, (rs, rowNum) -> 0, name).isEmpty();
+	}
 
 	;
 

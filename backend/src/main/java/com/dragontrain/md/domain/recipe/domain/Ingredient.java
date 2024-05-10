@@ -16,7 +16,7 @@ public class Ingredient {
 	@Column(name = "ingredient_id", columnDefinition = "int", nullable = false)
 	private Integer ingredientId;
 
-	@Column(name = "name", columnDefinition = "varchar(64)", nullable = false)
+	@Column(name = "ingredient_name", columnDefinition = "varchar(100)", nullable = false)
 	private String name;
 
 	@ManyToOne(fetch = FetchType.LAZY)
