@@ -4,12 +4,15 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.dragontrain.md.common.config.properties.ExpProperties;
+import com.dragontrain.md.common.service.EventPublisher;
 import com.dragontrain.md.domain.food.domain.CategoryBig;
 import com.dragontrain.md.domain.refrigerator.controller.request.BadgeRequest;
 import com.dragontrain.md.domain.refrigerator.controller.response.AttachedBadgeResponse;
 import com.dragontrain.md.domain.refrigerator.controller.response.BadgeInfo;
 import com.dragontrain.md.domain.refrigerator.controller.response.BadgeResponse;
 import com.dragontrain.md.domain.refrigerator.domain.*;
+import com.dragontrain.md.domain.refrigerator.event.ExpAcquired;
 import com.dragontrain.md.domain.refrigerator.service.port.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +43,8 @@ public class RefrigeratorServiceImpl
 	private final StorageStorageDesignRepository storageStorageDesignRepository;
 	private final BadgeRepository badgeRepository;
 	private final TimeService timeService;
+	private final EventPublisher eventPublisher;
+	private final ExpProperties expProperties;
 
 	@Transactional
 	@Override
@@ -118,20 +123,21 @@ public class RefrigeratorServiceImpl
 
 	@Transactional
 	@Override
-	public void gotBadge(Long refrigeratorId, Integer categoryBigId) {
+	public void gotBadge(Long userId, Integer categoryBigId) {
 		Badge badge = badgeRepository.findBadgeByCategoryBigId(categoryBigId)
 			.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.BADGE_NOT_FOUND));
-		if (refrigeratorBadgeRepository.existsByBadgeId(refrigeratorId, badge.getBadgeId())) {
+		if (refrigeratorBadgeRepository.existsByBadgeId(userId, badge.getBadgeId())) {
 			return;
 		}
 
 		RefrigeratorBadge refrigeratorBadge = RefrigeratorBadge.create(
-			refrigeratorRepository.findById(refrigeratorId)
+			refrigeratorRepository.findByUserId(userId)
 				.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND)),
 			badge,
 			timeService.localDateTimeNow()
 		);
 		refrigeratorBadgeRepository.save(refrigeratorBadge);
+		eventPublisher.publish(new ExpAcquired(userId, expProperties.getGotBadgeAmount()));
 	}
 
 	@Transactional
