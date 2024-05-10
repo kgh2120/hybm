@@ -7,8 +7,8 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public class LevelUp implements Event {
+public class ExpAcquired implements Event {
 
 	private final Long userId;
-	private final Integer level;
+	private final Integer exp;
 }

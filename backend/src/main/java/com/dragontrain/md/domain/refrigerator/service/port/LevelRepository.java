@@ -7,4 +7,6 @@ import com.dragontrain.md.domain.refrigerator.domain.Level;
 public interface LevelRepository {
 
 	Optional<Level> findLevel(int level);
+
+	Optional<Level> getNextLevel(int currentLevel);
 }
