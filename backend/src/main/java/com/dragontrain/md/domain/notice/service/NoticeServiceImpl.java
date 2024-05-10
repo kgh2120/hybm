@@ -17,9 +17,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.Message;
-import com.google.firebase.messaging.Notification;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -116,7 +116,7 @@ public class NoticeServiceImpl implements NoticeService{
 						.build()
 				);
 			} catch (JsonProcessingException e){
-				throw new NoticeException(NoticeErrorCode.CANT_CONVERT_NOTION_TO_JSON);
+				throw new NoticeException(NoticeErrorCode.CANT_CONVERT_NOTICE_TO_JSON);
 			}
 		});
 		return messages;

@@ -13,7 +13,7 @@ public enum NoticeErrorCode implements ErrorCode {
 	ALREADY_DELETED_NOTICE(HttpStatus.BAD_REQUEST, "이미 삭제된 알림입니다"),
 
 	NOT_FOUND_FCM_CREDENTIALS_FILE(HttpStatus.NOT_FOUND, "FCM 인증에 필요한 파일을 찾지 못했습니다."),
-	CANT_CONVERT_NOTION_TO_JSON(HttpStatus.BAD_REQUEST, "알림 json 변경 오류가 발생했습니다."),
+	CANT_CONVERT_NOTICE_TO_JSON(HttpStatus.BAD_REQUEST, "알림 json 변경 오류가 발생했습니다."),
 	;
 
 	private final HttpStatus httpStatus;

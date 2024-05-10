@@ -19,7 +19,7 @@ import java.io.InputStream;
 public class FCMConfig {
 
 	@Value("${firebase.key.path}")
-	String fcmKeyPath;
+	private String fcmKeyPath;
 
 	@PostConstruct
 	public void getFcmCredential(){
@@ -27,7 +27,10 @@ public class FCMConfig {
 			InputStream refreshToken = new ClassPathResource(fcmKeyPath).getInputStream();
 			FirebaseOptions options = FirebaseOptions.builder()
 				.setCredentials(GoogleCredentials.fromStream(refreshToken)).build();
-			FirebaseApp.initializeApp(options);
+
+			if (FirebaseApp.getApps().isEmpty()) {
+				FirebaseApp.initializeApp(options);
+			}
 			log.info("FCM Initialized");
 		} catch (IOException e){
 			throw new NoticeException(NoticeErrorCode.NOT_FOUND_FCM_CREDENTIALS_FILE);
