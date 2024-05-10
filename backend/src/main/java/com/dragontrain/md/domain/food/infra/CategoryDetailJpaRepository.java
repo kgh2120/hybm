@@ -10,4 +10,6 @@ public interface CategoryDetailJpaRepository extends JpaRepository<CategoryDetai
 
 	Optional<CategoryDetail> findByKanCode(Integer kanCode);
 
+	Optional<CategoryDetail> findByName(String name);
+
 }

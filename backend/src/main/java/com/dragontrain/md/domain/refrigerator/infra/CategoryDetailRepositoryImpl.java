@@ -25,4 +25,9 @@ public class CategoryDetailRepositoryImpl implements CategoryDetailRepository {
 		return categoryDetailJpaRepository.findById(categoryDetailId);
 	}
 
+	@Override
+	public Optional<CategoryDetail> findByName(String name) {
+		return categoryDetailJpaRepository.findByName(name);
+	}
+
 }

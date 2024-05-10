@@ -10,4 +10,6 @@ public interface CategoryDetailRepository {
 
 	Optional<CategoryDetail> findById(int categoryDetailId);
 
+	Optional<CategoryDetail> findByName(String name);
+
 }

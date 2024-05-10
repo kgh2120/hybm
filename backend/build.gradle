@@ -56,6 +56,11 @@ dependencies {
     // https://mvnrepository.com/artifact/org.jsoup/jsoup
     implementation 'org.jsoup:jsoup:1.17.2'
 
+    // Apache POI : MS Office 파일을 순수 자바 언어로 읽고 쓰는 기능
+    implementation 'org.apache.poi:poi-ooxml:4.1.2'
+
+    // db 종류와 관계없이 sql쿼리문으로 요청, 응답받을 수 있는 기능
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
