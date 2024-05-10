@@ -16,7 +16,7 @@ const getCurrentBadgeList = async () => {
 const getBadgeList = async () => {
   try {
     const res = await instance.get("/api/refrigerators/badges");
-    console.log(res);
+    return res.data;
   } catch (e) {
     console.log(e);
   }
