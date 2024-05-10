@@ -66,14 +66,16 @@ public class RefrigeratorServiceImpl
 		Refrigerator refrigerator = refrigeratorRepository.findByUserId(user.getUserId())
 			.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND));
 
-		List<RefrigeratorBadge> refrigeratorBadges = refrigeratorBadgeRepository.findAllByRefrigeratorId(
+
+
+		List<BadgeInfo> refrigeratorBadges = refrigeratorBadgeRepository.findAllByRefrigeratorId(
 			refrigerator.getRefrigeratorId()
 		);
 
-		List<BadgeInfo> badgeInfos = refrigeratorBadges.stream()
-			.map(BadgeInfo::create).toList();
+		// List<BadgeInfo> badgeInfos = refrigeratorBadges.stream()
+		// 	.map(BadgeInfo::create).toList();
 
-		return BadgeResponse.create(badgeInfos);
+		return BadgeResponse.create(refrigeratorBadges);
 	}
 
 	@Transactional

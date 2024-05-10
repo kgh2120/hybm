@@ -1,12 +1,13 @@
 package com.dragontrain.md.domain.refrigerator.controller.response;
 
-import com.dragontrain.md.domain.refrigerator.domain.Badge;
-import com.dragontrain.md.domain.refrigerator.domain.RefrigeratorBadge;
-import lombok.*;
-
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -18,12 +19,20 @@ public class BadgeResponse {
 
 	public static BadgeResponse create(List<BadgeInfo> badges) {
 
-		Map<Boolean, List<BadgeInfo>> res = badges.stream()
-			.collect(Collectors.groupingBy(BadgeInfo::getIsAttached));
+		List<BadgeInfo> has = new ArrayList<>();
+		List<BadgeInfo> hasNot = new ArrayList<>();
+
+		for (BadgeInfo badge : badges) {
+			if (badge.getIsAttached() != null) {
+				has.add(badge);
+			} else {
+				hasNot.add(badge);
+			}
+		}
 
 		return BadgeResponse.builder()
-			.has(res.get(true))
-			.hasnot(res.get(false))
+			.has(has)
+			.hasnot(hasNot)
 			.build();
 	}
 
