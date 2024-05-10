@@ -3,6 +3,7 @@ package com.dragontrain.md.domain.sse.service;
 import java.io.IOException;
 import java.util.UUID;
 
+import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -11,12 +12,19 @@ import com.dragontrain.md.domain.sse.service.port.SseRepository;
 import com.dragontrain.md.domain.user.domain.User;
 
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 
-@RequiredArgsConstructor
+
 @Service
 public class SseServiceImpl implements SseService {
 	private final SseRepository sseRepository;
-	private final Long DEFAULT_SSE_EMITTER_TIME_OUT = 10_0000L;
+
+	private final Long DEFAULT_SSE_EMITTER_TIME_OUT;
+
+	public SseServiceImpl(SseRepository sseRepository, Environment environment) {
+		this.sseRepository = sseRepository;
+		DEFAULT_SSE_EMITTER_TIME_OUT = Long.valueOf(environment.getProperty("secret.sse.ttl"));
+	}
 
 	@Override
 	public SseEmitter connect(User user) {
