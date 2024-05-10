@@ -1,3 +1,4 @@
+/* eslint-disable */
 import axios from "axios";
 
 const { VITE_API_DEV, VITE_RELOGIN_URI_BASE } = import.meta.env;
@@ -16,9 +17,11 @@ instance.interceptors.response.use(
       if (err.response.data.errorName === "UNAUTHORIZED_ACCESS") {
         try {
           // 토큰 재발행 API
-          await instance.post("/api/users/reissue");
+          const res = await instance.post("/api/users/reissue");
+          console.log("res", res);
           return instance(err.config);
         } catch (e) {
+          // @ts-ignore
           if (e.response.data.errorName === "REFRESH_TOKEN_MISSING") {
             alert("토큰이 만료되었습니다. 다시 로그인해주세요.");
             localStorage.removeItem("userData");
