@@ -4,6 +4,17 @@ import instance from "./axios";
 const getDangerFoodBySection = async () => {
   try {
     const res = await instance.get("/api/foods/danger");
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const getRecipeInfo = async (foodId: number) => {
+  try {
+    const res = await instance.get(
+      `/api/recipes/recommend?foodId=${foodId}`
+    );
     console.log(res);
     return res.data;
   } catch (e) {
@@ -11,4 +22,4 @@ const getDangerFoodBySection = async () => {
   }
 };
 
-export { getDangerFoodBySection };
+export { getDangerFoodBySection, getRecipeInfo };

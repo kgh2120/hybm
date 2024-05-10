@@ -3,7 +3,7 @@ import styles from "../styles/recipePage/RecipePage.module.css";
 import HomeBtn from "../assets/images/home.png";
 import ItemBox from "../components/common/ItemBox";
 import EmptyBox from "../components/common/EmptyBox";
-import RecipeBox from "../components/common/RecipeBox";
+import RecipeBox from "../components/recipePage/RecipeBox";
 import { useQuery } from "@tanstack/react-query";
 import { getDangerFoodBySection } from "../api/recipeApi";
 import FoodStateSection from "../components/storagePage/FoodStateSection";
@@ -157,9 +157,11 @@ function RecipePage() {
           <div className={styles.sub_content}>
             <p>선택한 재료들로 만들 수 있는 레시피로 이동합니다.</p>
             <section className={styles.main_section}>
-              <RecipeBox />
-              <RecipeBox />
-              <RecipeBox />
+              <RecipeBox
+                imgSrc={HomeBtn}
+                title="레시피 제목이지롱"
+                onClick={() => {}}
+              />
             </section>
           </div>
         </div>
