@@ -1,30 +1,37 @@
+/* eslint-disable */
 import axios from "axios";
 
-const { VITE_API_DEV } = import.meta.env;
+const { VITE_API_DEV, VITE_RELOGIN_URI_BASE } = import.meta.env;
 
 const instance = axios.create({
   baseURL: VITE_API_DEV,
   withCredentials: true,
 });
 
-// instance.interceptors.request.use(
-//   (config) => {
-//     const userDataString = localStorage.getItem('userData');
-//     if (userDataString !== null) {
-//       const userData = JSON.parse(userDataString);
-//       const accessToken = userData.state.accessToken;
-//       console.log('accesstoken: ', accessToken);
-//       config.headers['Authorization'] = accessToken;
-//     } else {
-//       console.log('userData가 null입니다.');
-//     }
-
-//     return config;
-//   },
-//   (error) => {
-//     console.log('config 에러: ', error);
-//     return Promise.reject(error);
-//   }
-// );
+instance.interceptors.response.use(
+  (res) => {
+    return res;
+  },
+  async (err) => {
+    if (err.response.status === 401) {
+      if (err.response.data.errorName === "UNAUTHORIZED_ACCESS") {
+        try {
+          // 토큰 재발행 API
+          const res = await instance.post("/api/users/reissue");
+          console.log("res", res);
+          return instance(err.config);
+        } catch (e) {
+          // @ts-ignore
+          if (e.response.data.errorName === "REFRESH_TOKEN_MISSING") {
+            alert("토큰이 만료되었습니다. 다시 로그인해주세요.");
+            localStorage.removeItem("userData");
+            window.location.href = VITE_RELOGIN_URI_BASE;
+          }
+        }
+      }
+    }
+    return Promise.reject(err);
+  }
+);
 
 export default instance;
