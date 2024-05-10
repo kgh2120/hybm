@@ -2,9 +2,9 @@ import styles from "../../styles/common/CategoryBox.module.css";
 // import search from "../../assets/images/search.png";
 import search from "../../assets/images/search.png";
 import { ChangeEvent, useEffect, useState } from "react";
-import useFoodStore from "../../stores/useFoodStore";
 import { useMutation } from "@tanstack/react-query";
 import { getExpiredDate } from "../../api/foodApi";
+import { useFoodCategoryStore } from "../../stores/useFoodStore";
 
 interface FilteredCategory {
   categoryImgSrc: string;
@@ -13,8 +13,12 @@ interface FilteredCategory {
   categoryId: number;
 }
 
-function CategoryBox() {
-  const { bigCategoryList } = useFoodStore();
+interface CategoryBoxProps {
+  onCategoryIdChange: (categoryId: number) => void;
+}
+
+function CategoryBox({ onCategoryIdChange }: CategoryBoxProps) {
+  const { bigCategoryList } = useFoodCategoryStore();
   const [name, setName] = useState("");
   const [selectedCategory, setSelectedCategory] =
     useState<FilteredCategory | null>(null);
@@ -35,6 +39,7 @@ function CategoryBox() {
     const newName = `${category.name}(${category.bigName})`;
     setName(newName);
     const categoryId = category.categoryId;
+    onCategoryIdChange(categoryId); // 부모 컴포넌트로 categoryId 전달
     mutateGetExpiredDate(categoryId);
   };
 
@@ -78,7 +83,12 @@ function CategoryBox() {
           alt="카테고리 이미지"
         />
       )}
-      <input type="text" value={name} onChange={handleChangeName} />
+      <input
+        type="text"
+        value={name}
+        onChange={handleChangeName}
+        placeholder="바코드를 촬영하거나 검색해보세요"
+      />
       <img
         className={styles.category_search_img}
         src={search}

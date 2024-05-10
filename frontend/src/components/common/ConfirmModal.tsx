@@ -25,11 +25,13 @@ function ConfirmModal({
               content={option1}
               color="red"
               onClick={option1Event}
+              disabled={false}
             />
             <Button
               content={option2}
               color="white"
               onClick={option2Event}
+              disabled={false}
             />
           </div>
         </div>

@@ -74,12 +74,14 @@ function DesignPage() {
             content="적용"
             color="red"
             onClick={handlePutDesign}
+            disabled={false}
           />
           <Link to="/">
             <Button
               content="홈으로"
               color="white"
               onClick={() => {}}
+              disabled={false}
             />
           </Link>
         </div>

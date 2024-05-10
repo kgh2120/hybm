@@ -12,6 +12,10 @@
   background-color: $color-light;
 }
 
+.red_button:disabled {
+  background-color: $color-line;
+}
+
 .white_button {
   @include button-common;
   color: $color-light;

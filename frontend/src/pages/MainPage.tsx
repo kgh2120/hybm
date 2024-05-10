@@ -9,7 +9,7 @@ import Modal from "../components/common/Modal";
 import LevelUpModal from "../components/mainPage/LevelUpModal";
 import ExpBar from "../components/common/ExpBar";
 import { deleteAllFood, getBigCategoryList } from "../api/foodApi";
-import useFoodStore from "../stores/useFoodStore";
+import { useFoodCategoryStore } from "../stores/useFoodStore";
 import { getCurrentDesign } from "../api/fridgeApi";
 import ConfirmModal from "../components/common/ConfirmModal";
 import { getCurrentBadgeList } from "../api/badgeApi";
@@ -27,7 +27,7 @@ interface CurrentDesignType {
 }
 
 function MainPage() {
-  const { setBigCategoryList } = useFoodStore();
+  const { setBigCategoryList } = useFoodCategoryStore();
   const { appliedDesign, setAppliedDesign } = useFridgeStore();
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
   const [
@@ -57,7 +57,7 @@ function MainPage() {
     isPending: isBigCategoryListPending,
     isError: isBigCategoryListError,
   } = useQuery({
-    queryKey: ["isNewNotification"],
+    queryKey: ["bigCategoryList"],
     queryFn: getBigCategoryList,
   });
 
