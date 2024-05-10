@@ -34,7 +34,7 @@ public class RefrigeratorEventHandler {
 
 	@EventListener
 	public void handleGotBadgeEvent(GotBadge gotBadge) {
-		refrigeratorService.gotBadge(gotBadge.getRefrigeratorId(), gotBadge.getCategoryBigId());
+		refrigeratorService.gotBadge(gotBadge.getUserId(), gotBadge.getCategoryBigId());
 	}
 
 	@TransactionalEventListener
