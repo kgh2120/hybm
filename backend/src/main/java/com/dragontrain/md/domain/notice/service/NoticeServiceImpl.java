@@ -4,6 +4,7 @@ import com.dragontrain.md.common.service.TimeService;
 import com.dragontrain.md.domain.food.domain.Food;
 import com.dragontrain.md.domain.notice.controller.response.AllNoticeResponse;
 import com.dragontrain.md.domain.notice.controller.response.HasnewNoticeResponse;
+import com.dragontrain.md.domain.notice.controller.response.NoticeResponse;
 import com.dragontrain.md.domain.notice.domain.Notice;
 import com.dragontrain.md.domain.notice.exception.NoticeErrorCode;
 import com.dragontrain.md.domain.notice.exception.NoticeException;
@@ -101,7 +102,7 @@ public class NoticeServiceImpl implements NoticeService{
 				messages.add(
 					Message.builder()
 						.setToken(token)
-						.putData("notice", objectMapper.writeValueAsString(notice))
+						.putData("notice", objectMapper.writeValueAsString(NoticeResponse.createByNotice(notice)))
 						.build()
 				);
 			} catch (JsonProcessingException e){
