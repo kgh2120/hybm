@@ -109,7 +109,6 @@ public class NoticeServiceImpl implements NoticeService{
 		notices.forEach(notice -> {
 			String token = stringRedisTemplate.opsForValue().get(notice.getFood().getRefrigerator().getUser().getUserId().toString());
 			try {
-				System.out.println(objectMapper.writeValueAsString(NoticeResponse.createByNotice(notice)));
 				messages.add(
 					Message.builder()
 						.setToken(token)
