@@ -7,6 +7,7 @@ import RecipeBox from "../components/common/RecipeBox";
 import { useQuery } from "@tanstack/react-query";
 import { getDangerFoodBySection } from "../api/recipeApi";
 import FoodStateSection from "../components/storagePage/FoodStateSection";
+import { useState } from "react";
 
 interface DangerFoodInfoType {
   foodId: number;
@@ -37,16 +38,28 @@ function RecipePage() {
     queryFn: getDangerFoodBySection,
   });
 
+  const [selectedFoodList, setSelectedFoodList] = useState<
+    DangerFoodInfoType[]
+  >([]);
+
+  const handlePickFood = (selectedFood: DangerFoodInfoType) => {
+    const newSelectedFoodList = [...selectedFoodList];
+    newSelectedFoodList.push(selectedFood);
+    setSelectedFoodList(newSelectedFoodList);
+  };
+
+  const handleDeleteFood = (selectedFood: DangerFoodInfoType) => {
+    const updatedFoodList = selectedFoodList.filter(
+      (food) => food.foodId != selectedFood.foodId
+    );
+    setSelectedFoodList(updatedFoodList);
+  };
+
   if (isDangerFoodBySectionPending) {
     return <div>데이터 가져오는 중...</div>;
   }
   if (isDangerFoodBySectionError) {
     return <div>에러나는 중...</div>;
-  }
-
-  // 지워야할 친구
-  if (dangerFoodBySection) {
-    console.log("첫 콘솔", dangerFoodBySection);
   }
 
   return (
@@ -93,6 +106,7 @@ function RecipePage() {
                             content={`D${item.dday}`}
                             option="active"
                             imgSrc={item.categoryImgSrc}
+                            onClick={() => handlePickFood(item)}
                           />
                         )
                       )}
@@ -106,13 +120,34 @@ function RecipePage() {
           <div className={styles.sub_title}>식품 확인하기</div>
           <div className={styles.sub_content}>
             <p>선택한 재료들을 확인합니다.</p>
-            <p>잘못 선택한 재료는 지워주세요.</p>
+            <p>잘못 선택한 재료는 터치로 지워주세요.</p>
             <section className={styles.main_section}>
               <section style={{ border: "2px solid #a9a9a9" }}>
-                <div className={styles.section_content}>
-                  <EmptyBox />
-                  <p>선택한 식품은 이 곳에서 표시됩니다.</p>
-                </div>
+                {selectedFoodList.length > 0 ? (
+                  selectedFoodList.map(
+                    (
+                      selectedFood: DangerFoodInfoType,
+                      idx: number
+                    ) => (
+                      <div key={idx}>
+                        <ItemBox
+                          name={selectedFood.name}
+                          content={`D${selectedFood.dday}`}
+                          option="active"
+                          imgSrc={selectedFood.categoryImgSrc}
+                          onClick={() =>
+                            handleDeleteFood(selectedFood)
+                          }
+                        />
+                      </div>
+                    )
+                  )
+                ) : (
+                  <div className={styles.section_content}>
+                    <EmptyBox />
+                    <p>선택한 식품은 이 곳에서 표시됩니다.</p>
+                  </div>
+                )}
               </section>
             </section>
           </div>
