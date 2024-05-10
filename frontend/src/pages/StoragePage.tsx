@@ -88,6 +88,7 @@ function StoragePage() {
                       sectionTitle === "rotten" ? "inactive" : ""
                     }
                     imgSrc={item.categoryImgSrc}
+                    onClick={() => {}}
                   />
                 )
               )}

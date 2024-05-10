@@ -5,10 +5,17 @@ interface ItemBoxProps {
   content: string;
   option: string;
   imgSrc: string;
+  onClick: () => void;
 }
-function ItemBox({ name, content, option = "active", imgSrc }: ItemBoxProps) {
+function ItemBox({
+  name,
+  content,
+  option = "active",
+  imgSrc,
+  onClick,
+}: ItemBoxProps) {
   return (
-    <article className={styles.wrapper}>
+    <article className={styles.wrapper} onClick={onClick}>
       {option === "inactive" ? (
         <div className={styles.img_box}>
           <div className={styles.img_gray_box}></div>
