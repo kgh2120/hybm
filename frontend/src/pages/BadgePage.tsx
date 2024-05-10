@@ -46,16 +46,7 @@ function BadgePage() {
       <section className={styles.white_section}>
         {/* <WhiteSection title="보유 뱃지" />
         <WhiteSection title="미보유 뱃지" /> */}
-        <div className={styles.button_box}>
-          <Button content="적용" color="red" onClick={() => {}} />
-          <Link to="/">
-            <Button
-              content="홈으로"
-              color="white"
-              onClick={() => {}}
-            />
-          </Link>
-        </div>
+        <Button content="적용" color="red" onClick={() => {}} disabled={false}/>
       </section>
       <Link to="/design">
         <img className={styles.left_arrow} src={rightArrow} alt="" />

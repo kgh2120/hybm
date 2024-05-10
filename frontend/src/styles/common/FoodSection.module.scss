@@ -25,26 +25,47 @@
       color: $color-text;
       min-width: 60px;
     }
+    .expiry_date_box {
+      @include center;
+      gap: 5px;
+      width: 80%;
+
+      select {
+        height: 30px;
+        background-color: $color-back;
+        @include input-text;
+        width: 50%;
+      }
+
+      option {
+        height: 30px;
+        // background-color: $color-back;
+        @include input-text;
+        width: 50%;
+      }
+    }
     > input {
       @include input-text;
       height: 30px;
       width: 80%;
       text-align: start;
-      padding-left: 12px;
       background-color: $color-back;
+      padding: 0 5px;
     }
     > select {
       @include input-text;
       height: 30px;
       text-align: start;
-      padding-left: 12px;
+      padding: 0 5px;
       background-color: $color-back;
     }
     .price_box {
       @include input-text;
       width: 80%;
       background-color: $color-back;
+      padding: 0 5px;
       > input {
+        max-width: 162px;
         background-color: transparent;
         text-align: start;
         height: 30px;
@@ -55,6 +76,21 @@
         font-size: $font-lg;
       }
     }
-    
+
+    .storage_box {
+      border: 2px solid $color-back;
+      color: $color-text;
+      font-size: 13px;
+      height: 30px;
+      width: 25%;
+      @include center;
+    }
   }
+}
+
+input::placeholder {
+  color: $color-line;
+  font-style: italic;
+  text-shadow: none;
+  font-size: $font-sm;
 }

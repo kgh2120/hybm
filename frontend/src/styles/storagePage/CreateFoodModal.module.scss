@@ -17,4 +17,16 @@
       }
     }
   }
+  > span {
+    font-size: $font-sm;
+    color: $color-line;
+    line-height: 14px;
+    margin-bottom: 12px;
+    text-align: end;
+    width: 90%;
+    > span{
+      padding: 2px;
+      background-color: rgba($color-back, 0.5);
+    }
+  }
 }
