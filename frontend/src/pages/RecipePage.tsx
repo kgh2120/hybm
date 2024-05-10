@@ -4,8 +4,51 @@ import HomeBtn from "../assets/images/home.png";
 import ItemBox from "../components/common/ItemBox";
 import EmptyBox from "../components/common/EmptyBox";
 import RecipeBox from "../components/common/RecipeBox";
+import { useQuery } from "@tanstack/react-query";
+import { getDangerFoodBySection } from "../api/recipeApi";
+import FoodStateSection from "../components/storagePage/FoodStateSection";
+
+interface DangerFoodInfoType {
+  foodId: number;
+  name: string;
+  categoryImgSrc: string;
+  dday: number;
+}
+
+interface DangerFoodBySectionType {
+  ICE: DangerFoodInfoType[];
+  COOL: DangerFoodInfoType[];
+  CABINET: DangerFoodInfoType[];
+}
 
 function RecipePage() {
+  const TITLE_LIST: { [key: string]: string } = {
+    ice: "냉동실",
+    cool: "냉장실",
+    cabinet: "찬장",
+  };
+
+  const {
+    data: dangerFoodBySection,
+    isPending: isDangerFoodBySectionPending,
+    isError: isDangerFoodBySectionError,
+  } = useQuery<DangerFoodBySectionType>({
+    queryKey: ["dangerFoodBySection"],
+    queryFn: getDangerFoodBySection,
+  });
+
+  if (isDangerFoodBySectionPending) {
+    return <div>데이터 가져오는 중...</div>;
+  }
+  if (isDangerFoodBySectionError) {
+    return <div>에러나는 중...</div>;
+  }
+
+  // 지워야할 친구
+  if (dangerFoodBySection) {
+    console.log("첫 콘솔", dangerFoodBySection);
+  }
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.page_header}>
@@ -34,111 +77,28 @@ function RecipePage() {
           <div className={styles.sub_content}>
             <p>레시피 속 재료가 될 식품을 선택합니다.</p>
             <section className={styles.main_section}>
-              <div className={styles.section_title}>
-                <h2>냉동실</h2>
-              </div>
-              <section style={{ border: "2px solid #ffa7a7" }}>
-                <ItemBox
-                  name="기본찬장"
-                  content="D-1"
-                  option="report"
-                  imgSrc=""
-                />
-                <ItemBox
-                  name="기본찬장"
-                  content="D-1"
-                  option="report"
-                  imgSrc=""
-                />
-                <ItemBox
-                  name="기본찬장"
-                  content="D-1"
-                  option="report"
-                  imgSrc=""
-                />
-                <ItemBox
-                  name="기본찬장"
-                  content="D-1"
-                  option="report"
-                  imgSrc=""
-                />
-                <ItemBox
-                  name="기본찬장"
-                  content="D-1"
-                  option="report"
-                  imgSrc=""
-                />
-              </section>
-              <div className={styles.section_title}>
-                <h2>냉장실</h2>
-              </div>
-              <section style={{ border: "2px solid #ffd66a" }}>
-                <ItemBox
-                  name="기본찬장"
-                  content="D-1"
-                  option="report"
-                  imgSrc=""
-                />
-                <ItemBox
-                  name="기본찬장"
-                  content="D-1"
-                  option="report"
-                  imgSrc=""
-                />
-                <ItemBox
-                  name="기본찬장"
-                  content="D-1"
-                  option="report"
-                  imgSrc=""
-                />
-                <ItemBox
-                  name="기본찬장"
-                  content="D-1"
-                  option="report"
-                  imgSrc=""
-                />
-                <ItemBox
-                  name="기본찬장"
-                  content="D-1"
-                  option="report"
-                  imgSrc=""
-                />
-              </section>
-              <div className={styles.section_title}>
-                <h2>찬장</h2>
-              </div>
-              <section style={{ border: "2px solid #7dd086" }}>
-                <ItemBox
-                  name="기본찬장"
-                  content="D-1"
-                  option="report"
-                  imgSrc=""
-                />
-                <ItemBox
-                  name="기본찬장"
-                  content="D-1"
-                  option="report"
-                  imgSrc=""
-                />
-                <ItemBox
-                  name="기본찬장"
-                  content="D-1"
-                  option="report"
-                  imgSrc=""
-                />
-                <ItemBox
-                  name="기본찬장"
-                  content="D-1"
-                  option="report"
-                  imgSrc=""
-                />
-                <ItemBox
-                  name="기본찬장"
-                  content="D-1"
-                  option="report"
-                  imgSrc=""
-                />
-              </section>
+              {Object.keys(dangerFoodBySection).map(
+                (section) =>
+                  dangerFoodBySection[section].length > 0 && (
+                    <FoodStateSection
+                      key={section} // React에서 배열의 각 요소에 고유한 key를 지정해야 함
+                      sectionTitle={TITLE_LIST[section]}
+                      sectionClass="danger"
+                    >
+                      {dangerFoodBySection[section].map(
+                        (item: DangerFoodInfoType, idx: number) => (
+                          <ItemBox
+                            key={idx}
+                            name={item.name}
+                            content={`D${item.dday}`}
+                            option="active"
+                            imgSrc={item.categoryImgSrc}
+                          />
+                        )
+                      )}
+                    </FoodStateSection>
+                  )
+              )}
             </section>
           </div>
         </div>
