@@ -80,9 +80,6 @@ public class NoticeServiceImpl implements NoticeService{
 	public void saveNotices(List<Food> foods) {
 		LocalDateTime now = timeService.localDateTimeNow();
 		foods.forEach(food ->
-			noticeRepository.save(Notice.create(food, noticeContentParser.parseNoticeContent(food),now )
-			//
-			));
-
+			noticeRepository.save(Notice.create(food, noticeContentParser.parseNoticeContent(food),now)));
 	}
 }
