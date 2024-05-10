@@ -4,8 +4,8 @@ import com.dragontrain.md.domain.refrigerator.domain.RefrigeratorBadge;
 import lombok.*;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class BadgeInfo {
 	private Integer badgeId;
@@ -14,6 +14,8 @@ public class BadgeInfo {
 	private String condition;
 	private Boolean isAttached;
 	private Integer position;
+
+
 
 	public static BadgeInfo create(RefrigeratorBadge refrigeratorBadge) {
 
