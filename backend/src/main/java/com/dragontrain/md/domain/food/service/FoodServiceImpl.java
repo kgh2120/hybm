@@ -88,7 +88,7 @@ public class FoodServiceImpl implements FoodService {
 	@Value("${secret.ocr.document.api-url}")
 	private String RECEIPT_API_URL;
 
-	private static void validateDuplicateFoodIds(Long[] foodIds) {
+	private void validateDuplicateFoodIds(Long[] foodIds) {
 		Set<Long> foodIdSet = new HashSet<>(List.of(foodIds));
 		if (foodIdSet.size() != foodIds.length)
 			throw new FoodException(FoodErrorCode.DUPLICATED_FOOD_ID);

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dragontrain.md.common.service.EventPublisher;
+import com.dragontrain.md.common.service.TimeService;
 import com.dragontrain.md.domain.refrigerator.controller.response.MyLevelResponse;
 import com.dragontrain.md.domain.refrigerator.domain.Level;
 import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
@@ -16,6 +17,7 @@ import com.dragontrain.md.domain.refrigerator.service.port.LevelRepository;
 import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
 import com.dragontrain.md.domain.user.domain.User;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Transactional(readOnly = true)
@@ -26,6 +28,7 @@ public class LevelServiceImpl implements LevelService {
 	private final RefrigeratorRepository refrigeratorRepository;
 	private final LevelRepository levelRepository;
 	private final EventPublisher eventPublisher;
+	private final TimeService timeService;
 
 	@Override
 	public MyLevelResponse getMyLevel(User user) {
@@ -40,28 +43,40 @@ public class LevelServiceImpl implements LevelService {
 
 	@Transactional
 	@Override
-	public void addExp(Long userId, Integer exp) {
+	public void acquireExp(Long userId, Integer exp) {
 		Refrigerator refrigerator = refrigeratorRepository.findByUserId(userId)
 			.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND));
 
-		// refrigerator.plusExp(exp);
 		int calculatedExp = refrigerator.getExp() + exp;
 		Level level = refrigerator.getLevel();
 		int originLevel = level.getLevel();
-		while (calculatedExp >= level.getMaxExp() && !level.getLevel().equals(10)) {
-			calculatedExp -= level.getMaxExp();
-			level = levelRepository.getNextLevel(level.getLevel()).orElseThrow(() -> new LevelException(LevelErrorCode.ALREADY_MAX_LEVEL));
-		}
+
+		AcquireExpCalculateResult result = calculateExp(calculatedExp, level);
+
+		calculatedExp = result.getCalculatedExp();
+		level = result.getLevel();
 		int afterLevel = level.getLevel();
 
-		refrigerator.acquireExp(calculatedExp, level);
+		refrigerator.acquireExp(calculatedExp, level, timeService.localDateTimeNow());
 
 		if (originLevel != afterLevel) {
-			// 레벨업 이벤트 쏘기
 			eventPublisher.publish(new LevelUp(userId, afterLevel));
 		}
+	}
 
+	private AcquireExpCalculateResult calculateExp(int calculatedExp, Level level) {
+		while (calculatedExp >= level.getMaxExp() && !level.getLevel().equals(10)) {
+			calculatedExp -= level.getMaxExp();
+			level = levelRepository.getNextLevel(level.getLevel())
+				.orElseThrow(() -> new LevelException(LevelErrorCode.ALREADY_MAX_LEVEL));
+		}
+		return new AcquireExpCalculateResult(level, calculatedExp);
+	}
 
-
+	@RequiredArgsConstructor
+	@Getter
+	private static class AcquireExpCalculateResult {
+		private final Level level;
+		private final int calculatedExp;
 	}
 }

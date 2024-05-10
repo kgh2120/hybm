@@ -6,5 +6,5 @@ import com.dragontrain.md.domain.user.domain.User;
 public interface LevelService {
 	MyLevelResponse getMyLevel(User user);
 
-	void addExp(Long refrigeratorId, Integer exp);
+	void acquireExp(Long refrigeratorId, Integer exp);
 }

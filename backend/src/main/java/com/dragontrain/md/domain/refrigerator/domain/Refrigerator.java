@@ -82,8 +82,9 @@ public class Refrigerator {
 		this.isDeleted = true;
 	}
 
-	public void acquireExp(int exp, Level level) {
+	public void acquireExp(int exp, Level level, LocalDateTime updatedAt) {
 		this.exp = exp;
 		this.level = level;
+		this.updatedAt = updatedAt;
 	}
 }

@@ -39,6 +39,6 @@ public class RefrigeratorEventHandler {
 
 	@TransactionalEventListener
 	public void handleExpAddedEvent(ExpAcquired expAcquired) {
-		levelService.addExp(expAcquired.getUserId(), expAcquired.getExp());
+		levelService.acquireExp(expAcquired.getUserId(), expAcquired.getExp());
 	}
 }
