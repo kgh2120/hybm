@@ -5,6 +5,22 @@
   flex-direction: column;
   gap: 5px;
 
+  .attached_img_box {
+    width: 60px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    @include center;
+    // background-color: $color-back;
+    background-color: aqua;
+    border: 1px dashed $color-light;
+    position: relative;
+    z-index: 900;
+    img  {
+      width: 80%;
+      aspect-ratio: 1/1;
+      z-index: 999;
+    }
+  }
   .img_box {
     width: 60px;
     aspect-ratio: 1/1;
@@ -13,6 +29,7 @@
     background-color: $color-back;
     border: 1px dashed $color-light;
     position: relative;
+    z-index: 900;
     > span {
       position: absolute;
       top: 50%;
@@ -42,12 +59,13 @@
       border-radius: 50%;
       border: 2px solid $color-point;
     }
-    img {
+    img  {
       width: 80%;
       aspect-ratio: 1/1;
+      z-index: 999;
     }
   }
-  
+
   .text_box {
     @include center;
     flex-direction: column;
@@ -59,5 +77,4 @@
       @include item-content;
     }
   }
-
 }

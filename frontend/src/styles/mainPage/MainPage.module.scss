@@ -5,6 +5,7 @@
   left: $left;
   bottom: $bottom;
   z-index: 50;
+  pointer-events:initial;
 }
 
 .wrapper {

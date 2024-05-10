@@ -9,13 +9,15 @@ import Modal from "../components/common/Modal";
 import LevelUpModal from "../components/mainPage/LevelUpModal";
 import ExpBar from "../components/common/ExpBar";
 import { deleteAllFood, getBigCategoryList } from "../api/foodApi";
-import useFoodStore from "../stores/useFoodStore";
+import { useFoodCategoryStore } from "../stores/useFoodStore";
 import { getCurrentDesign } from "../api/fridgeApi";
 import ConfirmModal from "../components/common/ConfirmModal";
 import { getCurrentBadgeList } from "../api/badgeApi";
 import useFridgeStore from "../stores/useFridgeStore";
 import plus from "../assets/images/plus.png";
-import useAttachedBadgeStore from "../stores/useBadgeStore";
+import useAttachedBadgeStore, {
+  useBadgeStore,
+} from "../stores/useBadgeStore";
 
 interface StorageType {
   id: number;
@@ -36,10 +38,12 @@ interface BadgeType {
 
 function MainPage() {
   const location = useLocation();
-  const { setBigCategoryList } = useFoodStore();
+  const { setBigCategoryList } = useFoodCategoryStore();
+
   const { appliedDesign, setAppliedDesign } = useFridgeStore();
   const { attachedBadgeList, setAttachedBadgeList } =
     useAttachedBadgeStore();
+  const { selectedBadge, setSelectedBadge } = useBadgeStore();
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
   const [
     isDeleteAllFoodConfirmModalOpen,
@@ -98,6 +102,21 @@ function MainPage() {
 
   const handleOpenDeleteAllFoodConfirmModal = () => {
     setIsDeleteAllFoodConfirmModalOpen(true);
+  };
+
+  const handleSelectAttachedBadege = () => {
+    console.log('확인')
+    if (selectedBadge) {
+      console.log(selectedBadge)
+      setAttachedBadgeList([
+        ...attachedBadgeList,
+        {
+          badgeId: selectedBadge.badgeId,
+          src: selectedBadge.src,
+          position: selectedBadge.position,
+        },
+      ]);
+    }
   };
 
   useEffect(() => {
@@ -195,6 +214,7 @@ function MainPage() {
             className={styles[`badge${position}`]}
             src={plus}
             alt={`배지${position} 이미지`}
+            onClick={handleSelectAttachedBadege}
           />
         );
       }

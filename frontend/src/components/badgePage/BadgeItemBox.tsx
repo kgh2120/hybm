@@ -1,4 +1,7 @@
-import useAttachedBadgeStore from '../../stores/useBadgeStore';
+import { useState } from "react";
+import useAttachedBadgeStore, {
+  useBadgeStore,
+} from "../../stores/useBadgeStore";
 import styles from "../../styles/badgePage/BadgeItemBox.module.css";
 
 interface BadgeType {
@@ -16,32 +19,36 @@ interface BadgeItemBoxProps {
 }
 
 function BadgeItemBox({ badge, option }: BadgeItemBoxProps) {
-  const { badgeId, name, badgeImgSrc, condition, isAttached, position } = badge;
+  const {
+    badgeId,
+    name,
+    badgeImgSrc,
+    condition,
+    isAttached,
+    position,
+  } = badge;
 
-  const { attachedBadgeList, setAttachedBadgeList } = useAttachedBadgeStore();
-
-
-  const onDragStart = (e: React.DragEvent<HTMLDivElement>, badgeId: number) => {
-    e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('selectedBadge', String(badgeId));
+  const { attachedBadgeList, setAttachedBadgeList } =
+    useAttachedBadgeStore();
+  const { setSelectedBadge } = useBadgeStore();
+  const [isSelected, setIsSelected] = useState(isAttached);
+  const handleSelectBadge = () => {
+    setIsSelected(true);
+    setSelectedBadge({ badgeId, src: badgeImgSrc, position });
   };
-
-  const onDragDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    console.log('gd')
-    
-    // setAttachedBadgeList(updateImages);
-  };
-
+  const styleName = isSelected ? "attached_img_box" : "img_box";
   return (
-    <article className={styles.wrapper} >
+    <article className={styles.wrapper}>
       {option === "hasnot" ? (
         <div className={styles.img_box}>
           <div className={styles.img_gray_box}></div>
           <img src={badgeImgSrc} alt="상품아이콘" />
         </div>
       ) : (
-        <div className={styles.img_box} draggable onDragStart={(e) => onDragStart(e, badgeId)} onDragEnd={(e) => onDragDrop(e)}>
+        <div
+          className={styles[styleName]}
+          onClick={handleSelectBadge}
+        >
           <img src={badgeImgSrc} alt="상품아이콘" />
         </div>
       )}
