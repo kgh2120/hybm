@@ -44,6 +44,8 @@ function MainPage() {
   const { attachedBadgeList, setAttachedBadgeList } =
     useAttachedBadgeStore();
   const { selectedBadge, initSelectedBadge } = useBadgeStore();
+  console.log("selectedBadge:", selectedBadge);
+  // let plusStyleName = selectedBadge.position !== null ? "blink_box" : "badge_sub_box";
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
   const [
     isDeleteAllFoodConfirmModalOpen,
@@ -107,20 +109,21 @@ function MainPage() {
 
   // - 버튼을 눌렀을 때 부착한 배지 제거
   const handleDeleteAttachedBadge = (badgeId: number) => {
-    console.log("attacthedBadgeList and badgeId:", attachedBadgeList, badgeId)
-    const updatedAttachedBadgeList = attachedBadgeList.map((badge) => {
-      if (badge.badgeId !== badgeId) {
-        return badge
-      } else {
-        return {
-          badgeId: badge.badgeId,
-          position: null,
-          src: badge.src
+    const updatedAttachedBadgeList = attachedBadgeList.map(
+      (badge) => {
+        if (badge.badgeId !== badgeId) {
+          return badge;
+        } else {
+          return {
+            badgeId: badge.badgeId,
+            position: null,
+            src: badge.src,
+          };
         }
       }
-    })
-    setAttachedBadgeList(updatedAttachedBadgeList)
-  }
+    );
+    setAttachedBadgeList(updatedAttachedBadgeList);
+  };
 
   const handleSelectAttachedBadege = (position: number) => {
     if (selectedBadge.badgeId !== 0) {
@@ -129,7 +132,7 @@ function MainPage() {
         {
           badgeId: selectedBadge.badgeId,
           src: selectedBadge.src,
-          position
+          position,
         },
       ]);
     }
@@ -162,7 +165,7 @@ function MainPage() {
     }
     if (currentBadgeList) {
       setAttachedBadgeList(currentBadgeList);
-    } 
+    }
   }, [currentDesign, currentBadgeList]);
 
   if (
@@ -187,31 +190,42 @@ function MainPage() {
       const appliedBadge = attachedBadgeList.find(
         (badge) => badge.position === position
       );
-      console.log("appliedBadge:", appliedBadge)
       if (appliedBadge) {
         return (
           <div
             key={appliedBadge.badgeId}
             className={styles[`badge${appliedBadge.position}`]}
           >
-            <div>
+            <div className={styles.badge_sub_box}>
               <img
                 src={appliedBadge.src}
                 alt={`배지${appliedBadge.position} 이미지`}
               />
-              <div className={styles.minus_button} onClick={() => handleDeleteAttachedBadge(appliedBadge.badgeId)}>-</div>
+              <div
+                className={styles.minus_button}
+                onClick={() =>
+                  handleDeleteAttachedBadge(appliedBadge.badgeId)
+                }
+              >
+                -
+              </div>
             </div>
           </div>
         );
       } else {
         return (
-          <img
+          <div
             key={idx}
             className={styles[`badge${position}`]}
-            src={plus}
-            alt={`배지${position} 이미지`}
             onClick={() => handleSelectAttachedBadege(position)}
-          />
+          >
+            <div className={styles.badge_sub_box}>
+              <img src={plus} alt={`배지${position} 이미지`} />
+              {selectedBadge.badgeId !== 0 && (
+                <div className={styles.blink_box} />
+              )}
+            </div>
+          </div>
         );
       }
     });
