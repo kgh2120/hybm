@@ -68,65 +68,199 @@
 }
 .wrapper .badge1 {
   width: 40px;
+  aspect-ratio: 1/1;
   position: absolute;
   left: 60px;
   bottom: 400px;
   z-index: 50;
   pointer-events: initial;
 }
+.wrapper .badge1 > div {
+  width: 100%;
+  position: relative;
+}
+.wrapper .badge1 > div img {
+  width: 100%;
+}
+.wrapper .badge1 > div .minus_button {
+  position: absolute;
+  color: red;
+  top: -3px;
+  right: -3px;
+  font-size: 20px;
+  font-weight: 700;
+}
+.wrapper .badge1 img {
+  width: 100%;
+}
 .wrapper .badge2 {
   width: 40px;
+  aspect-ratio: 1/1;
   position: absolute;
   left: 120px;
   bottom: 450px;
   z-index: 50;
   pointer-events: initial;
 }
+.wrapper .badge2 > div {
+  width: 100%;
+  position: relative;
+}
+.wrapper .badge2 > div img {
+  width: 100%;
+}
+.wrapper .badge2 > div .minus_button {
+  position: absolute;
+  color: red;
+  top: -3px;
+  right: -3px;
+  font-size: 20px;
+  font-weight: 700;
+}
+.wrapper .badge2 img {
+  width: 100%;
+}
 .wrapper .badge3 {
   width: 40px;
+  aspect-ratio: 1/1;
   position: absolute;
   left: 0px;
   bottom: 350px;
   z-index: 50;
   pointer-events: initial;
 }
+.wrapper .badge3 > div {
+  width: 100%;
+  position: relative;
+}
+.wrapper .badge3 > div img {
+  width: 100%;
+}
+.wrapper .badge3 > div .minus_button {
+  position: absolute;
+  color: red;
+  top: -3px;
+  right: -3px;
+  font-size: 20px;
+  font-weight: 700;
+}
 .wrapper .badge4 {
   width: 40px;
+  aspect-ratio: 1/1;
   position: absolute;
   left: 60px;
   bottom: 300px;
   z-index: 50;
   pointer-events: initial;
 }
+.wrapper .badge4 > div {
+  width: 100%;
+  position: relative;
+}
+.wrapper .badge4 > div img {
+  width: 100%;
+}
+.wrapper .badge4 > div .minus_button {
+  position: absolute;
+  color: red;
+  top: -3px;
+  right: -3px;
+  font-size: 20px;
+  font-weight: 700;
+}
 .wrapper .badge5 {
   width: 40px;
+  aspect-ratio: 1/1;
   position: absolute;
   left: 60px;
   bottom: 180px;
   z-index: 50;
   pointer-events: initial;
 }
+.wrapper .badge5 > div {
+  width: 100%;
+  position: relative;
+}
+.wrapper .badge5 > div img {
+  width: 100%;
+}
+.wrapper .badge5 > div .minus_button {
+  position: absolute;
+  color: red;
+  top: -3px;
+  right: -3px;
+  font-size: 20px;
+  font-weight: 700;
+}
 .wrapper .badge6 {
   width: 40px;
+  aspect-ratio: 1/1;
   position: absolute;
   left: 120px;
   bottom: 200px;
   z-index: 50;
   pointer-events: initial;
 }
+.wrapper .badge6 > div {
+  width: 100%;
+  position: relative;
+}
+.wrapper .badge6 > div img {
+  width: 100%;
+}
+.wrapper .badge6 > div .minus_button {
+  position: absolute;
+  color: red;
+  top: -3px;
+  right: -3px;
+  font-size: 20px;
+  font-weight: 700;
+}
 .wrapper .badge7 {
   width: 40px;
+  aspect-ratio: 1/1;
   position: absolute;
   left: 60px;
   bottom: 70px;
   z-index: 50;
   pointer-events: initial;
 }
+.wrapper .badge7 > div {
+  width: 100%;
+  position: relative;
+}
+.wrapper .badge7 > div img {
+  width: 100%;
+}
+.wrapper .badge7 > div .minus_button {
+  position: absolute;
+  color: red;
+  top: -3px;
+  right: -3px;
+  font-size: 20px;
+  font-weight: 700;
+}
 .wrapper .badge8 {
   width: 40px;
+  aspect-ratio: 1/1;
   position: absolute;
   left: 130px;
   bottom: 100px;
   z-index: 50;
   pointer-events: initial;
+}
+.wrapper .badge8 > div {
+  width: 100%;
+  position: relative;
+}
+.wrapper .badge8 > div img {
+  width: 100%;
+}
+.wrapper .badge8 > div .minus_button {
+  position: absolute;
+  color: red;
+  top: -3px;
+  right: -3px;
+  font-size: 20px;
+  font-weight: 700;
 }/*# sourceMappingURL=MainPage.module.css.map */

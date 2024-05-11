@@ -104,10 +104,18 @@ function MainPage() {
     setIsDeleteAllFoodConfirmModalOpen(true);
   };
 
+  // - 버튼을 눌렀을 때 부착한 배지 제거
+  const handleDeleteAttachedBadge = (badgeId: number) => {
+    const updatedAttachedBadgeList = attachedBadgeList.filter((badge) => {
+      return badge.badgeId !== badgeId
+    })
+    setAttachedBadgeList(updatedAttachedBadgeList)
+  }
+
   const handleSelectAttachedBadege = () => {
-    console.log('확인')
+    console.log("확인");
     if (selectedBadge) {
-      console.log(selectedBadge)
+      console.log(selectedBadge);
       setAttachedBadgeList([
         ...attachedBadgeList,
         {
@@ -125,6 +133,7 @@ function MainPage() {
     }
   }, [bigCategoryList]);
 
+  // 메인페이지에서 현재 적용중인 디자인 및 배지를 적용
   useEffect(() => {
     if (currentDesign) {
       setAppliedDesign({
@@ -200,12 +209,18 @@ function MainPage() {
       );
       if (appliedBadge) {
         return (
-          <img
+          <div
             key={appliedBadge.badgeId}
             className={styles[`badge${appliedBadge.position}`]}
-            src={appliedBadge.src}
-            alt={`배지${appliedBadge.position} 이미지`}
-          />
+          >
+            <div>
+              <img
+                src={appliedBadge.src}
+                alt={`배지${appliedBadge.position} 이미지`}
+              />
+              <div className={styles.minus_button} onClick={() => handleDeleteAttachedBadge(appliedBadge.badgeId)}>-</div>
+            </div>
+          </div>
         );
       } else {
         return (

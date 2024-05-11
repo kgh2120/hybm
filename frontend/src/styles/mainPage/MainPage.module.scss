@@ -1,11 +1,27 @@
 @import "../common/common";
-@mixin badge($left, $bottom) {
+@mixin badge-img-box($left, $bottom) {
   width: 40px;
+  aspect-ratio: 1/1;
   position: absolute;
   left: $left;
   bottom: $bottom;
   z-index: 50;
-  pointer-events:initial;
+  pointer-events: initial;
+  > div {
+    width: 100%;
+    position: relative;
+    img {
+      width: 100%;
+    }
+    .minus_button {
+      position: absolute;
+      color: red;
+      top: -3px;
+      right: -3px;
+      font-size: $font-xl;
+      font-weight: 700;
+    }
+  }
 }
 
 .wrapper {
@@ -78,27 +94,33 @@
     width: 60px;
   }
   .badge1 {
-    @include badge(60px, 400px);
+    @include badge-img-box(60px, 400px);
+    img {
+      width: 100%;
+    }
   }
   .badge2 {
-    @include badge(120px, 450px);
+    @include badge-img-box(120px, 450px);
+    img {
+      width: 100%;
+    }
   }
   .badge3 {
-    @include badge(0px, 350px);
+    @include badge-img-box(0px, 350px);
   }
   .badge4 {
-    @include badge(60px, 300px);
+    @include badge-img-box(60px, 300px);
   }
   .badge5 {
-    @include badge(60px, 180px);
+    @include badge-img-box(60px, 180px);
   }
   .badge6 {
-    @include badge(120px, 200px);
+    @include badge-img-box(120px, 200px);
   }
   .badge7 {
-    @include badge(60px, 70px);
+    @include badge-img-box(60px, 70px);
   }
   .badge8 {
-    @include badge(130px, 100px);
+    @include badge-img-box(130px, 100px);
   }
 }
