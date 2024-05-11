@@ -8,7 +8,7 @@ import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.dragontrain.md.common.config.CrawlProperties;
+import com.dragontrain.md.common.config.properties.CrawlProperties;
 import com.dragontrain.md.common.config.exception.InternalServerCaughtException;
 
 import lombok.RequiredArgsConstructor;
