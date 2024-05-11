@@ -7,20 +7,38 @@
   bottom: $bottom;
   z-index: 50;
   pointer-events: initial;
-  > div {
+
+  @keyframes blink-effect {
+    50% {
+      opacity: 0;
+    }
+  }
+  .badge_sub_box {
     width: 100%;
     position: relative;
-    img {
-      width: 100%;
-    }
-    .minus_button {
+    .blink_box {
+      border-radius: 50%;
+      width: 110%;
+      aspect-ratio: 1/1;
+      border: 2px solid rgb(249, 252, 34);
+      animation: blink-effect 1s step-end infinite;
       position: absolute;
-      color: red;
-      top: -3px;
-      right: -3px;
-      font-size: $font-xl;
-      font-weight: 700;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
+  }
+
+  img {
+    width: 100%;
+  }
+  .minus_button {
+    position: absolute;
+    color: red;
+    top: -3px;
+    right: -3px;
+    font-size: $font-xl;
+    font-weight: 700;
   }
 }
 
@@ -95,15 +113,9 @@
   }
   .badge1 {
     @include badge-img-box(60px, 400px);
-    img {
-      width: 100%;
-    }
   }
   .badge2 {
     @include badge-img-box(120px, 450px);
-    img {
-      width: 100%;
-    }
   }
   .badge3 {
     @include badge-img-box(0px, 350px);
