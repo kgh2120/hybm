@@ -72,7 +72,7 @@ function MainPage() {
     isPending: isBigCategoryListPending,
     isError: isBigCategoryListError,
   } = useQuery({
-    queryKey: ["isNewNotification"],
+    queryKey: ["bigCategoryList"],
     queryFn: getBigCategoryList,
   });
 

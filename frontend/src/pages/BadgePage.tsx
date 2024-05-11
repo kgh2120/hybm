@@ -46,12 +46,13 @@ function BadgePage() {
         <BadgeWhiteSection title="보유 뱃지" badgeList={badgeList.has} option="has"/>
         <BadgeWhiteSection title="미보유 뱃지" badgeList={badgeList.hasnot} option="hasnot"/>
         <div className={styles.button_box}>
-          <Button content="적용" color="red" onClick={() => {}} />
+          <Button content="적용" color="red" onClick={() => {}} disabled={false}/>
           <Link to="/">
             <Button
               content="홈으로"
               color="white"
               onClick={() => {}}
+              disabled={false}
             />
           </Link>
         </div>

@@ -2,15 +2,60 @@ import Button from "../common/Button";
 import styles from "../../styles/storagePage/CreateFoodModal.module.css";
 import barcode from "../../assets/images/barcode.png";
 import camera from "../../assets/images/camera.png";
-// import { useInput } from "../../hooks/useInput";
 import FoodSection from "../common/FoodSection";
-// import { useState } from "react";
+import useFoodStore from "../../stores/useFoodStore";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { postFood } from "../../api/foodApi";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { formatDashDate } from "../../utils/formatting";
 
-function CreateFoodModal() {
+interface CreateFoodModalProps {
+  handleCloseCreateFoodModal: () => void;
+}
+
+function CreateFoodModal({ handleCloseCreateFoodModal } : CreateFoodModalProps) {
+  const queryClient = useQueryClient();
+  const { storageName } = useParams() as { storageName: string };
+  const { inputList } = useFoodStore();
+
+  const [foodData, setFoodData] = useState({
+    name: "",
+    categoryId: 0,
+    price: 0,
+    expiredDate: "",
+    location: "",
+    isManual: true,
+  });
+
+  useEffect(() => {
+    setFoodData({
+      name: inputList.foodName,
+      categoryId: inputList.categoryId,
+      price: inputList.price,
+      expiredDate: formatDashDate(inputList.expiredDate),
+      location: storageName,
+      isManual: true,
+    });
+  }, [inputList]);
+
+  // 식품 등록 api
+  const { mutate: mutateFood } = useMutation({
+    mutationFn: postFood,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['foodStorageItemList'],
+      });
+      handleCloseCreateFoodModal();
+  }});
+  const handleCreateFood = () => {
+    mutateFood(foodData);
+  };
+
   return (
     <div className={styles.wrapper}>
       <section className={styles.main_section}>
-        <FoodSection />
+        <FoodSection option="inactive" />
         <section className={styles.btn_section}>
           <div>
             <img src={barcode} alt="바코드아이콘" />
@@ -21,46 +66,21 @@ function CreateFoodModal() {
           <div></div>
         </section>
       </section>
-      {/* <section className={styles.main_section}>
-        <div className={styles.img_section}>
-          <div className={styles.img_article}>
-            <div className={styles.food_option_box}>
-              <span>상품명</span>
-              <input placeholder="바코드를 촬영하거나 직접 입력해보세요."></input>
-            </div>
-            <div className={styles.food_option_box}>
-              <span>분류</span>
-              <div className={styles.category_box}>
-                <img src={meat} alt="" />
-                <input
-                  value={category}
-                  onChange={changeCategory}
-                  type="text"
-                  name=""
-                  id=""
-                ></input>
-              </div>
-            </div>
-          </div>
-          <img className={styles.button} src={barcode} alt="" />
-        </div>
-        <div className={styles.img_section}>
-          <div className={styles.food_option_box}>
-            <span>소비기한</span>
-            <ExpiryDateSelector />
-          </div>
-          <img className={styles.button} src={camera} alt="" />
-        </div>
-        <div className={styles.food_option_box}>
-          <span>가격</span>
-          <input></input>
-        </div>
-        <div className={styles.food_option_box}>
-          <span>위치</span>
-          <input></input>
-        </div>
-      </section> */}
-      <Button content="완료" color="red" onClick={() => {}}/>
+      <span>
+        * 분류에 따른 <span>예상 소비기한</span>이 제공되나
+        <br />
+        상이할 수 있습니다.
+      </span>
+      <Button
+        content="완료"
+        color="red"
+        onClick={handleCreateFood}
+        disabled={
+          foodData.name == '' ||
+          foodData.categoryId == 0 ||
+          foodData.price == 0
+        }
+      />
     </div>
   );
 }

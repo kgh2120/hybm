@@ -10,17 +10,21 @@ import ItemBox from "../components/common/ItemBox";
 import FoodStateSection from "../components/storagePage/FoodStateSection";
 import { getFoodStorageItemList } from "../api/foodApi";
 import { useQuery } from "@tanstack/react-query";
+import useFoodStore from "../stores/useFoodStore";
 
 function StoragePage() {
   const [isCreateFoodModalOpen, setIsCreateFoodModalOpen] =
     useState(false);
+  const { setInputList, initialInputList } = useFoodStore();
   const { storageName } = useParams() as { storageName: string };
+
   const handleOpenCreateFoodModal = () => {
     setIsCreateFoodModalOpen(true);
   };
 
   const handleCloseCreateFoodModal = () => {
     setIsCreateFoodModalOpen(false);
+    setInputList(initialInputList);
   };
 
   const TITLE_LIST: { [key: string]: string } = {
@@ -40,7 +44,7 @@ function StoragePage() {
     foodId: number;
     name: string;
     categoryImgSrc: string;
-    dDay: number;
+    dday: number;
   }
 
   // 내부 식품 칸별 조회 api
@@ -60,8 +64,6 @@ function StoragePage() {
     return <div>error</div>;
   }
 
-  console.log("아이템 리스트:", foodStorageItemList);
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.white_wrapper}>
@@ -74,25 +76,36 @@ function StoragePage() {
           />
         </Link>
         <section className={styles.main_section}>
-          {Object.keys(foodStorageItemList).map((sectionTitle) => (
-            <FoodStateSection
-              sectionTitle={SECTION_TITLE_LIST[sectionTitle]}
-              sectionClass={sectionTitle}
-            >
-              {foodStorageItemList[sectionTitle].map(
-                (item: FoodItemType) => (
-                  <ItemBox
-                    name={item.name}
-                    content={`D-${item.dDay}`}
-                    option={
-                      sectionTitle === "rotten" ? "inactive" : ""
-                    }
-                    imgSrc={item.categoryImgSrc}
-                  />
-                )
-              )}
-            </FoodStateSection>
-          ))}
+          {Object.keys(foodStorageItemList).map(
+            (sectionTitle, idx) => (
+              <FoodStateSection
+                key={idx}
+                sectionTitle={SECTION_TITLE_LIST[sectionTitle]}
+                sectionClass={sectionTitle}
+              >
+                {foodStorageItemList[sectionTitle].map(
+                  (item: FoodItemType, idx: number) => (
+                    <ItemBox
+                      key={idx}
+                      name={item.name}
+                      content={
+                        item.dday === 0
+                          ? "D-day"
+                          : item.dday > 0
+                          ? `D+${item.dday}`
+                          : `D${item.dday}`
+                      }
+                      option={
+                        sectionTitle === "rotten" ? "inactive" : ""
+                      }
+                      imgSrc={item.categoryImgSrc}
+                      onClick={() => {}}
+                    />
+                  )
+                )}
+              </FoodStateSection>
+            )
+          )}
         </section>
         <section className={styles.btn_section}>
           <div className={styles.btn_box}>
@@ -113,7 +126,9 @@ function StoragePage() {
           title="식품 등록"
           clickEvent={handleCloseCreateFoodModal}
         >
-          <CreateFoodModal />
+          <CreateFoodModal
+            handleCloseCreateFoodModal={handleCloseCreateFoodModal}
+          />
         </Modal>
       )}
     </div>

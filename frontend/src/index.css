@@ -101,3 +101,9 @@ body>div {
   border: 0;
   font-size: 100%;
 } */
+
+input:focus {outline:none;}
+
+input {
+  border-radius: 0%;
+}

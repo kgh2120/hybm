@@ -43,30 +43,35 @@ function RecipePage() {
                   content="D-1"
                   option="report"
                   imgSrc=""
+                  onClick={() => {}}
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
                   imgSrc=""
+                  onClick={() => {}}
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
                   imgSrc=""
+                  onClick={() => {}}
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
                   imgSrc=""
+                  onClick={() => {}}
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
                   imgSrc=""
+                  onClick={() => {}}
                 />
               </section>
               <div className={styles.section_title}>
@@ -78,30 +83,35 @@ function RecipePage() {
                   content="D-1"
                   option="report"
                   imgSrc=""
+                  onClick={() => {}}
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
                   imgSrc=""
+                  onClick={() => {}}
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
                   imgSrc=""
+                  onClick={() => {}}
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
                   imgSrc=""
+                  onClick={() => {}}
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
                   imgSrc=""
+                  onClick={() => {}}
                 />
               </section>
               <div className={styles.section_title}>
@@ -113,30 +123,35 @@ function RecipePage() {
                   content="D-1"
                   option="report"
                   imgSrc=""
+                  onClick={() => {}}
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
                   imgSrc=""
+                  onClick={() => {}}
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
                   imgSrc=""
+                  onClick={() => {}}
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
                   imgSrc=""
+                  onClick={() => {}}
                 />
                 <ItemBox
                   name="기본찬장"
                   content="D-1"
                   option="report"
                   imgSrc=""
+                  onClick={() => {}}
                 />
               </section>
             </section>
