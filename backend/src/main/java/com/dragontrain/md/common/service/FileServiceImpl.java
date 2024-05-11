@@ -8,16 +8,12 @@ import com.dragontrain.md.domain.recipe.service.port.RecipeIngredientRepository;
 import com.dragontrain.md.domain.recipe.service.port.RecipeRepository;
 import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorErrorCode;
 import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorException;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.context.annotation.Bean;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.*;

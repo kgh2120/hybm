@@ -397,7 +397,7 @@ class FoodControllerTest {
 	@Test
 	void foodDeleteFailInvalidPathVariablesTest() throws Exception {
 		// given
-		final String deleteType = "clear";
+		final String deleteType = "trash";
 		final String path = "/api/foods/" + deleteType;
 		// when // then
 		mockMvc.perform(delete(path)
