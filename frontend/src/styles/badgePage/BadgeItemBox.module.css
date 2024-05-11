@@ -12,8 +12,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: aqua;
-  border: 1px dashed #fb5862;
+  background-color: #fce6e7;
+  border: 2px solid #e5333e;
   position: relative;
   z-index: 900;
 }

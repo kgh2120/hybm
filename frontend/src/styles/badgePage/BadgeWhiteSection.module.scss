@@ -5,7 +5,7 @@
   border: 1px solid $color-light;
   border-radius: 10px;
   position: relative;
-  width: 180px;
+  width: 190px;
   > h2 {
     font-size: $font-lg;
     color: $color-text;
@@ -25,13 +25,13 @@
 }
 
 .main_section {
-  display: flex;
-  justify-content: left;
-  // background-color: aqua;
-  // align-items: center;
-  padding: 12px 12px 12px 20px;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-column-gap: 0px;
+  row-gap: 12px;
   flex-wrap: wrap;
-  height: 220px;
+  padding: 12px 0px;
+  height: 240px;
   overflow-y: auto;
 }

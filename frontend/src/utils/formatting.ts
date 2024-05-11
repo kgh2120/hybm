@@ -37,4 +37,6 @@ const formatDashDate = (date: DateType) => {
   return `${year}-${formattedMonth}-${formattedDay}`;
 };
 
-export {formatPrice, formatDate, stringToDate, dateToString, formatDashDate}
+const addLineBreakBeforeNumber = (inputString: string) => inputString.replace(/(\D)(\d)/g, '$1<br>$2');
+
+export {formatPrice, formatDate, stringToDate, dateToString, formatDashDate, addLineBreakBeforeNumber}

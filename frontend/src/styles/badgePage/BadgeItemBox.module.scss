@@ -10,9 +10,8 @@
     aspect-ratio: 1/1;
     border-radius: 50%;
     @include center;
-    // background-color: $color-back;
-    background-color: aqua;
-    border: 1px dashed $color-light;
+    background-color: $color-back;
+    border: 2px solid $color-point;
     position: relative;
     z-index: 900;
     img  {

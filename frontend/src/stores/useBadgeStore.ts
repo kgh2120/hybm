@@ -4,7 +4,7 @@ import { persist } from "zustand/middleware";
 interface BadgeType {
   src: string;
   badgeId: number;
-  position: number;
+  position: number | null;
 }
 
 interface AttachedBadgeState {
@@ -32,6 +32,7 @@ interface BadgeState {
 
 interface BadgeAction {
   setSelectedBadge: (value: BadgeType) => void;
+  initSelectedBadge: () => void;
 }
 
 export const useBadgeStore = create<BadgeState & BadgeAction>(
@@ -39,10 +40,12 @@ export const useBadgeStore = create<BadgeState & BadgeAction>(
     selectedBadge: {
       src: "",
       badgeId: 0,
-      position: 0,
+      position: null,
     },
     setSelectedBadge: (value: BadgeType) =>
       set({ selectedBadge: value }),
+    initSelectedBadge: () =>
+      set({ selectedBadge: {src: "", badgeId: 0, position: null} }),
   })
 );
 

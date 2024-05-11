@@ -1,8 +1,8 @@
-import { useState } from "react";
 import useAttachedBadgeStore, {
   useBadgeStore,
 } from "../../stores/useBadgeStore";
 import styles from "../../styles/badgePage/BadgeItemBox.module.css";
+import { addLineBreakBeforeNumber } from '../../utils/formatting';
 
 interface BadgeType {
   badgeId: number;
@@ -30,13 +30,14 @@ function BadgeItemBox({ badge, option }: BadgeItemBoxProps) {
 
   const { attachedBadgeList, setAttachedBadgeList } =
     useAttachedBadgeStore();
-  const { setSelectedBadge } = useBadgeStore();
-  const [isSelected, setIsSelected] = useState(isAttached);
+  const { selectedBadge, setSelectedBadge } = useBadgeStore();
   const handleSelectBadge = () => {
-    setIsSelected(true);
     setSelectedBadge({ badgeId, src: badgeImgSrc, position });
   };
-  const styleName = isSelected ? "attached_img_box" : "img_box";
+  const styleName = selectedBadge.badgeId === badgeId ? "attached_img_box" : "img_box";
+
+  const formattedCondition = addLineBreakBeforeNumber(condition)
+
   return (
     <article className={styles.wrapper}>
       {option === "hasnot" ? (
@@ -54,7 +55,7 @@ function BadgeItemBox({ badge, option }: BadgeItemBoxProps) {
       )}
       <div className={styles.text_box}>
         <span className={styles.item_name}>{name}</span>
-        <span className={styles.item_content}>{condition}</span>
+        <span className={styles.item_content} dangerouslySetInnerHTML={{ __html: formattedCondition }} />
       </div>
     </article>
   );

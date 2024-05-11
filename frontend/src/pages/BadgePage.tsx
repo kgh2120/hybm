@@ -2,10 +2,11 @@ import MainPage from "./MainPage";
 import styles from "../styles/designPage/DesignPage.module.css";
 import Button from "../components/common/Button";
 import rightArrow from "../assets/images/rightArrow.png";
-import { Link } from "react-router-dom";
-import { getBadgeList } from "../api/badgeApi";
-import { useQuery } from "@tanstack/react-query";
+import { Link, useNavigate } from "react-router-dom";
+import { getBadgeList, putBadgePosition } from "../api/badgeApi";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import BadgeWhiteSection from '../components/badgePage/BadgeWhiteSection';
+import useAttachedBadgeStore from '../stores/useBadgeStore';
 
 interface BadgeType {
   badgeId: number;
@@ -22,6 +23,8 @@ interface BadgeListType {
 }
 
 function BadgePage() {
+  const { attachedBadgeList } = useAttachedBadgeStore();
+  const navigate = useNavigate();
   const {
     data: badgeList,
     isPending: isBadgeListPending,
@@ -30,6 +33,21 @@ function BadgePage() {
     queryKey: ["badgeList"],
     queryFn: getBadgeList,
   });
+
+  const { mutate: mutatePutBadgePosition } = useMutation({
+    mutationFn: putBadgePosition,
+    onSuccess: () => {
+      navigate("/")
+    }
+  });
+  
+  const handlePutBadgePosition = () => {
+    const badgeListParams = attachedBadgeList.map((badge) => ({
+      badgeId: badge.badgeId, position: badge.position
+    }))
+    console.log('badgeListParams:', badgeListParams)
+    mutatePutBadgePosition(badgeListParams)
+  }
 
   if (isBadgeListPending) {
     return <div>Loading...</div>;
@@ -46,7 +64,7 @@ function BadgePage() {
         <BadgeWhiteSection title="보유 뱃지" badgeList={badgeList.has} option="has"/>
         <BadgeWhiteSection title="미보유 뱃지" badgeList={badgeList.hasnot} option="hasnot"/>
         <div className={styles.button_box}>
-          <Button content="적용" color="red" onClick={() => {}} disabled={false}/>
+          <Button content="적용" color="red" onClick={handlePutBadgePosition} disabled={false}/>
           <Link to="/">
             <Button
               content="홈으로"
