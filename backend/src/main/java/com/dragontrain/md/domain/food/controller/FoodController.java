@@ -117,7 +117,7 @@ public class FoodController {
 		return ResponseEntity.ok().build();
 	}
 
-	@PutMapping("/clear")
+	@DeleteMapping("/clear")
 	public ResponseEntity<Void> clearRefrigerator(@AuthenticationPrincipal User user) {
 
 		foodService.clearRefrigerator(user);

@@ -6,3 +6,4 @@ spring:
   config:
     import:
       - secret.yml
+
