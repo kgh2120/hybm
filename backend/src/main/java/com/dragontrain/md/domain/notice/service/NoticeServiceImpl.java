@@ -44,7 +44,7 @@ public class NoticeServiceImpl implements NoticeService{
 				refrigeratorRepository.findByUserId(user.getUserId())
 			.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND))
 			.getRefrigeratorId()
-				, pageable
+				, pageable.withPage(pageable.getPageNumber() - 1)
 			)
 		);
 	}
