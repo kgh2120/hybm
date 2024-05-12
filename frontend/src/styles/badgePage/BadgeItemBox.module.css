@@ -17,10 +17,17 @@
   position: relative;
   z-index: 900;
 }
-.wrapper .attached_img_box img {
+.wrapper .attached_img_box .badge_img {
   width: 80%;
   aspect-ratio: 0.7;
   z-index: 999;
+}
+.wrapper .attached_img_box .check_img {
+  z-index: 2;
+  position: absolute;
+  bottom: 0;
+  right: -4%;
+  width: 17px;
 }
 .wrapper .img_box {
   max-width: 60px;

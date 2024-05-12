@@ -45,7 +45,6 @@ function BadgePage() {
     const badgeListParams = attachedBadgeList.map((badge) => ({
       badgeId: badge.badgeId, position: badge.position
     }))
-    console.log('badgeListParams:', badgeListParams)
     mutatePutBadgePosition(badgeListParams)
   }
 

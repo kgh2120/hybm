@@ -1,8 +1,7 @@
-import useAttachedBadgeStore, {
-  useBadgeStore,
-} from "../../stores/useBadgeStore";
+import { useBadgeStore } from "../../stores/useBadgeStore";
 import styles from "../../styles/badgePage/BadgeItemBox.module.css";
-import { addLineBreakBeforeNumber } from '../../utils/formatting';
+import { addLineBreakBeforeNumber } from "../../utils/formatting";
+import check from "../../assets/images/check.png";
 
 interface BadgeType {
   badgeId: number;
@@ -19,24 +18,18 @@ interface BadgeItemBoxProps {
 }
 
 function BadgeItemBox({ badge, option }: BadgeItemBoxProps) {
-  const {
-    badgeId,
-    name,
-    badgeImgSrc,
-    condition,
-    isAttached,
-    position,
-  } = badge;
+  const { badgeId, name, badgeImgSrc, condition, position } = badge;
 
-  const { attachedBadgeList, setAttachedBadgeList } =
-    useAttachedBadgeStore();
   const { selectedBadge, setSelectedBadge } = useBadgeStore();
   const handleSelectBadge = () => {
     setSelectedBadge({ badgeId, src: badgeImgSrc, position });
   };
-  const styleName = selectedBadge.badgeId === badgeId ? "attached_img_box" : "img_box";
+  const styleName =
+    selectedBadge.badgeId === badgeId
+      ? "attached_img_box"
+      : "img_box";
 
-  const formattedCondition = addLineBreakBeforeNumber(condition)
+  const formattedCondition = addLineBreakBeforeNumber(condition);
 
   return (
     <article className={styles.wrapper}>
@@ -50,12 +43,20 @@ function BadgeItemBox({ badge, option }: BadgeItemBoxProps) {
           className={styles[styleName]}
           onClick={handleSelectBadge}
         >
-          <img src={badgeImgSrc} alt="상품아이콘" />
+          <img
+            className={styles.badge_img}
+            src={badgeImgSrc}
+            alt="상품아이콘"
+          />
+          {selectedBadge.badgeId === badgeId && <img className={styles.check_img}src={check} alt="체크 이미지" />}
         </div>
       )}
       <div className={styles.text_box}>
         <span className={styles.item_name}>{name}</span>
-        <span className={styles.item_content} dangerouslySetInnerHTML={{ __html: formattedCondition }} />
+        <span
+          className={styles.item_content}
+          dangerouslySetInnerHTML={{ __html: formattedCondition }}
+        />
       </div>
     </article>
   );

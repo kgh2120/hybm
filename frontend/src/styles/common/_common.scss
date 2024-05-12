@@ -33,7 +33,6 @@ $font-xl: 20px;
 @mixin font-shadow($color) {
   text-shadow: -1px 0px $color, 0px 1px $color, 1px 0px $color,
     0px -1px $color;
-  
 }
 
 @mixin input-text {
@@ -69,4 +68,12 @@ $font-xl: 20px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+@mixin check-img {
+  z-index: 2;
+  position: absolute;
+  bottom: 0;
+  right: -4%;
+  width: 17px;
 }

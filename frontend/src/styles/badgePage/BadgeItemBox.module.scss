@@ -14,10 +14,13 @@
     border: 2px solid $color-point;
     position: relative;
     z-index: 900;
-    img  {
+    .badge_img  {
       width: 80%;
       aspect-ratio: 0.7;
       z-index: 999;
+    }
+    .check_img {
+      @include check-img;
     }
   }
   .img_box {
