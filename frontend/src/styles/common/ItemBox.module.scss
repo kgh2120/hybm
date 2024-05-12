@@ -29,6 +29,39 @@
       aspect-ratio: 1/1;
     }
   }
+  .clicked_img_box {
+    width: 60px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    @include center;
+    background-color: $color-back;
+    border: 2px solid $color-light;
+    position: relative;
+
+    .img_solid_white_box {
+      @include absolute-center;
+      z-index: 1;
+      width: 58px;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      @include center;
+      background-color: rgba(white, 0.6);
+    }
+    .food_img {
+      width: 80%;
+      aspect-ratio: 1/1;
+    }
+
+    .check_img {
+      z-index: 2;
+      position: absolute;
+      bottom: 0;
+      right: -4%;
+      width: 17px;
+    }
+
+
+  }
 
   .text_box {
     @include center;

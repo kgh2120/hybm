@@ -44,6 +44,10 @@
   width: 100%;
   padding: 0px 12px;
 }
+.wrapper .white_wrapper .btn_section .right_btn_box {
+  display: flex;
+  gap: 13px;
+}
 .wrapper .white_wrapper .btn_section .btn_box {
   display: flex;
   align-items: center;
@@ -53,6 +57,7 @@
 }
 .wrapper .white_wrapper .btn_section .btn_box > img {
   width: 30px;
+  height: 30px;
 }
 .wrapper .white_wrapper .btn_section .btn_box > span {
   color: #666666;

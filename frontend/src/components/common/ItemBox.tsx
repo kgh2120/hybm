@@ -1,4 +1,5 @@
 import styles from "../../styles/common/ItemBox.module.css";
+import check from "../../assets/images/check.png"
 
 interface ItemBoxProps {
   name: string;
@@ -20,6 +21,12 @@ function ItemBox({
         <div className={styles.img_box}>
           <div className={styles.img_gray_box}></div>
           <img src={imgSrc} alt="상품아이콘" />
+        </div>
+      ) : option === "clicked" ? (
+        <div className={styles.clicked_img_box}>
+          <div className={styles.img_solid_white_box}></div>
+          <img className={styles.food_img} src={imgSrc} alt="상품아이콘" />
+          <img className={styles.check_img} src={check} alt="체크아이콘" />
         </div>
       ) : option === "report" ? (
         <div className={styles.report_img_box}>

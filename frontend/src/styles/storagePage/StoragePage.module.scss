@@ -37,12 +37,17 @@
       justify-content: space-between;
       width: 100%;
       padding: 0px 12px;
+      .right_btn_box {
+        display: flex;
+        gap: 13px;
+      }
       .btn_box {
         @include center;
         flex-direction: column;
         gap: 5px;
         > img {
           width: 30px;
+          height: 30px;
         }
         > span {
           @include item-content;
