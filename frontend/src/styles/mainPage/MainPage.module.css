@@ -67,13 +67,14 @@
   width: 60px;
 }
 .wrapper .badge1 {
-  width: 40px;
-  aspect-ratio: 1/1;
+  width: 45px;
+  aspect-ratio: 0.7;
   position: absolute;
   left: 60px;
-  bottom: 400px;
+  bottom: 420px;
   z-index: 50;
   pointer-events: initial;
+  filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
 @keyframes blink-effect {
   50% {
@@ -84,36 +85,30 @@
   width: 100%;
   position: relative;
 }
-.wrapper .badge1 .badge_sub_box .blink_box {
-  border-radius: 50%;
-  width: 110%;
-  aspect-ratio: 1/1;
-  border: 2px solid rgb(249, 252, 34);
-  animation: blink-effect 1s step-end infinite;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.wrapper .badge1 .badge_sub_box .plus_btn {
+  width: 70%;
+  aspect-ratio: 0.7;
+  opacity: 0.8;
 }
-.wrapper .badge1 img {
+.wrapper .badge1 .badge_sub_box .badge {
   width: 100%;
 }
-.wrapper .badge1 .minus_button {
+.wrapper .badge1 .badge_sub_box .minus_btn {
   position: absolute;
-  color: red;
-  top: -3px;
-  right: -3px;
-  font-size: 20px;
-  font-weight: 700;
+  width: 20px;
+  height: 50px;
+  bottom: 0px;
+  right: 0px;
 }
 .wrapper .badge2 {
-  width: 40px;
-  aspect-ratio: 1/1;
+  width: 45px;
+  aspect-ratio: 0.7;
   position: absolute;
-  left: 120px;
-  bottom: 450px;
+  left: 115px;
+  bottom: 475px;
   z-index: 50;
   pointer-events: initial;
+  filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
 @keyframes blink-effect {
   50% {
@@ -124,36 +119,30 @@
   width: 100%;
   position: relative;
 }
-.wrapper .badge2 .badge_sub_box .blink_box {
-  border-radius: 50%;
-  width: 110%;
-  aspect-ratio: 1/1;
-  border: 2px solid rgb(249, 252, 34);
-  animation: blink-effect 1s step-end infinite;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.wrapper .badge2 .badge_sub_box .plus_btn {
+  width: 70%;
+  aspect-ratio: 0.7;
+  opacity: 0.8;
 }
-.wrapper .badge2 img {
+.wrapper .badge2 .badge_sub_box .badge {
   width: 100%;
 }
-.wrapper .badge2 .minus_button {
+.wrapper .badge2 .badge_sub_box .minus_btn {
   position: absolute;
-  color: red;
-  top: -3px;
-  right: -3px;
-  font-size: 20px;
-  font-weight: 700;
+  width: 20px;
+  height: 50px;
+  bottom: 0px;
+  right: 0px;
 }
 .wrapper .badge3 {
-  width: 40px;
-  aspect-ratio: 1/1;
+  width: 45px;
+  aspect-ratio: 0.7;
   position: absolute;
-  left: 0px;
+  left: 55px;
   bottom: 350px;
   z-index: 50;
   pointer-events: initial;
+  filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
 @keyframes blink-effect {
   50% {
@@ -164,36 +153,30 @@
   width: 100%;
   position: relative;
 }
-.wrapper .badge3 .badge_sub_box .blink_box {
-  border-radius: 50%;
-  width: 110%;
-  aspect-ratio: 1/1;
-  border: 2px solid rgb(249, 252, 34);
-  animation: blink-effect 1s step-end infinite;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.wrapper .badge3 .badge_sub_box .plus_btn {
+  width: 70%;
+  aspect-ratio: 0.7;
+  opacity: 0.8;
 }
-.wrapper .badge3 img {
+.wrapper .badge3 .badge_sub_box .badge {
   width: 100%;
 }
-.wrapper .badge3 .minus_button {
+.wrapper .badge3 .badge_sub_box .minus_btn {
   position: absolute;
-  color: red;
-  top: -3px;
-  right: -3px;
-  font-size: 20px;
-  font-weight: 700;
+  width: 20px;
+  height: 50px;
+  bottom: 0px;
+  right: 0px;
 }
 .wrapper .badge4 {
-  width: 40px;
-  aspect-ratio: 1/1;
+  width: 45px;
+  aspect-ratio: 0.7;
   position: absolute;
-  left: 60px;
-  bottom: 300px;
+  left: 120px;
+  bottom: 415px;
   z-index: 50;
   pointer-events: initial;
+  filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
 @keyframes blink-effect {
   50% {
@@ -204,36 +187,30 @@
   width: 100%;
   position: relative;
 }
-.wrapper .badge4 .badge_sub_box .blink_box {
-  border-radius: 50%;
-  width: 110%;
-  aspect-ratio: 1/1;
-  border: 2px solid rgb(249, 252, 34);
-  animation: blink-effect 1s step-end infinite;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.wrapper .badge4 .badge_sub_box .plus_btn {
+  width: 70%;
+  aspect-ratio: 0.7;
+  opacity: 0.8;
 }
-.wrapper .badge4 img {
+.wrapper .badge4 .badge_sub_box .badge {
   width: 100%;
 }
-.wrapper .badge4 .minus_button {
+.wrapper .badge4 .badge_sub_box .minus_btn {
   position: absolute;
-  color: red;
-  top: -3px;
-  right: -3px;
-  font-size: 20px;
-  font-weight: 700;
+  width: 20px;
+  height: 50px;
+  bottom: 0px;
+  right: 0px;
 }
 .wrapper .badge5 {
-  width: 40px;
-  aspect-ratio: 1/1;
+  width: 45px;
+  aspect-ratio: 0.7;
   position: absolute;
   left: 60px;
-  bottom: 180px;
+  bottom: 170px;
   z-index: 50;
   pointer-events: initial;
+  filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
 @keyframes blink-effect {
   50% {
@@ -244,36 +221,30 @@
   width: 100%;
   position: relative;
 }
-.wrapper .badge5 .badge_sub_box .blink_box {
-  border-radius: 50%;
-  width: 110%;
-  aspect-ratio: 1/1;
-  border: 2px solid rgb(249, 252, 34);
-  animation: blink-effect 1s step-end infinite;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.wrapper .badge5 .badge_sub_box .plus_btn {
+  width: 70%;
+  aspect-ratio: 0.7;
+  opacity: 0.8;
 }
-.wrapper .badge5 img {
+.wrapper .badge5 .badge_sub_box .badge {
   width: 100%;
 }
-.wrapper .badge5 .minus_button {
+.wrapper .badge5 .badge_sub_box .minus_btn {
   position: absolute;
-  color: red;
-  top: -3px;
-  right: -3px;
-  font-size: 20px;
-  font-weight: 700;
+  width: 20px;
+  height: 50px;
+  bottom: 0px;
+  right: 0px;
 }
 .wrapper .badge6 {
-  width: 40px;
-  aspect-ratio: 1/1;
+  width: 45px;
+  aspect-ratio: 0.7;
   position: absolute;
-  left: 120px;
-  bottom: 200px;
+  left: 110px;
+  bottom: 190px;
   z-index: 50;
   pointer-events: initial;
+  filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
 @keyframes blink-effect {
   50% {
@@ -284,36 +255,30 @@
   width: 100%;
   position: relative;
 }
-.wrapper .badge6 .badge_sub_box .blink_box {
-  border-radius: 50%;
-  width: 110%;
-  aspect-ratio: 1/1;
-  border: 2px solid rgb(249, 252, 34);
-  animation: blink-effect 1s step-end infinite;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.wrapper .badge6 .badge_sub_box .plus_btn {
+  width: 70%;
+  aspect-ratio: 0.7;
+  opacity: 0.8;
 }
-.wrapper .badge6 img {
+.wrapper .badge6 .badge_sub_box .badge {
   width: 100%;
 }
-.wrapper .badge6 .minus_button {
+.wrapper .badge6 .badge_sub_box .minus_btn {
   position: absolute;
-  color: red;
-  top: -3px;
-  right: -3px;
-  font-size: 20px;
-  font-weight: 700;
+  width: 20px;
+  height: 50px;
+  bottom: 0px;
+  right: 0px;
 }
 .wrapper .badge7 {
-  width: 40px;
-  aspect-ratio: 1/1;
+  width: 45px;
+  aspect-ratio: 0.7;
   position: absolute;
-  left: 60px;
-  bottom: 70px;
+  left: 55px;
+  bottom: 65px;
   z-index: 50;
   pointer-events: initial;
+  filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
 @keyframes blink-effect {
   50% {
@@ -324,36 +289,30 @@
   width: 100%;
   position: relative;
 }
-.wrapper .badge7 .badge_sub_box .blink_box {
-  border-radius: 50%;
-  width: 110%;
-  aspect-ratio: 1/1;
-  border: 2px solid rgb(249, 252, 34);
-  animation: blink-effect 1s step-end infinite;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.wrapper .badge7 .badge_sub_box .plus_btn {
+  width: 70%;
+  aspect-ratio: 0.7;
+  opacity: 0.8;
 }
-.wrapper .badge7 img {
+.wrapper .badge7 .badge_sub_box .badge {
   width: 100%;
 }
-.wrapper .badge7 .minus_button {
+.wrapper .badge7 .badge_sub_box .minus_btn {
   position: absolute;
-  color: red;
-  top: -3px;
-  right: -3px;
-  font-size: 20px;
-  font-weight: 700;
+  width: 20px;
+  height: 50px;
+  bottom: 0px;
+  right: 0px;
 }
 .wrapper .badge8 {
-  width: 40px;
-  aspect-ratio: 1/1;
+  width: 45px;
+  aspect-ratio: 0.7;
   position: absolute;
-  left: 130px;
-  bottom: 100px;
+  left: 110px;
+  bottom: 90px;
   z-index: 50;
   pointer-events: initial;
+  filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
 @keyframes blink-effect {
   50% {
@@ -364,25 +323,18 @@
   width: 100%;
   position: relative;
 }
-.wrapper .badge8 .badge_sub_box .blink_box {
-  border-radius: 50%;
-  width: 110%;
-  aspect-ratio: 1/1;
-  border: 2px solid rgb(249, 252, 34);
-  animation: blink-effect 1s step-end infinite;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.wrapper .badge8 .badge_sub_box .plus_btn {
+  width: 70%;
+  aspect-ratio: 0.7;
+  opacity: 0.8;
 }
-.wrapper .badge8 img {
+.wrapper .badge8 .badge_sub_box .badge {
   width: 100%;
 }
-.wrapper .badge8 .minus_button {
+.wrapper .badge8 .badge_sub_box .minus_btn {
   position: absolute;
-  color: red;
-  top: -3px;
-  right: -3px;
-  font-size: 20px;
-  font-weight: 700;
+  width: 20px;
+  height: 50px;
+  bottom: 0px;
+  right: 0px;
 }/*# sourceMappingURL=MainPage.module.css.map */

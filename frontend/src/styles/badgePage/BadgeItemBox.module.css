@@ -6,7 +6,7 @@
   gap: 5px;
 }
 .wrapper .attached_img_box {
-  width: 60px;
+  max-width: 60px;
   aspect-ratio: 1/1;
   border-radius: 50%;
   display: flex;
@@ -19,11 +19,11 @@
 }
 .wrapper .attached_img_box img {
   width: 80%;
-  aspect-ratio: 1/1;
+  aspect-ratio: 0.7;
   z-index: 999;
 }
 .wrapper .img_box {
-  width: 60px;
+  max-width: 60px;
   aspect-ratio: 1/1;
   border-radius: 50%;
   display: flex;
@@ -73,7 +73,7 @@
 }
 .wrapper .img_box img {
   width: 80%;
-  aspect-ratio: 1/1;
+  aspect-ratio: 0.7;
   z-index: 999;
 }
 .wrapper .text_box {

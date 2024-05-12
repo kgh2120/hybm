@@ -1,13 +1,13 @@
 @import "../common/common";
 @mixin badge-img-box($left, $bottom) {
-  width: 40px;
-  aspect-ratio: 1/1;
+  width: 45px;
+  aspect-ratio: 0.7;
   position: absolute;
   left: $left;
   bottom: $bottom;
   z-index: 50;
   pointer-events: initial;
-
+  filter: drop-shadow(-4px 4px 0px rgba(black, 0.3));
   @keyframes blink-effect {
     50% {
       opacity: 0;
@@ -16,29 +16,32 @@
   .badge_sub_box {
     width: 100%;
     position: relative;
-    .blink_box {
-      border-radius: 50%;
-      width: 110%;
-      aspect-ratio: 1/1;
-      border: 2px solid rgb(249, 252, 34);
-      animation: blink-effect 1s step-end infinite;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+    // .blink_box {
+    //   border-radius: 50%;
+    //   width: 110%;
+    //   aspect-ratio: 1/1;
+    //   border: 2px solid rgb(249, 252, 34);
+    //   animation: blink-effect 1s step-end infinite;
+    //   position: absolute;
+    //   top: 50%;
+    //   left: 50%;
+    //   transform: translate(-50%, -50%);
+    // }
+    .plus_btn {
+      width: 70%;
+      aspect-ratio: 0.7;
+      opacity: 0.8;
     }
-  }
-
-  img {
-    width: 100%;
-  }
-  .minus_button {
-    position: absolute;
-    color: red;
-    top: -3px;
-    right: -3px;
-    font-size: $font-xl;
-    font-weight: 700;
+    .badge {
+      width: 100%;
+    }
+    .minus_btn {
+      position: absolute;
+      width: 20px;
+      height: 50px;
+      bottom: 0px;
+      right: 0px;
+    }
   }
 }
 
@@ -112,27 +115,27 @@
     width: 60px;
   }
   .badge1 {
-    @include badge-img-box(60px, 400px);
+    @include badge-img-box(60px, 420px);
   }
   .badge2 {
-    @include badge-img-box(120px, 450px);
+    @include badge-img-box(115px, 475px);
   }
   .badge3 {
-    @include badge-img-box(0px, 350px);
+    @include badge-img-box(55px, 350px);
   }
   .badge4 {
-    @include badge-img-box(60px, 300px);
+    @include badge-img-box(120px, 415px);
   }
   .badge5 {
-    @include badge-img-box(60px, 180px);
+    @include badge-img-box(60px, 170px);
   }
   .badge6 {
-    @include badge-img-box(120px, 200px);
+    @include badge-img-box(110px, 190px);
   }
   .badge7 {
-    @include badge-img-box(60px, 70px);
+    @include badge-img-box(55px, 65px);
   }
   .badge8 {
-    @include badge-img-box(130px, 100px);
+    @include badge-img-box(110px, 90px);
   }
 }

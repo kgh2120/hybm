@@ -14,7 +14,8 @@ import { getCurrentDesign } from "../api/fridgeApi";
 import ConfirmModal from "../components/common/ConfirmModal";
 import { getCurrentBadgeList } from "../api/badgeApi";
 import useFridgeStore from "../stores/useFridgeStore";
-import plus from "../assets/images/plus.png";
+import add from "../assets/images/add.png";
+import minus from "../assets/images/minus.png";
 import useAttachedBadgeStore, {
   useBadgeStore,
 } from "../stores/useBadgeStore";
@@ -39,13 +40,10 @@ interface BadgeType {
 function MainPage() {
   const location = useLocation();
   const { setBigCategoryList } = useFoodCategoryStore();
-
   const { appliedDesign, setAppliedDesign } = useFridgeStore();
   const { attachedBadgeList, setAttachedBadgeList } =
     useAttachedBadgeStore();
   const { selectedBadge, initSelectedBadge } = useBadgeStore();
-  console.log("selectedBadge:", selectedBadge);
-  // let plusStyleName = selectedBadge.position !== null ? "blink_box" : "badge_sub_box";
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
   const [
     isDeleteAllFoodConfirmModalOpen,
@@ -86,8 +84,7 @@ function MainPage() {
     queryKey: ["currentBadge"],
     queryFn: getCurrentBadgeList,
   });
-  // console.log("현재부착:", currentBadgeList)
-  // console.log(attachedBadgeList)
+
   const { mutate: mutateDeleteAllFood } = useMutation({
     mutationFn: deleteAllFood,
     onSuccess: () => {
@@ -126,15 +123,29 @@ function MainPage() {
   };
 
   const handleSelectAttachedBadege = (position: number) => {
-    if (selectedBadge.badgeId !== 0) {
-      setAttachedBadgeList([
-        ...attachedBadgeList,
-        {
-          badgeId: selectedBadge.badgeId,
-          src: selectedBadge.src,
-          position,
-        },
-      ]);
+    const existingBadgeIndex = attachedBadgeList.findIndex(
+      (badge) => badge.badgeId === selectedBadge.badgeId
+    );
+
+    if (existingBadgeIndex !== -1) {
+      const updatedBadgeList = [...attachedBadgeList];
+      updatedBadgeList[existingBadgeIndex] = {
+        badgeId: selectedBadge.badgeId,
+        src: selectedBadge.src,
+        position,
+      };
+      setAttachedBadgeList(updatedBadgeList);
+    } else {
+      if (selectedBadge.badgeId !== 0) {
+        setAttachedBadgeList([
+          ...attachedBadgeList,
+          {
+            badgeId: selectedBadge.badgeId,
+            src: selectedBadge.src,
+            position,
+          },
+        ]);
+      }
     }
     initSelectedBadge();
   };
@@ -185,45 +196,47 @@ function MainPage() {
   }
 
   let content: any = [];
-  if (location.pathname === "/badge") {
-    content = [1, 2, 3, 4, 5, 6, 7, 8].map((position, idx) => {
+  if (location.pathname === "/badge"){
+    content = [1, 2, 3, 4, 5, 6, 7, 8].map((position) => {
       const appliedBadge = attachedBadgeList.find(
         (badge) => badge.position === position
       );
       if (appliedBadge) {
         return (
           <div
-            key={appliedBadge.badgeId}
+            key={position}
             className={styles[`badge${appliedBadge.position}`]}
           >
             <div className={styles.badge_sub_box}>
               <img
+                className={styles.badge}
                 src={appliedBadge.src}
                 alt={`배지${appliedBadge.position} 이미지`}
               />
-              <div
-                className={styles.minus_button}
+              <img
+                src={minus}
+                alt="빼기 이미지"
+                className={styles.minus_btn}
                 onClick={() =>
                   handleDeleteAttachedBadge(appliedBadge.badgeId)
                 }
-              >
-                -
-              </div>
+              />
             </div>
           </div>
         );
       } else {
         return (
           <div
-            key={idx}
+            key={position}
             className={styles[`badge${position}`]}
             onClick={() => handleSelectAttachedBadege(position)}
           >
             <div className={styles.badge_sub_box}>
-              <img src={plus} alt={`배지${position} 이미지`} />
-              {selectedBadge.badgeId !== 0 && (
-                <div className={styles.blink_box} />
-              )}
+              <img
+                className={styles.plus_btn}
+                src={add}
+                alt={`배지${position} 이미지`}
+              />
             </div>
           </div>
         );
