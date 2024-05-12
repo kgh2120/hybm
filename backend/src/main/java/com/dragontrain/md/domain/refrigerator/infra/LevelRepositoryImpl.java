@@ -19,4 +19,9 @@ public class LevelRepositoryImpl implements LevelRepository {
 	public Optional<Level> findLevel(int level) {
 		return levelJpaRepository.findByLevel(level);
 	}
+
+	@Override
+	public Optional<Level> getNextLevel(int currentLevel) {
+		return levelJpaRepository.findNextLevel(currentLevel);
+	}
 }

@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.stream.LongStream;
 
+import com.dragontrain.md.common.config.properties.ExpProperties;
 import com.dragontrain.md.common.service.EventPublisher;
 import com.dragontrain.md.domain.food.event.EatenCountRaised;
 import com.dragontrain.md.domain.food.service.port.CategoryBigRepository;
@@ -61,6 +62,7 @@ class FoodServiceImplTest {
 	BarcodeRepository barcodeRepository;
 	@Mock
 	CrawlService crawlService;
+	@Mock ExpProperties expProperties;
 	@Mock
 	TimeService timeService;
 
@@ -644,6 +646,8 @@ class FoodServiceImplTest {
 		RefrigeratorEatenCount givenRefrigeratorEatenCount = RefrigeratorEatenCount.builder()
 			.eatenCount(9).build();
 
+		given(expProperties.getEatenAmount()).willReturn(20);
+
 		given(refrigeratorEatenCountRepository.findByRefrigeratorIdAndCategoryBigId(
 			givenRefrigerator.getRefrigeratorId(),
 			givenCategoryBig.getCategoryBigId()))
@@ -654,7 +658,7 @@ class FoodServiceImplTest {
 
 		//then
 		assertThat(givenRefrigeratorEatenCount.getEatenCount()).isEqualTo(10);
-		then(eventPublisher).should(times(1)).publish(any());
+		then(eventPublisher).should(times(2)).publish(any());
 
 	}
 

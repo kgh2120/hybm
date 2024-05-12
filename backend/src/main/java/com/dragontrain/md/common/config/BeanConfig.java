@@ -48,4 +48,6 @@ public class BeanConfig {
 		cacheManager.setCaches(caches);
 		return cacheManager;
 	}
+
+
 }

@@ -16,13 +16,13 @@ import lombok.NoArgsConstructor;
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Embeddable
-public class RecipeFoodId implements Serializable {
+public class RecipeIngredientId implements Serializable {
 
 	@EqualsAndHashCode.Include
 	@Column(name = "recipe_id", columnDefinition = "int")
 	private Integer recipeId;
 
 	@EqualsAndHashCode.Include
-	@Column(name = "category_detail_id", columnDefinition = "int")
-	private Integer categoryDetailId;
+	@Column(name = "ingredient_id", columnDefinition = "int")
+	private Integer ingredientId;
 }

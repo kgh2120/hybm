@@ -1,5 +1,6 @@
 package com.dragontrain.md.domain.food.service;
 
+import com.dragontrain.md.common.config.properties.ExpProperties;
 import com.dragontrain.md.common.service.EventPublisher;
 import com.dragontrain.md.domain.food.controller.request.FoodInfoRequest;
 import com.dragontrain.md.domain.food.controller.response.*;
@@ -13,8 +14,8 @@ import com.dragontrain.md.domain.food.service.port.FoodRepository;
 import com.dragontrain.md.domain.refrigerator.controller.RefrigeratorEventHandler;
 import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
 import com.dragontrain.md.domain.refrigerator.domain.RefrigeratorEatenCount;
-import com.dragontrain.md.domain.refrigerator.domain.StorageType;
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
+import com.dragontrain.md.domain.refrigerator.event.ExpAcquired;
 import com.dragontrain.md.domain.refrigerator.event.GotBadge;
 import com.dragontrain.md.domain.refrigerator.infra.StorageTypeRepositoryImpl;
 import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorEatenCountRepository;
@@ -73,6 +74,7 @@ public class FoodServiceImpl implements FoodService {
 	private final RefrigeratorEventHandler refrigeratorEventHandler;
 	private final EventPublisher eventPublisher;
 	private final StorageTypeRepositoryImpl storageTypeRepositoryImpl;
+	private final ExpProperties expProperties;
 
 	// OCR General 형식의 SECRET key, API URL
 	@Value("${secret.ocr.general.service-key}")
@@ -86,7 +88,7 @@ public class FoodServiceImpl implements FoodService {
 	@Value("${secret.ocr.document.api-url}")
 	private String RECEIPT_API_URL;
 
-	private static void validateDuplicateFoodIds(Long[] foodIds) {
+	private void validateDuplicateFoodIds(Long[] foodIds) {
 		Set<Long> foodIdSet = new HashSet<>(List.of(foodIds));
 		if (foodIdSet.size() != foodIds.length)
 			throw new FoodException(FoodErrorCode.DUPLICATED_FOOD_ID);
@@ -296,6 +298,7 @@ public class FoodServiceImpl implements FoodService {
 				location, refrigerator, timeService.localDateTimeNow(), true);
 
 			foodRepository.save(food);
+			eventPublisher.publish(new ExpAcquired(user.getUserId(), expProperties.getEatenAmount()));
 		}
 
 	}
@@ -402,8 +405,9 @@ public class FoodServiceImpl implements FoodService {
 			() -> RefrigeratorEatenCount.create(refrigerator, categoryBig)
 		);
 		refrigeratorEatenCount.eaten();
+		eventPublisher.publish(new ExpAcquired(refrigerator.getRefrigeratorId(), expProperties.getEatenAmount()));
 		if (refrigeratorEatenCount.getEatenCount().equals(10)) {
-			eventPublisher.publish(new GotBadge(refrigerator.getRefrigeratorId(), categoryBig.getCategoryBigId()));
+			eventPublisher.publish(new GotBadge(userId, categoryBig.getCategoryBigId()));
 		}
 		refrigeratorEatenCountRepository.save(refrigeratorEatenCount);
 
@@ -460,6 +464,8 @@ public class FoodServiceImpl implements FoodService {
 		// Food
 		foodRepository.save(Food.create(request.getName(), categoryDetail, request.getPrice(), expiredDate,
 			storageTypeId, refrigerator, timeService.localDateTimeNow(), request.getIsManual()));
+
+		eventPublisher.publish(new ExpAcquired(user.getUserId(), expProperties.getRegisterAmount()));
 	}
 
 

@@ -7,12 +7,6 @@ import static org.mockito.BDDMockito.*;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import com.dragontrain.md.domain.food.domain.CategoryBig;
-import com.dragontrain.md.domain.food.domain.CategoryDetail;
-import com.dragontrain.md.domain.food.service.port.CategoryBigRepository;
-import com.dragontrain.md.domain.food.service.port.CategoryDetailRepository;
-import com.dragontrain.md.domain.refrigerator.domain.*;
-import com.dragontrain.md.domain.refrigerator.service.port.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,9 +14,27 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.dragontrain.md.common.config.properties.ExpProperties;
+import com.dragontrain.md.common.service.EventPublisher;
 import com.dragontrain.md.common.service.TimeService;
+import com.dragontrain.md.domain.food.domain.CategoryBig;
+import com.dragontrain.md.domain.food.service.port.CategoryBigRepository;
+import com.dragontrain.md.domain.food.service.port.CategoryDetailRepository;
+import com.dragontrain.md.domain.refrigerator.domain.Badge;
+import com.dragontrain.md.domain.refrigerator.domain.Level;
+import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
+import com.dragontrain.md.domain.refrigerator.domain.RefrigeratorBadge;
+import com.dragontrain.md.domain.refrigerator.domain.StorageDesign;
+import com.dragontrain.md.domain.refrigerator.domain.StorageType;
+import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorErrorCode;
 import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorException;
+import com.dragontrain.md.domain.refrigerator.service.port.BadgeRepository;
+import com.dragontrain.md.domain.refrigerator.service.port.LevelRepository;
+import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorBadgeRepository;
+import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
+import com.dragontrain.md.domain.refrigerator.service.port.StorageDesignRepository;
+import com.dragontrain.md.domain.refrigerator.service.port.StorageStorageDesignRepository;
 import com.dragontrain.md.domain.user.domain.SocialLoginType;
 import com.dragontrain.md.domain.user.domain.User;
 import com.dragontrain.md.domain.user.exception.UserErrorCode;
@@ -53,6 +65,12 @@ class RefrigeratorServiceImplTest {
 	CategoryDetailRepository categoryDetailRepository;
 	@Mock
 	TimeService timeService;
+
+	@Mock
+	ExpProperties expProperties;
+
+	@Mock
+	EventPublisher eventPublisher;
 
 	@InjectMocks
 	RefrigeratorServiceImpl refrigeratorService;
@@ -185,8 +203,8 @@ class RefrigeratorServiceImplTest {
 
 	@DisplayName("냉장고 삭제 테스트 성공")
 	@Test
-	void deleteRefrigeratorSuccessTest() throws Exception{
-	    //given
+	void deleteRefrigeratorSuccessTest() throws Exception {
+		//given
 		final Long userId = 1L;
 		Refrigerator refrigerator = Refrigerator.builder()
 			.isDeleted(false)
@@ -194,14 +212,14 @@ class RefrigeratorServiceImplTest {
 		given(refrigeratorRepository.findByUserId(anyLong()))
 			.willReturn(Optional.of(refrigerator));
 		given(timeService.localDateTimeNow())
-			.willReturn(LocalDateTime.of(2024,5,6,13,14));
-	    //when //then
+			.willReturn(LocalDateTime.of(2024, 5, 6, 13, 14));
+		//when //then
 		refrigeratorService.deleteRefrigerator(userId);
 	}
 
 	@DisplayName("냉장고 삭제 테스트 실패 - 냉장고가 없는 경우")
 	@Test
-	void deleteRefrigeratorFailRefrigeratorNotFoundedTest() throws Exception{
+	void deleteRefrigeratorFailRefrigeratorNotFoundedTest() throws Exception {
 		//given
 		final Long userId = 1L;
 
@@ -216,7 +234,7 @@ class RefrigeratorServiceImplTest {
 
 	@DisplayName("냉장고 삭제 테스트 실패 - 냉장고가 이미 삭제된 경우")
 	@Test
-	void deleteRefrigeratorFailRefrigeratorAlreadyDeletedTest() throws Exception{
+	void deleteRefrigeratorFailRefrigeratorAlreadyDeletedTest() throws Exception {
 		//given
 		final Long userId = 1L;
 
@@ -226,7 +244,7 @@ class RefrigeratorServiceImplTest {
 		given(refrigeratorRepository.findByUserId(anyLong()))
 			.willReturn(Optional.of(refrigerator));
 		given(timeService.localDateTimeNow())
-			.willReturn(LocalDateTime.of(2024,5,6,13,14));
+			.willReturn(LocalDateTime.of(2024, 5, 6, 13, 14));
 
 		//when //then
 		assertThatThrownBy(() -> refrigeratorService.deleteRefrigerator(userId))
@@ -236,12 +254,17 @@ class RefrigeratorServiceImplTest {
 
 	@DisplayName("뱃지얻기 성공")
 	@Test
-	void eatenToGotBadgeSuccessTest() throws Exception{
+	void eatenToGotBadgeSuccessTest() throws Exception {
 		//given
 
-		Refrigerator refrigerator = Refrigerator.builder().refrigeratorId(1L).build();
+		User user = User.builder()
+			.userId(1L)
+			.build();
 
-		given(refrigeratorRepository.findById(refrigerator.getRefrigeratorId())).willReturn(Optional.of(refrigerator));
+		Refrigerator refrigerator = Refrigerator.builder().refrigeratorId(1L).user(user)
+			.build();
+
+		given(refrigeratorRepository.findByUserId(user.getUserId())).willReturn(Optional.of(refrigerator));
 
 		CategoryBig categoryBig = CategoryBig.builder()
 			.build();
@@ -251,11 +274,8 @@ class RefrigeratorServiceImplTest {
 
 		given(badgeRepository.findBadgeByCategoryBigId(categoryBig.getCategoryBigId()))
 			.willReturn(Optional.of(badge));
-
-		RefrigeratorBadge refrigeratorBadge = RefrigeratorBadge.builder().build();
-
 		// when
-		refrigeratorService.gotBadge(refrigerator.getRefrigeratorId(), categoryBig.getCategoryBigId());
+		refrigeratorService.gotBadge(user.getUserId(), categoryBig.getCategoryBigId());
 
 		// then
 		then(refrigeratorBadgeRepository).should().save(any());
