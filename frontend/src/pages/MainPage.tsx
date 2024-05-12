@@ -122,7 +122,7 @@ function MainPage() {
     setAttachedBadgeList(updatedAttachedBadgeList);
   };
 
-  const handleSelectAttachedBadege = (position: number) => {
+  const handleSelectAttachedBadge = (position: number) => {
     const existingBadgeIndex = attachedBadgeList.findIndex(
       (badge) => badge.badgeId === selectedBadge.badgeId
     );
@@ -229,7 +229,7 @@ function MainPage() {
           <div
             key={position}
             className={styles[`badge${position}`]}
-            onClick={() => handleSelectAttachedBadege(position)}
+            onClick={() => handleSelectAttachedBadge(position)}
           >
             <div className={styles.badge_sub_box}>
               <img

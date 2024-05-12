@@ -76,11 +76,6 @@
   pointer-events: initial;
   filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
-@keyframes blink-effect {
-  50% {
-    opacity: 0;
-  }
-}
 .wrapper .badge1 .badge_sub_box {
   width: 100%;
   position: relative;
@@ -109,11 +104,6 @@
   z-index: 50;
   pointer-events: initial;
   filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
-}
-@keyframes blink-effect {
-  50% {
-    opacity: 0;
-  }
 }
 .wrapper .badge2 .badge_sub_box {
   width: 100%;
@@ -144,11 +134,6 @@
   pointer-events: initial;
   filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
-@keyframes blink-effect {
-  50% {
-    opacity: 0;
-  }
-}
 .wrapper .badge3 .badge_sub_box {
   width: 100%;
   position: relative;
@@ -177,11 +162,6 @@
   z-index: 50;
   pointer-events: initial;
   filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
-}
-@keyframes blink-effect {
-  50% {
-    opacity: 0;
-  }
 }
 .wrapper .badge4 .badge_sub_box {
   width: 100%;
@@ -212,11 +192,6 @@
   pointer-events: initial;
   filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
-@keyframes blink-effect {
-  50% {
-    opacity: 0;
-  }
-}
 .wrapper .badge5 .badge_sub_box {
   width: 100%;
   position: relative;
@@ -245,11 +220,6 @@
   z-index: 50;
   pointer-events: initial;
   filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
-}
-@keyframes blink-effect {
-  50% {
-    opacity: 0;
-  }
 }
 .wrapper .badge6 .badge_sub_box {
   width: 100%;
@@ -280,11 +250,6 @@
   pointer-events: initial;
   filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
-@keyframes blink-effect {
-  50% {
-    opacity: 0;
-  }
-}
 .wrapper .badge7 .badge_sub_box {
   width: 100%;
   position: relative;
@@ -313,11 +278,6 @@
   z-index: 50;
   pointer-events: initial;
   filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
-}
-@keyframes blink-effect {
-  50% {
-    opacity: 0;
-  }
 }
 .wrapper .badge8 .badge_sub_box {
   width: 100%;

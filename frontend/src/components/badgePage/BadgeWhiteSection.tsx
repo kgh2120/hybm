@@ -1,7 +1,7 @@
 import styles from "../../styles/badgePage/BadgeWhiteSection.module.css";
 import clip from "../../assets/images/clip.png";
 import BadgeItemBox from "./BadgeItemBox";
-import useAttachedBadgeStore from '../../stores/useBadgeStore';
+import useAttachedBadgeStore from "../../stores/useBadgeStore";
 
 interface BadgeType {
   badgeId: number;
@@ -30,17 +30,21 @@ function BadgeWhiteSection({
       <img src={clip} alt="압정 이미지" />
       <section className={styles.main_section}>
         {badgeList.map((badge: BadgeType) => {
-          if (!attachedBadgeList.some(attachedBadge => attachedBadge.badgeId === badge.badgeId && attachedBadge.position !== null)) {
+          if (
+            !attachedBadgeList.some(
+              (attachedBadge) =>
+                attachedBadge.badgeId === badge.badgeId &&
+                attachedBadge.position !== null
+            )
+          ) {
             return (
-                <BadgeItemBox
-                    key={badge.badgeId}
-                    badge={badge}
-                    option={option}
-                />
+              <BadgeItemBox
+                key={badge.badgeId}
+                badge={badge}
+                option={option}
+              />
             );
-        } else {
-            return null; 
-        }
+          }
         })}
       </section>
     </section>
