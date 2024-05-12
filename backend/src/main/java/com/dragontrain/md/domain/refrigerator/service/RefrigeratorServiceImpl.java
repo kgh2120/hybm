@@ -87,30 +87,56 @@ public class RefrigeratorServiceImpl
 
 		int len = badgeRequests.size();
 		Set<Integer> badgeIds = new HashSet<>();
-		Set<Integer> positions = new HashSet<>();
+
+		int[] positionList = new int[8];
+		ArrayList<Integer> detachList = new ArrayList<>();
+
 		badgeRequests.forEach(badgeRequest -> {
 			badgeIds.add(badgeRequest.getBadgeId());
-			positions.add(badgeRequest.getPosition());
+			// 위치가 null이면 detach할 목록에 포함
+			if (badgeRequest.getPosition() == null) {
+				detachList.add(badgeRequest.getBadgeId());
+			} else {
+				// 포지션 1 ~ 8 까지 하나만 들어가게
+				if (badgeRequest.getPosition() < 1 ||
+					badgeRequest.getPosition() > 8 ||
+					positionList[badgeRequest.getPosition()-1] != 0) {
+					throw new RefrigeratorException(RefrigeratorErrorCode.INVALID_BADGE_POSITION);
+				}
+				positionList[badgeRequest.getPosition()-1] = badgeRequest.getBadgeId();
+			}
 		});
-		// BadgeId, position 중복값 검사
-		if ((badgeIds.size() != len) || (positions.size() != len)) {
+
+		// BadgeId, 중복값 검사
+		if (badgeIds.size() != len) {
 			throw new RefrigeratorException(RefrigeratorErrorCode.INVALID_BADGE_REQUEST);
 		}
-		// 중복값 1~8이 아닌 경우 검사
-		badgeRequests.forEach(badgeRequest -> {
-			if (badgeRequest.getPosition() < 1 || badgeRequest.getPosition() > 8) {
-				throw new RefrigeratorException(RefrigeratorErrorCode.INVALID_BADGE_POSITION);
-			}
-			refrigeratorBadgeRepository.findByPosition(refrigeratorId, badgeRequest.getPosition())
-				.ifPresent (ob -> {
-					ob.detachBadge();
-					refrigeratorBadgeRepository.save(ob);
-			});
-			RefrigeratorBadge newBadge = refrigeratorBadgeRepository.findByBadgeId(refrigeratorId, badgeRequest.getBadgeId())
+
+		// detachList 돌면서 모두 detach
+		detachList.forEach(bi -> {
+			RefrigeratorBadge newBadge = refrigeratorBadgeRepository.findByBadgeId(refrigeratorId, bi)
 				.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.BADGE_NOT_FOUND));
-			newBadge.attachBadge(badgeRequest.getPosition());
+			newBadge.detachBadge();
 			refrigeratorBadgeRepository.save(newBadge);
 		});
+
+		// positionList 돌면서 해당 위치에 있으면 detach 후 badgeId attach
+		for (int i = 0; i < 8; i++) {
+			if (positionList[i] != 0) {
+				int bi = positionList[i];
+				RefrigeratorBadge newBadge = refrigeratorBadgeRepository.findByBadgeId(refrigeratorId, bi)
+					.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.BADGE_NOT_FOUND));
+
+				refrigeratorBadgeRepository.findByPosition(refrigeratorId, i+1)
+					.ifPresent (ob -> {
+						ob.detachBadge();
+						refrigeratorBadgeRepository.save(ob);
+					});
+
+				newBadge.attachBadge(i+1);
+				refrigeratorBadgeRepository.save(newBadge);
+			}
+		}
 	}
 
 	@Override
