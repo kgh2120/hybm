@@ -21,21 +21,17 @@ const deleteAllNotification = async () => {
   }
 };
 
-interface GetNotificationListParams {
-  pageParam: number;
-}
-
 // 알림 전체 조회(확인한 것도)
-const getNotificationList = async ({ pageParam }: GetNotificationListParams) => {
+const getNotificationList = async (page: number) => {
   try {
     const res = await instance.get("/api/notices", {
       params: {
-        page: pageParam,
-        size: 20,
+        page,
+        size: 1,
       },
     });
-    console.log('알림조회:',res)
-    return res.data.notice;
+    
+    return res.data;
   } catch (e) {
     console.log(e);
   }
@@ -44,7 +40,7 @@ const getNotificationList = async ({ pageParam }: GetNotificationListParams) => 
 // 알림 삭제
 const deleteNotification = async (noticeId: number) => {
   try {
-    const res = await instance.delete(`/api/notices/${noticeId}`, {});
+    const res = await instance.delete(`/api/notices?noticeId=${noticeId}`);
     console.log(res);
     return res.data;
   } catch (e) {
