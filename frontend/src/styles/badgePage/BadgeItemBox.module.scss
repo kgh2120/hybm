@@ -1,0 +1,82 @@
+@import "../common/common";
+
+.wrapper {
+  @include center;
+  flex-direction: column;
+  gap: 5px;
+
+  .attached_img_box {
+    max-width: 60px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    @include center;
+    background-color: $color-back;
+    border: 2px solid $color-point;
+    position: relative;
+    z-index: 900;
+    .badge_img  {
+      width: 80%;
+      aspect-ratio: 0.7;
+      z-index: 999;
+    }
+    .check_img {
+      @include check-img;
+    }
+  }
+  .img_box {
+    max-width: 60px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    @include center;
+    background-color: $color-back;
+    border: 1px dashed $color-light;
+    position: relative;
+    z-index: 900;
+    > span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -65%);
+      color: white;
+      font-size: $font-xl;
+      font-weight: 700;
+      z-index: 20;
+      @include font-shadow(black);
+    }
+    .img_gray_box {
+      @include absolute-center;
+      z-index: 1;
+      width: 60px;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      @include center;
+      background-color: rgba(black, 0.2);
+      pointer-events: none;
+    }
+    .applied_img_box {
+      @include absolute-center;
+      z-index: 1;
+      width: 60px;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      border: 2px solid $color-point;
+    }
+    img  {
+      width: 80%;
+      aspect-ratio: 0.7;
+      z-index: 999;
+    }
+  }
+
+  .text_box {
+    @include center;
+    flex-direction: column;
+    gap: 3px;
+    .item_name {
+      @include item-name;
+    }
+    .item_content {
+      @include item-content;
+    }
+  }
+}

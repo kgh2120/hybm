@@ -6,6 +6,7 @@
   position: absolute;
   top: 10px;
   z-index: 10;
+  pointer-events: auto;
   .bar_sub_box {
     width: 100%;
     height: 100%;

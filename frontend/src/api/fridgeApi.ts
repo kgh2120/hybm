@@ -27,6 +27,7 @@ interface PutDesignProps {
   coolDesignId: number;
   cabinetDesignId: number;
 }
+
 // 냉장고 디자인 변경
 const putDesign = async ({
   iceDesignId,

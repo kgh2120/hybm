@@ -2,7 +2,7 @@ import styles from "../styles/mainPage/MainPage.module.css";
 import background from "../assets/images/background.png";
 import recipe from "../assets/images/recipe.png";
 import trashCan from "../assets/images/trashCan.png";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import Modal from "../components/common/Modal";
@@ -14,6 +14,11 @@ import { getCurrentDesign } from "../api/fridgeApi";
 import ConfirmModal from "../components/common/ConfirmModal";
 import { getCurrentBadgeList } from "../api/badgeApi";
 import useFridgeStore from "../stores/useFridgeStore";
+import add from "../assets/images/add.png";
+import minus from "../assets/images/minus.png";
+import useAttachedBadgeStore, {
+  useBadgeStore,
+} from "../stores/useBadgeStore";
 
 interface StorageType {
   id: number;
@@ -26,9 +31,19 @@ interface CurrentDesignType {
   cabinet: StorageType;
 }
 
+interface BadgeType {
+  badgeId: number;
+  src: string;
+  position: number;
+}
+
 function MainPage() {
+  const location = useLocation();
   const { setBigCategoryList } = useFoodCategoryStore();
   const { appliedDesign, setAppliedDesign } = useFridgeStore();
+  const { attachedBadgeList, setAttachedBadgeList } =
+    useAttachedBadgeStore();
+  const { selectedBadge, initSelectedBadge } = useBadgeStore();
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
   const [
     isDeleteAllFoodConfirmModalOpen,
@@ -62,15 +77,14 @@ function MainPage() {
   });
 
   const {
-    data: currentBadge,
-    isPending: iscurrentBadgePending,
-    isError: iscurrentBadgeError,
-  } = useQuery({
+    data: currentBadgeList,
+    isPending: iscurrentBadgeListPending,
+    isError: iscurrentBadgeListError,
+  } = useQuery<BadgeType[]>({
     queryKey: ["currentBadge"],
     queryFn: getCurrentBadgeList,
   });
 
-  console.log(currentBadge);
   const { mutate: mutateDeleteAllFood } = useMutation({
     mutationFn: deleteAllFood,
     onSuccess: () => {
@@ -90,12 +104,59 @@ function MainPage() {
     setIsDeleteAllFoodConfirmModalOpen(true);
   };
 
+  // - 버튼을 눌렀을 때 부착한 배지 제거
+  const handleDeleteAttachedBadge = (badgeId: number) => {
+    const updatedAttachedBadgeList = attachedBadgeList.map(
+      (badge) => {
+        if (badge.badgeId !== badgeId) {
+          return badge;
+        } else {
+          return {
+            badgeId: badge.badgeId,
+            position: null,
+            src: badge.src,
+          };
+        }
+      }
+    );
+    setAttachedBadgeList(updatedAttachedBadgeList);
+  };
+
+  const handleSelectAttachedBadge = (position: number) => {
+    const existingBadgeIndex = attachedBadgeList.findIndex(
+      (badge) => badge.badgeId === selectedBadge.badgeId
+    );
+
+    if (existingBadgeIndex !== -1) {
+      const updatedBadgeList = [...attachedBadgeList];
+      updatedBadgeList[existingBadgeIndex] = {
+        badgeId: selectedBadge.badgeId,
+        src: selectedBadge.src,
+        position,
+      };
+      setAttachedBadgeList(updatedBadgeList);
+    } else {
+      if (selectedBadge.badgeId !== 0) {
+        setAttachedBadgeList([
+          ...attachedBadgeList,
+          {
+            badgeId: selectedBadge.badgeId,
+            src: selectedBadge.src,
+            position,
+          },
+        ]);
+      }
+    }
+    initSelectedBadge();
+  };
+
   useEffect(() => {
     if (bigCategoryList) {
       setBigCategoryList(bigCategoryList);
     }
   }, [bigCategoryList]);
 
+  // 메인페이지에서 현재 적용중인 디자인 및 배지를 적용
   useEffect(() => {
     if (currentDesign) {
       setAppliedDesign({
@@ -113,12 +174,15 @@ function MainPage() {
         },
       });
     }
-  }, [currentDesign]);
+    if (currentBadgeList) {
+      setAttachedBadgeList(currentBadgeList);
+    }
+  }, [currentDesign, currentBadgeList]);
 
   if (
     isBigCategoryListPending ||
     isCurrentDesignPending ||
-    iscurrentBadgePending
+    iscurrentBadgeListPending
   ) {
     return <div>MainPage Loding...</div>;
   }
@@ -127,10 +191,68 @@ function MainPage() {
     return <div>bigCategoryList error</div>;
   } else if (isCurrentDesignError) {
     return <div>currentDesign error</div>;
-  } else if (iscurrentBadgeError) {
-    return <div>currentDesign error</div>;
+  } else if (iscurrentBadgeListError) {
+    return <div>currentBadge error</div>;
   }
 
+  let content: any = [];
+  if (location.pathname === "/badge"){
+    content = [1, 2, 3, 4, 5, 6, 7, 8].map((position) => {
+      const appliedBadge = attachedBadgeList.find(
+        (badge) => badge.position === position
+      );
+      if (appliedBadge) {
+        return (
+          <div
+            key={position}
+            className={styles[`badge${appliedBadge.position}`]}
+          >
+            <div className={styles.badge_sub_box}>
+              <img
+                className={styles.badge}
+                src={appliedBadge.src}
+                alt={`배지${appliedBadge.position} 이미지`}
+              />
+              <img
+                src={minus}
+                alt="빼기 이미지"
+                className={styles.minus_btn}
+                onClick={() =>
+                  handleDeleteAttachedBadge(appliedBadge.badgeId)
+                }
+              />
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <div
+            key={position}
+            className={styles[`badge${position}`]}
+            onClick={() => handleSelectAttachedBadge(position)}
+          >
+            <div className={styles.badge_sub_box}>
+              <img
+                className={styles.plus_btn}
+                src={add}
+                alt={`배지${position} 이미지`}
+              />
+            </div>
+          </div>
+        );
+      }
+    });
+  } else {
+    content = attachedBadgeList.map((tempAppliedBadge) => {
+      return (
+        <img
+          className={styles[`badge${tempAppliedBadge.position}`]}
+          src={tempAppliedBadge.src}
+          alt={`배지${tempAppliedBadge.position} 이미지`}
+        />
+      );
+    });
+  }
   return (
     <div className={styles.wrapper}>
       <ExpBar />
@@ -182,7 +304,7 @@ function MainPage() {
         src={trashCan}
         alt="쓰레기통 이미지"
       />
-
+      {content}
       {isLevelUpModalOpen && (
         <Modal title="레벨업!" clickEvent={handleCloseLevelUpModal}>
           <LevelUpModal />
