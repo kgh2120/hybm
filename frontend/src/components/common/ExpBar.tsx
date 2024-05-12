@@ -6,9 +6,11 @@ import expBar from "../../assets/images/expBar.png";
 import notification from "../../assets/images/notification.png";
 import Modal from "./Modal";
 import NotificationModal from "../mainPage/NotificationModal";
+import userBtn from "../../assets/images/userBtn.png";
 import { getLevelAndExp } from "../../api/userApi";
 import { useQuery } from "@tanstack/react-query";
-import { getIsNewNotification } from '../../api/notificationApi';
+import { getIsNewNotification } from "../../api/notificationApi";
+import DropDown from "./DropDown";
 
 interface IsNewNotificationType {
   hasNew: boolean;
@@ -16,6 +18,7 @@ interface IsNewNotificationType {
 function ExpBar() {
   const [isNotificationModalOpen, setIsNotificationModalOpen] =
     useState(false);
+  const [isDropdownView, setDropdownView] = useState(false);
 
   const handleOpenNotificationModal = () => {
     setIsNotificationModalOpen(true);
@@ -23,6 +26,16 @@ function ExpBar() {
 
   const handleCloseNotificationModal = () => {
     setIsNotificationModalOpen(false);
+  };
+
+  const handleClickUserBtn = () => {
+    setDropdownView(!isDropdownView);
+  };
+
+  const handleBlurContatiner = () => {
+    setTimeout(() => {
+      setDropdownView(false);
+    }, 200);
   };
 
   const {
@@ -46,14 +59,16 @@ function ExpBar() {
   if (isLevelAndExpPending || isNewNotificationPending) {
     return <div>levelBar Loding...</div>;
   }
+
   if (isLevelAndExpError) {
     return <div>get level and exp error</div>;
   } else if (isNewNotificationError) {
     return <div>get isNewNotification error</div>;
   }
 
-  const currentExpPercent =
-    Math.round((levelAndExp.currentExp / levelAndExp.maxExp) * 100);
+  const currentExpPercent = Math.round(
+    (levelAndExp.currentExp / levelAndExp.maxExp) * 100
+  );
 
   return (
     <div className={styles.bar_box}>
@@ -100,13 +115,24 @@ function ExpBar() {
             {isNewNotification.hasNew && <div></div>}
           </div>
         </div>
+        <div
+          className={styles.user_box}
+          onBlur={handleBlurContatiner}
+        >
+          <div onClick={handleClickUserBtn}>
+            <img src={userBtn} alt="유저버튼" />
+          </div>
+          {isDropdownView && <DropDown />}
+        </div>
       </div>
       {isNotificationModalOpen && (
         <Modal
           title="알림함"
           clickEvent={handleCloseNotificationModal}
         >
-          <NotificationModal isNewNotification={isNewNotification.hasNew}/>
+          <NotificationModal
+            isNewNotification={isNewNotification.hasNew}
+          />
         </Modal>
       )}
     </div>
