@@ -25,14 +25,13 @@ import lombok.NoArgsConstructor;
 public class Recipe {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "recipe_id", columnDefinition = "int", nullable = false)
 	private Integer recipeId;
 
 	@Column(name = "name", columnDefinition = "varchar(64)", nullable = false)
 	private String name;
 
-	@Column(name = "author", columnDefinition = "varchar(20)")
+	@Column(name = "author", columnDefinition = "varchar(30)")
 	private String author;
 
 }

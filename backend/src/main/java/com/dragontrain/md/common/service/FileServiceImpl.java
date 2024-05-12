@@ -1,26 +1,26 @@
 package com.dragontrain.md.common.service;
 
+import com.dragontrain.md.domain.food.domain.CategoryDetail;
 import com.dragontrain.md.domain.food.service.port.CategoryDetailRepository;
+import com.dragontrain.md.domain.recipe.domain.Ingredient;
 import com.dragontrain.md.domain.recipe.service.port.IngredientRepository;
 import com.dragontrain.md.domain.recipe.service.port.RecipeIngredientRepository;
 import com.dragontrain.md.domain.recipe.service.port.RecipeRepository;
-import lombok.NoArgsConstructor;
+import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorErrorCode;
+import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorException;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import javax.sql.DataSource;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
-@Component
+@Service
 public class FileServiceImpl implements FileService{
 
 	public static String path = "C:\\Users\\SSAFY\\Desktop";
@@ -39,6 +39,7 @@ public class FileServiceImpl implements FileService{
 			XSSFWorkbook workbook = new XSSFWorkbook(file);
 
 			XSSFSheet sheet = workbook.getSheetAt(0);
+
 
 			for (Row row : sheet) {
 				Cell recipeNo = row.getCell(0);
@@ -69,8 +70,6 @@ public class FileServiceImpl implements FileService{
 					// NUMERIC 타입이 아닌 경우에 대한 처리
 					recipeNoValue = (int) recipeNo.getNumericCellValue(); // 다른 타입의 셀도 문자열로 변환
 				}
-//                System.out.print(recipeNoValue);
-//                System.out.println();
 
 				String recipeNameValue;
 				if (recipeName.getCellType() == CellType.NUMERIC) {
@@ -80,8 +79,6 @@ public class FileServiceImpl implements FileService{
 					// NUMERIC 타입이 아닌 경우에 대한 처리
 					recipeNameValue = recipeName.toString(); // 다른 타입의 셀도 문자열로 변환
 				}
-//                System.out.print(recipeNameValue);
-//                System.out.println();
 
 				String recipeAuthorValue;
 				if (recipeName.getCellType() == CellType.NUMERIC) {
@@ -91,9 +88,7 @@ public class FileServiceImpl implements FileService{
 					// NUMERIC 타입이 아닌 경우에 대한 처리
 					recipeAuthorValue = recipeAuthor.toString(); // 다른 타입의 셀도 문자열로 변환
 				}
-//                System.out.print(recipeAuthorValue);
-//                System.out.println();
-				recipeRepository.save(recipeNameValue, recipeAuthorValue);
+				recipeRepository.save(recipeNoValue, recipeNameValue, recipeAuthorValue);
 
 
 				String foods;
@@ -105,30 +100,67 @@ public class FileServiceImpl implements FileService{
 					foods = recipeIngredients.toString(); // 다른 타입의 셀도 문자열로 변환
 				}
 				String[] foodArray = foods.split(" ");
-				ArrayList<String> foodnames = new ArrayList<>() ;
+
 				boolean isName = false;
-				for (String ingredientName : foodArray) {
+				for (String s : foodArray) {
 					if (isName) {
-						ingredientName = ingredientName.replaceAll("\\d.*", "").replace("|", "");
-//						if (ingredientRepository.existsByName(ingredientName)) {
-//							continue;
-//						}
-//						Integer categoryDetailId = categoryDetailRepository.findByName(ingredientName);
-						ingredientRepository.save(ingredientName, null);
-						foodnames.add(ingredientName);
+
+						// 레시피 재료 이름 정제
+						s = s.replaceAll("\\d.*", "").replace("|", "");
+						String ingredientName = s;
+
+						// 레시피 재료 이름이 재료 테이블에 있으면 중개 테이블에 저장하고 건너뜀
+						if (ingredientRepository.existsByName(ingredientName)) {
+
+							// 레시피-재료 중개 테이블에 저장
+							ingredientRepository.findAllIngredientIdsByName(ingredientName).forEach(
+								ingredientId -> {
+									if (!recipeIngredientRepository.existsById(recipeNoValue, ingredientId)) {
+										recipeIngredientRepository.save(recipeNoValue, ingredientId);
+									}
+								}
+							);
+							isName = false;
+							continue;
+						}
+
+						// 소분류 아이디를 이름으로 검색, 없으면 null 처리
+						if (categoryDetailRepository.existsByName(ingredientName)) {
+
+							List<CategoryDetail> cd = categoryDetailRepository.findByName(ingredientName);
+
+							cd.forEach(e -> {
+
+								Integer categoryDetailId = e.getCategoryDetailId();
+								ingredientRepository.save(ingredientName, categoryDetailId);
+
+								Ingredient ingredient = ingredientRepository.findByIngredientNameAndCategoryDetailId(
+									ingredientName, categoryDetailId
+									).orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.INVALID_BADGE_REQUEST));
+
+								recipeIngredientRepository.save(recipeNoValue, ingredient.getIngredientId());
+							});
+							isName = false;
+							continue;
+						} else {
+							ingredientRepository.save(ingredientName, null);
+
+							Ingredient ingredient = ingredientRepository.findByIngredientNameAndCategoryDetailId(
+								ingredientName, null
+								).orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND));
+
+							recipeIngredientRepository.save(recipeNoValue, ingredient.getIngredientId());
+						}
+
 						isName = false;
 					}
-					if (ingredientName.contains("]")) {
+					if (s.contains("]")) {
 						isName = true;
 					}
-					if (ingredientName.contains("|")) {
+					if (s.contains("|")) {
 						isName = true;
 					}
 				}
-//                foodnames.forEach(System.out::println);
-
-				List<String> foodList = foodnames.stream().toList();
-
 
 			}
 			System.out.println("끗");

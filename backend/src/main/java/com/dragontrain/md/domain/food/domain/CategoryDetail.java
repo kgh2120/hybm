@@ -25,7 +25,7 @@ public class CategoryDetail {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "category_detail_id", columnDefinition = "int", nullable = false)
+	@Column(name = "category_detail_id", columnDefinition = "int")
 	private Integer categoryDetailId;
 
 	@Column(name = "name", columnDefinition = "varchar(20)", nullable = false)
