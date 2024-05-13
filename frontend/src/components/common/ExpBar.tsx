@@ -20,7 +20,6 @@ interface IsNewNotificationType {
   hasNew: boolean;
 }
 
-
 function ExpBar() {
   const { currentLevel, setCurrentLevel } = useAuthStore();
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
@@ -106,9 +105,6 @@ function ExpBar() {
   const currentExpPercent = Math.round(
     (levelAndExp.currentExp / levelAndExp.maxExp) * 100
   );
-  const currentExpPercent = Math.round(
-    (levelAndExp.currentExp / levelAndExp.maxExp) * 100
-  );
 
   return (
     <div className={styles.bar_box}>
@@ -172,13 +168,6 @@ function ExpBar() {
         </div>
       </div>
       {isNotificationModalOpen && (
-        <Modal
-          title="알림함"
-          clickEvent={handleCloseNotificationModal}
-        >
-          <NotificationModal
-            isNewNotification={isNewNotification.hasNew}
-          />
         <Modal title="알림함" onClick={handleCloseNotificationModal}>
           <NotificationModal
             isNewNotification={isNewNotification.hasNew}
