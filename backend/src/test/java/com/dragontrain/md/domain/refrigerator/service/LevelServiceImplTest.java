@@ -165,7 +165,7 @@ class LevelServiceImplTest {
 			sa.assertThat(refrigerator.getLevel().getLevel()).isEqualTo(nextlevel.getLevel());
 			sa.assertThat(refrigerator.getUpdatedAt()).isEqualTo(updatedAt);
 		});
-		then(eventPublisher).should(times(1)).publish(new LevelUp(userId, nextlevel.getLevel()));
+		then(eventPublisher).should(times(1)).publish(new LevelUp(userId, currentLevel.getLevel(),  nextlevel.getLevel()));
 	}
 
 }
