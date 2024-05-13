@@ -29,8 +29,6 @@ function DropDown({ openModal }: DropDownProps) {
     if (logOutStatus) {
       setIsLogin(false);
       setLogout(false);
-    } else {
-      alert("로그아웃에 실패하였습니다.");
     }
   };
 
