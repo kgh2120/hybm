@@ -1,58 +1,41 @@
 import styles from "../../styles/common/DropDown.module.css";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { logOut, signOut } from "../../api/userApi";
+import { useQuery } from "@tanstack/react-query";
+import { logOut } from "../../api/userApi";
 import useAuthStore from "../../stores/useAuthStore";
 import { useState } from "react";
-import ConfirmModal from "./ConfirmModal";
 
-function DropDown() {
+function DropDown({ openModal }) {
   const { setIsLogin } = useAuthStore();
   const [isLogOut, setLogout] = useState(false);
-  const [isSignOutConfirmModalOpen, setSignOutConfirmModalOpen] =
-    useState(false);
 
   // API 호출
   const {
-    data: logOutStatus,
-    isPending: isLogOutPending,
+    isLoading: isLogOutLoading,
     isError: isLogOutError,
+    status: logOutStatus,
   } = useQuery({
     queryKey: ["logOut"],
     queryFn: logOut,
     enabled: isLogOut,
   });
 
-  const { mutate: mutateSignOut } = useMutation({
-    mutationFn: signOut,
-    onSuccess: () => {
-      setIsLogin(false);
-    },
-  });
-
   // onClick handle 메서드들
   const handleLogOut = () => {
     setLogout(true);
-    if (logOutStatus === 200) {
+    if (logOutStatus) {
       setIsLogin(false);
+      setLogout(false);
     } else {
       alert("로그아웃에 실패하였습니다.");
     }
   };
 
   const handleOpenSignOutConfirmModal = () => {
-    setSignOutConfirmModalOpen(true);
-  };
-
-  const handleSignOut = () => {
-    mutateSignOut();
-  };
-
-  const closeSingOutConfirmModal = () => {
-    setSignOutConfirmModalOpen(false);
+    openModal();
   };
 
   // pending, error 처리
-  if (isLogOutPending) {
+  if (isLogOutLoading) {
     return <div>로그아웃 하는 중...</div>;
   }
 
@@ -64,15 +47,6 @@ function DropDown() {
     <div className={styles.wrapper}>
       <button onClick={handleLogOut}>로그아웃</button>
       <p onClick={handleOpenSignOutConfirmModal}>회원탈퇴</p>
-      {isSignOutConfirmModalOpen && (
-        <ConfirmModal
-          content="정말 회원 탈퇴하시겠습니까?"
-          option1="예"
-          option2="취소"
-          option1Event={handleSignOut}
-          option2Event={closeSingOutConfirmModal}
-        />
-      )}
     </div>
   );
 }

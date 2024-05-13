@@ -33,15 +33,13 @@ const getLevelAndExp = async () => {
 // 로그아웃
 const logOut = async () => {
   try {
-    const res = await instance.get("/api/users/logout");
-    return res.status;
+    await instance.get("/api/users/logout");
   } catch (e) {
     console.log(e);
   }
 };
 
 // 회원탈퇴
-
 const signOut = async () => {
   try {
     const res = await instance.delete("/api/users/sign-out");

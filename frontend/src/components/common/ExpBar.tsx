@@ -8,17 +8,31 @@ import Modal from "./Modal";
 import NotificationModal from "../mainPage/NotificationModal";
 import userBtn from "../../assets/images/userBtn.png";
 import { getLevelAndExp } from "../../api/userApi";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getIsNewNotification } from "../../api/notificationApi";
+import { signOut } from "../../api/userApi";
 import DropDown from "./DropDown";
+import ConfirmModal from "./ConfirmModal";
+import useAuthStore from "../../stores/useAuthStore";
 
 interface IsNewNotificationType {
   hasNew: boolean;
 }
+
 function ExpBar() {
   const [isNotificationModalOpen, setIsNotificationModalOpen] =
     useState(false);
-  const [isDropdownView, setDropdownView] = useState(false);
+  const [isDropdownView, setDropdownView] = useState<boolean>(false);
+  const [isSignOutConfirmModalOpen, setSignOutConfirmModalOpen] =
+    useState<boolean>(false);
+  const { setIsLogin } = useAuthStore();
+
+  const { mutate: mutateSignOut } = useMutation({
+    mutationFn: signOut,
+    onSuccess: () => {
+      setIsLogin(false);
+    },
+  });
 
   const handleOpenNotificationModal = () => {
     setIsNotificationModalOpen(true);
@@ -32,10 +46,16 @@ function ExpBar() {
     setDropdownView(!isDropdownView);
   };
 
-  const handleBlurContatiner = () => {
-    setTimeout(() => {
-      setDropdownView(false);
-    }, 200);
+  const handleOpenModal = () => {
+    setSignOutConfirmModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setSignOutConfirmModalOpen(false);
+  };
+
+  const handleSignOut = () => {
+    mutateSignOut();
   };
 
   const {
@@ -115,14 +135,20 @@ function ExpBar() {
             {isNewNotification.hasNew && <div></div>}
           </div>
         </div>
-        <div
-          className={styles.user_box}
-          onBlur={handleBlurContatiner}
-        >
+        {isSignOutConfirmModalOpen && (
+          <ConfirmModal
+            content="정말 회원 탈퇴 하시겠습니까?"
+            option1="예"
+            option2="취소"
+            option1Event={handleSignOut}
+            option2Event={handleCloseModal}
+          />
+        )}
+        <div className={styles.user_box}>
           <div onClick={handleClickUserBtn}>
             <img src={userBtn} alt="유저버튼" />
           </div>
-          {isDropdownView && <DropDown />}
+          {isDropdownView && <DropDown openModal={handleOpenModal} />}
         </div>
       </div>
       {isNotificationModalOpen && (
