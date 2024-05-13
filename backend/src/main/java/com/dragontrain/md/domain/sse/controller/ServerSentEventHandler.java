@@ -32,7 +32,7 @@ public class ServerSentEventHandler {
 	}
 
 
-	@EventListener
+	// @EventListener
 	public void handleLevelUpEvent(LevelUp levelUp){
 		sseService.sendLevelUpMessage(levelUp.getUserId(), levelUp.getLevel());
 	}

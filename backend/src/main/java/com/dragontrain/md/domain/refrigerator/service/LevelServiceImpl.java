@@ -1,6 +1,7 @@
 package com.dragontrain.md.domain.refrigerator.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dragontrain.md.common.service.EventPublisher;
@@ -19,7 +20,9 @@ import com.dragontrain.md.domain.user.domain.User;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
@@ -41,9 +44,10 @@ public class LevelServiceImpl implements LevelService {
 		return MyLevelResponse.of(level.getLevel(), level.getMaxExp(), refrigerator.getExp());
 	}
 
-	@Transactional
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@Override
 	public void acquireExp(Long userId, Integer exp) {
+		log.debug("acquireExp - userId : {}, exp : {}", userId, exp);
 		Refrigerator refrigerator = refrigeratorRepository.findByUserId(userId)
 			.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND));
 
@@ -62,6 +66,8 @@ public class LevelServiceImpl implements LevelService {
 		if (originLevel != afterLevel) {
 			eventPublisher.publish(new LevelUp(userId, afterLevel));
 		}
+
+		log.debug("acquireExp - finished");
 	}
 
 	private AcquireExpCalculateResult calculateExp(int calculatedExp, Level level) {
