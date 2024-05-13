@@ -247,10 +247,7 @@ function StoragePage() {
         />
       )}
       {isCreateFoodModalOpen && (
-        <Modal
-          title="식품 등록"
-          clickEvent={handleCloseCreateFoodModal}
-        >
+        <Modal title="식품 등록" onClick={handleCloseCreateFoodModal}>
           <CreateFoodModal
             handleCloseCreateFoodModal={handleCloseCreateFoodModal}
           />

@@ -5,12 +5,10 @@ import trashCan from "../assets/images/trashCan.png";
 import { Link, useLocation } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import Modal from "../components/common/Modal";
-import LevelUpModal from "../components/mainPage/LevelUpModal";
 import ExpBar from "../components/common/ExpBar";
 import { deleteAllFood, getBigCategoryList } from "../api/foodApi";
 import { useFoodCategoryStore } from "../stores/useFoodStore";
-import { getCurrentDesign } from "../api/fridgeApi";
+import { getCurrentDesign, getDesignList } from "../api/fridgeApi";
 import ConfirmModal from "../components/common/ConfirmModal";
 import { getCurrentBadgeList } from "../api/badgeApi";
 import useFridgeStore from "../stores/useFridgeStore";
@@ -37,26 +35,80 @@ interface BadgeType {
   position: number;
 }
 
+interface DesignType {
+  designImgSrc: string;
+  has: boolean;
+  isApplied: boolean;
+  level: number;
+  location: string;
+  name: string;
+  storageDesignId: number;
+}
+
+interface DesignListType {
+  cabinet: DesignType[];
+  cool: DesignType[];
+  ice: DesignType[];
+}
+
 function MainPage() {
   const location = useLocation();
   const { setBigCategoryList } = useFoodCategoryStore();
-  const { appliedDesign, setAppliedDesign } = useFridgeStore();
+  const {
+    appliedDesign,
+    setAppliedDesign,
+    setLevelDesignList,
+  } = useFridgeStore();
   const { attachedBadgeList, setAttachedBadgeList } =
     useAttachedBadgeStore();
   const { selectedBadge, initSelectedBadge } = useBadgeStore();
-  const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
   const [
     isDeleteAllFoodConfirmModalOpen,
     setIsDeleteAllFoodConfirmModalOpen,
   ] = useState(false);
 
-  // const handleOpenLevelUpModal = () => {
-  //   setIsLevelUpModalOpen(true);
-  // };
+  const { data: designList, isPending: isdesignListPending } =
+    useQuery<DesignListType>({
+      queryKey: ["designList"],
+      queryFn: getDesignList,
+    });
 
-  const handleCloseLevelUpModal = () => {
-    setIsLevelUpModalOpen(false);
-  };
+  useEffect(() => {
+    if (designList) {
+      const cabinetDesignList = designList.cabinet
+        .filter((design) => design.level !== 1)
+        .map((design) => {
+          return {
+            designImgSrc: design.designImgSrc,
+            level: design.level,
+            name: design.name,
+          };
+        });
+      const coolDesignList = designList.cool
+        .filter((design) => design.level !== 1)
+        .map((design) => {
+          return {
+            designImgSrc: design.designImgSrc,
+            level: design.level,
+            name: design.name,
+          };
+        });
+      const iceDesignList = designList.ice
+        .filter((design) => design.level !== 1)
+        .map((design) => {
+          return {
+            designImgSrc: design.designImgSrc,
+            level: design.level,
+            name: design.name,
+          };
+        });
+      setLevelDesignList([
+        ...cabinetDesignList,
+        ...iceDesignList,
+        ...coolDesignList,
+      ]);
+    }
+  }, [designList]);
 
   const {
     data: currentDesign,
@@ -156,6 +208,7 @@ function MainPage() {
     }
   }, [bigCategoryList]);
 
+  
   // 메인페이지에서 현재 적용중인 디자인 및 배지를 적용
   useEffect(() => {
     if (currentDesign) {
@@ -182,7 +235,8 @@ function MainPage() {
   if (
     isBigCategoryListPending ||
     isCurrentDesignPending ||
-    iscurrentBadgeListPending
+    iscurrentBadgeListPending ||
+    isdesignListPending
   ) {
     return <div>MainPage Loding...</div>;
   }
@@ -196,7 +250,7 @@ function MainPage() {
   }
 
   let content: any = [];
-  if (location.pathname === "/badge"){
+  if (location.pathname === "/badge") {
     content = [1, 2, 3, 4, 5, 6, 7, 8].map((position) => {
       const appliedBadge = attachedBadgeList.find(
         (badge) => badge.position === position
@@ -305,11 +359,7 @@ function MainPage() {
         alt="쓰레기통 이미지"
       />
       {content}
-      {isLevelUpModalOpen && (
-        <Modal title="레벨업!" clickEvent={handleCloseLevelUpModal}>
-          <LevelUpModal />
-        </Modal>
-      )}
+
       {isDeleteAllFoodConfirmModalOpen && (
         <ConfirmModal
           content="모든 식품을 삭제하시겠습니까?"
