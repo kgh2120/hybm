@@ -7,8 +7,10 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionalEventListener;
 
+import com.dragontrain.md.domain.refrigerator.event.LevelUp;
 import com.dragontrain.md.domain.refrigerator.service.LevelService;
 import com.dragontrain.md.domain.refrigerator.service.RefrigeratorService;
+import com.dragontrain.md.domain.refrigerator.service.StorageStorageDesignService;
 import com.dragontrain.md.domain.user.event.UserCreated;
 import com.dragontrain.md.domain.user.event.UserDeleted;
 
@@ -20,6 +22,7 @@ public class RefrigeratorEventHandler {
 
 	private final RefrigeratorService refrigeratorService;
 	private final LevelService levelService;
+	private final StorageStorageDesignService storageStorageDesignService;
 
 	@EventListener
 	public void handleUserCreatedEvent(UserCreated userCreated) {
@@ -41,4 +44,10 @@ public class RefrigeratorEventHandler {
 	public void handleExpAddedEvent(ExpAcquired expAcquired) {
 		levelService.acquireExp(expAcquired.getUserId(), expAcquired.getExp());
 	}
+
+	@TransactionalEventListener
+	public void handleLevelUpEvent(LevelUp levelUp) {
+		storageStorageDesignService.acquireNewStorageDesign(levelUp.getUserId(), levelUp.getOriginalLevel(),  levelUp.getAfterLevel());
+	}
+
 }
