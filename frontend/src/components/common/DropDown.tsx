@@ -4,7 +4,11 @@ import { logOut } from "../../api/userApi";
 import useAuthStore from "../../stores/useAuthStore";
 import { useState } from "react";
 
-function DropDown({ openModal }) {
+interface DropDownProps {
+  openModal: () => void;
+}
+
+function DropDown({ openModal }: DropDownProps) {
   const { setIsLogin } = useAuthStore();
   const [isLogOut, setLogout] = useState(false);
 
