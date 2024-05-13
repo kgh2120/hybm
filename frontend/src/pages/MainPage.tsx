@@ -17,7 +17,6 @@ import minus from "../assets/images/minus.png";
 import useAttachedBadgeStore, {
   useBadgeStore,
 } from "../stores/useBadgeStore";
-import useAuthStore from "../stores/useAuthStore";
 
 interface StorageType {
   id: number;
