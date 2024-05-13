@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../../styles/common/ExpBar.module.css";
 import barBackground from "../../assets/images/barBackground.png";
 import barHeart from "../../assets/images/barHeart.png";
@@ -14,12 +14,16 @@ import { signOut } from "../../api/userApi";
 import DropDown from "./DropDown";
 import ConfirmModal from "./ConfirmModal";
 import useAuthStore from "../../stores/useAuthStore";
+import LevelUpModal from "../mainPage/LevelUpModal";
 
 interface IsNewNotificationType {
   hasNew: boolean;
 }
 
+
 function ExpBar() {
+  const { currentLevel, setCurrentLevel } = useAuthStore();
+  const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
   const [isNotificationModalOpen, setIsNotificationModalOpen] =
     useState(false);
   const [isDropdownView, setDropdownView] = useState<boolean>(false);
@@ -58,6 +62,10 @@ function ExpBar() {
     mutateSignOut();
   };
 
+  const handleCloseLevelUpModal = () => {
+    setIsLevelUpModalOpen(false);
+  };
+
   const {
     data: levelAndExp,
     isPending: isLevelAndExpPending,
@@ -76,6 +84,15 @@ function ExpBar() {
     queryFn: getIsNewNotification,
   });
 
+  useEffect(() => {
+    if (levelAndExp) {
+      if (currentLevel < levelAndExp.level) {
+        setIsLevelUpModalOpen(true);
+      }
+      setCurrentLevel(levelAndExp.level);
+    }
+  }, [levelAndExp]);
+
   if (isLevelAndExpPending || isNewNotificationPending) {
     return <div>levelBar Loding...</div>;
   }
@@ -86,6 +103,9 @@ function ExpBar() {
     return <div>get isNewNotification error</div>;
   }
 
+  const currentExpPercent = Math.round(
+    (levelAndExp.currentExp / levelAndExp.maxExp) * 100
+  );
   const currentExpPercent = Math.round(
     (levelAndExp.currentExp / levelAndExp.maxExp) * 100
   );
@@ -159,6 +179,15 @@ function ExpBar() {
           <NotificationModal
             isNewNotification={isNewNotification.hasNew}
           />
+        <Modal title="알림함" onClick={handleCloseNotificationModal}>
+          <NotificationModal
+            isNewNotification={isNewNotification.hasNew}
+          />
+        </Modal>
+      )}
+      {isLevelUpModalOpen && (
+        <Modal title="레벨업!" onClick={handleCloseLevelUpModal}>
+          <LevelUpModal level={currentLevel} />
         </Modal>
       )}
     </div>

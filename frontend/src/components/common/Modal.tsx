@@ -3,15 +3,15 @@ import Header from './Header';
 
 interface ModalProps {
   title: string;
-  clickEvent: () => void;
+  onClick: () => void;
   children: JSX.Element;
 }
-function Modal({ title, clickEvent, children }: ModalProps) {
+function Modal({ title, onClick, children }: ModalProps) {
   return (
     <>
       <div className={styles.modal}>
         <div className={styles.modal_content}>
-          <div onClick={clickEvent} className={styles.close_button}>
+          <div onClick={onClick} className={styles.close_button}>
             x
           </div>
           <Header title={title}/>

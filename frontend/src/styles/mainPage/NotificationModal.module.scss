@@ -1,6 +1,8 @@
 @import '../../styles/common/_common';
 
 .notification_modal_wrapper {
+  position: relative;
+  z-index: 999;
   overflow-y: auto;
   // min-height: 50px;
   max-height: 250px;

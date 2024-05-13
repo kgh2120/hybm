@@ -1,3 +1,4 @@
+
 import styles from "../../styles/mainPage/NotificationModal.module.css";
 import { formatDate } from "../../utils/formatting";
 import { deleteNotification } from "../../api/notificationApi";
@@ -15,23 +16,21 @@ interface NotificationType {
 
 interface NotificationItemProps {
   notification: NotificationType;
-  innerRef: React.Ref<HTMLParagraphElement>;
+  // innerRef: React.Ref<HTMLParagraphElement>;
 }
 
 function NotificationItem({
   notification,
-  innerRef,
+  // innerRef,
 }: NotificationItemProps) {
   const {
     foodId,
     noticeId,
     content,
-    isChecked,
     foodImgSrc,
     createdAt,
   } = notification;
   const formattedDate = formatDate(createdAt);
-  console.log(isChecked);
   const { mutate: mutateDeleteNotification } = useMutation({
     mutationFn: deleteNotification,
     onSuccess: () => {
@@ -63,7 +62,7 @@ function NotificationItem({
   };
 
   return (
-    <div className={styles.notification_item} ref={innerRef}>
+    <div className={styles.notification_item}>
       <div className={styles.main_section}>
         <div className={styles.image_section}>
           <img src={foodImgSrc} alt="음식 이미지" />

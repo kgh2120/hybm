@@ -1,4 +1,6 @@
 .notification_modal_wrapper {
+  position: relative;
+  z-index: 999;
   overflow-y: auto;
   max-height: 250px;
 }
