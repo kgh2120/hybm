@@ -1,5 +1,6 @@
 package com.dragontrain.md.domain.food.infra;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,6 +11,9 @@ public interface CategoryDetailJpaRepository extends JpaRepository<CategoryDetai
 
 	Optional<CategoryDetail> findByKanCode(Integer kanCode);
 
-	Optional<CategoryDetail> findByName(String name);
+	List<CategoryDetail> findAllByName(String name);
 
+	Boolean existsByName(String name);
+
+	Boolean existsByCategoryDetailId(Integer categoryDetailId);
 }

@@ -1,11 +1,11 @@
-package com.dragontrain.md.domain.refrigerator.infra;
+package com.dragontrain.md.domain.food.infra;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
 import com.dragontrain.md.domain.food.domain.CategoryDetail;
-import com.dragontrain.md.domain.food.infra.CategoryDetailJpaRepository;
 import com.dragontrain.md.domain.food.service.port.CategoryDetailRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -26,8 +26,18 @@ public class CategoryDetailRepositoryImpl implements CategoryDetailRepository {
 	}
 
 	@Override
-	public Optional<CategoryDetail> findByName(String name) {
-		return categoryDetailJpaRepository.findByName(name);
+	public List<CategoryDetail> findByName(String name) {
+		return categoryDetailJpaRepository.findAllByName(name);
+	}
+
+	@Override
+	public Boolean existsByName(String name) {
+		return categoryDetailJpaRepository.existsByName(name);
+	}
+
+	@Override
+	public Boolean existsByCategoryDetailId(Integer categoryDetailId) {
+		return categoryDetailJpaRepository.existsByCategoryDetailId(categoryDetailId);
 	}
 
 }

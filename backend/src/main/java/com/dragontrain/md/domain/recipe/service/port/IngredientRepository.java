@@ -11,4 +11,6 @@ public interface IngredientRepository {
 	boolean existsByName(String name);
 	Optional<Ingredient> findByCategoryDetailId(Integer categoryDetailId);
 	List<Ingredient> findByName(String name);
+	List<Integer> findAllIngredientIdsByName(String name);
+	Optional<Ingredient> findByIngredientNameAndCategoryDetailId(String name, Integer categoryDetailId);
 }

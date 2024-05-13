@@ -30,8 +30,8 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 	}
 
 	@Override
-	public void save(String name, String author){
-		String sql = "INSERT INTO tbl_recipe(name, author) VALUES (?, ?)";
-		template.update(sql, name, author);
-	}
+	public void save(Integer id, String name, String author){
+		String sql = "INSERT INTO tbl_recipe(recipe_id, name, author) VALUES (?, ?, ?)";
+		template.update(sql, id, name, author);
+	};
 }
