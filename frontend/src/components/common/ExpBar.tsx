@@ -54,10 +54,7 @@ function ExpBar() {
 
   useEffect(() => {
     if (levelAndExp) {
-      if (
-        currentLevel !== null &&
-        currentLevel !== levelAndExp.level
-      ) {
+      if (currentLevel < levelAndExp.level) {
         setIsLevelUpModalOpen(true);
       }
       setCurrentLevel(levelAndExp.level);
@@ -124,17 +121,14 @@ function ExpBar() {
         </div>
       </div>
       {isNotificationModalOpen && (
-        <Modal
-          title="알림함"
-          clickEvent={handleCloseNotificationModal}
-        >
+        <Modal title="알림함" onClick={handleCloseNotificationModal}>
           <NotificationModal
             isNewNotification={isNewNotification.hasNew}
           />
         </Modal>
       )}
       {isLevelUpModalOpen && (
-        <Modal title="레벨업!" clickEvent={handleCloseLevelUpModal}>
+        <Modal title="레벨업!" onClick={handleCloseLevelUpModal}>
           <LevelUpModal level={currentLevel} />
         </Modal>
       )}

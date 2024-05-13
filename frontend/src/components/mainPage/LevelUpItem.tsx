@@ -8,7 +8,7 @@ function LevelUpItem({ content, imgSrc }: LevelUpItemProps) {
   return (
     <div className={styles.item}>
       <div className={styles.item_img_box}>
-        <img className={styles.item_img} src={imgSrc} alt="" />
+        <img className={styles.item_img} src={imgSrc} alt="아이템 이미지" />
       </div>
       <span className={styles.item_text}>{content}</span>
     </div>
