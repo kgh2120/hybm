@@ -6,9 +6,13 @@ import expBar from "../../assets/images/expBar.png";
 import notification from "../../assets/images/notification.png";
 import Modal from "./Modal";
 import NotificationModal from "../mainPage/NotificationModal";
+import userBtn from "../../assets/images/userBtn.png";
 import { getLevelAndExp } from "../../api/userApi";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getIsNewNotification } from "../../api/notificationApi";
+import { signOut } from "../../api/userApi";
+import DropDown from "./DropDown";
+import ConfirmModal from "./ConfirmModal";
 import useAuthStore from "../../stores/useAuthStore";
 import LevelUpModal from "../mainPage/LevelUpModal";
 
@@ -21,6 +25,17 @@ function ExpBar() {
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
   const [isNotificationModalOpen, setIsNotificationModalOpen] =
     useState(false);
+  const [isDropdownView, setDropdownView] = useState<boolean>(false);
+  const [isSignOutConfirmModalOpen, setSignOutConfirmModalOpen] =
+    useState<boolean>(false);
+  const { setIsLogin } = useAuthStore();
+
+  const { mutate: mutateSignOut } = useMutation({
+    mutationFn: signOut,
+    onSuccess: () => {
+      setIsLogin(false);
+    },
+  });
 
   const handleOpenNotificationModal = () => {
     setIsNotificationModalOpen(true);
@@ -28,6 +43,22 @@ function ExpBar() {
 
   const handleCloseNotificationModal = () => {
     setIsNotificationModalOpen(false);
+  };
+
+  const handleClickUserBtn = () => {
+    setDropdownView(!isDropdownView);
+  };
+
+  const handleOpenModal = () => {
+    setSignOutConfirmModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setSignOutConfirmModalOpen(false);
+  };
+
+  const handleSignOut = () => {
+    mutateSignOut();
   };
 
   const handleCloseLevelUpModal = () => {
@@ -64,6 +95,7 @@ function ExpBar() {
   if (isLevelAndExpPending || isNewNotificationPending) {
     return <div>levelBar Loding...</div>;
   }
+
   if (isLevelAndExpError) {
     return <div>get level and exp error</div>;
   } else if (isNewNotificationError) {
@@ -118,6 +150,21 @@ function ExpBar() {
             <img src={notification} alt="알림 이미지" />
             {isNewNotification.hasNew && <div></div>}
           </div>
+        </div>
+        {isSignOutConfirmModalOpen && (
+          <ConfirmModal
+            content="정말 회원 탈퇴 하시겠습니까?"
+            option1="예"
+            option2="취소"
+            option1Event={handleSignOut}
+            option2Event={handleCloseModal}
+          />
+        )}
+        <div className={styles.user_box}>
+          <div onClick={handleClickUserBtn}>
+            <img src={userBtn} alt="유저버튼" />
+          </div>
+          {isDropdownView && <DropDown openModal={handleOpenModal} />}
         </div>
       </div>
       {isNotificationModalOpen && (
