@@ -76,6 +76,9 @@ public class LevelServiceImpl implements LevelService {
 			level = levelRepository.getNextLevel(level.getLevel())
 				.orElseThrow(() -> new LevelException(LevelErrorCode.ALREADY_MAX_LEVEL));
 		}
+		if (calculatedExp >= level.getMaxExp() && level.getLevel().equals(10)) {
+			calculatedExp = level.getMaxExp();
+		}
 		return new AcquireExpCalculateResult(level, calculatedExp);
 	}
 
