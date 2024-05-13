@@ -405,7 +405,7 @@ public class FoodServiceImpl implements FoodService {
 			() -> RefrigeratorEatenCount.create(refrigerator, categoryBig)
 		);
 		refrigeratorEatenCount.eaten();
-		eventPublisher.publish(new ExpAcquired(refrigerator.getRefrigeratorId(), expProperties.getEatenAmount()));
+		eventPublisher.publish(new ExpAcquired(userId, expProperties.getEatenAmount()));
 		if (refrigeratorEatenCount.getEatenCount().equals(10)) {
 			eventPublisher.publish(new GotBadge(userId, categoryBig.getCategoryBigId()));
 		}
