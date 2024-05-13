@@ -42,7 +42,7 @@
 }
 .bar_box .bar_sub_box .exp_bar_box {
   z-index: 15;
-  width: 62%;
+  width: 56%;
   top: 50%;
   transform: translate(0, -50%);
   position: absolute;
@@ -83,9 +83,9 @@
   z-index: 20;
   top: 50%;
   transform: translate(0, -50%);
-  width: 30px;
+  width: 28px;
   position: absolute;
-  right: 10%;
+  right: 19%;
 }
 .bar_box .bar_sub_box .notification_box .notification_sub_box {
   position: relative;
@@ -103,4 +103,12 @@
   border-radius: 50%;
   background-color: #b61f1f;
   border: 1px black solid;
+}
+.bar_box .bar_sub_box .user_box {
+  z-index: 20;
+  top: 50%;
+  transform: translate(0, -50%);
+  width: 24px;
+  position: absolute;
+  right: 10%;
 }/*# sourceMappingURL=ExpBar.module.css.map */

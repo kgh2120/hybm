@@ -30,4 +30,25 @@ const getLevelAndExp = async () => {
   }
 };
 
-export { getLoginStatus, getUserSignUpDate, getLevelAndExp };
+// 로그아웃
+const logOut = async () => {
+  try {
+    const res = await instance.get("/api/users/logout");
+    return res.status;
+  } catch (e) {
+    console.log(e)
+  }
+};
+
+// 회원탈퇴
+
+const signOut = async () => {
+  try {
+    const res = await instance.delete("/api/users/sign-out");
+    return res.status;
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+export { getLoginStatus, getUserSignUpDate, getLevelAndExp, logOut, signOut };
