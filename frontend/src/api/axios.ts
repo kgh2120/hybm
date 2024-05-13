@@ -1,8 +1,8 @@
 import axios, { isAxiosError } from "axios";
 
 interface ResponseDataType {
-  errorName: string;
-  code: number;
+  message?: string;
+  code?: string;
 }
 
 const { VITE_API_DEV, VITE_RELOGIN_URI_BASE } = import.meta.env;
@@ -24,19 +24,12 @@ instance.interceptors.response.use(
           return instance(err.config);
         } catch (e) {
           if (isAxiosError<ResponseDataType>(e)) {
-            if (e.response?.data.errorName === "REFRESH_TOKEN_MISSING") {
-              alert("토큰을 찾을 수 없습니다. 다시 로그인해주세요.")
-              localStorage.removeItem("userData");
-              window.location.href = VITE_RELOGIN_URI_BASE;
-            }
-          }
-          // if (e.response.data.errorName === "REFRESH_TOKEN_MISSING") {
-          //   alert("토큰을 찾을 수 없습니다. 다시 로그인해주세요.");
-          //   localStorage.removeItem("userData");
-          //   window.location.href = VITE_RELOGIN_URI_BASE;
+            localStorage.removeItem("userData");
+            window.location.href = VITE_RELOGIN_URI_BASE;
           }
         }
       }
+    }
     return Promise.reject(err);
   }
 );
