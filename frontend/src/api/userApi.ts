@@ -36,7 +36,7 @@ const logOut = async () => {
     const res = await instance.get("/api/users/logout");
     return res.status;
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 };
 
@@ -47,8 +47,15 @@ const signOut = async () => {
     const res = await instance.delete("/api/users/sign-out");
     return res.status;
   } catch (e) {
-    console.log(e)
+    console.log(e);
+    throw e;
   }
-}
+};
 
-export { getLoginStatus, getUserSignUpDate, getLevelAndExp, logOut, signOut };
+export {
+  getLoginStatus,
+  getUserSignUpDate,
+  getLevelAndExp,
+  logOut,
+  signOut,
+};

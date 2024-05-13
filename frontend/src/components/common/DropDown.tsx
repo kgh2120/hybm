@@ -1,10 +1,15 @@
 import styles from "../../styles/common/DropDown.module.css";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { logOut, signOut } from "../../api/userApi";
 import useAuthStore from "../../stores/useAuthStore";
+import { useState } from "react";
+import ConfirmModal from "./ConfirmModal";
 
 function DropDown() {
   const { setIsLogin } = useAuthStore();
+  const [isLogOut, setLogout] = useState(false);
+  const [isSignOutConfirmModalOpen, setSignOutConfirmModalOpen] =
+    useState(false);
 
   // API 호출
   const {
@@ -14,19 +19,19 @@ function DropDown() {
   } = useQuery({
     queryKey: ["logOut"],
     queryFn: logOut,
+    enabled: isLogOut,
   });
 
-  const {
-    data: signOutStatus,
-    isPending: isSignOutPending,
-    isError: isSignOutError,
-  } = useQuery({
-    queryKey: ["signOut"],
-    queryFn: signOut,
+  const { mutate: mutateSignOut } = useMutation({
+    mutationFn: signOut,
+    onSuccess: () => {
+      setIsLogin(false);
+    },
   });
 
   // onClick handle 메서드들
-  const handleLogOut = async () => {
+  const handleLogOut = () => {
+    setLogout(true);
     if (logOutStatus === 200) {
       setIsLogin(false);
     } else {
@@ -34,17 +39,16 @@ function DropDown() {
     }
   };
 
-  const handleSignOut = async () => {
-    const confirmed = window.confirm("정말 회원탈퇴 하시겠습니까?");
-    if (confirmed) {
-      if (signOutStatus === 200) {
-        alert("회원탈퇴가 완료되었습니다.");
-        setIsLogin(false);
-        console.log();
-      } else {
-        alert("회원탈퇴에 실패하였습니다.");
-      }
-    }
+  const handleOpenSignOutConfirmModal = () => {
+    setSignOutConfirmModalOpen(true);
+  };
+
+  const handleSignOut = () => {
+    mutateSignOut();
+  };
+
+  const closeSingOutConfirmModal = () => {
+    setSignOutConfirmModalOpen(false);
   };
 
   // pending, error 처리
@@ -56,18 +60,19 @@ function DropDown() {
     return <div>로그아웃 에러...</div>;
   }
 
-  if (isSignOutPending) {
-    return <div>회원탈퇴 하는 중...</div>;
-  }
-  
-  if (isSignOutError) {
-    return <div>회원탈퇴 에러...</div>;
-  }
-
   return (
     <div className={styles.wrapper}>
       <button onClick={handleLogOut}>로그아웃</button>
-      <p onClick={handleSignOut}>회원탈퇴</p>
+      <p onClick={handleOpenSignOutConfirmModal}>회원탈퇴</p>
+      {isSignOutConfirmModalOpen && (
+        <ConfirmModal
+          content="정말 회원 탈퇴하시겠습니까?"
+          option1="예"
+          option2="취소"
+          option1Event={handleSignOut}
+          option2Event={closeSingOutConfirmModal}
+        />
+      )}
     </div>
   );
 }
