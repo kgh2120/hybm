@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "../../styles/common/ExpBar.module.css";
 import barBackground from "../../assets/images/barBackground.png";
 import barHeart from "../../assets/images/barHeart.png";
@@ -9,22 +9,11 @@ import NotificationModal from "../mainPage/NotificationModal";
 import { getLevelAndExp } from "../../api/userApi";
 import { useQuery } from "@tanstack/react-query";
 import { getIsNewNotification } from '../../api/notificationApi';
-import useAuthStore from "../../stores/useAuthStore";
-import LevelUpModal from "../mainPage/LevelUpModal";
 
 interface IsNewNotificationType {
   hasNew: boolean;
 }
-
-interface LevelAndExpType {
-  level: number;
-  maxExp: number;
-  currentExp: number;
-}
-
 function ExpBar() {
-  const { currentLevel, setCurrentLevel } = useAuthStore();
-  const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
   const [isNotificationModalOpen, setIsNotificationModalOpen] =
     useState(false);
 
@@ -40,7 +29,7 @@ function ExpBar() {
     data: levelAndExp,
     isPending: isLevelAndExpPending,
     isError: isLevelAndExpError,
-  } = useQuery<LevelAndExpType>({
+  } = useQuery({
     queryKey: ["levelAndExp"],
     queryFn: getLevelAndExp,
   });
@@ -54,23 +43,6 @@ function ExpBar() {
     queryFn: getIsNewNotification,
   });
 
-  const handleOpenLevelUpModal = () => {
-    setIsLevelUpModalOpen(true);
-  };
-
-  const handleCloseLevelUpModal = () => {
-    setIsLevelUpModalOpen(false);
-  };
-
-  useEffect(() => {
-    if (levelAndExp) {
-      if (currentLevel !== null && currentLevel !== levelAndExp.level) {
-        handleOpenLevelUpModal()
-      }
-      setCurrentLevel(levelAndExp.level)
-    }
-  }, [levelAndExp])
-
   if (isLevelAndExpPending || isNewNotificationPending) {
     return <div>levelBar Loding...</div>;
   }
@@ -79,8 +51,6 @@ function ExpBar() {
   } else if (isNewNotificationError) {
     return <div>get isNewNotification error</div>;
   }
-
-  
 
   const currentExpPercent =
     Math.round((levelAndExp.currentExp / levelAndExp.maxExp) * 100);
@@ -137,11 +107,6 @@ function ExpBar() {
           clickEvent={handleCloseNotificationModal}
         >
           <NotificationModal isNewNotification={isNewNotification.hasNew}/>
-        </Modal>
-      )}
-      {isLevelUpModalOpen && (
-        <Modal title="레벨업!" clickEvent={handleCloseLevelUpModal}>
-          <LevelUpModal level={levelAndExp.level} />
         </Modal>
       )}
     </div>
