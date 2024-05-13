@@ -17,6 +17,7 @@ import minus from "../assets/images/minus.png";
 import useAttachedBadgeStore, {
   useBadgeStore,
 } from "../stores/useBadgeStore";
+import useAuthStore from "../stores/useAuthStore";
 
 interface StorageType {
   id: number;
@@ -208,6 +209,7 @@ function MainPage() {
     }
   }, [bigCategoryList]);
 
+  
   // 메인페이지에서 현재 적용중인 디자인 및 배지를 적용
   useEffect(() => {
     if (currentDesign) {
