@@ -3,11 +3,7 @@ import lock from "../../assets/images/lock.png";
 import useFridgeStore from "../../stores/useFridgeStore";
 import LevelUpItem from "./LevelUpItem";
 
-interface LevelUpModalProps {
-  level: number;
-}
-
-function LevelUpModal({ level }: LevelUpModalProps) {
+function LevelUpModal(level: number) {
   const { levelDesignList } = useFridgeStore();
   const acquiredDesign = levelDesignList.filter((design) => design.level === level)
   return (
