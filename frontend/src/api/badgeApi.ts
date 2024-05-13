@@ -22,13 +22,24 @@ const getBadgeList = async () => {
   }
 };
 
+interface PutBadgePositionParams {
+  badgeId: number;
+  position: number | null;
+}
+
 // 배지 위치 변경
-const putBadgePosition = async () => {
+const putBadgePosition = async (
+  badgeListParams: PutBadgePositionParams[]
+) => {
   try {
-    const res = await instance.put("/api/refrigerators/badges");
+    const res = await instance.put(
+      "/api/refrigerators/badges",
+      badgeListParams
+    );
     return res.data;
   } catch (e) {
     console.log(e);
+    throw e;
   }
 };
 export { getCurrentBadgeList, getBadgeList, putBadgePosition };

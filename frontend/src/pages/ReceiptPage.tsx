@@ -6,10 +6,10 @@ import home from "../assets/images/home.png";
 // import { useInput } from "../hooks/useInput";
 // import { useState } from "react";
 import FoodSection from "../components/common/FoodSection";
-import useFoodStore from "../stores/useFoodStore";
+import { useFoodCategoryStore } from "../stores/useFoodStore";
 
 function ReceiptPage() {
-  const { bigCategoryList } = useFoodStore();
+  const { bigCategoryList } = useFoodCategoryStore();
   console.log(bigCategoryList);
 
   return (
@@ -20,12 +20,12 @@ function ReceiptPage() {
           <img className={styles.home_img} src={home} alt="" />
         </Link>
         <section className={styles.food_list_section}>
-          <FoodSection />
+          <FoodSection option="active"/>
 
-          <FoodSection />
-          <FoodSection />
+          <FoodSection option="active"/>
+          <FoodSection option="active"/>
         </section>
-        <Button content="완료" color="red" onClick={() => {}} />
+        <Button content="완료" color="red" onClick={() => {}} disabled={false}/>
       </div>
     </div>
   );

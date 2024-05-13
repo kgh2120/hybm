@@ -11,12 +11,20 @@ interface AppliedDesignType {
   cool: DesignType;
   cabinet: DesignType;
 }
+
+interface LevelDesignType {
+  designImgSrc: string;
+  level: number;
+  name: string;
+}
 interface DesignState {
   appliedDesign: AppliedDesignType;
+  levelDesignList: LevelDesignType[];
 }
 
 interface DesignAction {
   setAppliedDesign: (value: AppliedDesignType) => void;
+  setLevelDesignList: (value: LevelDesignType[]) => void;
 }
 
 const useFridgeStore = create(
@@ -29,6 +37,9 @@ const useFridgeStore = create(
       },
       setAppliedDesign: (value: AppliedDesignType) =>
         set({ appliedDesign: value }),
+      levelDesignList: [],
+      setLevelDesignList: (value: LevelDesignType[]) =>
+      set({ levelDesignList: value }),
     }),
     { name: "fridgeData" }
   )

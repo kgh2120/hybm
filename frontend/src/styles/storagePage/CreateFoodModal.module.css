@@ -19,4 +19,16 @@
 }
 .wrapper .main_section .btn_section > div > img {
   width: 30px;
+}
+.wrapper > span {
+  font-size: 11px;
+  color: #c9c9c9;
+  line-height: 14px;
+  margin-bottom: 12px;
+  text-align: end;
+  width: 90%;
+}
+.wrapper > span > span {
+  padding: 2px;
+  background-color: rgba(252, 230, 231, 0.5);
 }/*# sourceMappingURL=CreateFoodModal.module.css.map */

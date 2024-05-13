@@ -65,4 +65,236 @@
   bottom: 290px;
   left: 105px;
   width: 60px;
+}
+.wrapper .badge1 {
+  width: 45px;
+  aspect-ratio: 0.7;
+  position: absolute;
+  left: 60px;
+  bottom: 420px;
+  z-index: 50;
+  pointer-events: initial;
+  filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
+}
+.wrapper .badge1 .badge_sub_box {
+  width: 100%;
+  position: relative;
+}
+.wrapper .badge1 .badge_sub_box .plus_btn {
+  width: 70%;
+  aspect-ratio: 0.7;
+  opacity: 0.8;
+}
+.wrapper .badge1 .badge_sub_box .badge {
+  width: 100%;
+}
+.wrapper .badge1 .badge_sub_box .minus_btn {
+  position: absolute;
+  width: 20px;
+  height: 50px;
+  bottom: 0px;
+  right: 0px;
+}
+.wrapper .badge2 {
+  width: 45px;
+  aspect-ratio: 0.7;
+  position: absolute;
+  left: 115px;
+  bottom: 475px;
+  z-index: 50;
+  pointer-events: initial;
+  filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
+}
+.wrapper .badge2 .badge_sub_box {
+  width: 100%;
+  position: relative;
+}
+.wrapper .badge2 .badge_sub_box .plus_btn {
+  width: 70%;
+  aspect-ratio: 0.7;
+  opacity: 0.8;
+}
+.wrapper .badge2 .badge_sub_box .badge {
+  width: 100%;
+}
+.wrapper .badge2 .badge_sub_box .minus_btn {
+  position: absolute;
+  width: 20px;
+  height: 50px;
+  bottom: 0px;
+  right: 0px;
+}
+.wrapper .badge3 {
+  width: 45px;
+  aspect-ratio: 0.7;
+  position: absolute;
+  left: 55px;
+  bottom: 350px;
+  z-index: 50;
+  pointer-events: initial;
+  filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
+}
+.wrapper .badge3 .badge_sub_box {
+  width: 100%;
+  position: relative;
+}
+.wrapper .badge3 .badge_sub_box .plus_btn {
+  width: 70%;
+  aspect-ratio: 0.7;
+  opacity: 0.8;
+}
+.wrapper .badge3 .badge_sub_box .badge {
+  width: 100%;
+}
+.wrapper .badge3 .badge_sub_box .minus_btn {
+  position: absolute;
+  width: 20px;
+  height: 50px;
+  bottom: 0px;
+  right: 0px;
+}
+.wrapper .badge4 {
+  width: 45px;
+  aspect-ratio: 0.7;
+  position: absolute;
+  left: 120px;
+  bottom: 415px;
+  z-index: 50;
+  pointer-events: initial;
+  filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
+}
+.wrapper .badge4 .badge_sub_box {
+  width: 100%;
+  position: relative;
+}
+.wrapper .badge4 .badge_sub_box .plus_btn {
+  width: 70%;
+  aspect-ratio: 0.7;
+  opacity: 0.8;
+}
+.wrapper .badge4 .badge_sub_box .badge {
+  width: 100%;
+}
+.wrapper .badge4 .badge_sub_box .minus_btn {
+  position: absolute;
+  width: 20px;
+  height: 50px;
+  bottom: 0px;
+  right: 0px;
+}
+.wrapper .badge5 {
+  width: 45px;
+  aspect-ratio: 0.7;
+  position: absolute;
+  left: 60px;
+  bottom: 170px;
+  z-index: 50;
+  pointer-events: initial;
+  filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
+}
+.wrapper .badge5 .badge_sub_box {
+  width: 100%;
+  position: relative;
+}
+.wrapper .badge5 .badge_sub_box .plus_btn {
+  width: 70%;
+  aspect-ratio: 0.7;
+  opacity: 0.8;
+}
+.wrapper .badge5 .badge_sub_box .badge {
+  width: 100%;
+}
+.wrapper .badge5 .badge_sub_box .minus_btn {
+  position: absolute;
+  width: 20px;
+  height: 50px;
+  bottom: 0px;
+  right: 0px;
+}
+.wrapper .badge6 {
+  width: 45px;
+  aspect-ratio: 0.7;
+  position: absolute;
+  left: 110px;
+  bottom: 190px;
+  z-index: 50;
+  pointer-events: initial;
+  filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
+}
+.wrapper .badge6 .badge_sub_box {
+  width: 100%;
+  position: relative;
+}
+.wrapper .badge6 .badge_sub_box .plus_btn {
+  width: 70%;
+  aspect-ratio: 0.7;
+  opacity: 0.8;
+}
+.wrapper .badge6 .badge_sub_box .badge {
+  width: 100%;
+}
+.wrapper .badge6 .badge_sub_box .minus_btn {
+  position: absolute;
+  width: 20px;
+  height: 50px;
+  bottom: 0px;
+  right: 0px;
+}
+.wrapper .badge7 {
+  width: 45px;
+  aspect-ratio: 0.7;
+  position: absolute;
+  left: 55px;
+  bottom: 65px;
+  z-index: 50;
+  pointer-events: initial;
+  filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
+}
+.wrapper .badge7 .badge_sub_box {
+  width: 100%;
+  position: relative;
+}
+.wrapper .badge7 .badge_sub_box .plus_btn {
+  width: 70%;
+  aspect-ratio: 0.7;
+  opacity: 0.8;
+}
+.wrapper .badge7 .badge_sub_box .badge {
+  width: 100%;
+}
+.wrapper .badge7 .badge_sub_box .minus_btn {
+  position: absolute;
+  width: 20px;
+  height: 50px;
+  bottom: 0px;
+  right: 0px;
+}
+.wrapper .badge8 {
+  width: 45px;
+  aspect-ratio: 0.7;
+  position: absolute;
+  left: 110px;
+  bottom: 90px;
+  z-index: 50;
+  pointer-events: initial;
+  filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
+}
+.wrapper .badge8 .badge_sub_box {
+  width: 100%;
+  position: relative;
+}
+.wrapper .badge8 .badge_sub_box .plus_btn {
+  width: 70%;
+  aspect-ratio: 0.7;
+  opacity: 0.8;
+}
+.wrapper .badge8 .badge_sub_box .badge {
+  width: 100%;
+}
+.wrapper .badge8 .badge_sub_box .minus_btn {
+  position: absolute;
+  width: 20px;
+  height: 50px;
+  bottom: 0px;
+  right: 0px;
 }/*# sourceMappingURL=MainPage.module.css.map */

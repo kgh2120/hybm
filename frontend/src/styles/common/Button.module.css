@@ -6,6 +6,10 @@
   background-color: #fb5862;
 }
 
+.red_button:disabled {
+  background-color: #c9c9c9;
+}
+
 .white_button {
   width: 80px;
   height: 40px;

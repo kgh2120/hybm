@@ -24,6 +24,28 @@
   color: #666666;
   min-width: 60px;
 }
+.wrapper .food_option_box .expiry_date_box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 80%;
+}
+.wrapper .food_option_box .expiry_date_box select {
+  height: 30px;
+  background-color: #fce6e7;
+  text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
+  font-size: 13px;
+  color: #666666;
+  width: 50%;
+}
+.wrapper .food_option_box .expiry_date_box option {
+  height: 30px;
+  text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
+  font-size: 13px;
+  color: #666666;
+  width: 50%;
+}
 .wrapper .food_option_box > input {
   text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
   font-size: 13px;
@@ -31,8 +53,8 @@
   height: 30px;
   width: 80%;
   text-align: start;
-  padding-left: 12px;
   background-color: #fce6e7;
+  padding: 0 5px;
 }
 .wrapper .food_option_box > select {
   text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
@@ -40,7 +62,7 @@
   color: #666666;
   height: 30px;
   text-align: start;
-  padding-left: 12px;
+  padding: 0 5px;
   background-color: #fce6e7;
 }
 .wrapper .food_option_box .price_box {
@@ -49,8 +71,10 @@
   color: #666666;
   width: 80%;
   background-color: #fce6e7;
+  padding: 0 5px;
 }
 .wrapper .food_option_box .price_box > input {
+  max-width: 162px;
   background-color: transparent;
   text-align: start;
   height: 30px;
@@ -60,4 +84,28 @@
 }
 .wrapper .food_option_box .price_box > span {
   font-size: 15px;
+}
+.wrapper .food_option_box .storage_box {
+  border: 2px solid #fce6e7;
+  color: #666666;
+  font-size: 13px;
+  height: 30px;
+  width: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+input::-moz-placeholder {
+  color: #c9c9c9;
+  font-style: italic;
+  text-shadow: none;
+  font-size: 11px;
+}
+
+input::placeholder {
+  color: #c9c9c9;
+  font-style: italic;
+  text-shadow: none;
+  font-size: 11px;
 }/*# sourceMappingURL=FoodSection.module.css.map */
