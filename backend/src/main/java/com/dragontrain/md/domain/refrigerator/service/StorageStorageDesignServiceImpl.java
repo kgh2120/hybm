@@ -1,5 +1,6 @@
 package com.dragontrain.md.domain.refrigerator.service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,12 +8,15 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dragontrain.md.common.service.TimeService;
 import com.dragontrain.md.domain.refrigerator.controller.request.ModifyAppliedStorageDesignRequest;
 import com.dragontrain.md.domain.refrigerator.controller.response.AppliedStorageDesignsResponse;
 import com.dragontrain.md.domain.refrigerator.controller.response.StorageDesignsResponse;
 import com.dragontrain.md.domain.refrigerator.domain.Refrigerator;
+import com.dragontrain.md.domain.refrigerator.domain.StorageDesign;
 import com.dragontrain.md.domain.refrigerator.domain.StorageStorageDesign;
 import com.dragontrain.md.domain.refrigerator.domain.StorageTypeId;
 import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorErrorCode;
@@ -20,11 +24,11 @@ import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorException;
 import com.dragontrain.md.domain.refrigerator.exception.StorageDesignErrorCode;
 import com.dragontrain.md.domain.refrigerator.exception.StorageDesignException;
 import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
+import com.dragontrain.md.domain.refrigerator.service.port.StorageDesignRepository;
 import com.dragontrain.md.domain.refrigerator.service.port.StorageStorageDesignRepository;
 import com.dragontrain.md.domain.user.domain.User;
 
 import lombok.RequiredArgsConstructor;
-
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -33,6 +37,8 @@ public class StorageStorageDesignServiceImpl implements StorageStorageDesignServ
 
 	private final StorageStorageDesignRepository storageStorageDesignRepository;
 	private final RefrigeratorRepository refrigeratorRepository;
+	private final StorageDesignRepository storageDesignRepository;
+	private final TimeService timeService;
 
 	@Override
 	public StorageDesignsResponse findAllStorageDesign(User user) {
@@ -100,6 +106,20 @@ public class StorageStorageDesignServiceImpl implements StorageStorageDesignServ
 			.forEach(item -> item.dettach());
 		// 새로 온 디자인들에 대해 true로 바꿔준다.
 		newDesigns.forEach(item -> item.attach());
+	}
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	@Override
+	public void acquireNewStorageDesign(Long userId, Integer originalLevel, Integer afterLevel) {
+		Refrigerator refrigerator = refrigeratorRepository.findByUserId(userId)
+			.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND));
+
+		// original level + 1 ~ afterLevel 까지 다 가져오기.
+		List<StorageDesign> nextStorageDesign = storageDesignRepository.findNextStorageDesign(originalLevel,
+			afterLevel);
+		LocalDateTime localDateTime = timeService.localDateTimeNow();
+		nextStorageDesign.forEach(sd ->
+			storageStorageDesignRepository.save(StorageStorageDesign.acquireDesign(refrigerator, sd, localDateTime)));
 	}
 
 	private <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {

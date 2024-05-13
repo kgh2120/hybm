@@ -12,5 +12,6 @@ import lombok.RequiredArgsConstructor;
 public class LevelUp implements Event {
 
 	private final Long userId;
-	private final Integer level;
+	private final Integer originalLevel;
+	private final Integer afterLevel;
 }

@@ -1,5 +1,6 @@
 package com.dragontrain.md.domain.refrigerator.infra;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
@@ -18,5 +19,10 @@ public class StorageDesignRepositoryImpl implements StorageDesignRepository {
 	@Override
 	public Optional<StorageDesign> findStorageDesignByLevelAndType(int level, StorageTypeId storageTypeId) {
 		return storageDesignJpaRepository.findByLevelAndStorageType_StorageType(level, storageTypeId);
+	}
+
+	@Override
+	public List<StorageDesign> findNextStorageDesign(int originalLevel, int currentLevel) {
+		return storageDesignJpaRepository.findNextStorageDesign(originalLevel, currentLevel);
 	}
 }

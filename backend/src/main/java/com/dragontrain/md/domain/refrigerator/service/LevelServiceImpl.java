@@ -64,7 +64,7 @@ public class LevelServiceImpl implements LevelService {
 		refrigerator.acquireExp(calculatedExp, level, timeService.localDateTimeNow());
 
 		if (originLevel != afterLevel) {
-			eventPublisher.publish(new LevelUp(userId, afterLevel));
+			eventPublisher.publish(new LevelUp(userId, originLevel,  afterLevel));
 		}
 
 		log.debug("acquireExp - finished");

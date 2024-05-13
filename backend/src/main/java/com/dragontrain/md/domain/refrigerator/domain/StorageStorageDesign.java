@@ -47,7 +47,7 @@ public class StorageStorageDesign {
 	@JoinColumn(name = "refrigerator_id",  columnDefinition = "bigint")
 	private Refrigerator refrigerator;
 
-	public static StorageStorageDesign create(Refrigerator refrigerator, StorageDesign storageDesign,
+	public static StorageStorageDesign initialDesign(Refrigerator refrigerator, StorageDesign storageDesign,
 		LocalDateTime now) {
 		return StorageStorageDesign.builder()
 			.storageStorageDesignId(StorageStorageDesignId.builder()
@@ -61,6 +61,24 @@ public class StorageStorageDesign {
 			.storageType(storageDesign.getStorageType())
 			.build();
 	}
+
+	public static StorageStorageDesign acquireDesign(Refrigerator refrigerator, StorageDesign storageDesign,
+		LocalDateTime now) {
+		return StorageStorageDesign.builder()
+			.storageStorageDesignId(StorageStorageDesignId.builder()
+				.refrigeratorId(refrigerator.getRefrigeratorId())
+				.storageDesignId(storageDesign.getStorageDesignId())
+				.build())
+			.isApplied(false)
+			.storageDesign(storageDesign)
+			.refrigerator(refrigerator)
+			.createdAt(now)
+			.storageType(storageDesign.getStorageType())
+			.build();
+	}
+
+
+
 
 	public void dettach() {
 		this.isApplied = Boolean.FALSE;

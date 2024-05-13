@@ -2,11 +2,9 @@ package com.dragontrain.md.domain.refrigerator.service;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import com.dragontrain.md.common.config.properties.ExpProperties;
 import com.dragontrain.md.common.service.EventPublisher;
-import com.dragontrain.md.domain.food.domain.CategoryBig;
 import com.dragontrain.md.domain.refrigerator.controller.request.BadgeRequest;
 import com.dragontrain.md.domain.refrigerator.controller.response.AttachedBadgeResponse;
 import com.dragontrain.md.domain.refrigerator.controller.response.BadgeInfo;
@@ -188,7 +186,7 @@ public class RefrigeratorServiceImpl
 		// 각 타입에 해당하는 기본 디자인 가져와서 보유 디자인으로 만들어주기
 		LocalDateTime initTime = timeService.localDateTimeNow();
 		findDefaultStorageDesign().forEach(sd -> {
-			storageStorageDesignRepository.save(StorageStorageDesign.create(refrigerator, sd, initTime));
+			storageStorageDesignRepository.save(StorageStorageDesign.initialDesign(refrigerator, sd, initTime));
 		});
 	}
 

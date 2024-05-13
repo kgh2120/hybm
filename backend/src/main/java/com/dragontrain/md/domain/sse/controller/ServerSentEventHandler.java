@@ -1,13 +1,8 @@
 package com.dragontrain.md.domain.sse.controller;
 
-import java.util.Map;
-
-import org.springframework.context.event.EventListener;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -34,7 +29,7 @@ public class ServerSentEventHandler {
 
 	// @EventListener
 	public void handleLevelUpEvent(LevelUp levelUp){
-		sseService.sendLevelUpMessage(levelUp.getUserId(), levelUp.getLevel());
+		sseService.sendLevelUpMessage(levelUp.getUserId(), levelUp.getAfterLevel());
 	}
 
 }
