@@ -5,9 +5,12 @@ import ItemBox from "../components/common/ItemBox";
 import EmptyBox from "../components/common/EmptyBox";
 import RecipeBox from "../components/recipePage/RecipeBox";
 import { useQuery } from "@tanstack/react-query";
-import { getDangerFoodBySection } from "../api/recipeApi";
+import {
+  getDangerFoodBySection,
+  getRecipeInfo,
+} from "../api/recipeApi";
 import FoodStateSection from "../components/storagePage/FoodStateSection";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface DangerFoodInfoType {
   foodId: number;
@@ -22,12 +25,18 @@ interface DangerFoodBySectionType {
   CABINET: DangerFoodInfoType[];
 }
 
+interface GetRecipeInfoType {
+  recipeId: number;
+  title: string;
+  author: string;
+}
+
 function RecipePage() {
-  const TITLE_LIST: { [key: string]: string } = {
-    ice: "냉동실",
-    cool: "냉장실",
-    cabinet: "찬장",
-  };
+  const [selectedFoodList, setSelectedFoodList] = useState<
+    DangerFoodInfoType[]
+  >([]);
+  const [foodIdList, setFoodIdList] = useState<number[]>([]);
+  const [isFoodIdList, setIsFoodIdList] = useState<boolean>(false);
 
   const {
     data: dangerFoodBySection,
@@ -38,14 +47,36 @@ function RecipePage() {
     queryFn: getDangerFoodBySection,
   });
 
-  const [selectedFoodList, setSelectedFoodList] = useState<
-    DangerFoodInfoType[]
-  >([]);
+  const {
+    data: recipeInfoData,
+    isLoading: isRecipeInfoLoading,
+    isError: isRecipeInfoError,
+    refetch: refetchRecipeInfoData,
+  } = useQuery<GetRecipeInfoType[]>({
+    queryKey: ["RecipeInfo"],
+    queryFn: () => getRecipeInfo(foodIdList),
+    enabled: isFoodIdList,
+  });
+
+  const TITLE_LIST: { [key: string]: string } = {
+    ice: "냉동실",
+    cool: "냉장실",
+    cabinet: "찬장",
+  };
 
   const handlePickFood = (selectedFood: DangerFoodInfoType) => {
-    const newSelectedFoodList = [...selectedFoodList];
-    newSelectedFoodList.push(selectedFood);
-    setSelectedFoodList(newSelectedFoodList);
+    const isAlreadySelected = selectedFoodList.some(
+      (food) => food.foodId === selectedFood.foodId
+    );
+
+    if (!isAlreadySelected) {
+      const newSelectedFoodList = [...selectedFoodList, selectedFood];
+      setSelectedFoodList(newSelectedFoodList);
+      setFoodIdList((prevFoodIdList) => [
+        ...prevFoodIdList,
+        selectedFood.foodId,
+      ]);
+    }
   };
 
   const handleDeleteFood = (selectedFood: DangerFoodInfoType) => {
@@ -53,13 +84,37 @@ function RecipePage() {
       (food) => food.foodId != selectedFood.foodId
     );
     setSelectedFoodList(updatedFoodList);
+    const updatedFoodIdList = foodIdList.filter(
+      (foodId) => foodId !== selectedFood.foodId
+    );
+    setFoodIdList(updatedFoodIdList);
   };
+
+  const handleGoRecipePage = (foodId: number) => {
+    window.location.href = `https://www.10000recipe.com/recipe/${foodId}`;
+  };
+
+  useEffect(() => {
+    if (foodIdList.length > 0) {
+      setIsFoodIdList(true);
+      refetchRecipeInfoData();
+    } else {
+      setIsFoodIdList(false);
+    }
+  }, [foodIdList, isFoodIdList]);
 
   if (isDangerFoodBySectionPending) {
     return <div>데이터 가져오는 중...</div>;
   }
   if (isDangerFoodBySectionError) {
     return <div>에러나는 중...</div>;
+  }
+
+  if (isRecipeInfoLoading) {
+    return <div>레시피 정보 가져오는 중...</div>;
+  }
+  if (isRecipeInfoError) {
+    return <div>에러가나는 중...</div>;
   }
 
   return (
@@ -94,7 +149,7 @@ function RecipePage() {
                 (section) =>
                   dangerFoodBySection[section].length > 0 && (
                     <FoodStateSection
-                      key={section} // React에서 배열의 각 요소에 고유한 key를 지정해야 함
+                      key={section}
                       sectionTitle={TITLE_LIST[section]}
                       sectionClass="danger"
                     >
@@ -156,13 +211,21 @@ function RecipePage() {
           <div className={styles.sub_title}>레시피 선택하기</div>
           <div className={styles.sub_content}>
             <p>선택한 재료들로 만들 수 있는 레시피로 이동합니다.</p>
-            <section className={styles.main_section}>
-              <RecipeBox
-                imgSrc={HomeBtn}
-                title="레시피 제목이지롱"
-                onClick={() => {}}
-              />
-            </section>
+            {foodIdList.length > 0 &&
+              recipeInfoData?.map((recipe: GetRecipeInfoType) => (
+                <section
+                  className={styles.main_section}
+                  key={recipe.recipeId}
+                >
+                  <RecipeBox
+                    author={recipe.author}
+                    title={recipe.title}
+                    onClick={() =>
+                      handleGoRecipePage(recipe.recipeId)
+                    }
+                  />
+                </section>
+              ))}
           </div>
         </div>
       </div>

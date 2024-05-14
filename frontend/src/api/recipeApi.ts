@@ -10,12 +10,13 @@ const getDangerFoodBySection = async () => {
   }
 };
 
-const getRecipeInfo = async (foodId: number) => {
+// 추천 레시피 조회
+const getRecipeInfo = async (foodIdList: number[]) => {
   try {
+    const foodIdsString = foodIdList.join(",");
     const res = await instance.get(
-      `/api/recipes/recommend?foodId=${foodId}`
+      `/api/recipes/recommend?foodId=${foodIdsString}`
     );
-    console.log(res);
     return res.data;
   } catch (e) {
     console.log(e);
