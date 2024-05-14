@@ -1,0 +1,33 @@
+@import "../common/common";
+
+.wrapper {
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 1px solid $color-text;
+  width: 120px;
+  @include center;
+  flex-direction: column;
+  position: absolute;
+  right: -30%;
+  bottom: -260%;
+  padding: 10px;
+  gap: 10px;
+  border-radius: 5px;
+
+  > button {
+    background-color: $color-back;
+    box-shadow: 1px 1px 2px gray;
+    padding: 10% 20%;
+    border: 1px solid $color-text;
+    border-radius: 5px;
+  }
+
+  > p {
+    font-size: $font-sm;
+    text-decoration: {
+      line: underline;
+      color: $color-text;
+      thickness: 1px;
+    }
+    text-underline-offset: 3px;
+  }
+}

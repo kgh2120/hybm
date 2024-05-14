@@ -1,3 +1,4 @@
+
 import styles from "../../styles/mainPage/NotificationModal.module.css";
 import { formatDate } from "../../utils/formatting";
 import { deleteNotification } from "../../api/notificationApi";
@@ -26,7 +27,6 @@ function NotificationItem({
     foodId,
     noticeId,
     content,
-    isChecked,
     foodImgSrc,
     createdAt,
   } = notification;
