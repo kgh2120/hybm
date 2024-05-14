@@ -1,6 +1,5 @@
 .wrapper {
-  position: relative;
-  height: 720px;
+  height: 100%;
 }
 .wrapper .trash_can {
   width: 130px;
@@ -30,7 +29,6 @@
 }
 .wrapper .background {
   width: 100%;
-  height: 100%;
 }
 .wrapper .receipt {
   position: absolute;
