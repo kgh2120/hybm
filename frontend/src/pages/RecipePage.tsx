@@ -20,6 +20,7 @@ interface DangerFoodInfoType {
 }
 
 interface DangerFoodBySectionType {
+  [key: string]: DangerFoodInfoType[];
   ICE: DangerFoodInfoType[];
   COOL: DangerFoodInfoType[];
   CABINET: DangerFoodInfoType[];
