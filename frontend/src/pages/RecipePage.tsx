@@ -91,8 +91,8 @@ function RecipePage() {
     setFoodIdList(updatedFoodIdList);
   };
 
-  const handleGoRecipePage = (foodId: number) => {
-    window.location.href = `https://www.10000recipe.com/recipe/${foodId}`;
+  const handleGoRecipePage = (recipeId: number) => {
+    window.location.href = `https://www.10000recipe.com/recipe/${recipeId}`;
   };
 
   useEffect(() => {
@@ -158,8 +158,12 @@ function RecipePage() {
                         (item: DangerFoodInfoType, idx: number) => (
                           <ItemBox
                             key={idx}
-                            name={item.name}
-                            content={`D${item.dday}`}
+                            name={
+                              item.name.length > 4
+                                ? `${item.name.slice(0, 4)}..`
+                                : item.name
+                            }
+                            content={`D-${item.dday}`}
                             option="active"
                             imgSrc={item.categoryImgSrc}
                             onClick={() => handlePickFood(item)}
@@ -187,8 +191,12 @@ function RecipePage() {
                     ) => (
                       <div key={idx}>
                         <ItemBox
-                          name={selectedFood.name}
-                          content={`D${selectedFood.dday}`}
+                          name={
+                            selectedFood.name.length > 4
+                              ? `${selectedFood.name.slice(0, 4)}..`
+                              : selectedFood.name
+                          }
+                          content={`D-${selectedFood.dday}`}
                           option="active"
                           imgSrc={selectedFood.categoryImgSrc}
                           onClick={() =>
