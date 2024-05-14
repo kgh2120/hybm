@@ -92,7 +92,7 @@ public class NoticeServiceImpl implements NoticeService{
 		LocalDateTime now = timeService.localDateTimeNow();
 		List<Notice> notices = new ArrayList<>();
 
-		foods.forEach(food -> notices.add(Notice.create(food, noticeContentParser.parseNoticeContent(food), now)));
+		foods.forEach(food -> notices.add(Notice.create(food, noticeContentParser.parseNoticeContent(food), now, food.getRefrigerator().getUser())));
 		noticeRepository.saveAll(notices);
 
 		FirebaseMessaging.getInstance().sendEachAsync(getMessageByNotices(notices));
@@ -107,7 +107,7 @@ public class NoticeServiceImpl implements NoticeService{
 		List<Message> messages = new ArrayList<>();
 
 		notices.forEach(notice -> {
-			String token = stringRedisTemplate.opsForValue().get(notice.getFood().getRefrigerator().getUser().getUserId().toString());
+			String token = stringRedisTemplate.opsForValue().get(notice.getUser().getUserId().toString());
 			try {
 				messages.add(
 					Message.builder()
