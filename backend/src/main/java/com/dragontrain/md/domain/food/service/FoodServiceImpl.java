@@ -418,11 +418,8 @@ public class FoodServiceImpl implements FoodService {
 	public void clearAllFood(Long userId) {
 		Refrigerator refrigerator = refrigeratorRepository.findByUserId(userId)
 			.orElseThrow(() -> new FoodException(FoodErrorCode.REFRIGERATOR_NOT_FOUND));
-		List<Food> foods = foodRepository.findAllByRefrigeratorId(refrigerator.getRefrigeratorId());
-		for (Food food : foods) {
-			food.clear();
-			foodRepository.save(food);
-		}
+		foodRepository.findAllByRefrigeratorId(refrigerator.getRefrigeratorId())
+			.forEach(Food::clear);
 	}
 
 	@Override
@@ -545,16 +542,10 @@ public class FoodServiceImpl implements FoodService {
 	@Transactional
 	@Override
 	public void clearRefrigerator(User user) {
-
 		Refrigerator refrigerator = refrigeratorRepository.findByUserId(user.getUserId())
 			.orElseThrow(() -> new FoodException(FoodErrorCode.REFRIGERATOR_NOT_FOUND));
-
-		List<Food> foods = foodRepository.findAllByRefrigeratorId(refrigerator.getRefrigeratorId());
-		for (Food food : foods) {
-			food.clear();
-			foodRepository.save(food);
-		}
-
+		foodRepository.findAllByRefrigeratorId(refrigerator.getRefrigeratorId())
+			.forEach(Food::clear);
 	}
 
 
