@@ -23,11 +23,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
 public class NoticeServiceImpl implements NoticeService{
@@ -60,6 +62,7 @@ public class NoticeServiceImpl implements NoticeService{
 		);
 	}
 
+	@Transactional
 	@Override
 	public void deleteNotice(User user, Long noticeId) {
 		Notice notice = noticeRepository.findByNoticeId(noticeId)
@@ -76,6 +79,7 @@ public class NoticeServiceImpl implements NoticeService{
 		notice.delete(timeService.localDateTimeNow());
 	}
 
+	@Transactional
 	@Override
 	public void deleteAllNotice(User user) {
 		List<Notice> notices = noticeRepository.findAllNotDeletedNotice(
@@ -87,17 +91,19 @@ public class NoticeServiceImpl implements NoticeService{
 		notices.forEach(notice -> notice.delete(timeService.localDateTimeNow()));
 	}
 
+	@Transactional
 	@Override
 	public void saveNotices(List<Food> foods) {
 		LocalDateTime now = timeService.localDateTimeNow();
 		List<Notice> notices = new ArrayList<>();
 
-		foods.forEach(food -> notices.add(Notice.create(food, noticeContentParser.parseNoticeContent(food), now)));
+		foods.forEach(food -> notices.add(Notice.create(food, noticeContentParser.parseNoticeContent(food), now, food.getRefrigerator().getUser())));
 		noticeRepository.saveAll(notices);
 
 		FirebaseMessaging.getInstance().sendEachAsync(getMessageByNotices(notices));
 	}
 
+	@Transactional
 	@Override
 	public void saveFCMToken(User user, String token) {
 		stringRedisTemplate.opsForValue().set(user.getUserId().toString(), token);
@@ -107,7 +113,7 @@ public class NoticeServiceImpl implements NoticeService{
 		List<Message> messages = new ArrayList<>();
 
 		notices.forEach(notice -> {
-			String token = stringRedisTemplate.opsForValue().get(notice.getFood().getRefrigerator().getUser().getUserId().toString());
+			String token = stringRedisTemplate.opsForValue().get(notice.getUser().getUserId().toString());
 			try {
 				messages.add(
 					Message.builder()

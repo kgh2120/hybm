@@ -8,6 +8,7 @@ import com.dragontrain.md.domain.food.domain.FoodStatus;
 import com.dragontrain.md.domain.notice.exception.NoticeErrorCode;
 import com.dragontrain.md.domain.notice.exception.NoticeException;
 
+import com.dragontrain.md.domain.user.domain.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -58,7 +59,11 @@ public class Notice {
 	@JoinColumn(name = "food_id")
 	private Food food;
 
-	public static Notice create(Food food, String content, LocalDateTime now) {
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	private User user;
+
+	public static Notice create(Food food, String content, LocalDateTime now, User user) {
 		return Notice.builder()
 			.food(food)
 			.isChecked(false)
@@ -66,6 +71,7 @@ public class Notice {
 			.updatedAt(now)
 			.content(content)
 			.type(food.getFoodStatus().equals(FoodStatus.DANGER) ? NoticeType.TO_DANGER : NoticeType.TO_ROTTEN)
+			.user(user)
 			.build();
 	}
 
