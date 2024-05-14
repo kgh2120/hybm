@@ -5,7 +5,7 @@ import {
   Tooltip,
   Legend,
   ChartType,
-} from "chart.js";
+} from "chart.js/auto";
 import { Chart } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import styles from "../styles/reportPage/ReportPage.module.css";
