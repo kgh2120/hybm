@@ -353,7 +353,7 @@ public class FoodServiceImpl implements FoodService {
 		Integer price = foodInfoRequest.getPrice();
 		LocalDate expiredDate = makeLocalDate(foodInfoRequest.getExpiredDate());
 		StorageTypeId location = StorageTypeId.valueOf(foodInfoRequest.getLocation().toUpperCase());
-		Food updatedFood = food.update(name, categoryDetail, price, expiredDate, location);
+		Food updatedFood = food.update(name, categoryDetail, price, expiredDate, location, timeService.localDateTimeNow());
 
 		foodRepository.save(updatedFood);
 	}
@@ -411,6 +411,15 @@ public class FoodServiceImpl implements FoodService {
 		}
 		refrigeratorEatenCountRepository.save(refrigeratorEatenCount);
 
+	}
+
+	@Transactional
+	@Override
+	public void clearAllFood(Long userId) {
+		Refrigerator refrigerator = refrigeratorRepository.findByUserId(userId)
+			.orElseThrow(() -> new FoodException(FoodErrorCode.REFRIGERATOR_NOT_FOUND));
+		foodRepository.findAllByRefrigeratorId(refrigerator.getRefrigeratorId())
+			.forEach(Food::clear);
 	}
 
 	@Override
@@ -533,16 +542,10 @@ public class FoodServiceImpl implements FoodService {
 	@Transactional
 	@Override
 	public void clearRefrigerator(User user) {
-
 		Refrigerator refrigerator = refrigeratorRepository.findByUserId(user.getUserId())
 			.orElseThrow(() -> new FoodException(FoodErrorCode.REFRIGERATOR_NOT_FOUND));
-
-		List<Food> foods = foodRepository.findAllByRefrigeratorId(refrigerator.getRefrigeratorId());
-		for (Food food : foods) {
-			food.clear();
-			foodRepository.save(food);
-		}
-
+		foodRepository.findAllByRefrigeratorId(refrigerator.getRefrigeratorId())
+			.forEach(Food::clear);
 	}
 
 
