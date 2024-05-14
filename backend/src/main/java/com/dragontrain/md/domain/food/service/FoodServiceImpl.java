@@ -353,7 +353,7 @@ public class FoodServiceImpl implements FoodService {
 		Integer price = foodInfoRequest.getPrice();
 		LocalDate expiredDate = makeLocalDate(foodInfoRequest.getExpiredDate());
 		StorageTypeId location = StorageTypeId.valueOf(foodInfoRequest.getLocation().toUpperCase());
-		Food updatedFood = food.update(name, categoryDetail, price, expiredDate, location);
+		Food updatedFood = food.update(name, categoryDetail, price, expiredDate, location, timeService.localDateTimeNow());
 
 		foodRepository.save(updatedFood);
 	}

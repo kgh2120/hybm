@@ -2,7 +2,6 @@ package com.dragontrain.md.domain.food.domain;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
@@ -104,14 +103,16 @@ public class Food {
 		CategoryDetail categoryDetail,
 		Integer price,
 		LocalDate expectedExpirationDate,
-		StorageTypeId storageType) {
+		StorageTypeId storageType,
+		LocalDateTime updatedAt) {
 
 		this.name = name;
 		this.categoryDetail = categoryDetail;
 		this.price = price;
 		this.expectedExpirationDate = expectedExpirationDate;
+		this.foodStatus = calculateFoodStatus(expectedExpirationDate, updatedAt.toLocalDate());
 		this.storageType = StorageType.builder().storageType(storageType).build();
-
+		this.updatedAt = updatedAt;
 		return this;
 	}
 
@@ -149,7 +150,7 @@ public class Food {
 		this.foodDeleteType = foodDeleteType;
 	}
 
-	public void changeStatus(FoodStatus foodStatus, LocalDateTime localDateTime){
+	public void changeStatus(FoodStatus foodStatus, LocalDateTime localDateTime) {
 		if (!Objects.isNull(deletedAt)) {
 			throw new FoodException(FoodErrorCode.ALREADY_DELETED_FOOD);
 		}
