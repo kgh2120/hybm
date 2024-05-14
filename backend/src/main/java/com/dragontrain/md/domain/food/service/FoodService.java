@@ -38,4 +38,6 @@ public interface FoodService {
 	void deleteFood(String deleteType, Long[] foodId, User user);
 
 	void raiseEatenCount(Long userId, Long foodId);
+
+	void clearAllFood(Long userId);
 }
