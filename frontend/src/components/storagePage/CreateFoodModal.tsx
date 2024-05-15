@@ -74,8 +74,10 @@ function CreateFoodModal({
     alert("3")
   };
 
-  //@ts-ignore
-  window.sendReceipt = sendReceipt;
+  useEffect(() => {
+    //@ts-ignore
+    window.sendReceipt = sendReceipt;
+  }, []);
   console.log(sendReceipt);
   return (
     <div className={styles.wrapper}>
