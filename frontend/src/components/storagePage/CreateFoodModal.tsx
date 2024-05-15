@@ -8,8 +8,9 @@ import useFoodStore from "../../stores/useFoodStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postFood } from "../../api/foodApi";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { formatDashDate } from "../../utils/formatting";
+import useAuthStore from "../../stores/useAuthStore";
 
 interface CreateFoodModalProps {
   handleCloseCreateFoodModal: () => void;
@@ -18,6 +19,8 @@ interface CreateFoodModalProps {
 function CreateFoodModal({
   handleCloseCreateFoodModal,
 }: CreateFoodModalProps) {
+  const navigate = useNavigate();
+  const { setImagePath } = useAuthStore();
   const queryClient = useQueryClient();
   const { storageName } = useParams() as { storageName: string };
   const { inputList } = useFoodStore();
@@ -63,7 +66,8 @@ function CreateFoodModal({
   };
 
   const sendReceipt = (imagePath: string) => {
-    console.log("imagePath:", imagePath);
+    setImagePath(imagePath)
+    navigate("/receipt");
   };
 
   console.log(sendReceipt);
