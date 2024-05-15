@@ -313,7 +313,7 @@ function StoragePage() {
       {isFoodDetailModal && inputList.categoryImgSrc !== "" && (
         <Modal
           title="식품 조회"
-          clickEvent={handleCloseFoodDetailModal}
+          onClick={handleCloseFoodDetailModal}
         >
           <FoodDetailModal
             foodId={foodId}
