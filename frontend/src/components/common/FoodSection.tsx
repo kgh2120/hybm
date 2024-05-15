@@ -141,7 +141,6 @@ function FoodSection({ option = "" }: FoodSectionProps) {
   });
 
   useEffect(() => {
-    console.log("foodExpiredDate", foodExpiredDate);
     if (foodExpiredDate && categoryId) {
       setInputList({
         ...inputList,
@@ -151,7 +150,6 @@ function FoodSection({ option = "" }: FoodSectionProps) {
           day: foodExpiredDate.day,
         },
       });
-      console.log("확인하고 있니?", inputList, inputList.foodName);
     }
   }, [foodExpiredDate]);
 

@@ -166,8 +166,6 @@ function StoragePage() {
     if (foodDetail && isFoodDetailModal) {
       const newDate = formatDashStringToDate(foodDetail.expiredDate);
       if (newDate) {
-        console.log("newDate", newDate);
-        console.log("foodDetail", foodDetail);
         
         setInputList({
           foodName: foodDetail.name,
@@ -182,7 +180,6 @@ function StoragePage() {
           price: foodDetail.price,
           location: foodDetail.location,
         });
-        console.log("inputList.ExpiredDate: ", inputList.expiredDate);
       }
     }
   }, [foodDetail, isFoodDetailModal]);

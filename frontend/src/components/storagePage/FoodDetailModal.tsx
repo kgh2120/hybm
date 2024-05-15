@@ -39,7 +39,6 @@ function FoodDetailModal({
   };
   
   useEffect(() => {
-    console.log('detailModal에서 확인',inputList)
     setFoodEditData({
       name: inputList.foodName,
       categoryId: inputList.categoryId,
@@ -65,8 +64,6 @@ function FoodDetailModal({
   const handleEditFood = () => {
     mutateFoodDetail({ foodId, foodEditData });
   };
-  console.log("수정 데이터", foodEditData);
-  console.log('처음 뜰때', inputList)
   return (
     <div className={styles.wrapper}>
       <section className={styles.main_section}>

@@ -37,7 +37,6 @@ const deleteFood = async ({
     const res = await instance.delete(
       `/api/foods/${option}?foodId=${foodIdsString}`
     );
-    console.log(res);
     return res.data;
   } catch (e) {
     console.error(e);
@@ -48,7 +47,6 @@ const deleteFood = async ({
 const deleteAllFood = async () => {
   try {
     const res = await instance.delete("/api/foods/clear");
-    console.log(res);
     return res.data;
   } catch (e) {
     console.error(e);
