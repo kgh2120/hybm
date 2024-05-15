@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Button from "../common/Button";
 import styles from "../../styles/storagePage/CreateFoodModal.module.css";
 import barcode from "../../assets/images/barcode.png";
@@ -14,7 +15,9 @@ interface CreateFoodModalProps {
   handleCloseCreateFoodModal: () => void;
 }
 
-function CreateFoodModal({ handleCloseCreateFoodModal } : CreateFoodModalProps) {
+function CreateFoodModal({
+  handleCloseCreateFoodModal,
+}: CreateFoodModalProps) {
   const queryClient = useQueryClient();
   const { storageName } = useParams() as { storageName: string };
   const { inputList, setInputList, initialInputList, setIsSelected } = useFoodStore();
@@ -44,7 +47,7 @@ function CreateFoodModal({ handleCloseCreateFoodModal } : CreateFoodModalProps) 
     mutationFn: postFood,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['foodStorageItemList'],
+        queryKey: ["foodStorageItemList"],
       });
       setInputList(initialInputList);
       handleCloseCreateFoodModal();
@@ -54,6 +57,17 @@ function CreateFoodModal({ handleCloseCreateFoodModal } : CreateFoodModalProps) 
       mutateFood(foodData);
     };
 
+  const handleOpenCamera = () => {
+    console.log("camera");
+    //@ts-ignore
+    window.flutter_inappwebview.postMessage("button_clicked");
+  };
+
+  const sendReceipt = (imagePath: string) => {
+    console.log("imagePath:", imagePath);
+  };
+
+  console.log(sendReceipt);
   return (
     <div className={styles.wrapper}>
       <section className={styles.main_section}>
@@ -62,7 +76,7 @@ function CreateFoodModal({ handleCloseCreateFoodModal } : CreateFoodModalProps) 
           <div>
             <img src={barcode} alt="바코드아이콘" />
           </div>
-          <div>
+          <div onClick={handleOpenCamera}>
             <img src={camera} alt="카메라아이콘" />
           </div>
           <div></div>

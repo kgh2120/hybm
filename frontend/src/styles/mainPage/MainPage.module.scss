@@ -1,4 +1,33 @@
 @import "../common/common";
+@mixin badge-img-box($left, $bottom) {
+  width: 45px;
+  aspect-ratio: 0.7;
+  position: absolute;
+  left: $left;
+  bottom: $bottom;
+  z-index: 50;
+  pointer-events: initial;
+  filter: drop-shadow(-4px 4px 0px rgba(black, 0.3));
+  .badge_sub_box {
+    width: 100%;
+    position: relative;
+    .plus_btn {
+      width: 70%;
+      aspect-ratio: 0.7;
+      opacity: 0.8;
+    }
+    .badge {
+      width: 100%;
+    }
+    .minus_btn {
+      position: absolute;
+      width: 20px;
+      height: 50px;
+      bottom: 0px;
+      right: 0px;
+    }
+  }
+}
 
 .wrapper {
   position: relative;
@@ -15,6 +44,7 @@
     top: -20px;
     left: -48px;
     width: 222px;
+    // width: 222px;
     z-index: 2;
   }
   .cool {
@@ -65,52 +95,32 @@
   .recipe {
     position: absolute;
     z-index: 6;
-    // opacity: 0;
     bottom: 290px;
     left: 105px;
     width: 60px;
   }
-  // .cabinet_btn {
-  //   position: absolute;
-  //   // top: 40px;
-  //   top: 35px;
-  //   left: -1px;
-  //   width: 170px;
-  //   height: 180px;
-  //   border-radius: 50%;
-  //   cursor: pointer;
-  //   // width: 170px;
-  //   z-index: 10;
-  //   background-color: red;
-  //   opacity: 0;
-  // }
-
-  //   .set {
-  //     height: 720px;
-  //     // display: flex;
-  //     // flex-direction: column;
-  //     position: relative;
-  //     .cabinet {
-  //     //   position: absolute;
-  //     //   top: 10px;
-  //     //   left: 0px;
-  //       width: 30%;
-  //     }
-  //     .cool {
-  //       position: absolute;
-  //       top: 150px;
-  //       left: 0px;
-  //       width: 40%;
-  //     }
-  //     .ice {
-  //       position: absolute;
-  //       top: 450px;
-  //       left: 0px;
-  //       width: 40%;
-  //     }
-  //   }
-  //   img {
-  //     width: 100px;
-  //     height: 200px;
-  //   }
+  .badge1 {
+    @include badge-img-box(60px, 420px);
+  }
+  .badge2 {
+    @include badge-img-box(115px, 475px);
+  }
+  .badge3 {
+    @include badge-img-box(55px, 350px);
+  }
+  .badge4 {
+    @include badge-img-box(120px, 415px);
+  }
+  .badge5 {
+    @include badge-img-box(60px, 170px);
+  }
+  .badge6 {
+    @include badge-img-box(110px, 190px);
+  }
+  .badge7 {
+    @include badge-img-box(55px, 65px);
+  }
+  .badge8 {
+    @include badge-img-box(110px, 90px);
+  }
 }

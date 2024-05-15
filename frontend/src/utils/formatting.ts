@@ -4,8 +4,8 @@ const formatPrice = (price: number | string) => {
 
 const formatDate = (date: string) => {
   const year = date.substring(0, 4);
-  const month = date.substring(4, 6);
-  const day = date.substring(6, 8);
+  const month = date.substring(5, 7);
+  const day = date.substring(8, 10);
 
   return `${year}.${month}.${day}`;
 };
@@ -41,6 +41,10 @@ const formatDashStringToDate = (dateString: string) => {
   const [year, month, day] = dateString.split("-").map(Number);
   return { year, month, day };
 };
+
+const addLineBreakBeforeNumber = (inputString: string) =>
+  inputString.replace(/(\D)(\d)/g, "$1<br>$2");
+
 export {
   formatPrice,
   formatDate,
@@ -48,4 +52,5 @@ export {
   dateToString,
   formatDashDate,
   formatDashStringToDate,
+  addLineBreakBeforeNumber,
 };

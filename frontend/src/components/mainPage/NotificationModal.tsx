@@ -1,35 +1,76 @@
-import {
-  useInfiniteQuery,
-  useMutation,
-} from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import styles from "../../styles/mainPage/NotificationModal.module.css";
-import NotificationItem from "./NotificationItem";
-import {
-  deleteAllNotification,
-  getNotificationList,
-} from "../../api/notificationApi";
+// import NotificationItem from "./NotificationItem";
+import { deleteAllNotification } from "../../api/notificationApi";
 import ConfirmModal from "../common/ConfirmModal";
-import { useEffect, useState } from "react";
-import { useInView } from "react-intersection-observer";
-import EmptySection from "../common/EmptySection";
+// import { useCallback, useEffect, useRef, useState } from "react";
+// import { useEffect, useState } from "react";
+import { useState } from "react";
+// import EmptySection from "../common/EmptySection";
+// import instance from "../../api/axios";
 
 interface NotificationModalProps {
   isNewNotification: boolean;
 }
 
-interface NotificationType {
-  foodId: number;
-  noticeId: number;
-  content: string;
-  isChecked: boolean;
-  foodImgSrc: string;
-  createdAt: string;
-}
+// interface NotificationType {
+//   foodId: number;
+//   noticeId: number;
+//   content: string;
+//   isChecked: boolean;
+//   foodImgSrc: string;
+//   createdAt: string;
+// }
+
+// interface NotificationListType {
+//   notice: NotificationType[];
+//   hasNext: boolean;
+// }
 
 function NotificationModal({
   isNewNotification,
 }: NotificationModalProps) {
-  const { ref, inView } = useInView();
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [hasNext, setHasNext] = useState(false);
+  // const [page, setPage] = useState(1);
+  // const [notificationList, setNotificationList] = useState<NotificationType[]>([]);
+  // const observerRef = useRef();
+
+  // const lastNotificationRef = useCallback(
+  //   (node) => {
+  //     if (isLoading) return;
+  //     if (observerRef.current) observerRef.current.disconnect();
+
+  //     observerRef.current = new IntersectionObserver((entries) => {
+  //       if (entries[0].isIntersecting && hasNext) {
+  //         setPage((prevPageNumber) => prevPageNumber + 1);
+  //       }
+  //     });
+
+  //     if (node) observerRef.current.observe(node);
+  //   },
+  //   [isLoading, hasNext]
+  // );
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       setIsLoading(true);
+  //       const res = await instance.get("/api/notices", {
+  //         params: {
+  //           page,
+  //           size: 20,
+  //         },
+  //       });
+  //       console.log("알림조회결과:", res)
+  //       setNotificationList((prev) => [...prev, ...res.data.notice]);
+  //       setHasNext(res.data.hasNext);
+  //     } catch (error) {}
+  //     setIsLoading(false);
+  //   };
+  //   fetchData();
+  // }, [page]);
+  console.log(isNewNotification)
   const [
     isDeleteNotificationConfirmModalOpen,
     setIsDeleteNotificationConfirmModalOpen,
@@ -45,24 +86,6 @@ function NotificationModal({
     },
   });
 
-  const {
-    data: notificationList,
-    status,
-    error,
-    fetchNextPage,
-    hasNextPage,
-  } = useInfiniteQuery({
-    queryKey: ["notificationList"],
-    queryFn: getNotificationList,
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages) => {
-      const nextPage = lastPage.length
-        ? allPages.length + 1
-        : undefined;
-      return nextPage;
-    },
-  });
-
   const handleDeleteAllNotification = () => {
     mutateDeleteAllNotification();
   };
@@ -75,24 +98,15 @@ function NotificationModal({
     setIsDeleteNotificationConfirmModalOpen(false);
   };
 
-  useEffect(() => {
-    if (inView && hasNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, hasNextPage, fetchNextPage]);
+  // if (isLoading) {
+  //   return <div>loading...</div>;
+  // }
 
-  if (status === "pending") {
-    return <div>Loading...</div>;
-  }
-  if (status === "error") {
-    return <div>Error: {error.message}</div>;
-  }
-
-  const content = notificationList?.pages.map(
-    (notification: NotificationType) => {
-      <NotificationItem innerRef={ref} notification={notification} />;
-    }
-  );
+  // const content = notificationList?.map(
+  //   (notification: NotificationType) => {
+  //     return <NotificationItem notification={notification} />;
+  //   }
+  // );
 
   return (
     <div className={styles.notification_modal_wrapper}>
@@ -102,7 +116,15 @@ function NotificationModal({
       >
         알림함 비우기
       </button>
-      {!isNewNotification ? <EmptySection content1="" content2=""/> : <>{content}</>}
+      {/* {!isNewNotification ? (
+        <EmptySection content1="알림함이 비었습니다." content2="" />
+      ) : (
+        <>{content}</>
+      )} */}
+      {/* <div
+          ref={lastNotificationRef}
+          style={{ height: '5px' }}
+        /> */}
 
       {isDeleteNotificationConfirmModalOpen && (
         <ConfirmModal

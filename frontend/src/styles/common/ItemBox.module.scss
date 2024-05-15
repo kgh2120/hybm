@@ -53,14 +53,8 @@
     }
 
     .check_img {
-      z-index: 2;
-      position: absolute;
-      bottom: 0;
-      right: -4%;
-      width: 17px;
+      @include check-img;
     }
-
-
   }
 
   .text_box {
