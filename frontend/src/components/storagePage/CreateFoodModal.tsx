@@ -67,10 +67,15 @@ function CreateFoodModal({
   };
 
   const sendReceipt = (imagePath: string) => {
+    alert("1") // 디버깅용
     setImagePath(imagePath)
+    alert("2")
     navigate("/receipt");
+    alert("3")
   };
 
+  //@ts-ignore
+  window.sendReceipt = sendReceipt;
   console.log(sendReceipt);
   return (
     <div className={styles.wrapper}>
