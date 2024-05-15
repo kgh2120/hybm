@@ -85,7 +85,7 @@ function ExpBar() {
 
   useEffect(() => {
     if (levelAndExp) {
-      if (currentLevel < levelAndExp.level) {
+      if (currentLevel !== null && currentLevel < levelAndExp.level) {
         setIsLevelUpModalOpen(true);
       }
       setCurrentLevel(levelAndExp.level);
