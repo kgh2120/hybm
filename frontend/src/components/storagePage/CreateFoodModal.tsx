@@ -67,9 +67,11 @@ function CreateFoodModal({
   };
 
   const sendReceipt = (imagePath: string) => {
-    alert("sendReceipt") // 디버깅용
+    alert("1") // 디버깅용
     setImagePath(imagePath)
+    alert("2")
     navigate("/receipt");
+    alert("3")
   };
 
   //@ts-ignore
