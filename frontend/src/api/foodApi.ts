@@ -65,7 +65,6 @@ const getExpiredDate = async (categoryId: number) => {
     const res = await instance.get(
       `/api/foods/expiration?categoryDetailId=${categoryId}&&year=${year}&&month=${month}&&day=${day}`
     );
-    console.log(res);
     return res.data;
   } catch (e) {
     console.error(e);
@@ -73,20 +72,57 @@ const getExpiredDate = async (categoryId: number) => {
 };
 
 // 식품 등록
-type FoodDataType = {
+interface FoodDataType {
   name: string;
   categoryId: number;
   price: number;
   expiredDate: string;
   location: string;
   isManual: boolean;
-};
+}
 const postFood = async (foodData: FoodDataType) => {
   try {
     const res = await instance.post("/api/foods", foodData, {});
-    console.log("식품 등록 성공:", res, foodData);
+    return res
   } catch (e) {
     console.error("식품 등록 실패:", e);
+    throw e;
+  }
+};
+
+// 내부 식품 상세 조회
+const getFoodDetail = async (foodId: number) => {
+  try {
+    const res = await instance.get(`/api/foods/${foodId}`);
+    return res.data;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+// 내부 식품 수정
+interface FoodEditDataType {
+  name: string;
+  categoryId: number;
+  price: number;
+  expiredDate: string;
+  location: string;
+}
+
+interface FoodDetailType {
+  foodId: number;
+  foodEditData: FoodEditDataType;
+}
+
+const putFoodDetail = async ({ foodId, foodEditData }: FoodDetailType) => {
+  try {
+    const res = await instance.put(
+      `/api/foods/${foodId}`,
+      foodEditData
+    );
+    return res.data;
+  } catch (e) {
+    console.log(e);
     throw e;
   }
 };
@@ -98,4 +134,6 @@ export {
   deleteAllFood,
   getExpiredDate,
   postFood,
+  getFoodDetail,
+  putFoodDetail,
 };

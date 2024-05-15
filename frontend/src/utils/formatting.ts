@@ -1,5 +1,5 @@
 const formatPrice = (price: number | string) => {
-  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); // 3자리마다 쉼표 추가
+  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // 3자리마다 쉼표 추가
 };
 
 const formatDate = (date: string) => {
@@ -15,7 +15,7 @@ const stringToDate = (dateString: string) => {
   const month = dateString.substring(4, 6);
   const day = dateString.substring(6, 8);
 
-  return {year, month, day};
+  return { year, month, day };
 };
 
 const dateToString = (year: number, month: number, day: number) => {
@@ -37,4 +37,15 @@ const formatDashDate = (date: DateType) => {
   return `${year}-${formattedMonth}-${formattedDay}`;
 };
 
-export {formatPrice, formatDate, stringToDate, dateToString, formatDashDate}
+const formatDashStringToDate = (dateString: string) => {
+  const [year, month, day] = dateString.split("-").map(Number);
+  return { year, month, day };
+};
+export {
+  formatPrice,
+  formatDate,
+  stringToDate,
+  dateToString,
+  formatDashDate,
+  formatDashStringToDate,
+};

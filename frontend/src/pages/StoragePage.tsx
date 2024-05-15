@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../components/common/Modal";
 import CreateFoodModal from "../components/storagePage/CreateFoodModal";
 import styles from "../styles/storagePage/StoragePage.module.css";
@@ -11,14 +11,20 @@ import eat from "../assets/images/eat.png";
 import throwAway from "../assets/images/throwAway.png";
 import ItemBox from "../components/common/ItemBox";
 import FoodStateSection from "../components/storagePage/FoodStateSection";
-import { deleteFood, getFoodStorageItemList } from "../api/foodApi";
 import {
-  useMutation,
+  deleteFood,
+  getFoodDetail,
+  getFoodStorageItemList,
+} from "../api/foodApi";
+import {
   useQuery,
   useQueryClient,
+  useMutation,
 } from "@tanstack/react-query";
 import useFoodStore from "../stores/useFoodStore";
 import ConfirmModal from "../components/common/ConfirmModal";
+import FoodDetailModal from "../components/storagePage/FoodDetailModal";
+import { formatDashStringToDate } from "../utils/formatting";
 
 function StoragePage() {
   const queryClient = useQueryClient();
@@ -28,18 +34,24 @@ function StoragePage() {
     useState(false);
   const [isThrownFoodConfirmModal, setIsThrownFoodConfirmModal] =
     useState(false);
+  const [isFoodDetailModal, setIsFoodDetailModal] = useState(false);
   const [isFoodEdit, setIsFoodEdit] = useState(false);
   const [clickedIndexesBySection, setClickedIndexesBySection] =
     useState<{ [key: string]: number[] }>({});
-  const { setInputList, initialInputList } = useFoodStore();
+  const { inputList, setInputList, initialInputList, setIsSelected } =
+    useFoodStore();
   const { storageName } = useParams() as { storageName: string };
+  const [foodId, setFoodId] = useState(0);
 
   const handleOpenCreateFoodModal = () => {
     setIsCreateFoodModalOpen(true);
+    setInputList(initialInputList);
+    setIsSelected(false);
   };
 
   const handleCloseCreateFoodModal = () => {
     setIsCreateFoodModalOpen(false);
+    setIsSelected(false);
     setInputList(initialInputList);
   };
 
@@ -56,6 +68,18 @@ function StoragePage() {
   // 버림 확인 모달창
   const handleThrownFoodConfirmModal = () => {
     setIsThrownFoodConfirmModal(!isThrownFoodConfirmModal);
+  };
+  // 조회 및 수정 모달창
+  const handleOpenFoodDetailModal = (foodId: number) => {
+    setIsFoodDetailModal(true);
+    setFoodId(foodId);
+    setIsSelected(false);
+  };
+  const handleCloseFoodDetailModal = () => {
+    setIsFoodDetailModal(false);
+    setInputList(initialInputList);
+    setFoodId(0);
+    setIsSelected(false);
   };
 
   // 아이템 클릭
@@ -82,8 +106,8 @@ function StoragePage() {
   );
 
   const TITLE_LIST: { [key: string]: string } = {
-    ice: "냉동실",
-    cool: "냉장실",
+    ice: "냉동칸",
+    cool: "냉장칸",
     cabinet: "찬장",
   };
 
@@ -100,7 +124,6 @@ function StoragePage() {
     categoryImgSrc: string;
     dday: number;
   }
-
   // 먹음/버림 api
   const { mutate: mutateDeleteFood } = useMutation({
     mutationFn: deleteFood,
@@ -116,27 +139,53 @@ function StoragePage() {
       }
     },
   });
-
   const handleDeleteFood = (option: string) => {
     mutateDeleteFood({ foodIdList: foodIds, option });
   };
 
   // 내부 식품 칸별 조회 api
-  const {
-    data: foodStorageItemList,
-    isPending: isFoodStorageItemListPending,
-    isError: isFoodStorageItemListError,
-  } = useQuery({
+  const { data: foodStorageItemList } = useQuery({
     queryKey: ["foodStorageItemList"],
     queryFn: () => getFoodStorageItemList(storageName),
   });
 
-  if (isFoodStorageItemListPending) {
-    return <div>isLoding...</div>;
-  }
-  if (isFoodStorageItemListError) {
-    return <div>error</div>;
-  }
+  // 내부 식품 상세 조회 api
+  const { refetch, data: foodDetail } = useQuery({
+    queryKey: ["foodDetail"],
+    queryFn: () => getFoodDetail(foodId),
+    enabled: isFoodDetailModal,
+  });
+
+  useEffect(() => {
+    if (isFoodDetailModal && foodId) {
+      refetch();
+    }
+  }, [isFoodDetailModal, foodId, refetch]);
+
+  useEffect(() => {
+    if (foodDetail && isFoodDetailModal) {
+      const newDate = formatDashStringToDate(foodDetail.expiredDate);
+      if (newDate) {
+        console.log("newDate", newDate);
+        console.log("foodDetail", foodDetail);
+        
+        setInputList({
+          foodName: foodDetail.name,
+          categoryId: foodDetail.categoryId,
+          categoryBigId: foodDetail.bigCategoryId,
+          categoryImgSrc: foodDetail.categoryImgSrc,
+          expiredDate: {
+            year: newDate.year,
+            month: newDate.month,
+            day: newDate.day,
+          },
+          price: foodDetail.price,
+          location: foodDetail.location,
+        });
+        console.log("inputList.ExpiredDate: ", inputList.expiredDate);
+      }
+    }
+  }, [foodDetail, isFoodDetailModal]);
 
   return (
     <div className={styles.wrapper}>
@@ -150,44 +199,52 @@ function StoragePage() {
           />
         </Link>
         <section className={styles.main_section}>
-          {Object.keys(foodStorageItemList).map(
-            (sectionTitle, idx) => (
-              <FoodStateSection
-                key={idx}
-                sectionTitle={SECTION_TITLE_LIST[sectionTitle]}
-                sectionClass={sectionTitle}
-              >
-                {foodStorageItemList[sectionTitle].map(
-                  (item: FoodItemType) => (
-                    <ItemBox
-                      key={item.foodId}
-                      name={item.name}
-                      content={
-                        item.dday === 0
-                          ? "D-day"
-                          : item.dday > 0
-                          ? `D+${item.dday}`
-                          : `D${item.dday}`
-                      }
-                      option={
-                        clickedIndexesBySection[
-                          sectionTitle
-                        ]?.includes(item.foodId) && isFoodEdit
-                          ? "clicked"
-                          : sectionTitle === "rotten"
-                          ? "inactive"
-                          : ""
-                      }
-                      imgSrc={item.categoryImgSrc}
-                      onClick={() =>
-                        handleClickItemBox(sectionTitle, item.foodId)
-                      }
-                    />
-                  )
-                )}
-              </FoodStateSection>
-            )
-          )}
+          {foodStorageItemList &&
+            Object.keys(foodStorageItemList).map(
+              (sectionTitle, idx) => (
+                <FoodStateSection
+                  key={idx}
+                  sectionTitle={SECTION_TITLE_LIST[sectionTitle]}
+                  sectionClass={sectionTitle}
+                >
+                  {foodStorageItemList[sectionTitle].map(
+                    (item: FoodItemType) => (
+                      <ItemBox
+                        key={item.foodId}
+                        name={item.name}
+                        content={
+                          item.dday === 0
+                            ? "D-day"
+                            : item.dday > 0
+                            ? `D+${item.dday}`
+                            : `D${item.dday}`
+                        }
+                        option={
+                          clickedIndexesBySection[
+                            sectionTitle
+                          ]?.includes(item.foodId) && isFoodEdit
+                            ? "clicked"
+                            : sectionTitle === "rotten"
+                            ? "inactive"
+                            : ""
+                        }
+                        imgSrc={item.categoryImgSrc}
+                        onClick={
+                          isFoodEdit
+                            ? () =>
+                                handleClickItemBox(
+                                  sectionTitle,
+                                  item.foodId
+                                )
+                            : () =>
+                                handleOpenFoodDetailModal(item.foodId)
+                        }
+                      />
+                    )
+                  )}
+                </FoodStateSection>
+              )
+            )}
         </section>
         {isFoodEdit ? (
           <section className={styles.btn_section}>
@@ -253,6 +310,17 @@ function StoragePage() {
         >
           <CreateFoodModal
             handleCloseCreateFoodModal={handleCloseCreateFoodModal}
+          />
+        </Modal>
+      )}
+      {isFoodDetailModal && inputList.categoryImgSrc !== "" && (
+        <Modal
+          title="식품 조회"
+          clickEvent={handleCloseFoodDetailModal}
+        >
+          <FoodDetailModal
+            foodId={foodId}
+            handleCloseFoodDetailModal={handleCloseFoodDetailModal}
           />
         </Modal>
       )}

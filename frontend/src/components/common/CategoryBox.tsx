@@ -4,7 +4,9 @@ import search from "../../assets/images/search.png";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { getExpiredDate } from "../../api/foodApi";
-import { useFoodCategoryStore } from "../../stores/useFoodStore";
+import useFoodStore, {
+  useFoodCategoryStore,
+} from "../../stores/useFoodStore";
 
 interface FilteredCategory {
   categoryImgSrc: string;
@@ -17,11 +19,25 @@ interface CategoryBoxProps {
   onCategoryIdChange: (categoryId: number) => void;
 }
 
+interface CategoryType {
+  categoryBigId: number;
+  name: string;
+  bigCategoryImgSrc: string;
+  categoryDetails: CategoryDetailType[];
+}
+
+interface CategoryDetailType {
+  categoryId: number;
+  name: string;
+  categoryImgSrc: string;
+}
+
 function CategoryBox({ onCategoryIdChange }: CategoryBoxProps) {
   const { bigCategoryList } = useFoodCategoryStore();
+  const { inputList } = useFoodStore();
   const [name, setName] = useState("");
-  const [selectedCategory, setSelectedCategory] =
-    useState<FilteredCategory | null>(null);
+  const [selectedCategoryImgSrc, setSelectedCategoryImgSrc] =
+    useState("");
   const [filteredCategoryList, setFilteredCategoryList] = useState<
     FilteredCategory[]
   >([]);
@@ -35,25 +51,21 @@ function CategoryBox({ onCategoryIdChange }: CategoryBoxProps) {
   };
 
   const handleSelectCategory = (category: FilteredCategory) => {
-    setSelectedCategory(category);
     const newName = `${category.name}(${category.bigName})`;
     setName(newName);
     const categoryId = category.categoryId;
     onCategoryIdChange(categoryId); // 부모 컴포넌트로 categoryId 전달
     mutateGetExpiredDate(categoryId);
+    setSelectedCategoryImgSrc(category.categoryImgSrc); // 선택한 카테고리 이미지 설정
   };
+  
 
   useEffect(() => {
     if (name.length >= 1) {
       changeFilteredCategoryList();
     } else {
       setFilteredCategoryList([]);
-      setSelectedCategory({
-        categoryImgSrc: "",
-        name: "",
-        bigName: "",
-        categoryId: 0,
-      });
+      setSelectedCategoryImgSrc("");
     }
   }, [name]);
 
@@ -74,12 +86,46 @@ function CategoryBox({ onCategoryIdChange }: CategoryBoxProps) {
     setFilteredCategoryList(updatedCategoryList);
   };
 
+  // localStorage에서 데이터 가져오기
+  useEffect(() => {
+    const storedData = localStorage.getItem("foodCategoryList");
+
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+      const categoryBigId = inputList.categoryBigId;
+      const categoryId = inputList.categoryId;
+
+      const bigCategory = parsedData.state.bigCategoryList.find(
+        (category: CategoryType) =>
+          category.categoryBigId === categoryBigId
+      );
+
+      if (bigCategory) {
+        // bigCategory에서 categoryDetails 배열을 찾음
+        const categoryDetails = bigCategory.categoryDetails;
+
+        // categoryDetails에서 categoryId와 일치하는 객체를 찾음
+        const targetCategory = categoryDetails.find(
+          (category: CategoryDetailType) =>
+            category.categoryId === categoryId
+        );
+
+        // targetCategory가 존재하는지 확인
+        if (targetCategory) {
+          setSelectedCategoryImgSrc(targetCategory.categoryImgSrc);
+          const selectedName = `${targetCategory.name}(${bigCategory.name})`;
+          setName(selectedName);
+        }
+      }
+    }
+  }, [inputList.categoryBigId, inputList.categoryId]);
+
   return (
     <div className={styles.category_box}>
-      {selectedCategory?.categoryImgSrc !== "" && (
+      {selectedCategoryImgSrc !== "" && (
         <img
           className={styles.category_img}
-          src={selectedCategory?.categoryImgSrc}
+          src={selectedCategoryImgSrc}
           alt="카테고리 이미지"
         />
       )}
