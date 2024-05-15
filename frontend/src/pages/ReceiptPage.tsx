@@ -31,10 +31,10 @@ function ReceiptPage() {
           <img className={styles.home_img} src={home} alt="" />
         </Link>
         <section className={styles.food_list_section}>
-          <FoodSection option="active"/>
+          <FoodSection option="receipt"/>
 
-          <FoodSection option="active"/>
-          <FoodSection option="active"/>
+          <FoodSection option="receipt"/>
+          <FoodSection option="receipt"/>
         </section>
         <Button content="완료" color="red" onClick={() => {}} disabled={false}/>
       </div>
