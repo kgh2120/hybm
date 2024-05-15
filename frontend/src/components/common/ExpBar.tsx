@@ -9,7 +9,10 @@ import NotificationModal from "../mainPage/NotificationModal";
 import userBtn from "../../assets/images/userBtn.png";
 import { getLevelAndExp } from "../../api/userApi";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getIsNewNotification } from "../../api/notificationApi";
+import {
+  deleteAllNotification,
+  getIsNewNotification,
+} from "../../api/notificationApi";
 import { signOut } from "../../api/userApi";
 import DropDown from "./DropDown";
 import ConfirmModal from "./ConfirmModal";
@@ -63,6 +66,30 @@ function ExpBar() {
 
   const handleCloseLevelUpModal = () => {
     setIsLevelUpModalOpen(false);
+  };
+
+  const handleOpenDeleteNotificationConfirmModal = () => {
+    setIsDeleteNotificationConfirmModalOpen(true);
+  };
+
+  const [
+    isDeleteNotificationConfirmModalOpen,
+    setIsDeleteNotificationConfirmModalOpen,
+  ] = useState(false);
+
+  const { mutate: mutateDeleteAllNotification } = useMutation({
+    mutationFn: deleteAllNotification,
+    onSuccess: () => {
+      setIsNotificationModalOpen(false);
+    },
+  });
+
+  const handleDeleteAllNotification = () => {
+    mutateDeleteAllNotification();
+  };
+
+  const closeDeleteNotificationConfirmModal = () => {
+    setIsDeleteNotificationConfirmModalOpen(false);
   };
 
   const {
@@ -169,10 +196,25 @@ function ExpBar() {
       </div>
       {isNotificationModalOpen && (
         <Modal title="알림함" onClick={handleCloseNotificationModal}>
-          <NotificationModal
-            isNewNotification={isNewNotification.hasNew}
-          />
+          <div>
+            <button
+              className={styles.remove_all_button}
+              onClick={handleOpenDeleteNotificationConfirmModal}
+            >
+              알림함 비우기
+            </button>
+            <NotificationModal />
+          </div>
         </Modal>
+      )}
+      {isDeleteNotificationConfirmModalOpen && (
+        <ConfirmModal
+          content="알림함을 비우시겠습니까?"
+          option1="삭제"
+          option2="취소"
+          option1Event={handleDeleteAllNotification}
+          option2Event={closeDeleteNotificationConfirmModal}
+        />
       )}
       {isLevelUpModalOpen && (
         <Modal title="레벨업!" onClick={handleCloseLevelUpModal}>
