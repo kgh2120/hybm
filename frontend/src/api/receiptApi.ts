@@ -2,18 +2,24 @@ import instance from "./axios";
 
 // 영수증 OCR 요청
 const postReceipt = async (image: File | null) => {
+  if (!image) {
+    console.error("No image file provided");
+    return;
+  }
+
   const formData = new FormData();
-  formData.append("image", image!);
+  formData.append("image", image);
   console.log(image);
+
   try {
     const res = await instance.post(
       "/api/foods/getReceiptOCR",
       formData
     );
-    alert(`테스트: ${image}, ${formData}, ${res}`);
+    alert(`테스트: ${image.name}, ${formData}, ${res}`);
     return res.data;
   } catch (e) {
-    alert(`실패: ${image}, ${formData}, ${e}`);
+    alert(`실패: ${image.name}, ${formData}, ${e}`);
     console.log(e);
   }
 };

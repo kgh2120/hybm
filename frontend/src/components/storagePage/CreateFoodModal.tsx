@@ -23,7 +23,8 @@ function CreateFoodModal({
   const { setImage } = useAuthStore();
   const queryClient = useQueryClient();
   const { storageName } = useParams() as { storageName: string };
-  const { inputList, setInputList, initialInputList, setIsSelected } = useFoodStore();
+  const { inputList, setInputList, initialInputList, setIsSelected } =
+    useFoodStore();
 
   const [foodData, setFoodData] = useState({
     name: "",
@@ -55,26 +56,32 @@ function CreateFoodModal({
       setInputList(initialInputList);
       handleCloseCreateFoodModal();
       setIsSelected(false);
-    }});
-    const handleCreateFood = () => {
-      mutateFood(foodData);
-    };
+    },
+  });
+
+  const handleCreateFood = () => {
+    mutateFood(foodData);
+  };
 
   const handleOpenCamera = () => {
-    //@ts-ignore
+    // @ts-ignore
     window.flutter_inappwebview.postMessage("button_clicked");
   };
 
-  const sendReceipt = (image: File) => {
-    setImage(image)
+  // 파일 경로를 받아 Blob으로 변환하고 이를 File 객체로 변환하는 함수
+  const convertToBlobAndSetImage = async (imagePath: string) => {
+    const response = await fetch(`file://${imagePath}`);
+    const blob = await response.blob();
+    const file = new File([blob], "receipt.jpg", { type: blob.type });
+    setImage(file);
     navigate("/receipt");
   };
 
   useEffect(() => {
-    //@ts-ignore
-    window.sendReceipt = sendReceipt;
+    // @ts-ignore
+    window.sendReceipt = convertToBlobAndSetImage;
   }, []);
-  
+
   return (
     <div className={styles.wrapper}>
       <section className={styles.main_section}>
@@ -98,10 +105,7 @@ function CreateFoodModal({
         content="완료"
         color="red"
         onClick={handleCreateFood}
-        disabled={
-          foodData.name == '' ||
-          foodData.categoryId == 0
-        }
+        disabled={foodData.name == "" || foodData.categoryId == 0}
       />
     </div>
   );
