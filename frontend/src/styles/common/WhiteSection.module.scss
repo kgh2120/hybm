@@ -12,11 +12,12 @@
     > h2 {
       position: absolute;
       top: -5px;
-      left: 10px;
+      left: 12px;
       font-size: $font-lg;
       color: $color-text;
       font-weight: 100;
-      @include font-shadow(white);
+      text-shadow: -2px 0px white, 0px 2px white, 2px 0px white,
+        0px -2px white;
     }
   }
   .main_section {

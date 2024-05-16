@@ -9,27 +9,37 @@
   color: #666666;
   font-size: 20px;
   font-weight: 100;
-  width: 100%;
+  width: 100px;
+  height: 40px;
+  border-radius: 50px;
+  background-color: #fb5862;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .wrapper .page_header span {
   color: #666666;
   font-size: 20px;
   font-weight: 100;
+  color: white;
   position: relative;
 }
 .wrapper .page_header .home_img {
-  width: 20px;
+  width: 25px;
   aspect-ratio: 1/1;
   position: absolute;
   left: 20px;
 }
 .wrapper .white_background {
   background-color: white;
-  width: 90%;
+  width: 94%;
   height: 90%;
   overflow-y: scroll;
-  padding: 5%;
-  margin: 1%;
+  padding: 3% 4%;
+  margin-top: 3%;
 }
 .wrapper .white_background .content .sub_title {
   text-align: start;
@@ -38,11 +48,13 @@
   text-decoration-color: #e5333e;
   text-decoration-thickness: 2px;
   text-underline-offset: 6px;
-  margin: 10% 0;
+  margin: 6% 0 5% 0;
 }
 .wrapper .white_background .content .sub_content p {
+  color: #666666;
   font-size: 13px;
   line-height: 150%;
+  margin-bottom: 8px;
 }
 .wrapper .white_background .content .sub_content p > span {
   color: #e5333e;
@@ -52,9 +64,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 12px;
   width: 100%;
-  margin: 3% 0;
 }
 .wrapper .white_background .content .sub_content .main_section .section_title {
   position: relative;
@@ -71,10 +81,10 @@
   background-color: white;
 }
 .wrapper .white_background .content .sub_content .main_section > section {
-  padding: 12px;
+  padding: 10px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 15px;
   width: 100%;
   overflow-x: scroll;
 }

@@ -1,44 +1,44 @@
 .wrapper {
-  width: 100%;
-  height: 100%;
-  background-color: #fce6e7;
+  height: 72px;
+  background-color: rgba(252, 230, 231, 0.7);
+  border: 1px dashed #fb5862;
   display: flex;
   gap: 5px;
-  margin-top: 4%;
+  margin-top: 7px;
+  text-shadow: -2px 0px white, 0px 2px white, 2px 0px white, 0px -2px white;
 }
 .wrapper .text_box {
   width: 67%;
-  height: 80px;
 }
 .wrapper .text_box > h2 {
   font-size: 15px;
   color: black;
   font-weight: 100;
-  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  margin-bottom: 2px;
 }
-.wrapper .text_box > p {
-  font-size: 11px;
-  color: black;
+.wrapper .text_box > span {
+  font-size: 13px;
+  color: #666666;
   font-weight: 100;
   bottom: 0;
-  height: 30px;
 }
 .wrapper > button {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100px;
-  aspect-ratio: 2/1;
-  gap: 5px;
+  width: 60px;
+  height: 30px;
+  color: white;
+  background-color: #fb5862;
   font-size: 13px;
-  border-radius: 5px;
-  box-shadow: 0.5px 0.5px 1px gray;
+  box-shadow: 1px 1px rgba(0, 0, 0, 0.4);
 }
 .wrapper > button img {
-  width: 7px;
-  height: 13px;
+  margin-left: 6px;
+  width: 5px;
+  height: 10px;
 }/*# sourceMappingURL=RecipeBox.module.css.map */

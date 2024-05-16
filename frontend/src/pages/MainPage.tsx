@@ -324,7 +324,7 @@ function MainPage() {
   }
   return (
     <div className={styles.wrapper}>
-      <ExpBar />
+      {location.pathname !== "/design" && location.pathname !== "/badge" && <ExpBar />}
       <Link to="/storage/cabinet">
         <img
           className={styles.cabinet}

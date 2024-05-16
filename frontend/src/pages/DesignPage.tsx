@@ -65,10 +65,11 @@ function DesignPage() {
       <div className={styles.background}>
         <MainPage />
       </div>
+      <h2>냉장고 바꾸기</h2>
       <section className={styles.white_section}>
         <WhiteSection title="찬장" designList={designList.cabinet} />
-        <WhiteSection title="냉장" designList={designList.cool} />
-        <WhiteSection title="냉동" designList={designList.ice} />
+        <WhiteSection title="냉장칸" designList={designList.cool} />
+        <WhiteSection title="냉동칸" designList={designList.ice} />
         <div className={styles.button_box}>
           <Button
             content="적용"
