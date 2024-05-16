@@ -1,19 +1,14 @@
 import instance from "./axios";
 
 // 영수증 OCR 요청
-const postReceipt = async (image: string) => {
+const postReceipt = async (image: File | null) => {
   const formData = new FormData();
-  formData.append("image", image);
+  formData.append("image", image!);
   console.log(image);
   try {
     const res = await instance.post(
       "/api/foods/getReceiptOCR",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
+      formData
     );
     alert(`테스트: ${image}, ${formData}, ${res}`);
     return res.data;

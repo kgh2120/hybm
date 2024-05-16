@@ -65,7 +65,7 @@ function CreateFoodModal({
     window.flutter_inappwebview.postMessage("button_clicked");
   };
 
-  const sendReceipt = (image: string) => {
+  const sendReceipt = (image: File) => {
     setImage(image)
     navigate("/receipt");
   };

@@ -38,7 +38,7 @@ function ReceiptPage() {
   
   useEffect(() => {
     alert(image);
-    mutatePostReceipt(image!);
+    mutatePostReceipt(image);
   }, [namePriceList])
   console.log(bigCategoryList);
   
@@ -54,7 +54,6 @@ function ReceiptPage() {
           <img className={styles.home_img} src={home} alt="" />
         </Link>
         <section className={styles.food_list_section}>
-          <img src={image!} alt="" />
           {/* {namePriceList.map((namePrice: namePriceType) => {
             console.log(namePrice)
             return <FoodSection option="active"/>
