@@ -150,6 +150,7 @@ function RecipePage() {
                   dangerFoodBySection[section].length > 0 && (
                     <FoodStateSection
                       key={section}
+                      wrapperClass="recipeWrapper"
                       sectionTitle={TITLE_LIST[section]}
                       sectionClass="danger"
                     >

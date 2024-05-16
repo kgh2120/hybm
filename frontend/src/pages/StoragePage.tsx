@@ -201,6 +201,7 @@ function StoragePage() {
               (sectionTitle, idx) => (
                 <FoodStateSection
                   key={idx}
+                  wrapperClass="wrapper"
                   sectionTitle={SECTION_TITLE_LIST[sectionTitle]}
                   sectionClass={sectionTitle}
                 >

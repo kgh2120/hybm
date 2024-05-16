@@ -164,7 +164,6 @@ function ExpBar() {
             <span>{levelAndExp.level}</span>
           </div>
         </div>
-
         <div className={styles.exp_bar_box}>
           <div className={styles.exp_bar_sub_box}>
             <img
