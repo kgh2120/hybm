@@ -7,7 +7,6 @@ import 'package:final_project/screen/camera_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final CameraDescription firstCamera;
-  // String? _imagePath;
 
   HomeScreen({Key? key, required this.firstCamera}) : super(key: key);
 
@@ -31,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
             print('페이지 끝나는 중: $url');
             // 페이지가 로드된 후 이미지 파일이 있다면 자바스크립트 함수 호출
             if (_imageFile != null) {
-              _controller.runJavascript('sendReceipt("$_imageFile");');
+              _controller.runJavascript('sendReceipt("${_imageFile!.path}");');
             }
           },
           initialUrl: 'https://k10a707.p.ssafy.io/',
@@ -57,22 +56,15 @@ class _HomeScreenState extends State<HomeScreen> {
             MaterialPageRoute(builder: (BuildContext context) {
               return TakePictureScreen(
                 camera: widget.firstCamera,
-                // onPictureTaken: (String imagePath) {
-                //   setState(() {
-                //     _imageBase64 = _convertImageToBase64(imagePath); // 이미지를 base64로 인코딩하여 저장
-                //   });
-                //   // 자바스크립트 함수 호출하여 이미지 base64 문자열 전달
-                //   _controller.runJavascript('sendReceipt("$_imageBase64");');
-                // },
                 onPictureTaken: (String imagePath) async {
-                  final base64Image = await _convertImageToBase64(imagePath);
+                  // final base64Image = await _convertImageToBase64(imagePath);
                   setState(() {
-                    _imageFile = _getImageFile(imagePath); // 이미지 파일 저장
-
+                    _imageFile = File(imagePath); // 이미지 파일 저장
                   });
-                  // 자바스크립트 함수 호출하여 이미지 파일 전달
-                  _controller.runJavascript('sendReceipt("$_imageFile");');
+                  // 자바스크립트 함수 호출하여 이미지 파일 경로 전달
+                  _controller.runJavascript('sendReceipt("${_imageFile}");');
                   print('결과값 $_imageFile');
+                  print('결과값2 $imagePath');
                 },
               );
             }),
@@ -82,8 +74,9 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // 이미지 파일을 반환하는 함수
-  File _getImageFile(String imagePath) {
-    return File(imagePath);
-  }
+  // 이미지 파일을 base64로 변환하는 함수
+  // Future<String> _convertImageToBase64(String imagePath) async {
+  //   final bytes = await File(imagePath).readAsBytes();
+  //   return base64Encode(bytes);
+  // }
 }
