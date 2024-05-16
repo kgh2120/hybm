@@ -3,7 +3,7 @@ import 'package:camera/camera.dart';
 
 class TakePictureScreen extends StatefulWidget {
   final CameraDescription camera;
-  final Function(String) onPictureTaken; // 콜백 함수 추가
+  final Function(String) onPictureTaken;
 
   const TakePictureScreen({Key? key, required this.camera, required this.onPictureTaken}) : super(key: key);
 
@@ -34,12 +34,40 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('카메라 예제')),
+      appBar: AppBar(
+        title: Text('영수증 촬영'),
+        backgroundColor: Color(0xFFFCE6E7), // AppBar 배경색 설정
+        titleTextStyle: TextStyle(
+          fontFamily: 'CustomFont', // 폰트 패밀리 설정
+          fontSize: 20,              // 폰트 크기 설정
+          color: Colors.black,        // 폰트 색상 설정
+        ),
+      ),
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return CameraPreview(_controller);
+            return Column(
+              children: [
+                Expanded(
+                  flex: 5,
+                  child: CameraPreview(_controller),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        '영수증을 촬영해 제품 정보를 얻어보세요.',
+                        style: TextStyle(fontSize: 16, fontFamily: 'CustomFont'),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
           } else {
             return Center(child: CircularProgressIndicator());
           }
@@ -54,9 +82,8 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
 
             if (!mounted) return;
 
-            // 사진을 찍은 후 콜백 함수를 호출하여 이미지 경로 전달
             widget.onPictureTaken(image.path);
-            Navigator.of(context).pop(); // 사진 촬영 후 화면 닫기
+            Navigator.of(context).pop();
           } catch (e) {
             print(e);
           }

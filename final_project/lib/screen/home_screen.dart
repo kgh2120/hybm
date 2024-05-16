@@ -1,8 +1,10 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:camera/camera.dart';
 import 'package:final_project/screen/camera_screen.dart';
+import 'package:final_project/screen/barcode_scan_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final CameraDescription firstCamera;
@@ -39,30 +41,31 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           javascriptChannels: <JavascriptChannel>{
             _createCameraChannel(context),
+            _createBarcodeChannel(context), // 바코드 채널 추가
           },
         ),
       ),
     );
   }
 
+  // 카메라 사용 채널
   JavascriptChannel _createCameraChannel(BuildContext context) {
     return JavascriptChannel(
       name: 'flutter_inappwebview',
       onMessageReceived: (JavascriptMessage message) {
         print('Received message: ${message.message}');
-        if (message.message == 'button_clicked') {
+        if (message.message == 'receipt_camera') {
           Navigator.of(context).push(
             MaterialPageRoute(builder: (BuildContext context) {
               return TakePictureScreen(
                 camera: widget.firstCamera,
                 onPictureTaken: (String imagePath) async {
+                  final base64Image = await _convertImageToBase64(imagePath);
                   setState(() {
                     _imageFile = File(imagePath); // 이미지 파일 저장
                   });
                   // 자바스크립트 함수 호출하여 이미지 파일 경로 전달
-                  _controller.runJavascript('sendReceipt("${_imageFile!.path}");');
-                  print('결과값 $_imageFile');
-                  print('결과값2 $imagePath');
+                  _controller.runJavascript('sendReceipt("$base64Image");');
                 },
               );
             }),
@@ -70,5 +73,33 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       },
     );
+  }
+
+  // 바코드 스캔 채널
+  JavascriptChannel _createBarcodeChannel(BuildContext context) {
+    return JavascriptChannel(
+      name: 'flutter_inappwebview_barcode',
+      onMessageReceived: (JavascriptMessage message) {
+        print('Received message: ${message.message}');
+        if (message.message == 'barcode_camera') {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (BuildContext context) {
+              return BarcodeScanScreen();
+            }),
+          ).then((scannedCode) {
+            if (scannedCode != null) {
+              _controller.runJavascript('getBarcode("$scannedCode");');
+            }
+          });
+        }
+      },
+    );
+  }
+
+  Future<String> _convertImageToBase64(String imagePath) async {
+    final imageFile = File(imagePath);
+    final bytes = await imageFile.readAsBytes();
+    final base64Image = base64Encode(bytes);
+    return base64Image;
   }
 }
