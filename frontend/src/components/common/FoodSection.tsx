@@ -47,10 +47,14 @@ function FoodSection({ option = "" }: FoodSectionProps) {
 
   useEffect(() => {
     if (barcodeResult) {
-    alert(`테스트1: ${barcodeResult}`);
-    alert(`테스트2: ${JSON.stringify(barcodeResult)}`);
-  }
-  }, [barcodeResult])
+      setInputList({
+        ...inputList,
+        foodName: barcodeResult.name,
+        categoryBigId: barcodeResult.categoryBigId,
+        categoryId: barcodeResult.categoryId,
+      });
+    }
+  }, [barcodeResult]);
 
   const handleInputList = (
     e: React.ChangeEvent<HTMLInputElement>
