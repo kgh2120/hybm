@@ -43,7 +43,7 @@ function ReceiptPage() {
   };
 
   useEffect(() => {
-    if (image) {
+    if (image instanceof File) {
       alert(`Uploading image: ${image.name}`);
       mutatePostReceipt(image);
     }
