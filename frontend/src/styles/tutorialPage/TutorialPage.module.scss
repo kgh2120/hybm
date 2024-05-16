@@ -1,0 +1,14 @@
+.wrapper {
+  height: 100%;
+  position: relative;
+  img {
+    width: 100%;
+  }
+  .tutorial_button {
+    width: 80px;
+    position: absolute;
+    bottom: 25px;
+    right: 50%;
+    transform: translate(50%)
+  } 
+}

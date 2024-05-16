@@ -117,3 +117,11 @@
     }
   }
 }
+
+.remove_all_button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: $color-text;
+  font-size: $font-md;
+}
