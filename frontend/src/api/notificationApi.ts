@@ -45,6 +45,7 @@ const deleteNotification = async (noticeId: number) => {
     return res.data;
   } catch (e) {
     console.log(e);
+    throw e;
   }
 };
 

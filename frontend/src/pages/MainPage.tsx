@@ -363,7 +363,7 @@ function MainPage() {
         />
       </Link>
       {content}
-
+      
       {isDeleteAllFoodConfirmModalOpen && (
         <ConfirmModal
           content="모든 식품을 삭제하시겠습니까?"

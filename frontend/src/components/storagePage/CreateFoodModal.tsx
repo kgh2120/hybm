@@ -20,7 +20,7 @@ function CreateFoodModal({
   handleCloseCreateFoodModal,
 }: CreateFoodModalProps) {
   const navigate = useNavigate();
-  const { setImagePath } = useAuthStore();
+  const { setImage } = useAuthStore();
   const queryClient = useQueryClient();
   const { storageName } = useParams() as { storageName: string };
   const { inputList, setInputList, initialInputList, setIsSelected } = useFoodStore();
@@ -61,17 +61,20 @@ function CreateFoodModal({
     };
 
   const handleOpenCamera = () => {
-    console.log("camera");
     //@ts-ignore
     window.flutter_inappwebview.postMessage("button_clicked");
   };
 
-  const sendReceipt = (imagePath: string) => {
-    setImagePath(imagePath)
+  const sendReceipt = (image: string) => {
+    setImage(image)
     navigate("/receipt");
   };
 
-  console.log(sendReceipt);
+  useEffect(() => {
+    //@ts-ignore
+    window.sendReceipt = sendReceipt;
+  }, []);
+  
   return (
     <div className={styles.wrapper}>
       <section className={styles.main_section}>

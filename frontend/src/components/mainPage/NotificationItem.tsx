@@ -1,4 +1,3 @@
-
 import styles from "../../styles/mainPage/NotificationModal.module.css";
 import { formatDate } from "../../utils/formatting";
 import { deleteNotification } from "../../api/notificationApi";
@@ -16,12 +15,16 @@ interface NotificationType {
 
 interface NotificationItemProps {
   notification: NotificationType;
-  // innerRef: React.Ref<HTMLParagraphElement>;
+  notificationList: NotificationType[];
+  setNotificationList: React.Dispatch<
+    React.SetStateAction<NotificationType[]>
+  >;
 }
 
 function NotificationItem({
   notification,
-  // innerRef,
+  notificationList,
+  setNotificationList,
 }: NotificationItemProps) {
   const {
     foodId,
@@ -29,13 +32,16 @@ function NotificationItem({
     content,
     foodImgSrc,
     createdAt,
+    isChecked,
   } = notification;
   const formattedDate = formatDate(createdAt);
   const { mutate: mutateDeleteNotification } = useMutation({
     mutationFn: deleteNotification,
     onSuccess: () => {
-      // navigate('/group');
-      // closeRewardModal()
+      const updatedNotificationList = notificationList.filter(
+        (notification) => notification.noticeId !== noticeId
+      );
+      setNotificationList(updatedNotificationList);
     },
     onError: (error) => {
       console.error("에러났습니다.", error);
@@ -45,11 +51,14 @@ function NotificationItem({
   const { mutate: mutateDeleteFood } = useMutation({
     mutationFn: deleteFood,
     onSuccess: () => {
-      // navigate('/group');
-      // closeRewardModal()
-    },
-    onError: (error) => {
-      console.error("에러났습니다.", error);
+      const updatedNotificationList = notificationList.map(
+        (notification) => {
+          return notification.noticeId === noticeId
+            ? { ...notification, isChecked: true }
+            : notification;
+        }
+      );
+      setNotificationList(updatedNotificationList);
     },
   });
 
@@ -61,8 +70,9 @@ function NotificationItem({
     mutateDeleteFood({ foodIdList: [foodId], option });
   };
 
+  const notificationItemStyles = isChecked ? "notification_item" : "notification_gray_item";
   return (
-    <div className={styles.notification_item}>
+    <div className={styles[notificationItemStyles]}>
       <div className={styles.main_section}>
         <div className={styles.image_section}>
           <img src={foodImgSrc} alt="음식 이미지" />
