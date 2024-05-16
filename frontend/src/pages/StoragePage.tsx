@@ -38,7 +38,7 @@ function StoragePage() {
   const [isFoodEdit, setIsFoodEdit] = useState(false);
   const [clickedIndexesBySection, setClickedIndexesBySection] =
     useState<{ [key: string]: number[] }>({});
-  const { inputList, setInputList, initialInputList, setIsSelected } =
+  const { setInputList, initialInputList, setIsSelected } =
     useFoodStore();
   const { storageName } = useParams() as { storageName: string };
   const [foodId, setFoodId] = useState(0);
@@ -166,7 +166,6 @@ function StoragePage() {
     if (foodDetail && isFoodDetailModal) {
       const newDate = formatDashStringToDate(foodDetail.expiredDate);
       if (newDate) {
-        
         setInputList({
           foodName: foodDetail.name,
           categoryId: foodDetail.categoryId,
@@ -308,11 +307,8 @@ function StoragePage() {
           />
         </Modal>
       )}
-      {isFoodDetailModal && inputList.categoryImgSrc !== "" && (
-        <Modal
-          title="식품 조회"
-          onClick={handleCloseFoodDetailModal}
-        >
+      {isFoodDetailModal && (
+        <Modal title="식품 조회" onClick={handleCloseFoodDetailModal}>
           <FoodDetailModal
             foodId={foodId}
             handleCloseFoodDetailModal={handleCloseFoodDetailModal}
