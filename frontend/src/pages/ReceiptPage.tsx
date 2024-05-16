@@ -10,11 +10,6 @@ import useAuthStore from "../stores/useAuthStore";
 import { useMutation } from "@tanstack/react-query";
 import { postFoodByReceipt, postReceipt } from "../api/receiptApi";
 
-interface NamePriceType {
-  name: string;
-  price: number;
-}
-
 function ReceiptPage() {
   const navigate = useNavigate();
   const { bigCategoryList } = useFoodCategoryStore();
@@ -26,6 +21,9 @@ function ReceiptPage() {
     status,
   } = useMutation({
     mutationFn: postReceipt,
+    onSuccess: () => {
+      alert(`결과값: ${namePriceList}`);
+    }
   });
 
   console.log(namePriceList);
@@ -44,7 +42,7 @@ function ReceiptPage() {
 
   useEffect(() => {
     mutatePostReceipt(image!);
-  }, [namePriceList])
+  }, [])
   console.log(bigCategoryList);
 
   if (status === "pending") {
@@ -59,14 +57,14 @@ function ReceiptPage() {
           <img className={styles.home_img} src={home} alt="홈" />
         </Link>
         <section className={styles.food_list_section}>
-          {namePriceList &&
+          {/* {namePriceList &&
             namePriceList.map((namePrice: NamePriceType) => (
               <div key={namePrice.name}>
                 <div>{namePrice.name}</div>
                 <div>{namePrice.price}</div>
-                {/* <FoodSection option="active"/> */}
+                <FoodSection option="active"/>
               </div>
-            ))}
+            ))} */}
         </section>
         <Button
           content="완료"
