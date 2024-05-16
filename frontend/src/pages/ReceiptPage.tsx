@@ -21,8 +21,9 @@ function ReceiptPage() {
     status,
   } = useMutation({
     mutationFn: postReceipt,
-    onSuccess: () => {
-      alert(`결과값: ${namePriceList}`);
+    onSuccess: (data) => {
+      alert(`결과값1: ${JSON.stringify(data)}`);
+      alert(`결과값2: ${namePriceList}`);
     }
   });
 
