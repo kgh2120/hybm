@@ -1,7 +1,7 @@
 import instance from "./axios";
 
 // 영수증 OCR 요청
-const postReceipt = async (image: File) => {
+const postReceipt = async (image: string) => {
   const formData = new FormData();
   formData.append("image", image);
   console.log(image);
@@ -15,8 +15,10 @@ const postReceipt = async (image: File) => {
         },
       }
     );
+    alert(`테스트: ${image}, ${formData}, ${res}`);
     return res.data;
   } catch (e) {
+    alert(`실패: ${image}, ${formData}, ${e}`);
     console.log(e);
   }
 };
