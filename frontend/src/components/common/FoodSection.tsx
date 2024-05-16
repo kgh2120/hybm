@@ -1,11 +1,13 @@
+/* eslint-disable */
 import { useEffect, useState } from "react";
 import styles from "../../styles/common/FoodSection.module.css";
 import CategoryBox from "./CategoryBox";
 // import ExpiryDateSelector from "./ExpiryDateSelector";
-import { getExpiredDate } from "../../api/foodApi";
+import { getBarcodeData, getExpiredDate } from "../../api/foodApi";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import useFoodStore from "../../stores/useFoodStore";
+import barcode from "../../assets/images/barcode.png";
 
 interface FoodSectionProps {
   option: string;
@@ -34,6 +36,15 @@ function FoodSection({ option = "" }: FoodSectionProps) {
     setIsSelected(true);
   };
 
+  const [barcodeNumber, setBarcodeNumber] = useState(0);
+
+  const { data: barcodeResult } = useQuery({
+    queryKey: ["barcode"],
+    queryFn: () => getBarcodeData(barcodeNumber),
+    enabled: barcodeNumber !== 0,
+  });
+  console.log(barcodeResult);
+
   const handleInputList = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -48,10 +59,9 @@ function FoodSection({ option = "" }: FoodSectionProps) {
       // 입력값이 숫자가 아닌 경우 또는 빈 문자열인 경우 "0"으로 처리
       newValue =
         isNaN(parseInt(newValue)) || newValue === "" ? "0" : newValue;
-        if (parseInt(newValue) >= 100000000) {
-          newValue = newValue.slice(0, 8);
-        }
-    
+      if (parseInt(newValue) >= 100000000) {
+        newValue = newValue.slice(0, 8);
+      }
     }
 
     setInputList({
@@ -139,6 +149,20 @@ function FoodSection({ option = "" }: FoodSectionProps) {
     enabled: isSelected,
     gcTime: 0,
   });
+
+  const handleOpenCamera = () => {
+    // @ts-ignore
+    window.flutter_inappwebview.postMessage("barcode_camera");
+  };
+
+  const getBarcode = (barcodeNum: number) => {
+    setBarcodeNumber(barcodeNum);
+  };
+
+  useEffect(() => {
+    // @ts-ignore
+    window.getBarcode = getBarcode;
+  }, []);
 
   useEffect(() => {
     if (foodExpiredDate && categoryId) {
@@ -233,8 +257,15 @@ function FoodSection({ option = "" }: FoodSectionProps) {
             <option value="찬장">찬장</option>
           </select>
         ) : (
-          <div className={styles.storage_box}>
-            {TITLE_LIST[storageName]}
+          <div className={styles.barcode_section}>
+            <div className={styles.storage_box}>
+              {TITLE_LIST[storageName]}
+            </div>
+          
+              <div onClick={handleOpenCamera}>
+                <img src={barcode} alt="바코드아이콘" />
+              </div>
+     
           </div>
         )}
       </article>
