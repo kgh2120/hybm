@@ -1,7 +1,5 @@
 import Button from "../common/Button";
 import styles from "../../styles/storagePage/CreateFoodModal.module.css";
-import barcode from "../../assets/images/barcode.png";
-import camera from "../../assets/images/camera.png";
 import FoodSection from "../common/FoodSection";
 import useFoodStore from "../../stores/useFoodStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -68,7 +66,7 @@ function FoodDetailModal({
     <div className={styles.wrapper}>
       <section className={styles.main_section}>
         <FoodSection option="detail" />
-        <section className={styles.btn_section}>
+        {/* <section className={styles.btn_section}>
           <div>
             <img src={barcode} alt="바코드아이콘" />
           </div>
@@ -76,7 +74,7 @@ function FoodDetailModal({
             <img src={camera} alt="카메라아이콘" />
           </div>
           <div></div>
-        </section>
+        </section> */}
       </section>
       <span>
         * 분류에 따른 <span>예상 소비기한</span>이 제공되나

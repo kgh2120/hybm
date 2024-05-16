@@ -45,6 +45,13 @@ function FoodSection({ option = "" }: FoodSectionProps) {
   });
   console.log(barcodeResult);
 
+  useEffect(() => {
+    if (barcodeResult) {
+    alert(`테스트1: ${barcodeResult}`);
+    alert(`테스트2: ${JSON.stringify(barcodeResult)}`);
+  }
+  }, [barcodeResult])
+
   const handleInputList = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -261,11 +268,10 @@ function FoodSection({ option = "" }: FoodSectionProps) {
             <div className={styles.storage_box}>
               {TITLE_LIST[storageName]}
             </div>
-          
-              <div onClick={handleOpenCamera}>
-                <img src={barcode} alt="바코드아이콘" />
-              </div>
-     
+
+            <div onClick={handleOpenCamera}>
+              <img src={barcode} alt="바코드아이콘" />
+            </div>
           </div>
         )}
       </article>
