@@ -53,20 +53,20 @@ function FoodSection({ option = "" }: FoodSectionProps) {
   useEffect(() => {
     setInputList(initialInputList);
     setIsSelected(false);
-    if (barcodeResult && categoryId === 0) {
+    if (barcodeResult) {
       setInputList({
         ...inputList,
         foodName: barcodeResult.name,
         categoryBigId: barcodeResult.categoryBigId,
         categoryId: barcodeResult.categoryId,
       });
-      if (categoryId) {
-        setBarcodeNumber(0);
-        setIsSelected(true);
-      }
     }
-  }, [barcodeResult, categoryId]);
+  }, [barcodeResult]);
 
+  useEffect(() => {
+    setBarcodeNumber(0);
+    setIsSelected(true);
+  }, [categoryId]);
   // 소비기한 확인 api
   const { data: foodExpiredDate } = useQuery({
     queryKey: ["foodExpiredDate"],
