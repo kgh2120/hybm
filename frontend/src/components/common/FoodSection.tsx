@@ -42,15 +42,20 @@ function FoodSection({ option = "" }: FoodSectionProps) {
     queryKey: ["barcode"],
     queryFn: () => getBarcodeData(barcodeNumber),
     enabled: barcodeNumber !== 0,
+    gcTime: 0
   });
-  console.log(barcodeResult);
 
   useEffect(() => {
     if (barcodeResult) {
-    alert(`테스트1: ${barcodeResult}`);
-    alert(`테스트2: ${JSON.stringify(barcodeResult)}`);
-  }
-  }, [barcodeResult])
+      setInputList({
+        ...inputList,
+        foodName: barcodeResult.name,
+        categoryBigId: barcodeResult.categoryBigId,
+        categoryId: barcodeResult.categoryId,
+      });
+      setBarcodeNumber(0);
+    }
+  }, [barcodeResult]);
 
   const handleInputList = (
     e: React.ChangeEvent<HTMLInputElement>
