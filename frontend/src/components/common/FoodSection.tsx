@@ -23,8 +23,13 @@ function FoodSection({ option = "" }: FoodSectionProps) {
     cabinet: "찬장",
   };
 
-  const { inputList, setInputList, isSelected, setIsSelected } =
-    useFoodStore();
+  const {
+    inputList,
+    setInputList,
+    isSelected,
+    setIsSelected,
+    initialInputList,
+  } = useFoodStore();
 
   const { foodName, categoryId, price, expiredDate } = inputList;
 
@@ -42,10 +47,12 @@ function FoodSection({ option = "" }: FoodSectionProps) {
     queryKey: ["barcode"],
     queryFn: () => getBarcodeData(barcodeNumber),
     enabled: barcodeNumber !== 0,
-    gcTime: 0
+    gcTime: 0,
   });
 
   useEffect(() => {
+    setInputList(initialInputList);
+    setIsSelected(false);
     if (barcodeResult) {
       setInputList({
         ...inputList,
@@ -53,9 +60,20 @@ function FoodSection({ option = "" }: FoodSectionProps) {
         categoryBigId: barcodeResult.categoryBigId,
         categoryId: barcodeResult.categoryId,
       });
-      setBarcodeNumber(0);
     }
   }, [barcodeResult]);
+
+  useEffect(() => {
+    setBarcodeNumber(0);
+    setIsSelected(true);
+  }, [categoryId]);
+  // 소비기한 확인 api
+  const { data: foodExpiredDate } = useQuery({
+    queryKey: ["foodExpiredDate"],
+    queryFn: () => getExpiredDate(categoryId),
+    enabled: isSelected,
+    gcTime: 0,
+  });
 
   const handleInputList = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -153,14 +171,6 @@ function FoodSection({ option = "" }: FoodSectionProps) {
       location: newLocation,
     });
   };
-
-  // 소비기한 확인 api
-  const { data: foodExpiredDate } = useQuery({
-    queryKey: ["foodExpiredDate"],
-    queryFn: () => getExpiredDate(categoryId),
-    enabled: isSelected,
-    gcTime: 0,
-  });
 
   const handleOpenCamera = () => {
     // @ts-ignore
