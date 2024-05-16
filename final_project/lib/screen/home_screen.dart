@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -57,12 +56,11 @@ class _HomeScreenState extends State<HomeScreen> {
               return TakePictureScreen(
                 camera: widget.firstCamera,
                 onPictureTaken: (String imagePath) async {
-                  // final base64Image = await _convertImageToBase64(imagePath);
                   setState(() {
                     _imageFile = File(imagePath); // 이미지 파일 저장
                   });
                   // 자바스크립트 함수 호출하여 이미지 파일 경로 전달
-                  _controller.runJavascript('sendReceipt("${_imageFile}");');
+                  _controller.runJavascript('sendReceipt("${_imageFile!.path}");');
                   print('결과값 $_imageFile');
                   print('결과값2 $imagePath');
                 },
@@ -73,10 +71,4 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
   }
-
-  // 이미지 파일을 base64로 변환하는 함수
-  // Future<String> _convertImageToBase64(String imagePath) async {
-  //   final bytes = await File(imagePath).readAsBytes();
-  //   return base64Encode(bytes);
-  // }
 }
