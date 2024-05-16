@@ -108,4 +108,14 @@ input::placeholder {
   font-style: italic;
   text-shadow: none;
   font-size: 11px;
+}
+
+.barcode_section {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.barcode_section img {
+  width: 30px;
 }/*# sourceMappingURL=FoodSection.module.css.map */

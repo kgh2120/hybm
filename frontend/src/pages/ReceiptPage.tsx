@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/common/Button";
 import Header from "../components/common/Header";
@@ -8,42 +9,45 @@ import { useFoodCategoryStore } from "../stores/useFoodStore";
 import useAuthStore from "../stores/useAuthStore";
 import { useMutation } from "@tanstack/react-query";
 import { postFoodByReceipt, postReceipt } from "../api/receiptApi";
-import { useEffect } from "react";
-
-// interface namePriceType {
-//   name: string;
-//   price: number;
-// }
 
 function ReceiptPage() {
   const navigate = useNavigate();
   const { bigCategoryList } = useFoodCategoryStore();
   const { image } = useAuthStore();
 
-  const { mutate: mutatePostReceipt, data: namePriceList, status } = useMutation({
+  const {
+    mutate: mutatePostReceipt,
+    data: namePriceList,
+    status,
+  } = useMutation({
     mutationFn: postReceipt,
+    onSuccess: (data) => {
+      alert(`결과값1: ${JSON.stringify(data)}`);
+      alert(`결과값2: ${namePriceList}`);
+    }
   });
+
+  console.log(namePriceList);
 
   const { mutate: mutatePostFoodByReceipt } = useMutation({
     mutationFn: postFoodByReceipt,
     onSuccess: () => {
       navigate("/");
-    }
+    },
   });
 
   const handlePostFoodByReceipt = () => {
-    console.log(mutatePostFoodByReceipt)
+    console.log(mutatePostFoodByReceipt);
     // mutatePostFoodByReceipt();
-  }
-  
+  };
+
   useEffect(() => {
-    alert(image);
     mutatePostReceipt(image!);
-  }, [namePriceList])
+  }, [])
   console.log(bigCategoryList);
-  
+
   if (status === "pending") {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   return (
@@ -51,17 +55,24 @@ function ReceiptPage() {
       <div className={styles.white_wrapper}>
         <Header title="영수증 등록 테스트" />
         <Link to="/">
-          <img className={styles.home_img} src={home} alt="" />
+          <img className={styles.home_img} src={home} alt="홈" />
         </Link>
         <section className={styles.food_list_section}>
-          <img src={image!} alt="" />
-          {/* {namePriceList.map((namePrice: namePriceType) => {
-            console.log(namePrice)
-            return <FoodSection option="active"/>
-          })} */}
-          
+          {/* {namePriceList &&
+            namePriceList.map((namePrice: NamePriceType) => (
+              <div key={namePrice.name}>
+                <div>{namePrice.name}</div>
+                <div>{namePrice.price}</div>
+                <FoodSection option="active"/>
+              </div>
+            ))} */}
         </section>
-        <Button content="완료" color="red" onClick={handlePostFoodByReceipt} disabled={false}/>
+        <Button
+          content="완료"
+          color="red"
+          onClick={handlePostFoodByReceipt}
+          disabled={false}
+        />
       </div>
     </div>
   );

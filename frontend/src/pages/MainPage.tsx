@@ -1,9 +1,10 @@
+/* eslint-disable */
 import styles from "../styles/mainPage/MainPage.module.css";
 import background from "../assets/images/background.png";
 import recipe from "../assets/images/recipe.png";
 import trashCan from "../assets/images/trashCan.png";
 import tutorial from "../assets/images/tutorial.png";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import ExpBar from "../components/common/ExpBar";
@@ -18,6 +19,7 @@ import minus from "../assets/images/minus.png";
 import useAttachedBadgeStore, {
   useBadgeStore,
 } from "../stores/useBadgeStore";
+import useAuthStore from "../stores/useAuthStore";
 
 interface StorageType {
   id: number;
@@ -54,6 +56,7 @@ interface DesignListType {
 
 function MainPage() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { setBigCategoryList } = useFoodCategoryStore();
   const { appliedDesign, setAppliedDesign, setLevelDesignList } =
     useFridgeStore();
@@ -64,7 +67,7 @@ function MainPage() {
     isDeleteAllFoodConfirmModalOpen,
     setIsDeleteAllFoodConfirmModalOpen,
   ] = useState(false);
-
+  const { setImage } = useAuthStore();
   const { data: designList, isPending: isdesignListPending } =
     useQuery<DesignListType>({
       queryKey: ["designList"],
@@ -153,6 +156,21 @@ function MainPage() {
   const handleOpenDeleteAllFoodConfirmModal = () => {
     setIsDeleteAllFoodConfirmModalOpen(true);
   };
+
+  const handleOpenCamera = () => {
+    // @ts-ignore
+    window.flutter_inappwebview.postMessage("receipt_camera");
+  };
+
+  const sendReceipt = (image: string) => {
+    setImage(image);
+    navigate("/receipt");
+  };
+
+  useEffect(() => {
+    // @ts-ignore
+    window.sendReceipt = sendReceipt;
+  }, []);
 
   // - 버튼을 눌렀을 때 부착한 배지 제거
   const handleDeleteAttachedBadge = (badgeId: number) => {
@@ -340,9 +358,9 @@ function MainPage() {
         src={background}
         alt="배경이미지"
       />
-      <Link to="/receipt">
-        <div className={styles.receipt}>영수증</div>
-      </Link>
+      <div className={styles.receipt} onClick={handleOpenCamera}>
+        영수증
+      </div>
       <Link to="/design">
         <div className={styles.design}>디자인</div>
       </Link>
@@ -363,7 +381,7 @@ function MainPage() {
         />
       </Link>
       {content}
-      
+
       {isDeleteAllFoodConfirmModalOpen && (
         <ConfirmModal
           content="모든 식품을 삭제하시겠습니까?"
