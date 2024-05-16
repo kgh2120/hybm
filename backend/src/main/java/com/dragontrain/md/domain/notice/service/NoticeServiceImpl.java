@@ -5,6 +5,7 @@ import com.dragontrain.md.domain.food.domain.Food;
 import com.dragontrain.md.domain.notice.controller.response.AllNoticeResponse;
 import com.dragontrain.md.domain.notice.controller.response.HasnewNoticeResponse;
 import com.dragontrain.md.domain.notice.controller.response.NoticeResponse;
+import com.dragontrain.md.domain.notice.domain.FCMType;
 import com.dragontrain.md.domain.notice.domain.Notice;
 import com.dragontrain.md.domain.notice.exception.NoticeErrorCode;
 import com.dragontrain.md.domain.notice.exception.NoticeException;
@@ -25,6 +26,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -115,15 +117,18 @@ public class NoticeServiceImpl implements NoticeService{
 
 		notices.forEach(notice -> {
 			String token = stringRedisTemplate.opsForValue().get(notice.getUser().getUserId().toString());
-			try {
-				messages.add(
-					Message.builder()
-						.setToken(token)
-						.putData("notice", objectMapper.writeValueAsString(NoticeResponse.createByNotice(notice)))
-						.build()
-				);
-			} catch (JsonProcessingException e){
-				throw new NoticeException(NoticeErrorCode.CANT_CONVERT_NOTICE_TO_JSON);
+
+			if(StringUtils.hasText(token)) {
+				try {
+					messages.add(
+						Message.builder()
+							.setToken(token)
+							.putData(FCMType.NOTICE.name(), objectMapper.writeValueAsString(NoticeResponse.createByNotice(notice)))
+							.build()
+					);
+				} catch (JsonProcessingException e) {
+					throw new NoticeException(NoticeErrorCode.CANT_CONVERT_NOTICE_TO_JSON);
+				}
 			}
 		});
 		return messages;
