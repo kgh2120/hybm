@@ -18,6 +18,7 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import RecipePage from "./pages/RecipePage";
+import TutorialPage from "./pages/TutorialPage";
 
 const queryClient = new QueryClient();
 
@@ -59,6 +60,10 @@ function App() {
         {
           path: "/recipe",
           element: <RecipePage />,
+        },
+        {
+          path: "/tutorial",
+          element: <TutorialPage />,
         },
       ],
     },
