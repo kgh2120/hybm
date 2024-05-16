@@ -24,6 +24,7 @@ function ReceiptPage() {
     onSuccess: (data) => {
       alert(`결과값1: ${JSON.stringify(data)}`);
       alert(`결과값2: ${namePriceList}`);
+      alert(`결과값3: ${JSON.stringify(namePriceList)}`);
     }
   });
 

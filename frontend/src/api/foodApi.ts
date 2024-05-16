@@ -129,8 +129,8 @@ const putFoodDetail = async ({ foodId, foodEditData }: FoodDetailType) => {
 const getBarcodeData = async (barcode: number) => {
   try {
     const res = await instance.get(`/api/foods?barcode=${barcode}`);
-    alert(`getBarcode 성공: ${res.data}`
-    )
+    alert(`getBarcode 성공: ${res.data}`)
+    alert(`바코드결과값: ${JSON.stringify(res.data)}`);
     return res.data;
   } catch (e) {
     alert(`getBarcode error: ${e}`)

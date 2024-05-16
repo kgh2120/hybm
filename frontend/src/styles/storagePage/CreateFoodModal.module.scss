@@ -3,9 +3,9 @@
 .wrapper {
   @include center;
   flex-direction: column;
+  padding-right: 20px;
   .main_section {
-    display: grid;
-    grid-template-columns: 6fr 1.2fr;
+    width: 90%;
     .btn_section {
       display: grid;
       grid-template-rows: 2fr 0.7fr 2.3fr;
@@ -24,7 +24,7 @@
     margin-bottom: 12px;
     text-align: end;
     width: 90%;
-    > span{
+    > span {
       padding: 2px;
       background-color: rgba($color-back, 0.5);
     }
