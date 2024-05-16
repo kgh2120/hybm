@@ -359,7 +359,7 @@ function MainPage() {
         alt="쓰레기통 이미지"
       />
       {content}
-
+      
       {isDeleteAllFoodConfirmModalOpen && (
         <ConfirmModal
           content="모든 식품을 삭제하시겠습니까?"
