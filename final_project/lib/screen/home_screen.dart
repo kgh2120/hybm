@@ -32,7 +32,6 @@ class _HomeScreenState extends State<HomeScreen> {
             // 페이지가 로드된 후 이미지 파일이 있다면 자바스크립트 함수 호출
             if (_imageFile != null) {
               _controller.runJavascript('sendReceipt("${_imageFile!.path}");');
-              _controller.runJavascript('sendReceipt("${_imageFile!.path}");');
             }
           },
           initialUrl: 'https://k10a707.p.ssafy.io/',
@@ -62,10 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 camera: widget.firstCamera,
                 onPictureTaken: (String imagePath) async {
                   final base64Image = await _convertImageToBase64(imagePath);
-                onPictureTaken: (String imagePath) async {
-                  final base64Image = await _convertImageToBase64(imagePath);
                   setState(() {
-                    _imageFile = File(imagePath); // 이미지 파일 저장
                     _imageFile = File(imagePath); // 이미지 파일 저장
                   });
                   // 자바스크립트 함수 호출하여 이미지 파일 경로 전달
