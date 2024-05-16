@@ -42,8 +42,8 @@ function FoodSection({ option = "" }: FoodSectionProps) {
     queryKey: ["barcode"],
     queryFn: () => getBarcodeData(barcodeNumber),
     enabled: barcodeNumber !== 0,
+    gcTime: 0
   });
-  console.log(barcodeResult);
 
   useEffect(() => {
     if (barcodeResult) {
@@ -53,6 +53,7 @@ function FoodSection({ option = "" }: FoodSectionProps) {
         categoryBigId: barcodeResult.categoryBigId,
         categoryId: barcodeResult.categoryId,
       });
+      setBarcodeNumber(0);
     }
   }, [barcodeResult]);
 
