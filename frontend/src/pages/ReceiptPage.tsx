@@ -43,12 +43,8 @@ function ReceiptPage() {
   };
 
   useEffect(() => {
-    if (image instanceof File) {
-      alert(`Uploading image: ${image.name}`);
-      mutatePostReceipt(image);
-    }
-  }, [image]);
-
+    mutatePostReceipt(image!);
+  }, [namePriceList])
   console.log(bigCategoryList);
 
   if (status === "pending") {

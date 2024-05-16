@@ -4,14 +4,14 @@ import { persist } from "zustand/middleware";
 interface AuthState {
   isLogin: boolean;
   currentLevel: number;
-  image: File | null;
+  image: string | null;
   isCurrentNotification: boolean;
 }
 
 interface AuthAction {
   setIsLogin: (value: boolean) => void;
   setCurrentLevel: (value: number) => void;
-  setImage: (value: File | null) => void;
+  setImage: (value: string | null) => void;
   setIsCurrentNotification: (value: boolean) => void;
 }
 
@@ -24,7 +24,7 @@ const useAuthStore = create(
       setCurrentLevel: (value: number) =>
         set({ currentLevel: value }),
       image: null,
-      setImage: (value: File | null) => set({ image: value }),
+      setImage: (value: string | null) => set({ image: value }),
       isCurrentNotification: false,
       setIsCurrentNotification: (value: boolean) =>
         set({ isCurrentNotification: value }),

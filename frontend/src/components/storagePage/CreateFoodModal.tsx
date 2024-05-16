@@ -69,17 +69,14 @@ function CreateFoodModal({
   };
 
   // 파일 경로를 받아 Blob으로 변환하고 이를 File 객체로 변환하는 함수
-  const convertToBlobAndSetImage = async (imagePath: string) => {
-    const response = await fetch(`file://${imagePath}`);
-    const blob = await response.blob();
-    const file = new File([blob], "receipt.jpg", { type: blob.type });
-    setImage(file);
+  const sendReceipt = (image: string) => {
+    setImage(image);
     navigate("/receipt");
   };
 
   useEffect(() => {
     // @ts-ignore
-    window.sendReceipt = convertToBlobAndSetImage;
+    window.sendReceipt = sendReceipt;
   }, []);
 
   return (
