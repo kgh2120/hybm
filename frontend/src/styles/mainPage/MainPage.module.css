@@ -66,6 +66,14 @@
   left: 105px;
   width: 60px;
 }
+.wrapper .tutorial {
+  width: 25px;
+  position: absolute;
+  bottom: 22%;
+  right: 7.5%;
+  opacity: 0.9;
+  filter: drop-shadow(-3px 3px 0px rgba(0, 0, 0, 0.4));
+}
 .wrapper .badge1 {
   width: 45px;
   aspect-ratio: 0.7;
