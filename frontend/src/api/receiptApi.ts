@@ -23,6 +23,7 @@ const postReceipt = async (image: string) => {
       formData
     );
     alert(`성공: 블롭: ${blob}, 폼데이터: ${formData}, 파일: ${file}`);
+    alert(res.data)
     return res.data;
   } catch (e) {
     alert(`실패: 블롭: ${blob}, 폼데이터: ${formData}, 파일: ${file}`);
