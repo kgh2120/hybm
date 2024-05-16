@@ -38,7 +38,7 @@ function ReceiptPage() {
   
   useEffect(() => {
     alert(image);
-    mutatePostReceipt(image);
+    mutatePostReceipt(image!);
   }, [namePriceList])
   console.log(bigCategoryList);
   
