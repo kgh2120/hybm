@@ -44,7 +44,7 @@ public class FoodStatusChangeScheduler {
 		List<Food> toRotten = foodRepository.findFoodByDDay(0, now);
 		toRotten.forEach(food -> food.changeStatus(FoodStatus.ROTTEN, localDateTime));
 		toDanger.addAll(toRotten);
-		noticeService.saveNotices(toDanger);
+		// noticeService.saveNotices(toDanger);
 	}
 
 }
