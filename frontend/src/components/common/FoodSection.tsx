@@ -152,7 +152,7 @@ function FoodSection({ option = "" }: FoodSectionProps) {
 
   const handleOpenCamera = () => {
     // @ts-ignore
-    window.flutter_inappwebview.postMessage("barcode_camera");
+    window.flutter_inappwebview_barcode.postMessage("barcode_camera");
   };
 
   const getBarcode = (barcodeNum: number) => {

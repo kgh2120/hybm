@@ -58,6 +58,7 @@ function ReceiptPage() {
           <img className={styles.home_img} src={home} alt="홈" />
         </Link>
         <section className={styles.food_list_section}>
+          {/* {namePriceList} */}
           {/* {namePriceList &&
             namePriceList.map((namePrice: NamePriceType) => (
               <div key={namePrice.name}>
