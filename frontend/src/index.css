@@ -31,7 +31,7 @@ button {
 
 html,
 body {
-  height: 100%;
+  height: 100vh;
   background-color: #fce6e7;
 
   .react-datepicker {
@@ -89,8 +89,8 @@ button {
   background-color: white;
 }
 
-body>div {
-  height: 100%;
+body > div {
+  height: 100vh;
 }
 
 /* 
@@ -102,7 +102,9 @@ body>div {
   font-size: 100%;
 } */
 
-input:focus {outline:none;}
+input:focus {
+  outline: none;
+}
 
 input {
   border-radius: 0%;
