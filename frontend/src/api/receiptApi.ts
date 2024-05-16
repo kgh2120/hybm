@@ -16,6 +16,7 @@ const postReceipt = async (image: string) => {
   const formData = new FormData();
   formData.append("image", blob);
   console.log(image);
+
   try {
     const res = await instance.post(
       "/api/foods/getReceiptOCR",
