@@ -20,7 +20,7 @@ function CreateFoodModal({
   handleCloseCreateFoodModal,
 }: CreateFoodModalProps) {
   const navigate = useNavigate();
-  const { setImagePath } = useAuthStore();
+  const { setImage } = useAuthStore();
   const queryClient = useQueryClient();
   const { storageName } = useParams() as { storageName: string };
   const { inputList, setInputList, initialInputList, setIsSelected } = useFoodStore();
@@ -61,24 +61,20 @@ function CreateFoodModal({
     };
 
   const handleOpenCamera = () => {
-    console.log("camera");
     //@ts-ignore
     window.flutter_inappwebview.postMessage("button_clicked");
   };
 
-  const sendReceipt = (imagePath: string) => {
-    alert("1") // 디버깅용
-    setImagePath(imagePath)
-    alert("2")
+  const sendReceipt = (image: File) => {
+    setImage(image)
     navigate("/receipt");
-    alert("3")
   };
 
   useEffect(() => {
     //@ts-ignore
     window.sendReceipt = sendReceipt;
   }, []);
-  console.log(sendReceipt);
+  
   return (
     <div className={styles.wrapper}>
       <section className={styles.main_section}>

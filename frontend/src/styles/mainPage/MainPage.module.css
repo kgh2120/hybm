@@ -72,7 +72,7 @@
   position: absolute;
   left: 60px;
   bottom: 420px;
-  z-index: 50;
+  z-index: 1;
   pointer-events: initial;
   filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
@@ -101,7 +101,7 @@
   position: absolute;
   left: 115px;
   bottom: 475px;
-  z-index: 50;
+  z-index: 1;
   pointer-events: initial;
   filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
@@ -130,7 +130,7 @@
   position: absolute;
   left: 55px;
   bottom: 350px;
-  z-index: 50;
+  z-index: 1;
   pointer-events: initial;
   filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
@@ -159,7 +159,7 @@
   position: absolute;
   left: 120px;
   bottom: 415px;
-  z-index: 50;
+  z-index: 1;
   pointer-events: initial;
   filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
@@ -188,7 +188,7 @@
   position: absolute;
   left: 60px;
   bottom: 170px;
-  z-index: 50;
+  z-index: 1;
   pointer-events: initial;
   filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
@@ -217,7 +217,7 @@
   position: absolute;
   left: 110px;
   bottom: 190px;
-  z-index: 50;
+  z-index: 1;
   pointer-events: initial;
   filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
@@ -246,7 +246,7 @@
   position: absolute;
   left: 55px;
   bottom: 65px;
-  z-index: 50;
+  z-index: 1;
   pointer-events: initial;
   filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
@@ -275,7 +275,7 @@
   position: absolute;
   left: 110px;
   bottom: 90px;
-  z-index: 50;
+  z-index: 1;
   pointer-events: initial;
   filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
