@@ -7,7 +7,7 @@ import 'package:final_project/screen/camera_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final CameraDescription firstCamera;
-  String? _imagePath;
+  // String? _imagePath;
 
   HomeScreen({Key? key, required this.firstCamera}) : super(key: key);
 
@@ -57,11 +57,18 @@ class _HomeScreenState extends State<HomeScreen> {
             MaterialPageRoute(builder: (BuildContext context) {
               return TakePictureScreen(
                 camera: widget.firstCamera,
-                onPictureTaken: (String imagePath) {
+                // onPictureTaken: (String imagePath) {
+                //   setState(() {
+                //     _imageBase64 = _convertImageToBase64(imagePath); // 이미지를 base64로 인코딩하여 저장
+                //   });
+                //   // 자바스크립트 함수 호출하여 이미지 base64 문자열 전달
+                //   _controller.runJavascript('sendReceipt("$_imageBase64");');
+                // },
+                onPictureTaken: (String imagePath) async {
+                  final base64Image = await _convertImageToBase64(imagePath);
                   setState(() {
-                    _imageBase64 = _convertImageToBase64(imagePath); // 이미지를 base64로 인코딩하여 저장
+                    _imageBase64 = base64Image;
                   });
-                  // 자바스크립트 함수 호출하여 이미지 base64 문자열 전달
                   _controller.runJavascript('sendReceipt("$_imageBase64");');
                 },
               );
@@ -72,10 +79,15 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // 이미지를 base64로 인코딩하는 함수
-  String _convertImageToBase64(String imagePath) {
-    File imageFile = File(imagePath);
-    List<int> imageBytes = imageFile.readAsBytesSync();
+  // // 이미지를 base64로 인코딩하는 함수
+  // String _convertImageToBase64(String imagePath) {
+  //   File imageFile = File(imagePath);
+  //   List<int> imageBytes = imageFile.readAsBytesSync();
+  //   return base64Encode(imageBytes);
+  // }
+  Future<String> _convertImageToBase64(String imagePath) async {
+    final imageFile = File(imagePath);
+    final imageBytes = await imageFile.readAsBytes();
     return base64Encode(imageBytes);
   }
 }

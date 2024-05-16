@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:final_project/screen/home_screen.dart';
 import 'package:camera/camera.dart';
 
-Future main() async {
+Future<void> main() async {
   // 플러터 프레임워크가 실행할 준비가 될 때까지 기다림
   WidgetsFlutterBinding.ensureInitialized();
 
