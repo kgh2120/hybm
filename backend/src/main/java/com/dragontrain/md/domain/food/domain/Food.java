@@ -155,9 +155,9 @@ public class Food {
 			throw new FoodException(FoodErrorCode.ALREADY_DELETED_FOOD);
 		}
 
-		if (this.foodStatus.equals(foodStatus)) {
-			throw new FoodException(FoodErrorCode.ALREADY_THAT_STATUS);
-		}
+		// if (this.foodStatus.equals(foodStatus)) {
+		// 	throw new FoodException(FoodErrorCode.ALREADY_THAT_STATUS);
+		// }
 		this.foodStatus = foodStatus;
 		this.updatedAt = localDateTime;
 	}
