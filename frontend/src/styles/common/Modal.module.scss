@@ -5,7 +5,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 999;
+  z-index: 900;
   max-width: 400px;
   width: 95%;
 
@@ -13,6 +13,7 @@
     padding: 20px;
     background-color: white;
     border: 1px solid $color-light;
+    position: relative;
   }
 }
 

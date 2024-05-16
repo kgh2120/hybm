@@ -66,13 +66,21 @@
   left: 105px;
   width: 60px;
 }
+.wrapper .tutorial {
+  width: 25px;
+  position: absolute;
+  bottom: 22%;
+  right: 7.5%;
+  opacity: 0.9;
+  filter: drop-shadow(-3px 3px 0px rgba(0, 0, 0, 0.4));
+}
 .wrapper .badge1 {
   width: 45px;
   aspect-ratio: 0.7;
   position: absolute;
   left: 60px;
   bottom: 420px;
-  z-index: 50;
+  z-index: 1;
   pointer-events: initial;
   filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
@@ -101,7 +109,7 @@
   position: absolute;
   left: 115px;
   bottom: 475px;
-  z-index: 50;
+  z-index: 1;
   pointer-events: initial;
   filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
@@ -130,7 +138,7 @@
   position: absolute;
   left: 55px;
   bottom: 350px;
-  z-index: 50;
+  z-index: 1;
   pointer-events: initial;
   filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
@@ -159,7 +167,7 @@
   position: absolute;
   left: 120px;
   bottom: 415px;
-  z-index: 50;
+  z-index: 1;
   pointer-events: initial;
   filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
@@ -188,7 +196,7 @@
   position: absolute;
   left: 60px;
   bottom: 170px;
-  z-index: 50;
+  z-index: 1;
   pointer-events: initial;
   filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
@@ -217,7 +225,7 @@
   position: absolute;
   left: 110px;
   bottom: 190px;
-  z-index: 50;
+  z-index: 1;
   pointer-events: initial;
   filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
@@ -246,7 +254,7 @@
   position: absolute;
   left: 55px;
   bottom: 65px;
-  z-index: 50;
+  z-index: 1;
   pointer-events: initial;
   filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }
@@ -275,7 +283,7 @@
   position: absolute;
   left: 110px;
   bottom: 90px;
-  z-index: 50;
+  z-index: 1;
   pointer-events: initial;
   filter: drop-shadow(-4px 4px 0px rgba(0, 0, 0, 0.3));
 }

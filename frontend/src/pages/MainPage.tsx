@@ -2,6 +2,7 @@ import styles from "../styles/mainPage/MainPage.module.css";
 import background from "../assets/images/background.png";
 import recipe from "../assets/images/recipe.png";
 import trashCan from "../assets/images/trashCan.png";
+import tutorial from "../assets/images/tutorial.png";
 import { Link, useLocation } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -54,11 +55,8 @@ interface DesignListType {
 function MainPage() {
   const location = useLocation();
   const { setBigCategoryList } = useFoodCategoryStore();
-  const {
-    appliedDesign,
-    setAppliedDesign,
-    setLevelDesignList,
-  } = useFridgeStore();
+  const { appliedDesign, setAppliedDesign, setLevelDesignList } =
+    useFridgeStore();
   const { attachedBadgeList, setAttachedBadgeList } =
     useAttachedBadgeStore();
   const { selectedBadge, initSelectedBadge } = useBadgeStore();
@@ -208,7 +206,6 @@ function MainPage() {
     }
   }, [bigCategoryList]);
 
-  
   // 메인페이지에서 현재 적용중인 디자인 및 배지를 적용
   useEffect(() => {
     if (currentDesign) {
@@ -358,8 +355,15 @@ function MainPage() {
         src={trashCan}
         alt="쓰레기통 이미지"
       />
+      <Link to="/tutorial">
+        <img
+          className={styles.tutorial}
+          src={tutorial}
+          alt="튜토리얼 버튼"
+        />
+      </Link>
       {content}
-
+      
       {isDeleteAllFoodConfirmModalOpen && (
         <ConfirmModal
           content="모든 식품을 삭제하시겠습니까?"

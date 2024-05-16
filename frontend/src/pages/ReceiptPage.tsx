@@ -10,10 +10,10 @@ import useAuthStore from "../stores/useAuthStore";
 import { useMutation } from "@tanstack/react-query";
 import { postFoodByReceipt, postReceipt } from "../api/receiptApi";
 
-// interface namePriceType {
-//   name: string;
-//   price: number;
-// }
+interface NamePriceType {
+  name: string;
+  price: number;
+}
 
 function ReceiptPage() {
   const navigate = useNavigate();
@@ -48,6 +48,7 @@ function ReceiptPage() {
       mutatePostReceipt(image);
     }
   }, [image]);
+
   console.log(bigCategoryList);
 
   if (status === "pending") {
@@ -59,13 +60,17 @@ function ReceiptPage() {
       <div className={styles.white_wrapper}>
         <Header title="영수증 등록 테스트" />
         <Link to="/">
-          <img className={styles.home_img} src={home} alt="" />
+          <img className={styles.home_img} src={home} alt="홈" />
         </Link>
         <section className={styles.food_list_section}>
-          {/* {namePriceList.map((namePrice: namePriceType) => {
-            console.log(namePrice)
-            return <FoodSection option="active"/>
-          })} */}
+          {namePriceList &&
+            namePriceList.map((namePrice: NamePriceType) => (
+              <div key={namePrice.name}>
+                <div>{namePrice.name}</div>
+                <div>{namePrice.price}</div>
+                {/* <FoodSection option="active"/> */}
+              </div>
+            ))}
         </section>
         <Button
           content="완료"
