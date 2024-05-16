@@ -53,7 +53,7 @@ function FoodSection({ option = "" }: FoodSectionProps) {
   useEffect(() => {
     setInputList(initialInputList);
     setIsSelected(false);
-    if (barcodeResult) {
+    if (barcodeResult && categoryId === 0) {
       setInputList({
         ...inputList,
         foodName: barcodeResult.name,
