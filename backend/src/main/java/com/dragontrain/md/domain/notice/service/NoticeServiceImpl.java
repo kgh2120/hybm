@@ -24,6 +24,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -114,15 +115,18 @@ public class NoticeServiceImpl implements NoticeService{
 
 		notices.forEach(notice -> {
 			String token = stringRedisTemplate.opsForValue().get(notice.getUser().getUserId().toString());
-			try {
-				messages.add(
-					Message.builder()
-						.setToken(token)
-						.putData("notice", objectMapper.writeValueAsString(NoticeResponse.createByNotice(notice)))
-						.build()
-				);
-			} catch (JsonProcessingException e){
-				throw new NoticeException(NoticeErrorCode.CANT_CONVERT_NOTICE_TO_JSON);
+
+			if(StringUtils.hasText(token)) {
+				try {
+					messages.add(
+						Message.builder()
+							.setToken(token)
+							.putData("notice", objectMapper.writeValueAsString(NoticeResponse.createByNotice(notice)))
+							.build()
+					);
+				} catch (JsonProcessingException e) {
+					throw new NoticeException(NoticeErrorCode.CANT_CONVERT_NOTICE_TO_JSON);
+				}
 			}
 		});
 		return messages;
