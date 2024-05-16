@@ -39,6 +39,14 @@ public class NoticeController {
 		return ResponseEntity.ok().build();
 	}
 
+	@DeleteMapping("/all")
+	public ResponseEntity<Void> deleteAllNotice(
+		@AuthenticationPrincipal User user
+	){
+		noticeService.deleteAllNotice(user);
+		return ResponseEntity.ok().build();
+	}
+
 	@PostMapping("/fcm")
 	public ResponseEntity<Void> saveFCMToken(
 		@AuthenticationPrincipal User user,
