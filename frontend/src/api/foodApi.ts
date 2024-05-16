@@ -125,6 +125,20 @@ const putFoodDetail = async ({ foodId, foodEditData }: FoodDetailType) => {
   }
 };
 
+// 바코드 정보 조회
+const getBarcodeData = async (barcode: number) => {
+  try {
+    const res = await instance.get(`/api/foods?barcode=${barcode}`);
+    alert(`getBarcode 성공: ${res.data}`
+    )
+    return res.data;
+  } catch (e) {
+    alert(`getBarcode error: ${e}`)
+
+    console.error(e);
+  }
+};
+
 export {
   getFoodStorageItemList,
   getBigCategoryList,
@@ -134,4 +148,5 @@ export {
   postFood,
   getFoodDetail,
   putFoodDetail,
+  getBarcodeData
 };
