@@ -54,7 +54,7 @@ function ReceiptPage() {
   return (
     <div className={styles.wrapper}>
       <div className={styles.white_wrapper}>
-        <Header title="영수증 등록 테스트" />
+        <Header title="영수증 등록" />
         <Link to="/">
           <img className={styles.home_img} src={home} alt="홈" />
         </Link>
