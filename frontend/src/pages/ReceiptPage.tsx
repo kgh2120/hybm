@@ -3,17 +3,17 @@ import Button from "../components/common/Button";
 import Header from "../components/common/Header";
 import styles from "../styles/receiptPage/ReceiptPage.module.css";
 import home from "../assets/images/home.png";
-import FoodSection from "../components/common/FoodSection";
+// import FoodSection from "../components/common/FoodSection";
 import { useFoodCategoryStore } from "../stores/useFoodStore";
 import useAuthStore from "../stores/useAuthStore";
 import { useMutation } from "@tanstack/react-query";
 import { postFoodByReceipt, postReceipt } from "../api/receiptApi";
 import { useEffect } from "react";
 
-interface namePriceType {
-  name: string;
-  price: number;
-}
+// interface namePriceType {
+//   name: string;
+//   price: number;
+// }
 
 function ReceiptPage() {
   const navigate = useNavigate();
@@ -35,8 +35,9 @@ function ReceiptPage() {
     console.log(mutatePostFoodByReceipt)
     // mutatePostFoodByReceipt();
   }
-
+  
   useEffect(() => {
+    alert(image);
     mutatePostReceipt(image!);
   }, [namePriceList])
   console.log(bigCategoryList);
@@ -48,15 +49,16 @@ function ReceiptPage() {
   return (
     <div className={styles.wrapper}>
       <div className={styles.white_wrapper}>
-        <Header title="영수증 등록" />
+        <Header title="영수증 등록 테스트" />
         <Link to="/">
           <img className={styles.home_img} src={home} alt="" />
         </Link>
         <section className={styles.food_list_section}>
-          {namePriceList.map((namePrice: namePriceType) => {
+          <img src={image!} alt="" />
+          {/* {namePriceList.map((namePrice: namePriceType) => {
             console.log(namePrice)
             return <FoodSection option="active"/>
-          })}
+          })} */}
           
         </section>
         <Button content="완료" color="red" onClick={handlePostFoodByReceipt} disabled={false}/>
