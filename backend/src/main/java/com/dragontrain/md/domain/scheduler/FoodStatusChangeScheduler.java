@@ -28,12 +28,14 @@ public class FoodStatusChangeScheduler {
 	private final TimeService timeService;
 	private final NoticeService noticeService;
 
-	@Scheduled(cron = "0 0 4 * * *", zone = "Asia/Seoul")
+	@Scheduled(cron = "0 0/10 * * * *", zone = "Asia/Seoul")
 	public void changeFoodStatus() {
 		LocalDate now = timeService.localDateNow();
-		log.debug("{}월 {}일자 - 음식 스케줄러 돌아갑니다", now.getMonthValue(), now.getDayOfMonth());
+		log.info("{}월 {}일자 - 음식 스케줄러 돌아갑니다", now.getMonthValue(), now.getDayOfMonth());
 
 		LocalDateTime localDateTime = timeService.localDateTimeNow();
+		List<Food> toWarning = foodRepository.findFoodByDDay(7, now);
+		toWarning.forEach(food -> food.changeStatus(FoodStatus.WARNING, localDateTime));
 
 		List<Food> toDanger = foodRepository.findFoodByDDay(3, now);
 		toDanger.forEach(food -> food.changeStatus(FoodStatus.DANGER, localDateTime));
@@ -42,7 +44,7 @@ public class FoodStatusChangeScheduler {
 		List<Food> toRotten = foodRepository.findFoodByDDay(0, now);
 		toRotten.forEach(food -> food.changeStatus(FoodStatus.ROTTEN, localDateTime));
 		toDanger.addAll(toRotten);
-		noticeService.saveNotices(toDanger);
+		// noticeService.saveNotices(toDanger);
 	}
 
 }
