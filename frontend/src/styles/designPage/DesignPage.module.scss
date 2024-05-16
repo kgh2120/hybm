@@ -2,14 +2,32 @@
 
 .wrapper {
   position: relative;
+  height: 100vh;
+  > h2 {
+    z-index: 200;
+    position: absolute;
+    top: 2.5%;
+    left: 50%;
+    translate: (-50%);
+    color: $color-point;
+    background-color: white;
+    opacity: 0.9;
+    border: 1px solid $color-point;
+    width: 180px;
+    height: 40px;
+    font-size: 18px;
+    // border-radius: 50px;
+    font-weight: 100;
+    @include center;
+  }
   .background {
     pointer-events: none;
   }
   .white_section {
     z-index: 100;
     position: absolute;
-    top: 10%;
-    right: 10px;
+    bottom: 2.5%;
+    right: 3%;
     @include center;
     flex-direction: column;
     gap: 5px;
@@ -21,8 +39,8 @@
 }
 
 .left_arrow {
-    width: 25px;
-    height: 75px;
+    width: 30px;
+    opacity: 0.7;
     position: absolute;
     z-index: 100;
     top: 50%;

@@ -59,6 +59,7 @@ function BadgePage() {
       <div className={styles.background}>
         <MainPage />
       </div>
+      <h2>배지 붙이기</h2>
       <section className={styles.white_section}>
         <BadgeWhiteSection title="보유 뱃지" badgeList={badgeList.has} option="has"/>
         <BadgeWhiteSection title="미보유 뱃지" badgeList={badgeList.hasnot} option="hasnot"/>

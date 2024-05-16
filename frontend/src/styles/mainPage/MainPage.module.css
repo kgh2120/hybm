@@ -1,6 +1,8 @@
 .wrapper {
-  position: relative;
-  height: 720px;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  overflow: hidden;
 }
 .wrapper .trash_can {
   width: 130px;
@@ -10,7 +12,7 @@
 }
 .wrapper .cabinet {
   position: absolute;
-  top: -20px;
+  bottom: 524px;
   left: -48px;
   width: 222px;
   z-index: 2;
@@ -36,28 +38,33 @@
   position: absolute;
   z-index: 5;
   opacity: 0;
-  top: 80px;
-  right: 60px;
-  width: 100px;
-  height: 100px;
+  top: 12%;
+  right: 15%;
+  width: 34%;
+  height: 15%;
+  transform: skew(-27deg);
+  rotate: -27.5deg;
 }
 .wrapper .design {
   position: absolute;
   z-index: 5;
   opacity: 0;
-  top: 220px;
-  right: 20px;
-  width: 130px;
-  height: 100px;
+  top: 28%;
+  right: 5%;
+  width: 41%;
+  height: 19%;
+  border-radius: 50%;
 }
 .wrapper .report {
   position: absolute;
   z-index: 5;
   opacity: 0;
-  top: 350px;
-  right: 90px;
-  width: 80px;
-  height: 70px;
+  top: 47.5%;
+  right: 26%;
+  width: 19%;
+  height: 10.5%;
+  transform: skew(33deg);
+  rotate: -28deg;
 }
 .wrapper .recipe {
   position: absolute;
@@ -94,6 +101,7 @@
   opacity: 0.8;
 }
 .wrapper .badge1 .badge_sub_box .badge {
+  aspect-ratio: 0.7;
   width: 100%;
 }
 .wrapper .badge1 .badge_sub_box .minus_btn {
@@ -123,6 +131,7 @@
   opacity: 0.8;
 }
 .wrapper .badge2 .badge_sub_box .badge {
+  aspect-ratio: 0.7;
   width: 100%;
 }
 .wrapper .badge2 .badge_sub_box .minus_btn {
@@ -152,6 +161,7 @@
   opacity: 0.8;
 }
 .wrapper .badge3 .badge_sub_box .badge {
+  aspect-ratio: 0.7;
   width: 100%;
 }
 .wrapper .badge3 .badge_sub_box .minus_btn {
@@ -181,6 +191,7 @@
   opacity: 0.8;
 }
 .wrapper .badge4 .badge_sub_box .badge {
+  aspect-ratio: 0.7;
   width: 100%;
 }
 .wrapper .badge4 .badge_sub_box .minus_btn {
@@ -210,6 +221,7 @@
   opacity: 0.8;
 }
 .wrapper .badge5 .badge_sub_box .badge {
+  aspect-ratio: 0.7;
   width: 100%;
 }
 .wrapper .badge5 .badge_sub_box .minus_btn {
@@ -239,6 +251,7 @@
   opacity: 0.8;
 }
 .wrapper .badge6 .badge_sub_box .badge {
+  aspect-ratio: 0.7;
   width: 100%;
 }
 .wrapper .badge6 .badge_sub_box .minus_btn {
@@ -268,6 +281,7 @@
   opacity: 0.8;
 }
 .wrapper .badge7 .badge_sub_box .badge {
+  aspect-ratio: 0.7;
   width: 100%;
 }
 .wrapper .badge7 .badge_sub_box .minus_btn {
@@ -297,6 +311,7 @@
   opacity: 0.8;
 }
 .wrapper .badge8 .badge_sub_box .badge {
+  aspect-ratio: 0.7;
   width: 100%;
 }
 .wrapper .badge8 .badge_sub_box .minus_btn {

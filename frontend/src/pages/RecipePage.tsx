@@ -134,10 +134,9 @@ function RecipePage() {
         <div className={styles.content}>
           <div className={styles.sub_content}>
             <p>
-              나의 냉장고 속 <span>위험 단계</span> 식품들 입니다.
-            </p>
-            <p>
-              <span>레시피를 추천</span>받아보세요.
+              나의 냉장고 속 <span>"위험 단계"</span> 식품들입니다.
+            <br />
+              <span>레시피</span>를 <span>추천</span> 받아보세요.
             </p>
           </div>
         </div>
@@ -179,10 +178,13 @@ function RecipePage() {
         <div className={styles.content}>
           <div className={styles.sub_title}>식품 확인하기</div>
           <div className={styles.sub_content}>
-            <p>선택한 재료들을 확인합니다.</p>
-            <p>잘못 선택한 재료는 터치로 지워주세요.</p>
+            <p>
+              선택한 재료들을 확인합니다.
+              <br />
+              잘못 선택한 재료는 터치로 지워주세요.
+            </p>
             <section className={styles.main_section}>
-              <section style={{ border: "2px solid #a9a9a9" }}>
+              <section style={{ border: "1px solid #a9a9a9" }}>
                 {selectedFoodList.length > 0 ? (
                   selectedFoodList.map(
                     (
