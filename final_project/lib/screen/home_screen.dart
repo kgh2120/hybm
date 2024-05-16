@@ -7,7 +7,6 @@ import 'package:final_project/screen/camera_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final CameraDescription firstCamera;
-  String? _imagePath;
 
   HomeScreen({Key? key, required this.firstCamera}) : super(key: key);
 
@@ -31,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
             print('페이지 끝나는 중: $url');
             // 페이지가 로드된 후 이미지 파일이 있다면 자바스크립트 함수 호출
             if (_imageFile != null) {
-              _controller.runJavascript('sendReceipt("$_imageFile");');
+              _controller.runJavascript('sendReceipt("${_imageFile!.path}");');
             }
           },
           initialUrl: 'https://k10a707.p.ssafy.io/',
@@ -57,14 +56,14 @@ class _HomeScreenState extends State<HomeScreen> {
             MaterialPageRoute(builder: (BuildContext context) {
               return TakePictureScreen(
                 camera: widget.firstCamera,
-                onPictureTaken: (String imagePath) {
+                onPictureTaken: (String imagePath) async {
+                  final base64Image = await _convertImageToBase64(imagePath);
                   setState(() {
-                    _imageFile = _getImageFile(imagePath); // 이미지 파일 저장
-
+                    _imageFile = File(imagePath); // 이미지 파일 저장
                   });
-                  // 자바스크립트 함수 호출하여 이미지 파일 전달
-                  _controller.runJavascript('sendReceipt("$_imageFile");');
-                  print('결과값 $_imageFile');
+                  // 자바스크립트 함수 호출하여 이미지 파일 경로 전달
+                  _controller.runJavascript('sendReceipt("${base64Image}");');
+
                 },
               );
             }),
@@ -74,8 +73,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // 이미지 파일을 반환하는 함수
-  File _getImageFile(String imagePath) {
-    return File(imagePath);
-  }
+Future<String> _convertImageToBase64(String imagePath) async {
+  final imageFile = File(imagePath);
+  final bytes = await imageFile.readAsBytes();
+  final base64Image = base64Encode(bytes);
+  return base64Image;
+}
 }
