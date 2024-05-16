@@ -17,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late WebViewController _controller;
-  String? _imageBase64; // 이미지를 base64로 인코딩하여 저장
+  File? _imageFile; // 이미지 파일 저장
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +29,9 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           onPageFinished: (String url) {
             print('페이지 끝나는 중: $url');
-            // 페이지가 로드된 후 이미지 base64 문자열이 있다면 자바스크립트 함수 호출
-            if (_imageBase64 != null) {
-              _controller.runJavascript('sendReceipt("$_imageBase64");');
+            // 페이지가 로드된 후 이미지 파일이 있다면 자바스크립트 함수 호출
+            if (_imageFile != null) {
+              _controller.runJavascript('sendReceipt("$_imageFile");');
             }
           },
           initialUrl: 'https://k10a707.p.ssafy.io/',
@@ -59,10 +59,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 camera: widget.firstCamera,
                 onPictureTaken: (String imagePath) {
                   setState(() {
-                    _imageBase64 = _convertImageToBase64(imagePath); // 이미지를 base64로 인코딩하여 저장
+                    _imageFile = _getImageFile(imagePath); // 이미지 파일 저장
+
                   });
-                  // 자바스크립트 함수 호출하여 이미지 base64 문자열 전달
-                  _controller.runJavascript('sendReceipt("$_imageBase64");');
+                  // 자바스크립트 함수 호출하여 이미지 파일 전달
+                  _controller.runJavascript('sendReceipt("$_imageFile");');
+                  print('결과값 $_imageFile');
                 },
               );
             }),
@@ -72,10 +74,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // 이미지를 base64로 인코딩하는 함수
-  String _convertImageToBase64(String imagePath) {
-    File imageFile = File(imagePath);
-    List<int> imageBytes = imageFile.readAsBytesSync();
-    return base64Encode(imageBytes);
+  // 이미지 파일을 반환하는 함수
+  File _getImageFile(String imagePath) {
+    return File(imagePath);
   }
 }
