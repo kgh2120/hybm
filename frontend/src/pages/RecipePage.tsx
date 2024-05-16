@@ -163,7 +163,7 @@ function RecipePage() {
                                 ? `${item.name.slice(0, 4)}..`
                                 : item.name
                             }
-                            content={`D-${item.dday}`}
+                            content={`D${item.dday}`}
                             option="active"
                             imgSrc={item.categoryImgSrc}
                             onClick={() => handlePickFood(item)}
