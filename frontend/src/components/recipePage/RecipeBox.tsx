@@ -12,12 +12,10 @@ function RecipeBox({ author, title, onClick }: RecipeBoxProps) {
     <section className={styles.wrapper}>
       <div className={styles.text_box}>
         <h2>{title}</h2>
-        <p>글쓴이: {author}</p>
+        <span>written by {author}</span>
       </div>
       <button onClick={onClick}>
-        레시피로
-        <br />
-        이동하기
+        이동
         <img src={rightArrow} alt="버튼이미지" />
       </button>
     </section>
