@@ -36,8 +36,6 @@ function ReceiptPage() {
     // mutatePostFoodByReceipt();
   }
 
-  
-
   useEffect(() => {
     mutatePostReceipt(image!);
   }, [namePriceList])

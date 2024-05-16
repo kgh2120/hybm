@@ -24,7 +24,12 @@ interface IsNewNotificationType {
 }
 
 function ExpBar() {
-  const { currentLevel, setCurrentLevel } = useAuthStore();
+  const {
+    currentLevel,
+    setCurrentLevel,
+    isCurrentNotification,
+    setIsCurrentNotification,
+  } = useAuthStore();
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
   const [isNotificationModalOpen, setIsNotificationModalOpen] =
     useState(false);
@@ -81,6 +86,8 @@ function ExpBar() {
     mutationFn: deleteAllNotification,
     onSuccess: () => {
       setIsNotificationModalOpen(false);
+      setIsDeleteNotificationConfirmModalOpen(false);
+      setIsCurrentNotification(false);
     },
   });
 
@@ -118,6 +125,12 @@ function ExpBar() {
       setCurrentLevel(levelAndExp.level);
     }
   }, [levelAndExp]);
+
+  useEffect(() => {
+    if (isNewNotification) {
+      setIsCurrentNotification(isNewNotification!.hasNew);
+    }
+  }, [isNewNotification]);
 
   if (isLevelAndExpPending || isNewNotificationPending) {
     return <div>levelBar Loding...</div>;
@@ -175,7 +188,7 @@ function ExpBar() {
         >
           <div className={styles.notification_sub_box}>
             <img src={notification} alt="알림 이미지" />
-            {isNewNotification.hasNew && <div></div>}
+            {isCurrentNotification && <div />}
           </div>
         </div>
         {isSignOutConfirmModalOpen && (

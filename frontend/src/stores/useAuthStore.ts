@@ -5,12 +5,14 @@ interface AuthState {
   isLogin: boolean;
   currentLevel: number;
   image: File | null;
+  isCurrentNotification: boolean;
 }
 
 interface AuthAction {
   setIsLogin: (value: boolean) => void;
   setCurrentLevel: (value: number) => void;
   setImage: (value: File) => void;
+  setIsCurrentNotification: (value: boolean) => void;
 }
 
 const useAuthStore = create(
@@ -22,6 +24,9 @@ const useAuthStore = create(
   setCurrentLevel: (value: number) => set({currentLevel: value}),
   image: null,
   setImage: (value: File) => set({image: value}),
+  isCurrentNotification: false,
+  setIsCurrentNotification: (value: boolean) => set({isCurrentNotification: value}),
+
 }),{ name: 'userData' }))
 
 export default useAuthStore;

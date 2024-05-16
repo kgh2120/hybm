@@ -11,33 +11,52 @@ interface FoodSectionProps {
   option: string;
 }
 
-function FoodSection({ option = "active" }: FoodSectionProps) {
+function FoodSection({ option = "" }: FoodSectionProps) {
   const { storageName } = useParams() as { storageName: string };
+  const [selectedLocation, setSelectedLocation] = useState("");
 
   const TITLE_LIST: { [key: string]: string } = {
-    ice: "냉동실",
-    cool: "냉장실",
+    ice: "냉동칸",
+    cool: "냉장칸",
     cabinet: "찬장",
   };
 
-  const { inputList, setInputList } = useFoodStore();
+  const { inputList, setInputList, isSelected, setIsSelected } =
+    useFoodStore();
 
-  const { foodName, categoryId, expiredDate, price } = inputList;
+  const { foodName, categoryId, price, expiredDate } = inputList;
 
   const handleCategoryIdChange = (categoryId: number) => {
     setInputList({
       ...inputList,
       categoryId: categoryId, // 선택한 카테고리의 categoryId를 업데이트
     });
+    setIsSelected(true);
   };
 
   const handleInputList = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const { name, value } = e.target;
+    let newValue = value;
+
+    if (name === "price") {
+      // 입력값이 "0"으로 시작하고, 그 뒤에 다른 숫자가 오면 "0"을 제거
+      if (/^0\d/.test(value)) {
+        newValue = value.substring(1);
+      }
+      // 입력값이 숫자가 아닌 경우 또는 빈 문자열인 경우 "0"으로 처리
+      newValue =
+        isNaN(parseInt(newValue)) || newValue === "" ? "0" : newValue;
+        if (parseInt(newValue) >= 100000000) {
+          newValue = newValue.slice(0, 8);
+        }
+    
+    }
+
     setInputList({
       ...inputList,
-      [name]: name === "price" ? parseFloat(value) || 0 : value,
+      [name]: newValue,
     });
   };
 
@@ -88,28 +107,51 @@ function FoodSection({ option = "active" }: FoodSectionProps) {
     });
   };
 
+  const handleLocationChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    let newLocation = "";
+
+    switch (e.target.value) {
+      case "냉동칸":
+        newLocation = "ICE";
+        break;
+      case "냉장칸":
+        newLocation = "COOL";
+        break;
+      case "찬장":
+        newLocation = "CABINET";
+        break;
+      default:
+        newLocation = e.target.value;
+    }
+    setSelectedLocation(e.target.value);
+    setInputList({
+      ...inputList,
+      location: newLocation,
+    });
+  };
+
   // 소비기한 확인 api
-  const { refetch, data: foodExpiredDate } = useQuery({
+  const { data: foodExpiredDate } = useQuery({
     queryKey: ["foodExpiredDate"],
     queryFn: () => getExpiredDate(categoryId),
-    enabled: false,
+    enabled: isSelected,
+    gcTime: 0,
   });
 
   useEffect(() => {
-    if (categoryId !== 0) {
-      refetch();
-      if (foodExpiredDate) {
-        setInputList({
-          ...inputList,
-          expiredDate: {
-            year: foodExpiredDate.year,
-            month: foodExpiredDate.month,
-            day: foodExpiredDate.day,
-          },
-        });
-      }
+    if (foodExpiredDate && categoryId) {
+      setInputList({
+        ...inputList,
+        expiredDate: {
+          year: foodExpiredDate.year,
+          month: foodExpiredDate.month,
+          day: foodExpiredDate.day,
+        },
+      });
     }
-  }, [categoryId, refetch, foodExpiredDate]);
+  }, [foodExpiredDate]);
 
   return (
     <div className={styles.wrapper}>
@@ -167,6 +209,7 @@ function FoodSection({ option = "active" }: FoodSectionProps) {
         <div className={styles.price_box}>
           <input
             name="price"
+            type="number"
             value={price}
             onChange={handleInputList}
           />
@@ -175,10 +218,18 @@ function FoodSection({ option = "active" }: FoodSectionProps) {
       </article>
       <article className={styles.food_option_box}>
         <span>위치</span>
-        {option === "active" ? (
-          <select>
-            <option value="냉동실">냉동실</option>
-            <option value="냉장실">냉장실</option>
+        {option === "detail" || option === "receipt" ? (
+          <select
+            name="location"
+            value={
+              selectedLocation === ""
+                ? inputList.location
+                : selectedLocation
+            }
+            onChange={handleLocationChange}
+          >
+            <option value="냉동칸">냉동칸</option>
+            <option value="냉장칸">냉장칸</option>
             <option value="찬장">찬장</option>
           </select>
         ) : (

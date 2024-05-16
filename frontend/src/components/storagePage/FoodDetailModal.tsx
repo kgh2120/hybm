@@ -1,4 +1,3 @@
-/* eslint-disable */
 import Button from "../common/Button";
 import styles from "../../styles/storagePage/CreateFoodModal.module.css";
 import barcode from "../../assets/images/barcode.png";
@@ -6,84 +5,74 @@ import camera from "../../assets/images/camera.png";
 import FoodSection from "../common/FoodSection";
 import useFoodStore from "../../stores/useFoodStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { postFood } from "../../api/foodApi";
+import { putFoodDetail } from "../../api/foodApi";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import { formatDashDate } from "../../utils/formatting";
-import useAuthStore from "../../stores/useAuthStore";
 
-interface CreateFoodModalProps {
-  handleCloseCreateFoodModal: () => void;
+interface FoodDetailModalProps {
+  foodId: number;
+  handleCloseFoodDetailModal: () => void;
 }
 
-function CreateFoodModal({
-  handleCloseCreateFoodModal,
-}: CreateFoodModalProps) {
-  const navigate = useNavigate();
-  const { setImage } = useAuthStore();
+function FoodDetailModal({
+  foodId,
+  handleCloseFoodDetailModal,
+}: FoodDetailModalProps) {
   const queryClient = useQueryClient();
-  const { storageName } = useParams() as { storageName: string };
-  const { inputList, setInputList, initialInputList, setIsSelected } = useFoodStore();
+  const { inputList, setInputList, initialInputList } =
+    useFoodStore();
 
-  const [foodData, setFoodData] = useState({
+  const [foodEditData, setFoodEditData] = useState({
     name: "",
     categoryId: 0,
     price: 0,
     expiredDate: "",
     location: "",
-    isManual: true,
   });
-
+  const isEnglishLocation = ["ICE", "COOL", "CABINET"].includes(
+    inputList.location
+  );
+  const LOCATION_LIST: { [key: string]: string } = {
+    냉동칸: "ICE",
+    냉장칸: "COOL",
+    찬장: "CABINET",
+  };
+  
   useEffect(() => {
-    setFoodData({
+    setFoodEditData({
       name: inputList.foodName,
       categoryId: inputList.categoryId,
       price: inputList.price,
       expiredDate: formatDashDate(inputList.expiredDate),
-      location: storageName,
-      isManual: true,
+      location: isEnglishLocation
+        ? inputList.location
+        : LOCATION_LIST[inputList.location],
     });
   }, [inputList]);
 
-  // 식품 등록 api
-  const { mutate: mutateFood } = useMutation({
-    mutationFn: postFood,
+  // 내부 식품 수정 api
+  const { mutate: mutateFoodDetail } = useMutation({
+    mutationFn: putFoodDetail,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["foodStorageItemList"],
       });
+      handleCloseFoodDetailModal();
       setInputList(initialInputList);
-      handleCloseCreateFoodModal();
-      setIsSelected(false);
-    }});
-    const handleCreateFood = () => {
-      mutateFood(foodData);
-    };
-
-  const handleOpenCamera = () => {
-    //@ts-ignore
-    window.flutter_inappwebview.postMessage("button_clicked");
+    },
+  });
+  const handleEditFood = () => {
+    mutateFoodDetail({ foodId, foodEditData });
   };
-
-  const sendReceipt = (image: File) => {
-    setImage(image)
-    navigate("/receipt");
-  };
-
-  useEffect(() => {
-    //@ts-ignore
-    window.sendReceipt = sendReceipt;
-  }, []);
-  
   return (
     <div className={styles.wrapper}>
       <section className={styles.main_section}>
-        <FoodSection option="create" />
+        <FoodSection option="detail" />
         <section className={styles.btn_section}>
           <div>
             <img src={barcode} alt="바코드아이콘" />
           </div>
-          <div onClick={handleOpenCamera}>
+          <div>
             <img src={camera} alt="카메라아이콘" />
           </div>
           <div></div>
@@ -95,16 +84,15 @@ function CreateFoodModal({
         상이할 수 있습니다.
       </span>
       <Button
-        content="완료"
+        content="수정"
         color="red"
-        onClick={handleCreateFood}
+        onClick={handleEditFood}
         disabled={
-          foodData.name == '' ||
-          foodData.categoryId == 0
+          foodEditData.name == "" || foodEditData.categoryId == 0
         }
       />
     </div>
   );
 }
 
-export default CreateFoodModal;
+export default FoodDetailModal;
