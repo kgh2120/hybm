@@ -26,14 +26,22 @@
   }
   .filtered_category_list_section {
     border-radius: 5px;
-  position: absolute;
-  width: 100%;
-  top: 35px;
-  left: 0px;
-  background-color: $color-back;
-  @include center;
-  flex-direction: column;
-  gap: 5px;
-  overflow-y: auto;
+    position: absolute;
+    width: 100%;
+    max-height: 350px;
+    top: 35px;
+    left: 0px;
+    background-color: white;
+    flex-direction: column;
+    overflow-y: auto;
+    .category_list {
+      background-color: #fceced;
+      border: 1px dashed white;
+      width: 100%;
+      min-height: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
   }
 }
