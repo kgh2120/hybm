@@ -56,10 +56,12 @@ function FoodSection({ option = "" }: FoodSectionProps) {
   useEffect(() => {
     if (status === "error") {
       setIsBarcodeError(true);
+      setBarcodeNumber(0);
     }
   }, [status])
 
   useEffect(() => {
+    alert(`useEffect들어오냐 ${barcodeResult}`)
     if (barcodeResult) {
       initInputList();
       setIsSelected(false);
@@ -71,8 +73,9 @@ function FoodSection({ option = "" }: FoodSectionProps) {
       });
     }
   }, [barcodeResult]);
-
+  
   useEffect(() => {
+    alert(`categoryId 바꼈을때 useEffect ${barcodeResult}`)
     if (barcodeResult) {
       setBarcodeNumber(0);
       setIsSelected(true);

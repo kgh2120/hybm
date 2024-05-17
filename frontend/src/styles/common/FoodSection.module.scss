@@ -104,3 +104,10 @@ input::placeholder {
     width: 30px;
   }
 }
+
+.error_text {
+  font-size: $font-sm;
+  color: $color-light;
+  width: 100%;
+  text-align: end;
+}
