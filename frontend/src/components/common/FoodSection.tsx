@@ -56,7 +56,6 @@ function FoodSection({ option = "" }: FoodSectionProps) {
   useEffect(() => {
     if (status === "error") {
       setIsBarcodeError(true);
-      setBarcodeNumber(0);
     }
   }, [status])
 
@@ -181,6 +180,7 @@ function FoodSection({ option = "" }: FoodSectionProps) {
 
   const handleOpenCamera = () => {
     setIsBarcodeError(false);
+    setBarcodeNumber(0);
     // @ts-ignore
     window.flutter_inappwebview_barcode.postMessage("barcode_camera");
   };
