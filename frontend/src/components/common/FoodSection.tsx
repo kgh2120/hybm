@@ -56,11 +56,12 @@ function FoodSection({ option = "" }: FoodSectionProps) {
   useEffect(() => {
     if (status === "error") {
       setIsBarcodeError(true);
+      alert(`에러문구 ${JSON.stringify(isBarcodeError)}, ${barcodeNumber}`)
     }
   }, [status])
 
   useEffect(() => {
-    alert(`useEffect들어오냐 ${barcodeResult}`)
+    alert(`useEffect들어오냐 ${barcodeResult}, ${barcodeNumber}`)
     if (barcodeResult) {
       initInputList();
       setIsSelected(false);
@@ -74,7 +75,7 @@ function FoodSection({ option = "" }: FoodSectionProps) {
   }, [barcodeResult]);
   
   useEffect(() => {
-    alert(`categoryId 바꼈을때 useEffect ${barcodeResult}`)
+    alert(`categoryId 바꼈을때 useEffect ${barcodeResult}, ${barcodeNumber}`)
     if (barcodeResult) {
       setBarcodeNumber(0);
       setIsSelected(true);
@@ -186,7 +187,7 @@ function FoodSection({ option = "" }: FoodSectionProps) {
   };
 
   const getBarcode = (barcodeNum: number) => {
-    alert(`barcodeNum test: ${barcodeNum}`)
+    alert(`barcodeNum test: ${barcodeNum}, ${barcodeNumber}`)
     setBarcodeNumber(barcodeNum);
     // if (barcodeNum === )
     // setIsBarcodeError(true);
