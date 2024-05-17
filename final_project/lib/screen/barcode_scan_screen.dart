@@ -48,7 +48,7 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
             child: Center(
               child: Text(
                 _qrInfo!,
-                style: TextStyle(fontSize: 18, fontFamily: 'CustomFont'), // 폰트 패밀리 설정
+                style: TextStyle(fontSize: 16, fontFamily: 'CustomFont'), // 폰트 패밀리 설정
               ),
             ),
           ),

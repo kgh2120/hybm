@@ -21,28 +21,40 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: WebView(
-          onPageStarted: (String url) {
-            print('페이지 시작중: $url');
-          },
-          onPageFinished: (String url) {
-            print('페이지 끝나는 중: $url');
-            // 페이지가 로드된 후 이미지 파일이 있다면 자바스크립트 함수 호출
-            if (_imageFile != null) {
-              _controller.runJavascript('sendReceipt("${_imageFile!.path}");');
-            }
-          },
-          initialUrl: 'https://k10a707.p.ssafy.io/',
-          javascriptMode: JavascriptMode.unrestricted,
-          onWebViewCreated: (WebViewController webViewController) {
-            _controller = webViewController;
-          },
-          javascriptChannels: <JavascriptChannel>{
-            _createCameraChannel(context),
-            _createBarcodeChannel(context), // 바코드 채널 추가
-          },
+    return WillPopScope(
+      onWillPop: () async {
+        // 안드로이드 뒤로가기 처리
+        if (await _controller.canGoBack()) {
+          _controller.goBack();
+          return false;
+        } else {
+          // 뒤로갈 페이지가 없다면 앱 종료
+          return true;
+        }
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: WebView(
+            onPageStarted: (String url) {
+              print('페이지 시작중: $url');
+            },
+            onPageFinished: (String url) {
+              print('페이지 끝나는 중: $url');
+              // 페이지가 로드된 후 이미지 파일이 있다면 자바스크립트 함수 호출
+              if (_imageFile != null) {
+                _controller.runJavascript('sendReceipt("${_imageFile!.path}");');
+              }
+            },
+            initialUrl: 'https://k10a707.p.ssafy.io/',
+            javascriptMode: JavascriptMode.unrestricted,
+            onWebViewCreated: (WebViewController webViewController) {
+              _controller = webViewController;
+            },
+            javascriptChannels: <JavascriptChannel>{
+              _createCameraChannel(context),
+              _createBarcodeChannel(context), // 바코드 채널 추가
+            },
+          ),
         ),
       ),
     );
