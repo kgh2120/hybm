@@ -1,4 +1,4 @@
-@import '../common/common';
+@import "../common/common";
 .wrapper {
   background-color: $color-back;
   padding: 5px;
@@ -19,31 +19,30 @@
       width: 90%;
       @include center;
       padding: 0px 12px;
-    flex-direction: column;
-    overflow-y: auto;
-    &::-webkit-scrollbar {
-      width: 4px;
-    }
-  
-    &::-webkit-scrollbar-thumb {
-      background-color: rgba($color-line, 0.2);
-      border-radius: 10px;
-      background-clip: padding-box;
-      border: 2px solid transparent;
-      &:hover {
-        background-color: rgba($color-line, 0.4);
+      flex-direction: column;
+      overflow-y: auto;
+      &::-webkit-scrollbar {
+        width: 4px;
       }
-    }
-  
-    &::-webkit-scrollbar-track {
-      background-color: rgba(220, 220, 220, 0.7);
-      border-radius: 10px;
-      /* box-shadow: inset 0px 0px 5px white; */
-    }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba($color-line, 0.2);
+        border-radius: 10px;
+        background-clip: padding-box;
+        border: 2px solid transparent;
+        &:hover {
+          background-color: rgba($color-line, 0.4);
+        }
+      }
+
+      &::-webkit-scrollbar-track {
+        background-color: rgba(220, 220, 220, 0.7);
+        border-radius: 10px;
+        /* box-shadow: inset 0px 0px 5px white; */
+      }
     }
   }
 }
-
 
 .food_section_wrapper {
   display: flex;

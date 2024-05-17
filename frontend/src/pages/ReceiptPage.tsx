@@ -20,6 +20,13 @@ const tempResultList = [
   { name: "오뚜기 카레(약간매운맛)", cost: 5380 },
 ];
 
+interface InputReceiptType {
+  name: string;
+  categoryId: number;
+  price: number;
+  expiredDate: string;
+  location: string;
+}
 function ReceiptPage() {
   const navigate = useNavigate();
   const { bigCategoryList } = useFoodCategoryStore();
@@ -31,13 +38,9 @@ function ReceiptPage() {
     status,
   } = useMutation({
     mutationFn: postReceipt,
-    onSuccess: (data) => {
-      alert(`결과값1: ${JSON.stringify(data)}`);
-      alert(`결과값2: ${namePriceList}`);
-      alert(`결과값3: ${JSON.stringify(namePriceList)}`);
-    },
+    onSuccess: (data) => {},
   });
-
+  const [inputReceiptList, setInputReceiptList] = useState<InputReceiptType[]>([]);
   console.log(namePriceList);
 
   const { mutate: mutatePostFoodByReceipt } = useMutation({
@@ -97,11 +100,11 @@ function ReceiptPage() {
   });
 
   const handleInputList = (
-    e: React.ChangeEvent<HTMLInputElement>
+    e: React.ChangeEvent<HTMLInputElement>, idx: number
   ) => {
     const { name, value } = e.target;
     let newValue = value;
-
+    console.log(idx)
     if (name === "price") {
       // 입력값이 "0"으로 시작하고, 그 뒤에 다른 숫자가 오면 "0"을 제거
       if (/^0\d/.test(value)) {
@@ -206,10 +209,24 @@ function ReceiptPage() {
     }
   }, [foodExpiredDate]);
 
+  useEffect(() => {
+    const initializedList = tempResultList.map(item => ({
+      name: item.name,
+      categoryId: 0,
+      price: item.cost,
+      expiredDate: "",
+      location: ""
+    }));
+    setInputReceiptList(initializedList);
+  }, []);
+
   if (status === "pending") {
     return <div>Loading...</div>;
   }
 
+  if (inputReceiptList.length === 0) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className={styles.wrapper}>
       <div className={styles.white_wrapper}>
@@ -218,93 +235,99 @@ function ReceiptPage() {
           <img className={styles.home_img} src={home} alt="홈" />
         </Link>
         <section className={styles.food_list_section}>
-          <div className={styles.food_section_wrapper}>
-            <article className={styles.food_option_box}>
-              <span>상품명</span>
-              <input
-                name="foodName"
-                value={foodName}
-                onChange={handleInputList}
-                placeholder="바코드를 촬영하거나 직접 입력해보세요"
-              />
-            </article>
-            <article className={styles.food_option_box}>
-              <span>분류</span>
-              <CategoryBox
-                onCategoryIdChange={handleCategoryIdChange}
-              />
-            </article>
-            <article className={styles.food_option_box}>
-              <span>소비기한</span>
-              <div className={styles.expiry_date_box}>
-                <select
-                  value={expiredDate.year}
-                  onChange={handleYearChange}
-                >
-                  {years.map((year) => (
-                    <option key={year} value={year}>
-                      {year}
-                    </option>
-                  ))}
-                </select>
-                <select
-                  value={expiredDate.month}
-                  onChange={handleMonthChange}
-                >
-                  {Array.from(
-                    { length: 12 },
-                    (_, index) => index + 1
-                  ).map((month) => (
-                    <option key={month} value={month}>
-                      {month}
-                    </option>
-                  ))}
-                </select>
-                <select
-                  value={expiredDate.day}
-                  onChange={handleDayChange}
-                >
-                  {Array.from(
-                    { length: 31 },
-                    (_, index) => index + 1
-                  ).map((day) => (
-                    <option key={day} value={day}>
-                      {day}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </article>
-            <article className={styles.food_option_box}>
-              <span>가격</span>
-              <div className={styles.price_box}>
-                <input
-                  name="price"
-                  type="number"
-                  value={price}
-                  onChange={handleInputList}
-                />
-                <span>원</span>
-              </div>
-            </article>
-            <article className={styles.food_option_box}>
-              <span>위치</span>
+          {inputReceiptList.map((_, idx) => {
+            return (
+              <div 
+              key={idx}
+              className={styles.food_section_wrapper}>
+                <article className={styles.food_option_box}>
+                  <span>상품명</span>
+                  <input
+                    name="foodName"
+                    value={inputReceiptList[idx].name}
+                    onChange={(e) => handleInputList(e, idx)}
+                 
+                  />
+                </article>
+                <article className={styles.food_option_box}>
+                  <span>분류</span>
+                  <CategoryBox
+                    onCategoryIdChange={handleCategoryIdChange}
+                  />
+                </article>
+                <article className={styles.food_option_box}>
+                  <span>소비기한</span>
+                  <div className={styles.expiry_date_box}>
+                    <select
+                      value={expiredDate.year}
+                      onChange={handleYearChange}
+                    >
+                      {years.map((year) => (
+                        <option key={year} value={year}>
+                          {year}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      value={expiredDate.month}
+                      onChange={handleMonthChange}
+                    >
+                      {Array.from(
+                        { length: 12 },
+                        (_, index) => index + 1
+                      ).map((month) => (
+                        <option key={month} value={month}>
+                          {month}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      value={expiredDate.day}
+                      onChange={handleDayChange}
+                    >
+                      {Array.from(
+                        { length: 31 },
+                        (_, index) => index + 1
+                      ).map((day) => (
+                        <option key={day} value={day}>
+                          {day}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </article>
+                <article className={styles.food_option_box}>
+                  <span>가격</span>
+                  <div className={styles.price_box}>
+                    <input
+                      name="price"
+                      type="number"
+                      value={inputReceiptList[idx].price}
+                      onChange={handleInputList}
+                    />
+                    <span>원</span>
+                  </div>
+                </article>
+                <article className={styles.food_option_box}>
+                  <span>위치</span>
 
-              <select
-                name="location"
-                value={
-                  selectedLocation === ""
-                    ? inputList.location
-                    : selectedLocation
-                }
-                onChange={handleLocationChange}
-              >
-                <option value="냉동칸">냉동칸</option>
-                <option value="냉장칸">냉장칸</option>
-                <option value="찬장">찬장</option>
-              </select>
-            </article>
-          </div>
+                  <select
+                    name="location"
+                    value={
+                      selectedLocation === ""
+                        ? inputList.location
+                        : selectedLocation
+                    }
+                    onChange={handleLocationChange}
+                  >
+                    <option value="냉동칸">냉동칸</option>
+                    <option value="냉장칸">냉장칸</option>
+                    <option value="찬장">찬장</option>
+                  </select>
+                </article>
+              </div>
+            );
+          })}
         </section>
         <Button
           content="완료"

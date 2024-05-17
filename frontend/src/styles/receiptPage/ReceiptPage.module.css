@@ -43,4 +43,116 @@
   background-color: rgba(220, 220, 220, 0.7);
   border-radius: 10px;
   /* box-shadow: inset 0px 0px 5px white; */
+}
+
+.food_section_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 5px 0px;
+}
+.food_section_wrapper::after {
+  content: "";
+  border: 1px dashed #fce6e7;
+  width: 100%;
+}
+.food_section_wrapper:last-child::after {
+  content: none;
+}
+.food_section_wrapper .food_option_box {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+}
+.food_section_wrapper .food_option_box > span {
+  font-size: 15px;
+  color: #666666;
+  min-width: 60px;
+}
+.food_section_wrapper .food_option_box .expiry_date_box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 80%;
+}
+.food_section_wrapper .food_option_box .expiry_date_box select {
+  height: 30px;
+  background-color: #fce6e7;
+  text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
+  font-size: 13px;
+  color: #666666;
+  width: 50%;
+}
+.food_section_wrapper .food_option_box .expiry_date_box option {
+  height: 30px;
+  text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
+  font-size: 13px;
+  color: #666666;
+  width: 50%;
+}
+.food_section_wrapper .food_option_box > input {
+  text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
+  font-size: 13px;
+  color: #666666;
+  height: 30px;
+  width: 80%;
+  text-align: start;
+  background-color: #fce6e7;
+  padding: 0 5px;
+}
+.food_section_wrapper .food_option_box > select {
+  text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
+  font-size: 13px;
+  color: #666666;
+  height: 30px;
+  text-align: start;
+  padding: 0 5px;
+  background-color: #fce6e7;
+}
+.food_section_wrapper .food_option_box .price_box {
+  text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
+  font-size: 13px;
+  color: #666666;
+  width: 80%;
+  background-color: #fce6e7;
+  padding: 0 5px;
+}
+.food_section_wrapper .food_option_box .price_box > input {
+  max-width: 162px;
+  background-color: transparent;
+  text-align: start;
+  height: 30px;
+  text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
+  font-size: 13px;
+  color: #666666;
+}
+.food_section_wrapper .food_option_box .price_box > span {
+  font-size: 15px;
+}
+.food_section_wrapper .food_option_box .storage_box {
+  border: 2px solid #fce6e7;
+  color: #666666;
+  font-size: 13px;
+  height: 30px;
+  width: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+input::-moz-placeholder {
+  color: #c9c9c9;
+  font-style: italic;
+  text-shadow: none;
+  font-size: 11px;
+}
+
+input::placeholder {
+  color: #c9c9c9;
+  font-style: italic;
+  text-shadow: none;
+  font-size: 11px;
 }/*# sourceMappingURL=ReceiptPage.module.css.map */

@@ -7,6 +7,7 @@ import { getExpiredDate } from "../../api/foodApi";
 import useFoodStore, {
   useFoodCategoryStore,
 } from "../../stores/useFoodStore";
+import { useLocation } from "react-router-dom";
 
 interface FilteredCategory {
   categoryImgSrc: string;
@@ -33,6 +34,7 @@ interface CategoryDetailType {
 }
 
 function CategoryBox({ onCategoryIdChange }: CategoryBoxProps) {
+  const location = useLocation();
   const { bigCategoryList } = useFoodCategoryStore();
   const { inputList } = useFoodStore();
   const [name, setName] = useState("");
@@ -133,7 +135,7 @@ function CategoryBox({ onCategoryIdChange }: CategoryBoxProps) {
         type="text"
         value={name}
         onChange={handleChangeName}
-        placeholder="바코드를 촬영하거나 검색해보세요"
+        placeholder={location.pathname !== "/receipt" ? "바코드를 촬영하거나 검색해보세요" : ""}
       />
       <img
         className={styles.category_search_img}
