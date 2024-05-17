@@ -3,6 +3,7 @@
   border: 1px solid #fb5862;
   border-radius: 10px;
   position: relative;
+  height: 100%;
   width: 180px;
 }
 .wrapper > div {
@@ -19,6 +20,7 @@
   text-shadow: -2px 0px white, 0px 2px white, 2px 0px white, 0px -2px white;
 }
 .wrapper .main_section {
+  height: 100%;
   padding: 12px;
   display: grid;
   grid-template-columns: 1fr 1fr;
