@@ -8,6 +8,16 @@
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="/src/main.tsx">
+      // FCM 서비스 워커 등록
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/firebase-messaging-sw.js')
+          .then(function(registration) {
+            console.log('index.html에서 성공', registration.scope);
+          }, function(err) {
+            console.log('index.html에서 실패', err);
+          });
+      }
+    </script>
   </body>
 </html>
