@@ -138,3 +138,50 @@ input::placeholder {
   text-shadow: none;
   font-size: $font-sm;
 }
+
+.category_box {
+  @include input-text;
+  width: 80%;
+  background-color: $color-back;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0px 5px;
+  position: relative;
+  .category_img {
+    width: 30px;
+    aspect-ratio: 1/1;
+  }
+  > input {
+    width: 85%;
+    background-color: transparent;
+    text-align: start;
+    height: 30px;
+    @include input-text;
+  }
+  .category_search_img {
+    width: 20px;
+    aspect-ratio: 1/1;
+  }
+  .filtered_category_list_section {
+    border-radius: 5px;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    max-height: 350px;
+    top: 35px;
+    left: 0px;
+    background-color: white;
+    flex-direction: column;
+    overflow-y: auto;
+    .category_list {
+      background-color: #fceced;
+      border: 1px dashed white;
+      width: 100%;
+      min-height: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+}

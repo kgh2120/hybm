@@ -155,4 +155,55 @@ input::placeholder {
   font-style: italic;
   text-shadow: none;
   font-size: 11px;
+}
+
+.category_box {
+  text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
+  font-size: 13px;
+  color: #666666;
+  width: 80%;
+  background-color: #fce6e7;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0px 5px;
+  position: relative;
+}
+.category_box .category_img {
+  width: 30px;
+  aspect-ratio: 1/1;
+}
+.category_box > input {
+  width: 85%;
+  background-color: transparent;
+  text-align: start;
+  height: 30px;
+  text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
+  font-size: 13px;
+  color: #666666;
+}
+.category_box .category_search_img {
+  width: 20px;
+  aspect-ratio: 1/1;
+}
+.category_box .filtered_category_list_section {
+  border-radius: 5px;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+  max-height: 350px;
+  top: 35px;
+  left: 0px;
+  background-color: white;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.category_box .filtered_category_list_section .category_list {
+  background-color: #fceced;
+  border: 1px dashed white;
+  width: 100%;
+  min-height: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }/*# sourceMappingURL=ReceiptPage.module.css.map */

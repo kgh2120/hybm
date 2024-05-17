@@ -63,9 +63,12 @@ const getExpiredDate = async (categoryId: number) => {
     const res = await instance.get(
       `/api/foods/expiration?categoryDetailId=${categoryId}&&year=${year}&&month=${month}&&day=${day}`
     );
+  console.log("확인:", res)
+
     return res.data;
   } catch (e) {
     console.error(e);
+    throw e;
   }
 };
 
