@@ -19,6 +19,7 @@ import {
 } from "@tanstack/react-query";
 import RecipePage from "./pages/RecipePage";
 import TutorialPage from "./pages/TutorialPage";
+import './firebase'; // Firebase 초기 설정
 
 const queryClient = new QueryClient();
 
@@ -84,9 +85,9 @@ function App() {
     },
   ]);
   return (
-  <QueryClientProvider client={queryClient}>
-    <RouterProvider router={router} />
-  </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   );
 }
 
