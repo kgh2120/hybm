@@ -17,6 +17,9 @@
     "chart.js": "^4.4.2",
     "chartjs-plugin-datalabels": "^2.2.0",
     "date-fns": "^3.6.0",
+    "firebase": "^10.12.0",
+    "firebase-tools": "^13.9.0",
+    "global": "^4.4.0",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-calendar": "^5.0.0",
@@ -30,6 +33,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@types/firebase": "^3.2.1",
     "@types/react": "^18.2.66",
     "@types/react-beautiful-dnd": "^13.1.8",
     "@types/react-datepicker": "^6.2.0",
