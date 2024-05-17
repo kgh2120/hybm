@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import styles from "../../styles/common/FoodSection.module.css";
 import CategoryBox from "./CategoryBox";
-// import ExpiryDateSelector from "./ExpiryDateSelector";
 import { getBarcodeData, getExpiredDate } from "../../api/foodApi";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
@@ -43,6 +42,7 @@ function FoodSection({ option = "" }: FoodSectionProps) {
 
   const [barcodeNumber, setBarcodeNumber] = useState(0);
 
+  // 바코드 정보 조회 api
   const { data: barcodeResult } = useQuery({
     queryKey: ["barcode"],
     queryFn: () => getBarcodeData(barcodeNumber),
@@ -62,19 +62,12 @@ function FoodSection({ option = "" }: FoodSectionProps) {
       });
     }
   }, [barcodeResult]);
-
   useEffect(() => {
-    setBarcodeNumber(0);
-    setIsSelected(true);
+    if (barcodeResult) {
+      setBarcodeNumber(0);
+      setIsSelected(true);
+    }
   }, [categoryId]);
-  
-  // 소비기한 확인 api
-  const { data: foodExpiredDate } = useQuery({
-    queryKey: ["foodExpiredDate"],
-    queryFn: () => getExpiredDate(categoryId),
-    enabled: isSelected,
-    gcTime: 0,
-  });
 
   const handleInputList = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -186,6 +179,14 @@ function FoodSection({ option = "" }: FoodSectionProps) {
     // @ts-ignore
     window.getBarcode = getBarcode;
   }, []);
+
+  // 소비기한 확인 api
+  const { data: foodExpiredDate } = useQuery({
+    queryKey: ["foodExpiredDate"],
+    queryFn: () => getExpiredDate(categoryId),
+    enabled: isSelected,
+    gcTime: 0,
+  });
 
   useEffect(() => {
     if (foodExpiredDate && categoryId) {

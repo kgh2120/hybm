@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 
 interface AuthState {
   isLogin: boolean;
-  currentLevel: number;
+  currentLevel: number | null;
   image: string | null;
   isCurrentNotification: boolean;
 }
@@ -20,7 +20,7 @@ const useAuthStore = create(
     (set) => ({
       isLogin: false,
       setIsLogin: (value: boolean) => set({ isLogin: value }),
-      currentLevel: 1,
+      currentLevel: null,
       setCurrentLevel: (value: number) =>
         set({ currentLevel: value }),
       image: null,
