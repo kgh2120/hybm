@@ -67,6 +67,7 @@ function FoodSection({ option = "" }: FoodSectionProps) {
     setBarcodeNumber(0);
     setIsSelected(true);
   }, [categoryId]);
+  
   // 소비기한 확인 api
   const { data: foodExpiredDate } = useQuery({
     queryKey: ["foodExpiredDate"],
