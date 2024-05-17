@@ -82,7 +82,7 @@
       color: $color-text;
       font-size: 13px;
       height: 30px;
-      width: 25%;
+      width: 35%;
       @include center;
     }
   }
@@ -103,4 +103,11 @@ input::placeholder {
   img {
     width: 30px;
   }
+}
+
+.error_text {
+  font-size: $font-sm;
+  color: $color-light;
+  width: 100%;
+  text-align: end;
 }

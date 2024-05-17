@@ -4,6 +4,8 @@
   border-radius: 10px;
   position: relative;
   width: 190px;
+  height: 100%;
+  min-height: 40%;
 }
 .wrapper > h2 {
   font-size: 15px;
@@ -30,6 +32,6 @@
   row-gap: 12px;
   flex-wrap: wrap;
   padding: 12px 0px;
-  height: 240px;
+  height: 88%;
   overflow-y: auto;
 }/*# sourceMappingURL=BadgeWhiteSection.module.css.map */

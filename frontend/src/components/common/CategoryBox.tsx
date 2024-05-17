@@ -144,12 +144,14 @@ function CategoryBox({ onCategoryIdChange }: CategoryBoxProps) {
       />
       <section className={styles.filtered_category_list_section}>
         {filteredCategoryList.map((category) => (
-          <article
+          <div className={styles.category_list}>
+            <article
             onClick={() => handleSelectCategory(category)}
             key={category.categoryId}
-          >
-            {category.name}({category.bigName})
-          </article>
+            >
+              {category.name}({category.bigName})
+            </article>
+          </div>
         ))}
       </section>
     </div>

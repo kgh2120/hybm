@@ -30,6 +30,7 @@ interface FoodState {
 interface FoodAction {
   setInputList: (value: InputListType) => void;
   setIsSelected: (value: boolean) => void;
+  initInputList: () => void;
 }
 
 interface ExpiredDateType {
@@ -57,7 +58,7 @@ export const useFoodCategoryStore = create(
     { name: "foodCategoryList" }
   )
 );
-const initialInputList: InputListType  = {
+const initialInputList: InputListType = {
   foodName: "",
   categoryId: 0,
   categoryBigId: 0,
@@ -72,10 +73,12 @@ const initialInputList: InputListType  = {
 };
 export const useFoodStore = create<FoodState & FoodAction>((set) => ({
   inputList: initialInputList,
-  setInputList: (newInputList: InputListType) => set({ inputList: newInputList }),
+  setInputList: (newInputList: InputListType) =>
+    set({ inputList: newInputList }),
   initialInputList,
+  initInputList: () => set({ inputList: initialInputList }),
   isSelected: false,
-  setIsSelected: (value: boolean) => set({isSelected: value}),
+  setIsSelected: (value: boolean) => set({ isSelected: value }),
 }));
 
 export default useFoodStore;

@@ -15,6 +15,7 @@ interface FoodSectionProps {
 function FoodSection({ option = "" }: FoodSectionProps) {
   const { storageName } = useParams() as { storageName: string };
   const [selectedLocation, setSelectedLocation] = useState("");
+  const [isBarcodeError, setIsBarcodeError] = useState(false);
 
   const TITLE_LIST: { [key: string]: string } = {
     ice: "냉동칸",
@@ -27,7 +28,7 @@ function FoodSection({ option = "" }: FoodSectionProps) {
     setInputList,
     isSelected,
     setIsSelected,
-    initialInputList,
+    initInputList,
   } = useFoodStore();
 
   const { foodName, categoryId, price, expiredDate } = inputList;
@@ -42,8 +43,9 @@ function FoodSection({ option = "" }: FoodSectionProps) {
 
   const [barcodeNumber, setBarcodeNumber] = useState(0);
 
+  
   // 바코드 정보 조회 api
-  const { data: barcodeResult } = useQuery({
+  const { data: barcodeResult, status } = useQuery({
     queryKey: ["barcode"],
     queryFn: () => getBarcodeData(barcodeNumber),
     enabled: barcodeNumber !== 0,
@@ -51,9 +53,17 @@ function FoodSection({ option = "" }: FoodSectionProps) {
   });
 
   useEffect(() => {
-    setInputList(initialInputList);
-    setIsSelected(false);
+    if (status === "error") {
+      setIsBarcodeError(true);
+      alert(`에러문구 ${JSON.stringify(isBarcodeError)}, ${barcodeNumber}`)
+    }
+  }, [status])
+
+  useEffect(() => {
+    alert(`useEffect들어오냐 ${barcodeResult}, ${barcodeNumber}`)
     if (barcodeResult) {
+      initInputList();
+      setIsSelected(false);
       setInputList({
         ...inputList,
         foodName: barcodeResult.name,
@@ -62,7 +72,9 @@ function FoodSection({ option = "" }: FoodSectionProps) {
       });
     }
   }, [barcodeResult]);
+  
   useEffect(() => {
+    alert(`categoryId 바꼈을때 useEffect ${barcodeResult}, ${barcodeNumber}`)
     if (barcodeResult) {
       setBarcodeNumber(0);
       setIsSelected(true);
@@ -167,12 +179,17 @@ function FoodSection({ option = "" }: FoodSectionProps) {
   };
 
   const handleOpenCamera = () => {
+    setIsBarcodeError(false);
+    setBarcodeNumber(0);
     // @ts-ignore
     window.flutter_inappwebview_barcode.postMessage("barcode_camera");
   };
 
   const getBarcode = (barcodeNum: number) => {
+    alert(`barcodeNum test: ${barcodeNum}, ${barcodeNumber}`)
     setBarcodeNumber(barcodeNum);
+    // if (barcodeNum === )
+    // setIsBarcodeError(true);
   };
 
   useEffect(() => {
@@ -216,6 +233,7 @@ function FoodSection({ option = "" }: FoodSectionProps) {
         <span>분류</span>
         <CategoryBox onCategoryIdChange={handleCategoryIdChange} />
       </article>
+      {isBarcodeError && <span className={styles.error_text}>바코드를 다시 촬영해주세요.</span>}
       <article className={styles.food_option_box}>
         <span>소비기한</span>
         <div className={styles.expiry_date_box}>
