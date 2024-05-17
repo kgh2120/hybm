@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import useAuthStore from "../../stores/useAuthStore";
 import { useMutation } from "@tanstack/react-query";
-import { getToken, onMessage } from "firebase/messaging";
+import { getToken, onMessage, MessagePayload } from "firebase/messaging";
 import { saveFcmToken } from '../../api/fcmApi';
 import { messaging } from '../../firebase';
 import styles from "../../styles/common/ProtectedRoute.module.css";
@@ -28,7 +28,7 @@ function ProtectedRoute() {
     if (isLogin) {
       // FCM 토큰 가져오기 및 저장
       getToken(messaging, { vapidKey: VITE_FIREBASE_VAPID_KEY })
-        .then((currentToken) => {
+      .then((currentToken: string | null) => {
           if (currentToken) {
             mutateSaveFcmToken(currentToken);
             console.log(currentToken)
@@ -40,7 +40,7 @@ function ProtectedRoute() {
         });
 
       // 메시지 수신
-      onMessage(messaging, (payload) => {
+      onMessage(messaging, (payload: MessagePayload) => {
         console.log('메시지 수신:', payload);
       });
     }
