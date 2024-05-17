@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Modal from "../components/common/Modal";
 import CreateFoodModal from "../components/storagePage/CreateFoodModal";
 import styles from "../styles/storagePage/StoragePage.module.css";
@@ -13,7 +13,6 @@ import ItemBox from "../components/common/ItemBox";
 import FoodStateSection from "../components/storagePage/FoodStateSection";
 import {
   deleteFood,
-  getFoodDetail,
   getFoodStorageItemList,
 } from "../api/foodApi";
 import {
@@ -24,7 +23,6 @@ import {
 import useFoodStore from "../stores/useFoodStore";
 import ConfirmModal from "../components/common/ConfirmModal";
 import FoodDetailModal from "../components/storagePage/FoodDetailModal";
-import { formatDashStringToDate } from "../utils/formatting";
 
 function StoragePage() {
   const queryClient = useQueryClient();
@@ -38,21 +36,21 @@ function StoragePage() {
   const [isFoodEdit, setIsFoodEdit] = useState(false);
   const [clickedIndexesBySection, setClickedIndexesBySection] =
     useState<{ [key: string]: number[] }>({});
-  const { setInputList, initialInputList, setIsSelected } =
+  const { setIsSelected, initInputList } =
     useFoodStore();
   const { storageName } = useParams() as { storageName: string };
   const [foodId, setFoodId] = useState(0);
 
   const handleOpenCreateFoodModal = () => {
     setIsCreateFoodModalOpen(true);
-    setInputList(initialInputList);
+    initInputList();
     setIsSelected(false);
   };
 
   const handleCloseCreateFoodModal = () => {
     setIsCreateFoodModalOpen(false);
     setIsSelected(false);
-    setInputList(initialInputList);
+    initInputList();
   };
 
   // 편집창 열고 닫기
@@ -77,9 +75,10 @@ function StoragePage() {
   };
   const handleCloseFoodDetailModal = () => {
     setIsFoodDetailModal(false);
-    setInputList(initialInputList);
+    initInputList();
     setFoodId(0);
     setIsSelected(false);
+    // SetIsGetFoodDetailEnabled(false);
   };
 
   // 아이템 클릭
@@ -148,40 +147,6 @@ function StoragePage() {
     queryKey: ["foodStorageItemList"],
     queryFn: () => getFoodStorageItemList(storageName),
   });
-
-  // 내부 식품 상세 조회 api
-  const { refetch, data: foodDetail } = useQuery({
-    queryKey: ["foodDetail"],
-    queryFn: () => getFoodDetail(foodId),
-    enabled: isFoodDetailModal,
-  });
-
-  useEffect(() => {
-    if (isFoodDetailModal && foodId) {
-      refetch();
-    }
-  }, [isFoodDetailModal, foodId, refetch]);
-
-  useEffect(() => {
-    if (foodDetail && isFoodDetailModal) {
-      const newDate = formatDashStringToDate(foodDetail.expiredDate);
-      if (newDate) {
-        setInputList({
-          foodName: foodDetail.name,
-          categoryId: foodDetail.categoryId,
-          categoryBigId: foodDetail.bigCategoryId,
-          categoryImgSrc: foodDetail.categoryImgSrc,
-          expiredDate: {
-            year: newDate.year,
-            month: newDate.month,
-            day: newDate.day,
-          },
-          price: foodDetail.price,
-          location: foodDetail.location,
-        });
-      }
-    }
-  }, [foodDetail, isFoodDetailModal]);
 
   return (
     <div className={styles.wrapper}>

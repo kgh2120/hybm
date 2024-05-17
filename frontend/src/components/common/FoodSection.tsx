@@ -28,7 +28,7 @@ function FoodSection({ option = "" }: FoodSectionProps) {
     setInputList,
     isSelected,
     setIsSelected,
-    initialInputList,
+    initInputList,
   } = useFoodStore();
 
   const { foodName, categoryId, price, expiredDate } = inputList;
@@ -52,9 +52,9 @@ function FoodSection({ option = "" }: FoodSectionProps) {
   });
 
   useEffect(() => {
-    setInputList(initialInputList);
-    setIsSelected(false);
     if (barcodeResult) {
+      initInputList();
+      setIsSelected(false);
       setInputList({
         ...inputList,
         foodName: barcodeResult.name,
@@ -63,6 +63,7 @@ function FoodSection({ option = "" }: FoodSectionProps) {
       });
     }
   }, [barcodeResult]);
+
   useEffect(() => {
     if (barcodeResult) {
       setBarcodeNumber(0);

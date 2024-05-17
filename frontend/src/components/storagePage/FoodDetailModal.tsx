@@ -2,10 +2,10 @@ import Button from "../common/Button";
 import styles from "../../styles/storagePage/CreateFoodModal.module.css";
 import FoodSection from "../common/FoodSection";
 import useFoodStore from "../../stores/useFoodStore";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { putFoodDetail } from "../../api/foodApi";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getFoodDetail, putFoodDetail } from "../../api/foodApi";
 import { useEffect, useState } from "react";
-import { formatDashDate } from "../../utils/formatting";
+import { formatDashDate, formatDashStringToDate } from "../../utils/formatting";
 
 interface FoodDetailModalProps {
   foodId: number;
@@ -17,7 +17,7 @@ function FoodDetailModal({
   handleCloseFoodDetailModal,
 }: FoodDetailModalProps) {
   const queryClient = useQueryClient();
-  const { inputList, setInputList, initialInputList } =
+  const { inputList, initInputList, setInputList } =
     useFoodStore();
 
   const [foodEditData, setFoodEditData] = useState({
@@ -56,12 +56,50 @@ function FoodDetailModal({
         queryKey: ["foodStorageItemList"],
       });
       handleCloseFoodDetailModal();
-      setInputList(initialInputList);
+      initInputList();
     },
   });
   const handleEditFood = () => {
     mutateFoodDetail({ foodId, foodEditData });
   };
+
+  // 내부 식품 상세 조회 api
+  const { data: foodDetail, status } = useQuery({
+    queryKey: ["foodDetail"],
+    queryFn: () => getFoodDetail(foodId),
+    gcTime: 0,
+  });
+
+  // useEffect(() => {
+  //   if (isFoodDetailModal && foodId) {
+  //     refetch();
+  //   }
+  // }, [isFoodDetailModal, foodId, refetch]);
+
+  useEffect(() => {
+    if (foodDetail) {
+      const newDate = formatDashStringToDate(foodDetail.expiredDate);
+      setInputList({
+        foodName: foodDetail.name,
+        categoryId: foodDetail.categoryId,
+        categoryBigId: foodDetail.bigCategoryId,
+        categoryImgSrc: foodDetail.categoryImgSrc,
+        expiredDate: {
+          year: newDate.year,
+          month: newDate.month,
+          day: newDate.day,
+        },
+        price: foodDetail.price,
+        location: foodDetail.location,
+      });
+      setTimeout(() => {
+      }, 3000);
+    }
+  }, [foodDetail, foodId]);
+
+  if (status === "pending") {
+    return <div>로오딩</div>
+  }
   return (
     <div className={styles.wrapper}>
       <section className={styles.main_section}>
