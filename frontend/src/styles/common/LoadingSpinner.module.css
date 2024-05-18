@@ -1,0 +1,15 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+  background-color: #fce6e7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.wrapper > img {
+  width: 40%;
+}
+.wrapper span {
+  color: #666666;
+}/*# sourceMappingURL=LoadingSpinner.module.css.map */
