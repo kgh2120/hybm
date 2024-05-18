@@ -1,1 +1,1 @@
-{"version":3,"sources":["LoadingSpinner.module.scss","_common.scss","LoadingSpinner.module.css"],"names":[],"mappings":"AAEA;EACE,WAAA;EACA,YAAA;EACA,yBCLW;EA2BX,aAAA;EACA,mBAAA;EACA,uBAAA;EDtBA,sBAAA;AECF;AFAE;EACE,UAAA;AEEJ;AFAE;EACE,cCRS;ACUb","file":"LoadingSpinner.module.css"}
+{"version":3,"sources":["LoadingSpinner.module.scss","_common.scss","LoadingSpinner.module.css"],"names":[],"mappings":"AAEA;EACE,WAAA;EACA,YAAA;EACA,6BAAA;ECsBA,aAAA;EACA,mBAAA;EACA,uBAAA;EDtBA,sBAAA;AECF;AFAE;EACE,UAAA;AEEJ;AFAE;EACE,cCRS;ACUb","file":"LoadingSpinner.module.css"}
