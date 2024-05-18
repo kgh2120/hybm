@@ -205,6 +205,7 @@ function ReceiptPage() {
   };
   
   const sendReceipt = (image: string) => {
+    alert(`사진 찍은 후 테스트 ${isOcrErrorModal}`)
     if (isOcrErrorModal) {
       setImage(image);
       setIsOcrErrorModal(false);
@@ -215,7 +216,7 @@ function ReceiptPage() {
   useEffect(() => {
     // @ts-ignore
     window.sendReceipt = sendReceipt;
-  }, []);
+  }, [image]);
 
   useEffect(() => {
     if (ocrResultList.length > 0) {
