@@ -60,7 +60,6 @@ function CategoryBox({ onCategoryIdChange }: CategoryBoxProps) {
     mutateGetExpiredDate(categoryId);
     setSelectedCategoryImgSrc(category.categoryImgSrc); // 선택한 카테고리 이미지 설정
   };
-  
 
   useEffect(() => {
     if (name.length >= 1) {
@@ -120,6 +119,10 @@ function CategoryBox({ onCategoryIdChange }: CategoryBoxProps) {
         }
       }
     }
+    if (inputList.categoryId === 0) {
+      setName("");
+      setSelectedCategoryImgSrc("");
+    }
   }, [inputList.categoryBigId, inputList.categoryId]);
 
   return (
@@ -135,7 +138,11 @@ function CategoryBox({ onCategoryIdChange }: CategoryBoxProps) {
         type="text"
         value={name}
         onChange={handleChangeName}
-        placeholder={location.pathname !== "/receipt" ? "바코드를 촬영하거나 검색해보세요" : ""}
+        placeholder={
+          location.pathname !== "/receipt"
+            ? "바코드를 촬영하거나 검색해보세요"
+            : ""
+        }
       />
       <img
         className={styles.category_search_img}
@@ -146,8 +153,8 @@ function CategoryBox({ onCategoryIdChange }: CategoryBoxProps) {
         {filteredCategoryList.map((category) => (
           <div className={styles.category_list}>
             <article
-            onClick={() => handleSelectCategory(category)}
-            key={category.categoryId}
+              onClick={() => handleSelectCategory(category)}
+              key={category.categoryId}
             >
               {category.name}({category.bigName})
             </article>
