@@ -56,12 +56,7 @@ function FoodSection({ option = "" }: FoodSectionProps) {
     // gcTime: 0,
   });
   useEffect(() => {
-    if (barcodeNumber !== 0) {
-      refetch();
-      alert(`refetch ${barcodeNumber}`)
-    }
-  }, [barcodeNumber]);
-  useEffect(() => {
+    alert(`status useEffect ${JSON.stringify(status)} ${status}`)
     if (status === "error") {
       setBarcodeNumber(0);
       setIsBarcodeError(true);
@@ -70,6 +65,12 @@ function FoodSection({ option = "" }: FoodSectionProps) {
       );
     }
   }, [status]);
+  useEffect(() => {
+    if (barcodeNumber !== 0 && status !== "error") {
+      refetch();
+      alert(`refetch ${barcodeNumber}`)
+    }
+  }, [barcodeNumber]);
 
   useEffect(() => {
     alert(`useEffect들어오냐 ${barcodeResult}, ${barcodeNumber}`);
