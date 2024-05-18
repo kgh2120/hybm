@@ -13,6 +13,7 @@ import { postFoodByReceipt, postReceipt } from "../api/receiptApi";
 import { getExpiredDate } from "../api/foodApi";
 import throwAway from "../assets/images/throwAway.png";
 import ConfirmModal from "../components/common/ConfirmModal";
+import LoadingSpinner from "../components/common/LoadingSpinner";
 
 interface InputReceiptType {
   name: string;
@@ -367,12 +368,9 @@ function ReceiptPage() {
   };
 
   if (isPending) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
 
-  // if (inputReceiptList.length === 0) {
-  //   return <div>Loading...</div>;
-  // }
   return (
     <div className={styles.wrapper}>
       {!isOcrErrorModal && (

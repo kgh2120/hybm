@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getLoginStatus } from "../api/userApi";
 import useAuthStore from "../stores/useAuthStore";
+import LoadingSpinner from "../components/common/LoadingSpinner";
 
 function AuthCallback() {
   const { setIsLogin } = useAuthStore();
@@ -16,7 +17,7 @@ function AuthCallback() {
   });
 
   if (isLoginStatusPending) {
-    return <div>로그인 중...</div>;
+    return <LoadingSpinner />;
   }
   if (isLoginStatusError) {
     navigate("/landing");

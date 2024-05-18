@@ -11,6 +11,7 @@ import {
 } from "../api/recipeApi";
 import FoodStateSection from "../components/storagePage/FoodStateSection";
 import { useEffect, useState } from "react";
+import LoadingSpinner from "../components/common/LoadingSpinner";
 
 interface DangerFoodInfoType {
   foodId: number;
@@ -105,14 +106,14 @@ function RecipePage() {
   }, [foodIdList, isFoodIdList]);
 
   if (isDangerFoodBySectionPending) {
-    return <div>데이터 가져오는 중...</div>;
+    return <LoadingSpinner />;
   }
   if (isDangerFoodBySectionError) {
     return <div>에러나는 중...</div>;
   }
 
   if (isRecipeInfoLoading) {
-    return <div>레시피 정보 가져오는 중...</div>;
+    return <LoadingSpinner />;
   }
   if (isRecipeInfoError) {
     return <div>에러가나는 중...</div>;
