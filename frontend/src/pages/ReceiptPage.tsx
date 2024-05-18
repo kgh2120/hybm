@@ -203,20 +203,18 @@ function ReceiptPage() {
     // @ts-ignore
     window.flutter_inappwebview.postMessage("receipt_camera");
   };
-  
+
   const sendReceipt = (image: string) => {
-    alert(`사진 찍은 후 테스트 ${isOcrErrorModal}`)
-    if (isOcrErrorModal) {
-      setImage(image);
-      setIsOcrErrorModal(false);
-      // navigate("/receipt");
-    }
+    alert(`함수 안에 드러오나 ${isOcrErrorModal}`);
+    setImage(image);
+    setIsOcrErrorModal(false);
+    // navigate("/receipt");
   };
 
   useEffect(() => {
     // @ts-ignore
     window.sendReceipt = sendReceipt;
-  }, [image]);
+  }, []);
 
   useEffect(() => {
     if (ocrResultList.length > 0) {
