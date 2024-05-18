@@ -44,13 +44,23 @@ function FoodSection({ option = "" }: FoodSectionProps) {
   const [barcodeNumber, setBarcodeNumber] = useState(0);
 
   // 바코드 정보 조회 api
-  const { data: barcodeResult, status } = useQuery({
+  const {
+    data: barcodeResult,
+    status,
+    refetch,
+  } = useQuery({
     queryKey: ["barcode"],
     queryFn: () => getBarcodeData(barcodeNumber),
-    enabled: barcodeNumber !== 0,
+    // enabled: barcodeNumber !== 0,
+    enabled: false,
     // gcTime: 0,
   });
-
+  useEffect(() => {
+    if (barcodeNumber !== 0) {
+      refetch();
+      alert(`refetch ${barcodeNumber}`)
+    }
+  }, [barcodeNumber]);
   useEffect(() => {
     if (status === "error") {
       setBarcodeNumber(0);
