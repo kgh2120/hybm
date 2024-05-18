@@ -10,6 +10,8 @@ import useAuthStore from "../stores/useAuthStore";
 import { useMutation } from "@tanstack/react-query";
 import { postFoodByReceipt, postReceipt } from "../api/receiptApi";
 import { getExpiredDate } from "../api/foodApi";
+import throwAway from "../assets/images/throwAway.png";
+import ConfirmModal from "../components/common/ConfirmModal";
 
 interface InputReceiptType {
   name: string;
@@ -38,7 +40,7 @@ interface OcrResultType {
 function ReceiptPage() {
   const navigate = useNavigate();
   const { image } = useAuthStore();
-
+  const [isOcrErrorModal, setIsOcrErrorModal] = useState(false);
   const [ocrResultList, setOcrResultList] = useState<OcrResultType[]>(
     []
   );
@@ -46,11 +48,11 @@ function ReceiptPage() {
   const { mutate: mutatePostReceipt, status } = useMutation({
     mutationFn: postReceipt,
     onSuccess: (data) => {
-      setOcrResultList(data);
-    },
-    onError: () => {
-      alert("영수증을 다시 촬영해주세요.");
-      navigate("/");
+      if (data === null || data.length === 0) {
+        setIsOcrErrorModal(true);
+      } else {
+        setOcrResultList(data);
+      }
     },
   });
   const [inputReceiptList, setInputReceiptList] = useState<
@@ -92,13 +94,11 @@ function ReceiptPage() {
       }
     );
     mutatePostFoodByReceipt(newInputReceiptList);
-    // mutatePostFoodByReceipt();
   };
 
   useEffect(() => {
     mutatePostReceipt(image!);
   }, []);
-  // console.log(bigCategoryList);
 
   const [selectedLocation, setSelectedLocation] = useState<string[]>(
     []
@@ -112,29 +112,6 @@ function ReceiptPage() {
   const [expiredDateList, setExpiredDateList] = useState<
     ExpiredDateType[]
   >([]);
-  // const handleCategoryIdChange = (
-  //   categoryId: number,
-  //   idx: number
-  // ) => {
-  //   const updatedList = [...inputReceiptList];
-  //   updatedList[idx] = {
-  //     ...updatedList[idx],
-  //     categoryId: categoryId,
-  //   };
-  //   setInputReceiptList(updatedList);
-  //   setIsSelected(true);
-  // };
-
-  // useEffect(() => {
-  //   setIsSelected(true);
-  // }, [categoryId]);
-
-  // 소비기한 확인 api
-  // const { data: foodExpiredDate, refetch: refetchFoodExpiredDate } = useQuery({
-  //   queryKey: ["foodExpiredDate"],
-  //   queryFn: () => getExpiredDate(categoryId),
-  //   gcTime: 0,
-  // });
 
   const { mutate: mutateGetExpiredDate } = useMutation({
     mutationFn: getExpiredDate,
@@ -147,19 +124,6 @@ function ReceiptPage() {
       setExpiredDateList(newExpiredDateList);
     },
   });
-
-  // useEffect(() => {
-  //   if (selectedCategoryId !== null && expiredDate) {
-  //     const newExpiredDateList = [...expiredDateList];
-  //     newExpiredDateList[selectedCategoryId] = {
-  //       year: expiredDate.year,
-  //       month: expiredDate.month,
-  //       day: expiredDate.day
-  //     }
-  //     console.log("test:",newExpiredDateList);
-  //     setExpiredDateList(newExpiredDateList)
-  //   }
-  // }, [selectedCategoryId]);
 
   const handleInputList = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -228,42 +192,10 @@ function ReceiptPage() {
     e: React.ChangeEvent<HTMLSelectElement>,
     idx: number
   ) => {
-    // let newLocation = "";
-
-    // switch (e.target.value) {
-    //   case "냉동칸":
-    //     newLocation = "ICE";
-    //     break;
-    //   case "냉장칸":
-    //     newLocation = "COOL";
-    //     break;
-    //   case "찬장":
-    //     newLocation = "CABINET";
-    //     break;
-    //   default:
-    //     newLocation = e.target.value;
-    // }
     const newLocationList = [...selectedLocation];
     newLocationList[idx] = e.target.value;
     setSelectedLocation(newLocationList);
-
-    // const updatedList = [...inputReceiptList];
-    // updatedList[idx] = { ...updatedList[idx], location: newLocation };
-    // setInputReceiptList(updatedList);
   };
-
-  // useEffect(() => {
-  //   if (foodExpiredDate && categoryId) {
-  //     setInputList({
-  //       ...inputList,
-  //       expiredDate: {
-  //         year: foodExpiredDate.year,
-  //         month: foodExpiredDate.month,
-  //         day: foodExpiredDate.day,
-  //       },
-  //     });
-  //   }
-  // }, [foodExpiredDate]);
 
   useEffect(() => {
     if (ocrResultList.length > 0) {
@@ -379,13 +311,51 @@ function ReceiptPage() {
     });
   }, [inputReceiptList, categoryIdList]);
 
+  const handleDeleteOcrResult = (idx: number) => {
+    const newSelectedLocation = selectedLocation.filter(
+      (_, itemIdx) => {
+        return itemIdx !== idx;
+      }
+    );
+    setSelectedLocation(newSelectedLocation);
+
+    const newInputReceiptList = inputReceiptList.filter(
+      (_, itemIdx) => {
+        return itemIdx !== idx;
+      }
+    );
+    setInputReceiptList(newInputReceiptList);
+
+    const newNameList = nameList.filter((_, itemIdx) => {
+      return itemIdx !== idx;
+    });
+    setNameList(newNameList);
+
+    const newImgSrcList = imgSrcList.filter((_, itemIdx) => {
+      return itemIdx !== idx;
+    });
+    setImgSrcList(newImgSrcList);
+
+    const newExpiredDateList = expiredDateList.filter(
+      (_, itemIdx) => {
+        return itemIdx !== idx;
+      }
+    );
+    setExpiredDateList(newExpiredDateList);
+
+    const newCategoryIdList = categoryIdList.filter((_, itemIdx) => {
+      return itemIdx !== idx;
+    });
+    setCategoryIdList(newCategoryIdList);
+  };
+
   if (status === "pending") {
     return <div>Loading...</div>;
   }
 
-  if (inputReceiptList.length === 0) {
-    return <div>Loading...</div>;
-  }
+  // if (inputReceiptList.length === 0) {
+  //   return <div>Loading...</div>;
+  // }
   return (
     <div className={styles.wrapper}>
       <div className={styles.white_wrapper}>
@@ -508,11 +478,6 @@ function ReceiptPage() {
 
                   <select
                     name="location"
-                    // value={
-                    //   selectedLocation[idx] === ""
-                    //     ? inputReceiptList[idx].location
-                    //     : selectedLocation[idx]
-                    // }
                     value={selectedLocation[idx]}
                     onChange={(e) => handleLocationChange(e, idx)}
                   >
@@ -520,6 +485,15 @@ function ReceiptPage() {
                     <option value="냉장칸">냉장칸</option>
                     <option value="찬장">찬장</option>
                   </select>
+                  <div
+                    onClick={() => handleDeleteOcrResult(idx)}
+                    className={styles.close_button}
+                  >
+                    <div className={styles.btn_box}>
+                      <img src={throwAway} alt="삭제 버튼" />
+                      <span>지우기</span>
+                    </div>
+                  </div>
                 </article>
               </div>
             );
@@ -537,6 +511,19 @@ function ReceiptPage() {
           disabled={isDisabled}
         />
       </div>
+      {isOcrErrorModal && (
+        <ConfirmModal
+          content="영수증이 인식되지 않았습니다"
+          option1="재촬영"
+          option1Event={() => {
+            navigate("/receipt");
+          }}
+          option2="홈으로"
+          option2Event={() => {
+            navigate("/");
+          }}
+        />
+      )}
     </div>
   );
 }

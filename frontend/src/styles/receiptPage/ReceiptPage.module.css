@@ -9,7 +9,6 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 12px;
 }
 .wrapper .white_wrapper .home_img {
   width: 20px;
@@ -26,6 +25,7 @@
   padding: 0px 12px;
   flex-direction: column;
   overflow-y: auto;
+  margin-bottom: 12px;
 }
 .wrapper .white_wrapper .food_list_section::-webkit-scrollbar {
   width: 4px;
@@ -68,9 +68,6 @@
   content: "";
   border: 1px dashed #fce6e7;
   width: 100%;
-}
-.food_section_wrapper:last-child::after {
-  content: none;
 }
 .food_section_wrapper .food_option_box {
   display: flex;
@@ -218,4 +215,25 @@ input::placeholder {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.close_button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+.close_button .btn_box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2px;
+}
+.close_button .btn_box > img {
+  width: 21px;
+}
+.close_button .btn_box > span {
+  color: #666666;
+  font-size: 11px;
 }/*# sourceMappingURL=ReceiptPage.module.css.map */

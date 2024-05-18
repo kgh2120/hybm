@@ -7,7 +7,6 @@
     background-color: white;
     @include center;
     flex-direction: column;
-    gap: 12px;
     .home_img {
       width: 20px;
       aspect-ratio: 1/1;
@@ -21,6 +20,7 @@
       padding: 0px 12px;
       flex-direction: column;
       overflow-y: auto;
+      margin-bottom: 12px;
       &::-webkit-scrollbar {
         width: 4px;
       }
@@ -67,9 +67,6 @@
     // display: block;
     border: 1px dashed $color-back;
     width: 100%;
-  }
-  &:last-child::after {
-    content: none;
   }
   .food_option_box {
     display: flex;
@@ -194,6 +191,25 @@ input::placeholder {
       display: flex;
       flex-direction: column;
       justify-content: center;
+    }
+  }
+}
+
+.close_button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  .btn_box {
+    @include center;
+    flex-direction: column;
+    gap: 2px;
+    > img {
+      width: 21px;
+    }
+    > span {
+      color: $color-text;
+      font-size: $font-sm;
     }
   }
 }
