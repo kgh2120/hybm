@@ -40,6 +40,7 @@ interface OcrResultType {
   cost: number;
 }
 function ReceiptPage() {
+  const [isReCamera, setIsReCamera] = useState(false);
   const navigate = useNavigate();
   const { image, setImage } = useAuthStore();
   const [isOcrErrorModal, setIsOcrErrorModal] = useState(false);
@@ -54,6 +55,7 @@ function ReceiptPage() {
         setIsOcrErrorModal(true);
       } else {
         setOcrResultList(data);
+        setIsReCamera(false);
       }
     },
   });
@@ -201,6 +203,7 @@ function ReceiptPage() {
 
   const handleOpenCamera = () => {
     setIsOcrErrorModal(false);
+    setIsReCamera(true);
     // @ts-ignore
     window.flutter_inappwebview.postMessage("receipt_camera");
   };
@@ -368,7 +371,7 @@ function ReceiptPage() {
 
   return (
     <div className={styles.wrapper}>
-      {!isOcrErrorModal && (
+      {!isOcrErrorModal && !isReCamera && (
         <div className={styles.white_wrapper}>
           <Header title="영수증 등록" />
           <Link to="/">
