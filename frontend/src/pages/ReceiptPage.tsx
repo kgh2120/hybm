@@ -200,6 +200,7 @@ function ReceiptPage() {
   };
 
   const handleOpenCamera = () => {
+    setIsOcrErrorModal(false);
     // @ts-ignore
     window.flutter_inappwebview.postMessage("receipt_camera");
   };
