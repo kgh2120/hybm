@@ -116,7 +116,6 @@ function ExpBar() {
     queryKey: ["isNewNotification"],
     queryFn: getIsNewNotification,
   });
-
   useEffect(() => {
     if (levelAndExp) {
       if (currentLevel !== null && currentLevel < levelAndExp.level) {
