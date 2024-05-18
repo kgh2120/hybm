@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { ChangeEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/common/Button";
@@ -39,7 +40,7 @@ interface OcrResultType {
 }
 function ReceiptPage() {
   const navigate = useNavigate();
-  const { image } = useAuthStore();
+  const { image, setImage } = useAuthStore();
   const [isOcrErrorModal, setIsOcrErrorModal] = useState(false);
   const [ocrResultList, setOcrResultList] = useState<OcrResultType[]>(
     []
@@ -98,7 +99,7 @@ function ReceiptPage() {
 
   useEffect(() => {
     mutatePostReceipt(image!);
-  }, []);
+  }, [image]);
 
   const [selectedLocation, setSelectedLocation] = useState<string[]>(
     []
@@ -196,6 +197,20 @@ function ReceiptPage() {
     newLocationList[idx] = e.target.value;
     setSelectedLocation(newLocationList);
   };
+  const handleOpenCamera = () => {
+    // @ts-ignore
+    window.flutter_inappwebview.postMessage("receipt_camera");
+  };
+
+  const sendReceipt = (image: string) => {
+    setImage(image);
+    // navigate("/receipt");
+  };
+
+  useEffect(() => {
+    // @ts-ignore
+    window.sendReceipt = sendReceipt;
+  }, []);
 
   useEffect(() => {
     if (ocrResultList.length > 0) {
@@ -515,9 +530,7 @@ function ReceiptPage() {
         <ConfirmModal
           content="영수증이 인식되지 않았습니다"
           option1="재촬영"
-          option1Event={() => {
-            navigate("/receipt");
-          }}
+          option1Event={handleOpenCamera}
           option2="홈으로"
           option2Event={() => {
             navigate("/");
