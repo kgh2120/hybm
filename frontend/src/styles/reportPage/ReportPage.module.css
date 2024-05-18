@@ -102,15 +102,15 @@
   color: #e5333e;
 }
 .wrapper .content .top_five {
-  width: 95%;
+  width: 100%;
   background-color: #fce6e7;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 10px;
-  padding: 5%;
+  margin-top: 10px;
+  padding: 10px 0;
   gap: 1vh;
 }
 .wrapper .content .top_five p > span {
@@ -129,4 +129,5 @@
   align-items: center;
   justify-content: center;
   margin: 3%;
+  gap: 5px;
 }/*# sourceMappingURL=ReportPage.module.css.map */

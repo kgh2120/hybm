@@ -136,7 +136,7 @@ function RecipePage() {
           <div className={styles.sub_content}>
             <p>
               나의 냉장고 속 <span>"위험 단계"</span> 식품들입니다.
-            <br />
+              <br />
               <span>레시피</span>를 <span>추천</span> 받아보세요.
             </p>
           </div>
@@ -159,11 +159,7 @@ function RecipePage() {
                         (item: DangerFoodInfoType, idx: number) => (
                           <ItemBox
                             key={idx}
-                            name={
-                              item.name.length > 4
-                                ? `${item.name.slice(0, 4)}..`
-                                : item.name
-                            }
+                            name={item.name}
                             content={`D${item.dday}`}
                             option="active"
                             imgSrc={item.categoryImgSrc}
