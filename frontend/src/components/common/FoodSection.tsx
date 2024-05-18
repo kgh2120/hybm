@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import styles from "../../styles/common/FoodSection.module.css";
 import CategoryBox from "./CategoryBox";
 import { getBarcodeData, getExpiredDate } from "../../api/foodApi";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import useFoodStore from "../../stores/useFoodStore";
 import barcode from "../../assets/images/barcode.png";
@@ -44,18 +44,31 @@ function FoodSection({ option = "" }: FoodSectionProps) {
   const [barcodeNumber, setBarcodeNumber] = useState(0);
 
   // 바코드 정보 조회 api
-  const {
-    data: barcodeResult,
-    error,
-    refetch,
-  } = useQuery({
-    queryKey: ["barcode"],
-    queryFn: () => getBarcodeData(barcodeNumber),
-    // enabled: barcodeNumber !== 0,
-    enabled: false,
+  // const {
+  //   data: barcodeResult,
+  //   error,
+  //   refetch,
+  // } = useQuery({
+  //   queryKey: ["barcode"],
+  //   queryFn: () => getBarcodeData(barcodeNumber),
+  //   // enabled: barcodeNumber !== 0,
+  //   enabled: false,
     
-    // gcTime: 0,
-  });
+  //   // gcTime: 0,
+  // });
+  interface BarcodeResultType {
+    name: string;
+    categoryBigId: number;
+    categoryId: number;
+  }
+  const [barcodeResult, setBarcodeResult] = useState<BarcodeResultType | null>(null);
+  const { mutate: mutateGetBarcodeData, error } = useMutation({
+    mutationFn: getBarcodeData,
+    onSuccess: (data) => {
+      setBarcodeResult(data)
+    }
+  })
+
   useEffect(() => {
     alert(`isError useEffect ${error?.message}`)
     if (error?.message) {
@@ -69,11 +82,12 @@ function FoodSection({ option = "" }: FoodSectionProps) {
 
   // 바코드 넘버 바뀌면 얘부터다 현수야
   useEffect(() => {
-    alert(`refetch useEffect ${barcodeNumber} ${error?.message}`)
+    alert(`mutate useEffect ${barcodeNumber} ${error?.message}`)
     if (barcodeNumber !== 0 && !error?.message) {
-      alert(`refetch로 실행되면 이게 뜨는거다 현수야 ${error?.message}`)
-      refetch();
-      alert(`refetch ${barcodeNumber}`)
+      alert(`mutate 실행되면 이게 뜨는거다 현수야 ${error?.message}`)
+      // refetch();
+      mutateGetBarcodeData(barcodeNumber);
+      alert(`mutate ${barcodeNumber}`)
     }
   }, [barcodeNumber]);
 
