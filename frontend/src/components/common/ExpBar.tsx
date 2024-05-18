@@ -18,6 +18,7 @@ import DropDown from "./DropDown";
 import ConfirmModal from "./ConfirmModal";
 import useAuthStore from "../../stores/useAuthStore";
 import LevelUpModal from "../mainPage/LevelUpModal";
+import LoadingSpinner from "./LoadingSpinner";
 
 interface IsNewNotificationType {
   hasNew: boolean;
@@ -132,7 +133,7 @@ function ExpBar() {
   }, [isNewNotification]);
 
   if (isLevelAndExpPending || isNewNotificationPending) {
-    return <div>levelBar Loding...</div>;
+    return <LoadingSpinner />;
   }
 
   if (isLevelAndExpError) {

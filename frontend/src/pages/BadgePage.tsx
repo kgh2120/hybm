@@ -7,6 +7,7 @@ import { getBadgeList, putBadgePosition } from "../api/badgeApi";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import BadgeWhiteSection from '../components/badgePage/BadgeWhiteSection';
 import useAttachedBadgeStore from '../stores/useBadgeStore';
+import LoadingSpinner from "../components/common/LoadingSpinner";
 
 interface BadgeType {
   badgeId: number;
@@ -49,7 +50,7 @@ function BadgePage() {
   }
 
   if (isBadgeListPending) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
   if (isBadgeListError) {
     return <div>Error...</div>;

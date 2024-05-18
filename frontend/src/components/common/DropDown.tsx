@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { logOut } from "../../api/userApi";
 import useAuthStore from "../../stores/useAuthStore";
 import { useState } from "react";
+import LoadingSpinner from "./LoadingSpinner";
 
 interface DropDownProps {
   openModal: () => void;
@@ -38,7 +39,7 @@ function DropDown({ openModal }: DropDownProps) {
 
   // pending, error 처리
   if (isLogOutLoading) {
-    return <div>로그아웃 하는 중...</div>;
+    return <LoadingSpinner />
   }
 
   if (isLogOutError) {
