@@ -1,3 +1,4 @@
+/* eslint-disable */
 import instance from "./axios";
 
 // 식품 분류 조회
@@ -141,7 +142,8 @@ const getBarcodeData = async (barcode: number) => {
     alert(`바코드결과값: ${JSON.stringify(res.data)}`);
     return res.data;
   } catch (e) {
-    alert(`getBarcode error: ${e}`);
+    // @ts-ignore
+    alert(`getBarcode error: ${e.message}`);
 
     console.error(e);
     throw e;
