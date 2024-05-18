@@ -366,10 +366,6 @@ function ReceiptPage() {
     return <LoadingSpinner />;
   }
 
-  if (inputReceiptList.length === 0) {
-    return <LoadingSpinner />;
-  }
-
   return (
     <div className={styles.wrapper}>
       {!isOcrErrorModal && (
