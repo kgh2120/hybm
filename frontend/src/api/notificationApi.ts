@@ -14,7 +14,7 @@ const getIsNewNotification = async () => {
 const deleteAllNotification = async () => {
   try {
     const res = await instance.delete("/api/notices/all");
-    console.log(res);
+    return res
   } catch (e) {
     console.log(e);
     throw e;
@@ -41,7 +41,6 @@ const getNotificationList = async (page: number) => {
 const deleteNotification = async (noticeId: number) => {
   try {
     const res = await instance.delete(`/api/notices?noticeId=${noticeId}`);
-    console.log(res);
     return res.data;
   } catch (e) {
     console.log(e);

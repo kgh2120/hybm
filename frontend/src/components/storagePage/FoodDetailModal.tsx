@@ -6,6 +6,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getFoodDetail, putFoodDetail } from "../../api/foodApi";
 import { useEffect, useState } from "react";
 import { formatDashDate, formatDashStringToDate } from "../../utils/formatting";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 interface FoodDetailModalProps {
   foodId: number;
@@ -98,7 +99,7 @@ function FoodDetailModal({
   }, [foodDetail, foodId]);
 
   if (status === "pending") {
-    return <div>로오딩</div>
+    return <LoadingSpinner />
   }
   return (
     <div className={styles.wrapper}>
