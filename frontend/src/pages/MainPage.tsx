@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disable */  
 import styles from "../styles/mainPage/MainPage.module.css";
 import background from "../assets/images/background.png";
 import recipe from "../assets/images/recipe.png";
