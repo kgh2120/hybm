@@ -316,12 +316,6 @@ function ReceiptPage() {
   const [isDisabled, setIsDisabled] = useState(false);
   useEffect(() => {
     inputReceiptList.forEach((inputReceipt, idx) => {
-      console.log(
-        "idx:",
-        idx,
-        inputReceipt.name,
-        categoryIdList[idx]
-      );
       if (inputReceipt.name === "" || categoryIdList[idx] === 0) {
         setIsDisabled(true);
       } else {
@@ -369,6 +363,10 @@ function ReceiptPage() {
   };
 
   if (isPending) {
+    return <LoadingSpinner />;
+  }
+
+  if (inputReceiptList.length === 0) {
     return <LoadingSpinner />;
   }
 
