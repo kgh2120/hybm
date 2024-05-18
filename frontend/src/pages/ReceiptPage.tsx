@@ -198,6 +198,7 @@ function ReceiptPage() {
     setSelectedLocation(newLocationList);
   };
   const handleOpenCamera = () => {
+    setIsOcrErrorModal(false);
     // @ts-ignore
     window.flutter_inappwebview.postMessage("receipt_camera");
   };
@@ -373,159 +374,164 @@ function ReceiptPage() {
   // }
   return (
     <div className={styles.wrapper}>
-      <div className={styles.white_wrapper}>
-        <Header title="영수증 등록" />
-        <Link to="/">
-          <img className={styles.home_img} src={home} alt="홈" />
-        </Link>
-        <section className={styles.food_list_section}>
-          {inputReceiptList.map((inputReceipt, idx) => {
-            return (
-              <div key={idx} className={styles.food_section_wrapper}>
-                <article className={styles.food_option_box}>
-                  <span>상품명</span>
-                  <input
-                    name="name"
-                    value={inputReceipt.name}
-                    onChange={(e) => handleInputList(e, idx)}
-                  />
-                </article>
-                <article className={styles.food_option_box}>
-                  <span>분류</span>
-                  <div className={styles.category_box}>
-                    {imgSrcList[idx] !== "" && (
-                      <img
-                        className={styles.category_img}
-                        src={imgSrcList[idx]}
-                        alt="카테고리 이미지"
-                      />
-                    )}
+      {!isOcrErrorModal && (
+        <div className={styles.white_wrapper}>
+          <Header title="영수증 등록" />
+          <Link to="/">
+            <img className={styles.home_img} src={home} alt="홈" />
+          </Link>
+          <section className={styles.food_list_section}>
+            {inputReceiptList.map((inputReceipt, idx) => {
+              return (
+                <div
+                  key={idx}
+                  className={styles.food_section_wrapper}
+                >
+                  <article className={styles.food_option_box}>
+                    <span>상품명</span>
                     <input
-                      type="text"
-                      value={nameList[idx]}
-                      onChange={(e) => handleChangeName(e, idx)}
-                    />
-                    <img
-                      className={styles.category_search_img}
-                      src={search}
-                      alt="돋보기 이미지"
-                    />
-                    {selectedId === idx && (
-                      <section
-                        className={
-                          styles.filtered_category_list_section
-                        }
-                      >
-                        {filteredCategoryList.map((category) => (
-                          <div
-                            key={category.categoryId}
-                            className={styles.category_list}
-                          >
-                            <article
-                              onClick={() =>
-                                handleSelectCategory(category, idx)
-                              }
-                              key={category.categoryId}
-                            >
-                              {category.name}({category.bigName})
-                            </article>
-                          </div>
-                        ))}
-                      </section>
-                    )}
-                  </div>
-                </article>
-                <article className={styles.food_option_box}>
-                  <span>소비기한</span>
-                  <div className={styles.expiry_date_box}>
-                    <select
-                      value={expiredDateList[idx].year}
-                      onChange={(e) => handleYearChange(e, idx)}
-                    >
-                      {years.map((year) => (
-                        <option key={year} value={year}>
-                          {year}
-                        </option>
-                      ))}
-                    </select>
-                    <select
-                      value={expiredDateList[idx].month}
-                      onChange={(e) => handleMonthChange(e, idx)}
-                    >
-                      {Array.from(
-                        { length: 12 },
-                        (_, index) => index + 1
-                      ).map((month) => (
-                        <option key={month} value={month}>
-                          {month}
-                        </option>
-                      ))}
-                    </select>
-                    <select
-                      value={expiredDateList[idx].day}
-                      onChange={(e) => handleDayChange(e, idx)}
-                    >
-                      {Array.from(
-                        { length: 31 },
-                        (_, index) => index + 1
-                      ).map((day) => (
-                        <option key={day} value={day}>
-                          {day}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </article>
-                <article className={styles.food_option_box}>
-                  <span>가격</span>
-                  <div className={styles.price_box}>
-                    <input
-                      name="price"
-                      type="number"
-                      value={inputReceipt.price}
+                      name="name"
+                      value={inputReceipt.name}
                       onChange={(e) => handleInputList(e, idx)}
                     />
-                    <span>원</span>
-                  </div>
-                </article>
-                <article className={styles.food_option_box}>
-                  <span>위치</span>
-
-                  <select
-                    name="location"
-                    value={selectedLocation[idx]}
-                    onChange={(e) => handleLocationChange(e, idx)}
-                  >
-                    <option value="냉동칸">냉동칸</option>
-                    <option value="냉장칸">냉장칸</option>
-                    <option value="찬장">찬장</option>
-                  </select>
-                  <div
-                    onClick={() => handleDeleteOcrResult(idx)}
-                    className={styles.close_button}
-                  >
-                    <div className={styles.btn_box}>
-                      <img src={throwAway} alt="삭제 버튼" />
-                      <span>지우기</span>
+                  </article>
+                  <article className={styles.food_option_box}>
+                    <span>분류</span>
+                    <div className={styles.category_box}>
+                      {imgSrcList[idx] !== "" && (
+                        <img
+                          className={styles.category_img}
+                          src={imgSrcList[idx]}
+                          alt="카테고리 이미지"
+                        />
+                      )}
+                      <input
+                        type="text"
+                        value={nameList[idx]}
+                        onChange={(e) => handleChangeName(e, idx)}
+                      />
+                      <img
+                        className={styles.category_search_img}
+                        src={search}
+                        alt="돋보기 이미지"
+                      />
+                      {selectedId === idx && (
+                        <section
+                          className={
+                            styles.filtered_category_list_section
+                          }
+                        >
+                          {filteredCategoryList.map((category) => (
+                            <div
+                              key={category.categoryId}
+                              className={styles.category_list}
+                            >
+                              <article
+                                onClick={() =>
+                                  handleSelectCategory(category, idx)
+                                }
+                                key={category.categoryId}
+                              >
+                                {category.name}({category.bigName})
+                              </article>
+                            </div>
+                          ))}
+                        </section>
+                      )}
                     </div>
-                  </div>
-                </article>
-              </div>
-            );
-          })}
-        </section>
-        <span>
-          * 분류에 따른 <span>예상 소비기한</span>이 제공되나
-          <br />
-          상이할 수 있습니다.
-        </span>
-        <Button
-          content="완료"
-          color="red"
-          onClick={handlePostFoodByReceipt}
-          disabled={isDisabled}
-        />
-      </div>
+                  </article>
+                  <article className={styles.food_option_box}>
+                    <span>소비기한</span>
+                    <div className={styles.expiry_date_box}>
+                      <select
+                        value={expiredDateList[idx].year}
+                        onChange={(e) => handleYearChange(e, idx)}
+                      >
+                        {years.map((year) => (
+                          <option key={year} value={year}>
+                            {year}
+                          </option>
+                        ))}
+                      </select>
+                      <select
+                        value={expiredDateList[idx].month}
+                        onChange={(e) => handleMonthChange(e, idx)}
+                      >
+                        {Array.from(
+                          { length: 12 },
+                          (_, index) => index + 1
+                        ).map((month) => (
+                          <option key={month} value={month}>
+                            {month}
+                          </option>
+                        ))}
+                      </select>
+                      <select
+                        value={expiredDateList[idx].day}
+                        onChange={(e) => handleDayChange(e, idx)}
+                      >
+                        {Array.from(
+                          { length: 31 },
+                          (_, index) => index + 1
+                        ).map((day) => (
+                          <option key={day} value={day}>
+                            {day}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </article>
+                  <article className={styles.food_option_box}>
+                    <span>가격</span>
+                    <div className={styles.price_box}>
+                      <input
+                        name="price"
+                        type="number"
+                        value={inputReceipt.price}
+                        onChange={(e) => handleInputList(e, idx)}
+                      />
+                      <span>원</span>
+                    </div>
+                  </article>
+                  <article className={styles.food_option_box}>
+                    <span>위치</span>
+
+                    <select
+                      name="location"
+                      value={selectedLocation[idx]}
+                      onChange={(e) => handleLocationChange(e, idx)}
+                    >
+                      <option value="냉동칸">냉동칸</option>
+                      <option value="냉장칸">냉장칸</option>
+                      <option value="찬장">찬장</option>
+                    </select>
+                    <div
+                      onClick={() => handleDeleteOcrResult(idx)}
+                      className={styles.close_button}
+                    >
+                      <div className={styles.btn_box}>
+                        <img src={throwAway} alt="삭제 버튼" />
+                        <span>지우기</span>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+              );
+            })}
+          </section>
+          <span>
+            * 분류에 따른 <span>예상 소비기한</span>이 제공되나
+            <br />
+            상이할 수 있습니다.
+          </span>
+          <Button
+            content="완료"
+            color="red"
+            onClick={handlePostFoodByReceipt}
+            disabled={isDisabled}
+          />
+        </div>
+      )}
       {isOcrErrorModal && (
         <ConfirmModal
           content="영수증이 인식되지 않았습니다"
@@ -533,6 +539,7 @@ function ReceiptPage() {
           option1Event={handleOpenCamera}
           option2="홈으로"
           option2Event={() => {
+            setIsOcrErrorModal(false);
             navigate("/");
           }}
         />
