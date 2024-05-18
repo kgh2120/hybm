@@ -38,6 +38,7 @@ function FoodSection({ option = "" }: FoodSectionProps) {
       ...inputList,
       categoryId: categoryId, // 선택한 카테고리의 categoryId를 업데이트
     });
+    setIsBarcodeError(false);
     setIsSelected(true);
   };
 
@@ -47,18 +48,21 @@ function FoodSection({ option = "" }: FoodSectionProps) {
     categoryBigId: number;
     categoryId: number;
   }
-  const [barcodeResult, setBarcodeResult] = useState<BarcodeResultType | null>(null);
+  const [barcodeResult, setBarcodeResult] =
+    useState<BarcodeResultType | null>(null);
   const { mutate: mutateGetBarcodeData, error } = useMutation({
     mutationFn: getBarcodeData,
     onSuccess: (data) => {
-      setBarcodeResult(data)
-    }
-  })
+      setBarcodeResult(data);
+    },
+  });
 
   useEffect(() => {
     if (error?.message) {
       setBarcodeNumber(0);
       setIsBarcodeError(true);
+      initInputList();
+      setIsSelected(false);
     }
   }, [error?.message]);
 
@@ -109,7 +113,7 @@ function FoodSection({ option = "" }: FoodSectionProps) {
         newValue = newValue.slice(0, 8);
       }
     }
-
+    setIsBarcodeError(false);
     setInputList({
       ...inputList,
       [name]: newValue,
@@ -137,6 +141,7 @@ function FoodSection({ option = "" }: FoodSectionProps) {
         year: parseInt(e.target.value),
       },
     });
+    setIsBarcodeError(false);
   };
 
   const handleMonthChange = (
@@ -149,6 +154,7 @@ function FoodSection({ option = "" }: FoodSectionProps) {
         month: parseInt(e.target.value),
       },
     });
+    setIsBarcodeError(false);
   };
 
   const handleDayChange = (
@@ -161,6 +167,7 @@ function FoodSection({ option = "" }: FoodSectionProps) {
         day: parseInt(e.target.value),
       },
     });
+    setIsBarcodeError(false);
   };
 
   const handleLocationChange = (
@@ -186,6 +193,7 @@ function FoodSection({ option = "" }: FoodSectionProps) {
       ...inputList,
       location: newLocation,
     });
+    setIsBarcodeError(false);
   };
 
   const handleOpenCamera = () => {
