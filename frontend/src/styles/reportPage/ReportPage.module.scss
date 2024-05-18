@@ -113,15 +113,15 @@
     }
 
     .top_five {
-      width: 95%;
+      width: 100%;
       background-color: $color-back;
       border-radius: 10px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      margin: 10px;
-      padding: 5%;
+      margin-top: 10px;
+      padding: 10px 0; 
       gap: 1vh;
 
       p > span {
@@ -138,6 +138,7 @@
       .item_box_list {
         @include center;
         margin: 3%;
+        gap: 5px;
       }
     }
   }
