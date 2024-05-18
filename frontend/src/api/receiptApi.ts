@@ -18,8 +18,10 @@ const postReceipt = async (image: string) => {
       "/api/foods/getReceiptOCR",
       formData
     );
-    return JSON.stringify(res.data);
+    alert(`api 성공 ${JSON.stringify(res.data.receiptProducts)}`)
+    return res.data.receiptProducts;
   } catch (e) {
+    alert(`api 에러 ${e}`)
     console.log(e);
     throw e;
   }
@@ -36,6 +38,7 @@ interface FoodDataType {
 const postFoodByReceipt = async (foodList: FoodDataType[]) => {
   try {
     const res = await instance.post("/api/foods/bill", foodList);
+    console.log("성공")
     return res.data;
   } catch (e) {
     console.log(e);

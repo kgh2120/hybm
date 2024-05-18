@@ -7,16 +7,9 @@ import home from "../assets/images/home.png";
 import search from "../assets/images/search.png";
 import { useFoodCategoryStore } from "../stores/useFoodStore";
 import useAuthStore from "../stores/useAuthStore";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { postFoodByReceipt, postReceipt } from "../api/receiptApi";
 import { getExpiredDate } from "../api/foodApi";
-
-const tempResultList = [
-  { name: "다이소균일가(2,000)", cost: 2000 },
-  { name: "삼진어묵", cost: 3780 },
-  { name: "꼬마새송이", cost: 990 },
-  { name: "오뚜기 카레(약간매운맛)", cost: 5380 },
-];
 
 interface InputReceiptType {
   name: string;
@@ -33,35 +26,32 @@ interface FilteredCategory {
   categoryId: number;
 }
 
-interface CategoryType {
-  categoryBigId: number;
-  name: string;
-  bigCategoryImgSrc: string;
-  categoryDetails: CategoryDetailType[];
-}
-
-interface CategoryDetailType {
-  categoryId: number;
-  name: string;
-  categoryImgSrc: string;
-}
-
 interface ExpiredDateType {
   year: number;
   month: number;
   day: number;
 }
+interface OcrResultType {
+  name: string;
+  cost: number;
+}
 function ReceiptPage() {
   const navigate = useNavigate();
   const { image } = useAuthStore();
 
-  const {
-    mutate: mutatePostReceipt,
-    data: namePriceList,
-    status,
-  } = useMutation({
+  const [ocrResultList, setOcrResultList] = useState<OcrResultType[]>(
+    []
+  );
+  // 영수증 OCR 요청 api
+  const { mutate: mutatePostReceipt, status } = useMutation({
     mutationFn: postReceipt,
-    onSuccess: (data) => {},
+    onSuccess: (data) => {
+      setOcrResultList(data);
+    },
+    onError: () => {
+      alert("영수증을 다시 촬영해주세요.");
+      navigate("/");
+    },
   });
   const [inputReceiptList, setInputReceiptList] = useState<
     InputReceiptType[]
@@ -87,11 +77,11 @@ function ReceiptPage() {
             : expiredDateList[idx].day;
         let formattedLocation = "";
         if (selectedLocation[idx] === "냉동칸") {
-          formattedLocation = "ice";
+          formattedLocation = "ICE";
         } else if (selectedLocation[idx] === "냉장칸") {
-          formattedLocation = "cool";
+          formattedLocation = "COOL";
         } else if (selectedLocation[idx] === "찬장") {
-          formattedLocation = "cabinet";
+          formattedLocation = "CABINET";
         }
         return {
           ...inputReceipt,
@@ -276,30 +266,32 @@ function ReceiptPage() {
   // }, [foodExpiredDate]);
 
   useEffect(() => {
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth() + 1;
-    const currentDay = currentDate.getDate();
-    const initializedList = tempResultList.map((item) => {
-      selectedLocation.push("냉동칸");
-      nameList.push("");
-      imgSrcList.push("");
-      expiredDateList.push({
-        year: currentYear,
-        month: currentMonth,
-        day: currentDay,
+    if (ocrResultList.length > 0) {
+      const currentDate = new Date();
+      const currentYear = currentDate.getFullYear();
+      const currentMonth = currentDate.getMonth() + 1;
+      const currentDay = currentDate.getDate();
+      const initializedList = ocrResultList.map((ocrResult) => {
+        selectedLocation.push("냉동칸");
+        nameList.push("");
+        imgSrcList.push("");
+        expiredDateList.push({
+          year: currentYear,
+          month: currentMonth,
+          day: currentDay,
+        });
+        categoryIdList.push(0);
+        return {
+          name: ocrResult.name,
+          categoryId: 0,
+          price: ocrResult.cost,
+          expiredDate: "",
+          location: "",
+        };
       });
-      categoryIdList.push(0);
-      return {
-        name: item.name,
-        categoryId: 0,
-        price: item.cost,
-        expiredDate: "",
-        location: "",
-      };
-    });
-    setInputReceiptList(initializedList);
-  }, []);
+      setInputReceiptList(initializedList);
+    }
+  }, [ocrResultList]);
 
   // 가져온 카테고리..
   const { bigCategoryList } = useFoodCategoryStore();
@@ -369,6 +361,23 @@ function ReceiptPage() {
     );
     setFilteredCategoryList(updatedCategoryList);
   };
+
+  const [isDisabled, setIsDisabled] = useState(false);
+  useEffect(() => {
+    inputReceiptList.forEach((inputReceipt, idx) => {
+      console.log(
+        "idx:",
+        idx,
+        inputReceipt.name,
+        categoryIdList[idx]
+      );
+      if (inputReceipt.name === "" || categoryIdList[idx] === 0) {
+        setIsDisabled(true);
+      } else {
+        setIsDisabled(false);
+      }
+    });
+  }, [inputReceiptList, categoryIdList]);
 
   if (status === "pending") {
     return <div>Loading...</div>;
@@ -516,11 +525,16 @@ function ReceiptPage() {
             );
           })}
         </section>
+        <span>
+          * 분류에 따른 <span>예상 소비기한</span>이 제공되나
+          <br />
+          상이할 수 있습니다.
+        </span>
         <Button
           content="완료"
           color="red"
           onClick={handlePostFoodByReceipt}
-          disabled={false}
+          disabled={isDisabled}
         />
       </div>
     </div>
