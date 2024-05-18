@@ -64,8 +64,6 @@ const getExpiredDate = async (categoryId: number) => {
     const res = await instance.get(
       `/api/foods/expiration?categoryDetailId=${categoryId}&&year=${year}&&month=${month}&&day=${day}`
     );
-  console.log("확인:", res)
-
     return res.data;
   } catch (e) {
     console.error(e);
@@ -134,17 +132,11 @@ const putFoodDetail = async ({
 
 // 바코드 정보 조회
 const getBarcodeData = async (barcode: number) => {
-  alert(`api들어왔슴: 
-  ${barcode}`);
   try {
     const res = await instance.get(`/api/foods?barcode=${barcode}`);
     // 결과값 잘 나옴
-    alert(`바코드결과값: ${JSON.stringify(res.data)}`);
     return res.data;
   } catch (e) {
-    // @ts-ignore
-    alert(`getBarcode error: ${e.message}`);
-
     console.error(e);
     throw e;
   }

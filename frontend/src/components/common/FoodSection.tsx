@@ -38,62 +38,43 @@ function FoodSection({ option = "" }: FoodSectionProps) {
       ...inputList,
       categoryId: categoryId, // 선택한 카테고리의 categoryId를 업데이트
     });
+    setIsBarcodeError(false);
     setIsSelected(true);
   };
 
   const [barcodeNumber, setBarcodeNumber] = useState(0);
-
-  // 바코드 정보 조회 api
-  // const {
-  //   data: barcodeResult,
-  //   error,
-  //   refetch,
-  // } = useQuery({
-  //   queryKey: ["barcode"],
-  //   queryFn: () => getBarcodeData(barcodeNumber),
-  //   // enabled: barcodeNumber !== 0,
-  //   enabled: false,
-    
-  //   // gcTime: 0,
-  // });
   interface BarcodeResultType {
     name: string;
     categoryBigId: number;
     categoryId: number;
   }
-  const [barcodeResult, setBarcodeResult] = useState<BarcodeResultType | null>(null);
+  const [barcodeResult, setBarcodeResult] =
+    useState<BarcodeResultType | null>(null);
   const { mutate: mutateGetBarcodeData, error } = useMutation({
     mutationFn: getBarcodeData,
     onSuccess: (data) => {
-      setBarcodeResult(data)
-    }
-  })
+      setBarcodeResult(data);
+    },
+  });
 
   useEffect(() => {
-    alert(`isError useEffect ${error?.message}`)
     if (error?.message) {
       setBarcodeNumber(0);
       setIsBarcodeError(true);
-      alert(
-        `에러문구 ${JSON.stringify(isBarcodeError)}, ${barcodeNumber}`
-      );
+      initInputList();
+      setIsSelected(false);
     }
   }, [error?.message]);
 
   // 바코드 넘버 바뀌면 얘부터다 현수야
   useEffect(() => {
-    alert(`mutate useEffect ${barcodeNumber} ${error?.message}`)
-    if (barcodeNumber !== 0 && !error?.message) {
-      alert(`mutate 실행되면 이게 뜨는거다 현수야 ${error?.message}`)
-      // refetch();
+    if (barcodeNumber !== 0) {
       mutateGetBarcodeData(barcodeNumber);
-      alert(`mutate ${barcodeNumber}`)
     }
   }, [barcodeNumber]);
 
   // 바코드 리솔트 바뀌면 얘부터다 거북아
   useEffect(() => {
-    alert(`useEffect들어오냐 ${barcodeResult}, ${barcodeNumber}`);
     if (barcodeResult) {
       initInputList();
       setIsSelected(false);
@@ -108,9 +89,6 @@ function FoodSection({ option = "" }: FoodSectionProps) {
 
   // setInputList 잘 먹으면 얘는 된다
   useEffect(() => {
-    alert(
-      `categoryId 바꼈을때 useEffect ${barcodeResult}, ${barcodeNumber}`
-    );
     if (barcodeResult) {
       setBarcodeNumber(0);
       setIsSelected(true);
@@ -135,7 +113,7 @@ function FoodSection({ option = "" }: FoodSectionProps) {
         newValue = newValue.slice(0, 8);
       }
     }
-
+    setIsBarcodeError(false);
     setInputList({
       ...inputList,
       [name]: newValue,
@@ -163,6 +141,7 @@ function FoodSection({ option = "" }: FoodSectionProps) {
         year: parseInt(e.target.value),
       },
     });
+    setIsBarcodeError(false);
   };
 
   const handleMonthChange = (
@@ -175,6 +154,7 @@ function FoodSection({ option = "" }: FoodSectionProps) {
         month: parseInt(e.target.value),
       },
     });
+    setIsBarcodeError(false);
   };
 
   const handleDayChange = (
@@ -187,6 +167,7 @@ function FoodSection({ option = "" }: FoodSectionProps) {
         day: parseInt(e.target.value),
       },
     });
+    setIsBarcodeError(false);
   };
 
   const handleLocationChange = (
@@ -212,6 +193,7 @@ function FoodSection({ option = "" }: FoodSectionProps) {
       ...inputList,
       location: newLocation,
     });
+    setIsBarcodeError(false);
   };
 
   const handleOpenCamera = () => {
