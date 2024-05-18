@@ -49,6 +49,7 @@ function ReceiptPage() {
   const { mutate: mutatePostReceipt } = useMutation({
     mutationFn: postReceipt,
     onSuccess: (data) => {
+      alert(`onsuccess ${data}`);
       if (data === null || data.length === 0) {
         setIsOcrErrorModal(true);
       } else {
@@ -197,15 +198,18 @@ function ReceiptPage() {
     newLocationList[idx] = e.target.value;
     setSelectedLocation(newLocationList);
   };
+
   const handleOpenCamera = () => {
-    setIsOcrErrorModal(false);
     // @ts-ignore
     window.flutter_inappwebview.postMessage("receipt_camera");
   };
-
+  
   const sendReceipt = (image: string) => {
-    setImage(image);
-    // navigate("/receipt");
+    if (isOcrErrorModal) {
+      setImage(image);
+      setIsOcrErrorModal(false);
+      // navigate("/receipt");
+    }
   };
 
   useEffect(() => {

@@ -12,14 +12,15 @@ const postReceipt = async (image: string) => {
 
   const formData = new FormData();
   formData.append("image", blob);
-
   try {
     const res = await instance.post(
       "/api/foods/getReceiptOCR",
       formData
     );
+    alert(`ocr 요청 api try ${res.data}`);
     return res.data.receiptProducts;
   } catch (e) {
+    alert(`ocr 요청 api error ${e}`);
     console.log(e);
     throw e;
   }
