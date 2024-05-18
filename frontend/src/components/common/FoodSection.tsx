@@ -43,24 +43,26 @@ function FoodSection({ option = "" }: FoodSectionProps) {
 
   const [barcodeNumber, setBarcodeNumber] = useState(0);
 
-  
   // 바코드 정보 조회 api
   const { data: barcodeResult, status } = useQuery({
     queryKey: ["barcode"],
     queryFn: () => getBarcodeData(barcodeNumber),
     enabled: barcodeNumber !== 0,
-    gcTime: 0,
+    // gcTime: 0,
   });
 
   useEffect(() => {
     if (status === "error") {
+      setBarcodeNumber(0);
       setIsBarcodeError(true);
-      alert(`에러문구 ${JSON.stringify(isBarcodeError)}, ${barcodeNumber}`)
+      alert(
+        `에러문구 ${JSON.stringify(isBarcodeError)}, ${barcodeNumber}`
+      );
     }
-  }, [status])
+  }, [status]);
 
   useEffect(() => {
-    alert(`useEffect들어오냐 ${barcodeResult}, ${barcodeNumber}`)
+    alert(`useEffect들어오냐 ${barcodeResult}, ${barcodeNumber}`);
     if (barcodeResult) {
       initInputList();
       setIsSelected(false);
@@ -72,9 +74,11 @@ function FoodSection({ option = "" }: FoodSectionProps) {
       });
     }
   }, [barcodeResult]);
-  
+
   useEffect(() => {
-    alert(`categoryId 바꼈을때 useEffect ${barcodeResult}, ${barcodeNumber}`)
+    alert(
+      `categoryId 바꼈을때 useEffect ${barcodeResult}, ${barcodeNumber}`
+    );
     if (barcodeResult) {
       setBarcodeNumber(0);
       setIsSelected(true);
@@ -186,7 +190,7 @@ function FoodSection({ option = "" }: FoodSectionProps) {
   };
 
   const getBarcode = (barcodeNum: number) => {
-    alert(`barcodeNum test: ${barcodeNum}, ${barcodeNumber}`)
+    alert(`barcodeNum test: ${barcodeNum}, ${barcodeNumber}`);
     setBarcodeNumber(barcodeNum);
     // if (barcodeNum === )
     // setIsBarcodeError(true);
@@ -233,7 +237,11 @@ function FoodSection({ option = "" }: FoodSectionProps) {
         <span>분류</span>
         <CategoryBox onCategoryIdChange={handleCategoryIdChange} />
       </article>
-      {isBarcodeError && <span className={styles.error_text}>바코드를 다시 촬영해주세요.</span>}
+      {isBarcodeError && (
+        <span className={styles.error_text}>
+          바코드를 다시 촬영해주세요.
+        </span>
+      )}
       <article className={styles.food_option_box}>
         <span>소비기한</span>
         <div className={styles.expiry_date_box}>
