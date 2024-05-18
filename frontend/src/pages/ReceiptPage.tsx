@@ -46,7 +46,7 @@ function ReceiptPage() {
     []
   );
   // 영수증 OCR 요청 api
-  const { mutate: mutatePostReceipt, status } = useMutation({
+  const { mutate: mutatePostReceipt } = useMutation({
     mutationFn: postReceipt,
     onSuccess: (data) => {
       if (data === null || data.length === 0) {
@@ -365,9 +365,9 @@ function ReceiptPage() {
     setCategoryIdList(newCategoryIdList);
   };
 
-  if (status === "pending") {
-    return <div>Loading...</div>;
-  }
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
 
   // if (inputReceiptList.length === 0) {
   //   return <div>Loading...</div>;
