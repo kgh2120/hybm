@@ -20,6 +20,7 @@ import useAttachedBadgeStore, {
   useBadgeStore,
 } from "../stores/useBadgeStore";
 import useAuthStore from "../stores/useAuthStore";
+import LoadingSpinner from "../components/common/LoadingSpinner";
 
 interface StorageType {
   id: number;
@@ -253,7 +254,7 @@ function MainPage() {
     iscurrentBadgeListPending ||
     isdesignListPending
   ) {
-    return <div>MainPage Loding...</div>;
+    return <LoadingSpinner />;
   }
 
   if (isBigCategoryListError) {
