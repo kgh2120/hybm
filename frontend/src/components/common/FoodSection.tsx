@@ -46,27 +46,29 @@ function FoodSection({ option = "" }: FoodSectionProps) {
   // 바코드 정보 조회 api
   const {
     data: barcodeResult,
-    status,
+    isError,
     refetch,
   } = useQuery({
     queryKey: ["barcode"],
     queryFn: () => getBarcodeData(barcodeNumber),
     // enabled: barcodeNumber !== 0,
     enabled: false,
+    
     // gcTime: 0,
   });
   useEffect(() => {
-    alert(`status useEffect ${JSON.stringify(status)} ${status}`)
-    if (status === "error") {
+    alert(`isError useEffect ${isError}`)
+    if (isError) {
       setBarcodeNumber(0);
       setIsBarcodeError(true);
       alert(
         `에러문구 ${JSON.stringify(isBarcodeError)}, ${barcodeNumber}`
       );
     }
-  }, [status]);
+  }, [isError]);
   useEffect(() => {
-    if (barcodeNumber !== 0 && status !== "error") {
+    alert(`refetch useEffect ${barcodeNumber} ${isError}`)
+    if (barcodeNumber !== 0 && !isError) {
       refetch();
       alert(`refetch ${barcodeNumber}`)
     }
@@ -201,7 +203,6 @@ function FoodSection({ option = "" }: FoodSectionProps) {
   };
 
   const getBarcode = (barcodeNum: number) => {
-    alert(`barcodeNum test: ${barcodeNum}, ${barcodeNumber}`);
     setBarcodeNumber(barcodeNum);
     // if (barcodeNum === )
     // setIsBarcodeError(true);
