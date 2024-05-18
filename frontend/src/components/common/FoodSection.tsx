@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import styles from "../../styles/common/FoodSection.module.css";
 import CategoryBox from "./CategoryBox";
-// import ExpiryDateSelector from "./ExpiryDateSelector";
 import { getBarcodeData, getExpiredDate } from "../../api/foodApi";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
