@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import styles from "../../styles/reportPage/Calendar.module.css";
 import { useQuery } from "@tanstack/react-query";
 import { getUserSignUpDate } from "../../api/userApi";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 interface CustomHeaderProps {
   date: Date;
@@ -65,7 +66,7 @@ function MyDatePicker({ year, month, onDateChange }: MyDatePickerProps) {
   });
 
   if (isUserSignUpPending) {
-    return <div>데이터 가져오는 중...</div>;
+    return <LoadingSpinner />;
   }
 
   if (isUserSignUpDateError) {

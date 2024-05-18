@@ -16,6 +16,7 @@ import { getReportData } from "../api/reportApi";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import EmptySection from "../components/common/EmptySection";
+import LoadingSpinner from "../components/common/LoadingSpinner";
 
 interface FoodType {
   bigCategory: string;
@@ -68,7 +69,7 @@ function ReportPage() {
   }, [year, month]);
 
   if (isReportDataPending) {
-    return <div>로그인 중...</div>;
+    return <LoadingSpinner />;
   }
 
   if (isReportDataError) {

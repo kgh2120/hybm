@@ -13,6 +13,7 @@ import { postFoodByReceipt, postReceipt } from "../api/receiptApi";
 import { getExpiredDate } from "../api/foodApi";
 import throwAway from "../assets/images/throwAway.png";
 import ConfirmModal from "../components/common/ConfirmModal";
+import LoadingSpinner from "../components/common/LoadingSpinner";
 
 interface InputReceiptType {
   name: string;
@@ -46,10 +47,9 @@ function ReceiptPage() {
     []
   );
   // 영수증 OCR 요청 api
-  const { mutate: mutatePostReceipt } = useMutation({
+  const { mutate: mutatePostReceipt, isPending } = useMutation({
     mutationFn: postReceipt,
     onSuccess: (data) => {
-      alert(`onsuccess ${data}`);
       if (data === null || data.length === 0) {
         setIsOcrErrorModal(true);
       } else {
@@ -205,7 +205,6 @@ function ReceiptPage() {
   };
 
   const sendReceipt = (image: string) => {
-    alert(`함수 안에 드러오나 ${isOcrErrorModal}`);
     setImage(image);
     setIsOcrErrorModal(false);
     // navigate("/receipt");
@@ -368,13 +367,10 @@ function ReceiptPage() {
     setCategoryIdList(newCategoryIdList);
   };
 
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
+  if (isPending) {
+    return <LoadingSpinner />;
+  }
 
-  // if (inputReceiptList.length === 0) {
-  //   return <div>Loading...</div>;
-  // }
   return (
     <div className={styles.wrapper}>
       {!isOcrErrorModal && (
