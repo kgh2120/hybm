@@ -8,7 +8,7 @@ import Modal from "./Modal";
 import NotificationModal from "../mainPage/NotificationModal";
 import userBtn from "../../assets/images/userBtn.png";
 import { getLevelAndExp } from "../../api/userApi";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   deleteAllNotification,
   getIsNewNotification,
@@ -45,6 +45,7 @@ function ExpBar() {
       setIsLogin(false);
     },
   });
+  const queryClient = useQueryClient();
 
   const handleOpenNotificationModal = () => {
     setIsNotificationModalOpen(true);
@@ -89,6 +90,9 @@ function ExpBar() {
       setIsNotificationModalOpen(false);
       setIsDeleteNotificationConfirmModalOpen(false);
       setIsCurrentNotification(false);
+      queryClient.invalidateQueries({
+        queryKey: ["isNewNotification"],
+      });
     },
   });
 
