@@ -17,9 +17,11 @@ function ItemBox({
   onClick,
 }: ItemBoxProps) {
   const location = useLocation();
-  const nameLength = location.pathname === "/report" ? 3 : 5
+  const nameLength = location.pathname === "/report" ? 3 : 4;
   const fomattedName =
-    name.length > nameLength ? `${name.slice(0, nameLength)}..` : name;
+    name.length > nameLength
+      ? `${name.slice(0, nameLength)}..`
+      : name;
 
   return (
     <article className={styles.wrapper} onClick={onClick}>

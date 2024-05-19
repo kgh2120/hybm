@@ -6,6 +6,7 @@
   overflow-y: auto;
   // min-height: 50px;
   max-height: 250px;
+  width: 100%;
   &::-webkit-scrollbar {
     width: 4px;
   }
@@ -31,21 +32,26 @@
     align-items: center;
     gap: 5px;
     padding: 7px;
+    width: 100%;
     position: relative;
+    margin: 4px 0;
+    border: 1px dashed $color-back;
   }
-
+  
   .notification_gray_item {
     display: flex;
+    margin: 4px 0;
+    max-width: 100%;
     flex-direction: column;
     align-items: center;
     gap: 5px;
     padding: 7px;
     position: relative;
-    background-color: rgba($color-line, 0.1);
+    border: 1px dashed $color-back;
+    background-color: rgba($color-back, 0.3);
   }
   &::after {
     content: "";
-    // display: block;
     border: 1px dashed $color-back;
     width: 100%;
     margin-top: 5px;
@@ -54,11 +60,13 @@
     content: none;
   }
   .main_section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 8fr 0.7fr;
     gap: 10px;
+    max-width: 100%;
+    align-items: center;
     .image_section {
+      background-color: red;
       width: 40px;
       aspect-ratio: 1/1;
       background-color: $color-back;
@@ -73,22 +81,21 @@
       }
     }
     .content_section {
-      width: 75%;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
       gap: 8px;
       > span {
-        width: 100%;
+        max-width: 100%;
         text-align: left;
         color: $color-point;
         font-size: $font-md;
+        line-height: 17px;
       }
       > div {
         display: flex;
         align-items: center;
         gap: 12px;
+        justify-content: space-between;
         span {
           color: $color-text;
           font-size: $font-sm;
@@ -103,7 +110,14 @@
             border: 1px solid $color-text;
             background-color: white;
             padding: 2px;
-            width: 70px;
+            width: 60px;
+            height: 20px;
+          }
+          .is_disabled {
+            background-color: $color-line;
+            color: white;
+            border: none;
+            pointer-events: none;
           }
         }
       }
@@ -114,6 +128,4 @@
       color: $color-text;
     }
   }
-
-  
 }
