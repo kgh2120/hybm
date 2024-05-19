@@ -1,0 +1,47 @@
+@import "../common/_common";
+
+.wrapper {
+  height: 72px;
+  background-color: rgba($color-back, 0.7);
+  border: 1px dashed $color-light;
+  display: flex;
+  gap: 5px;
+  margin-top: 7px;
+  text-shadow: -2px 0px white, 0px 2px white, 2px 0px white,
+    0px -2px white;
+  
+  .text_box {
+    width: 67%;
+    
+    > h2 {
+      font-size: $font-lg;
+      color: black;
+      font-weight: 100;
+      @include center;
+      flex-direction: column;
+      margin-bottom: 2px;
+    }
+
+    > span {
+      font-size: $font-md;
+      color: $color-text;
+      font-weight: 100;
+      bottom: 0;
+    }
+  }
+  > button {
+    @include center;
+    width: 60px;
+    height: 30px;
+    color: white;
+    background-color: $color-light;
+    font-size: $font-md;
+    box-shadow: 1px 1px rgba(black, 0.4);
+
+    img {
+      margin-left: 6px;
+      width: 5px;
+      height: 10px;
+    }
+  }
+}

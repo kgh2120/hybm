@@ -1,0 +1,127 @@
+@import "../common/common";
+
+.bar_box {
+  height: 50px;
+  width: 100%;
+  position: absolute;
+  top: 10px;
+  z-index: 10;
+  pointer-events: auto;
+  .bar_sub_box {
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    .bar_background {
+      width: 90%;
+      z-index: 10;
+    }
+    .bar_heart_box {
+      z-index: 30;
+      width: 30px;
+      aspect-ratio: 1/1;
+      top: 50%;
+      transform: translate(0, -50%);
+      position: absolute;
+      left: 10%;
+      .bar_heart_sub_box {
+        position: relative;
+        .bar_heart {
+          width: 100%;
+        }
+        > span {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -65%);
+          color: white;
+          font-size: $font-lg;
+          font-weight: 700;
+          @include font-shadow(black);
+        }
+      }
+    }
+    .exp_bar_box {
+      z-index: 15;
+      width: 56%;
+      top: 50%;
+      transform: translate(0, -50%);
+      position: absolute;
+      left: 15%;
+      height: 8px;
+      .exp_bar_sub_box {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        .current_exp {
+          width: 100%;
+          height: 8px;
+          top: -5px;
+          position: absolute;
+          left: 0;
+          background-color: #fda2cd;
+        }
+        .exp_bar {
+          width: 100%;
+          height: 11px;
+          top: -7px;
+          position: absolute;
+          left: 0;
+          z-index: 1;
+        }
+        .exp_content {
+          top: 150%;
+          position: absolute;
+          left: 26%;
+          width: 100%;
+          transform: translate(-50%, -50%);
+          font-size: $font-sm;
+          color: black;
+        }
+      }
+    }
+
+    .notification_box {
+      z-index: 20;
+      top: 50%;
+      transform: translate(0, -50%);
+      width: 28px;
+      position: absolute;
+      right: 19%;
+      .notification_sub_box {
+        position: relative;
+        width: 100%;
+        > img {
+          width: 100%;
+        }
+        > div {
+          position: absolute;
+          width: 8px;
+          aspect-ratio: 1/1;
+          right: 3px;
+          top: 3px;
+          border-radius: 50%;
+          background-color: #b61f1f;
+          border: 1px black solid;
+        }
+      }
+    }
+
+    .user_box {
+      z-index: 20;
+      top: 50%;
+      transform: translate(0, -50%);
+      width: 24px;
+      position: absolute;
+      right: 10%;
+    }
+  }
+}
+
+.remove_all_button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: $color-text;
+  font-size: $font-md;
+}

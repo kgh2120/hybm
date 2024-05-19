@@ -1,0 +1,10 @@
+@import '../../styles/common/_common';
+
+.wrapper {
+  h1 {
+    @include modal-title;
+  }
+  .line {
+    width: 290px;
+  }
+}

@@ -1,0 +1,33 @@
+@import "../common/common";
+
+.wrapper {
+  @include center;
+  flex-direction: column;
+  gap: 5px;
+
+  .img_box {
+    width: 45px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    @include center;
+    border: 1px dashed $color-line;
+    position: relative;
+
+    .img_gray_box {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      @include center;
+      background-color: rgba(black, 0.2);
+    }
+
+    img {
+      width: 30%;
+      aspect-ratio: 1/1;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+.date_picker {
+  display: flex;
+  align-items: center;
+  background-color: #fce6e7;
+  box-sizing: border-box;
+  width: 100%;
+  height: 40px;
+  color: #000000;
+  text-align: center;
+}
+.date_picker:focus {
+  border: #666666;
+}
+
+.custom_header {
+  background-color: #fce6e7;
+  display: flex;
+  justify-content: space-around;
+  height: 100%;
+}
+
+.custom_button {
+  background-color: transparent;
+  margin: 3px;
+}/*# sourceMappingURL=Calendar.module.css.map */

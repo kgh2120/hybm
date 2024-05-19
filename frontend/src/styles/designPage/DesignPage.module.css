@@ -1,0 +1,53 @@
+.wrapper {
+  position: relative;
+  height: 100vh;
+}
+.wrapper > h2 {
+  z-index: 200;
+  position: absolute;
+  top: 2.5%;
+  left: 50%;
+  translate: -50%;
+  color: #e5333e;
+  background-color: white;
+  opacity: 0.9;
+  border: 1px solid #e5333e;
+  width: 180px;
+  height: 40px;
+  font-size: 18px;
+  font-weight: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wrapper .background {
+  pointer-events: none;
+}
+.wrapper .white_section {
+  height: 85%;
+  z-index: 100;
+  position: absolute;
+  bottom: 2.5%;
+  right: 3%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+}
+.wrapper .white_section .button_box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.left_arrow {
+  width: 30px;
+  opacity: 0.7;
+  position: absolute;
+  z-index: 100;
+  top: 50%;
+  left: 10%;
+  transform: translate(-50%, -50%);
+}/*# sourceMappingURL=DesignPage.module.css.map */

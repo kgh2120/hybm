@@ -1,0 +1,100 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+}
+.wrapper .attached_img_box {
+  max-width: 60px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fce6e7;
+  border: 2px solid #e5333e;
+  position: relative;
+  z-index: 900;
+}
+.wrapper .attached_img_box .badge_img {
+  width: 80%;
+  aspect-ratio: 0.7;
+  z-index: 999;
+}
+.wrapper .attached_img_box .check_img {
+  z-index: 2;
+  position: absolute;
+  bottom: 0;
+  right: -4%;
+  width: 17px;
+}
+.wrapper .img_box {
+  max-width: 60px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fce6e7;
+  border: 1px dashed #fb5862;
+  position: relative;
+  z-index: 900;
+}
+.wrapper .img_box > span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -65%);
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  z-index: 20;
+  text-shadow: -1px 0px black, 0px 1px black, 1px 0px black, 0px -1px black;
+}
+.wrapper .img_box .img_gray_box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  width: 60px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+}
+.wrapper .img_box .applied_img_box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  width: 60px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  border: 2px solid #e5333e;
+}
+.wrapper .img_box img {
+  width: 80%;
+  aspect-ratio: 0.7;
+  z-index: 998;
+}
+.wrapper .text_box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 3px;
+}
+.wrapper .text_box .item_name {
+  color: #e5333e;
+  font-size: 13px;
+}
+.wrapper .text_box .item_content {
+  color: #666666;
+  font-size: 11px;
+}/*# sourceMappingURL=BadgeItemBox.module.css.map */

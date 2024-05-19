@@ -1,0 +1,37 @@
+.wrapper {
+  background-color: rgba(255, 255, 255, 0.97);
+  border: 1px solid #fb5862;
+  border-radius: 10px;
+  position: relative;
+  width: 190px;
+  height: 100%;
+  min-height: 40%;
+}
+.wrapper > h2 {
+  font-size: 15px;
+  color: #666666;
+  text-align: left;
+  padding: 12px 0px 0px 12px;
+  font-weight: 100;
+  text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
+}
+.wrapper > img {
+  width: 23px;
+  aspect-ratio: 1/1;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  top: -5px;
+}
+
+.main_section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-column-gap: 0px;
+  row-gap: 12px;
+  flex-wrap: wrap;
+  padding: 12px 0px;
+  height: 88%;
+  overflow-y: auto;
+}/*# sourceMappingURL=BadgeWhiteSection.module.css.map */

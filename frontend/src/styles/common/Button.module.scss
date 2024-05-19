@@ -1,0 +1,24 @@
+@import "../common/common";
+
+@mixin button-common {
+  width: 80px;
+  height: 40px;
+  font-size: $font-lg;
+}
+
+.red_button {
+  @include button-common;
+  color: white;
+  background-color: $color-light;
+}
+
+.red_button:disabled {
+  background-color: $color-line;
+}
+
+.white_button {
+  @include button-common;
+  color: $color-light;
+  background-color: white;
+  border: 1px solid $color-light;
+}

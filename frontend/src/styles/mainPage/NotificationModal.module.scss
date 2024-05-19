@@ -1,0 +1,131 @@
+@import "../../styles/common/_common";
+
+.notification_modal_wrapper {
+  position: relative;
+  z-index: 999;
+  overflow-y: auto;
+  // min-height: 50px;
+  max-height: 250px;
+  width: 100%;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba($color-line, 0.2);
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid rgba(black, 0.2);
+    &:hover {
+      background-color: rgba($color-line, 0.4);
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: rgba(220, 220, 220, 0.7);
+    border-radius: 10px;
+    /* box-shadow: inset 0px 0px 5px white; */
+  }
+  .notification_item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 7px;
+    width: 100%;
+    position: relative;
+    margin: 4px 0;
+    border: 1px dashed $color-back;
+  }
+  
+  .notification_gray_item {
+    display: flex;
+    margin: 4px 0;
+    max-width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 7px;
+    position: relative;
+    border: 1px dashed $color-back;
+    background-color: rgba($color-back, 0.3);
+  }
+  &::after {
+    content: "";
+    border: 1px dashed $color-back;
+    width: 100%;
+    margin-top: 5px;
+  }
+  &:last-child::after {
+    content: none;
+  }
+  .main_section {
+    display: grid;
+    grid-template-columns: 1fr 8fr 0.7fr;
+    gap: 10px;
+    max-width: 100%;
+    align-items: center;
+    .image_section {
+      background-color: red;
+      width: 40px;
+      aspect-ratio: 1/1;
+      background-color: $color-back;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px dashed $color-light;
+      img {
+        width: 80%;
+        aspect-ratio: 1/1;
+      }
+    }
+    .content_section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      > span {
+        max-width: 100%;
+        text-align: left;
+        color: $color-point;
+        font-size: $font-md;
+        line-height: 17px;
+      }
+      > div {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        justify-content: space-between;
+        span {
+          color: $color-text;
+          font-size: $font-sm;
+        }
+        > div {
+          display: flex;
+          gap: 5px;
+          button {
+            color: $color-text;
+            font-size: $font-sm;
+            border-radius: 10px;
+            border: 1px solid $color-text;
+            background-color: white;
+            padding: 2px;
+            width: 60px;
+            height: 20px;
+          }
+          .is_disabled {
+            background-color: $color-line;
+            color: white;
+            border: none;
+            pointer-events: none;
+          }
+        }
+      }
+    }
+    .button_section {
+      align-self: flex-start;
+      font-size: $font-xl;
+      color: $color-text;
+    }
+  }
+}
