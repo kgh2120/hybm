@@ -196,7 +196,7 @@ function RecipePage() {
                               ? `${selectedFood.name.slice(0, 4)}..`
                               : selectedFood.name
                           }
-                          content={`D-${selectedFood.dday}`}
+                          content={`D${selectedFood.dday}`}
                           option="active"
                           imgSrc={selectedFood.categoryImgSrc}
                           onClick={() =>
