@@ -5,7 +5,6 @@ import EmptySection from "../common/EmptySection";
 import instance from "../../api/axios";
 
 interface NotificationType {
-  foodId: number;
   noticeId: number;
   content: string;
   isChecked: boolean;
@@ -59,9 +58,10 @@ function NotificationModal() {
   }, [page]);
 
   const content = notificationList?.map(
-    (notification: NotificationType) => {
+    (notification: NotificationType, idx: number) => {
       return (
         <NotificationItem
+          key={idx}
           notification={notification}
           setNotificationList={setNotificationList}
           notificationList={notificationList}
