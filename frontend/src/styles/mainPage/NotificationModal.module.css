@@ -3,6 +3,7 @@
   z-index: 999;
   overflow-y: auto;
   max-height: 250px;
+  width: 100%;
 }
 .notification_modal_wrapper::-webkit-scrollbar {
   width: 4px;
@@ -27,16 +28,22 @@
   align-items: center;
   gap: 5px;
   padding: 7px;
+  width: 100%;
   position: relative;
+  margin: 4px 0;
+  border: 1px dashed #fce6e7;
 }
 .notification_modal_wrapper .notification_gray_item {
   display: flex;
+  margin: 4px 0;
+  max-width: 100%;
   flex-direction: column;
   align-items: center;
   gap: 5px;
   padding: 7px;
   position: relative;
-  background-color: rgba(201, 201, 201, 0.1);
+  border: 1px dashed #fce6e7;
+  background-color: rgba(252, 230, 231, 0.3);
 }
 .notification_modal_wrapper::after {
   content: "";
@@ -48,12 +55,14 @@
   content: none;
 }
 .notification_modal_wrapper .main_section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 8fr 0.7fr;
   gap: 10px;
+  max-width: 100%;
+  align-items: center;
 }
 .notification_modal_wrapper .main_section .image_section {
+  background-color: red;
   width: 40px;
   aspect-ratio: 1/1;
   background-color: #fce6e7;
@@ -68,23 +77,22 @@
   aspect-ratio: 1/1;
 }
 .notification_modal_wrapper .main_section .content_section {
-  width: 75%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   gap: 8px;
 }
 .notification_modal_wrapper .main_section .content_section > span {
-  width: 100%;
+  max-width: 100%;
   text-align: left;
   color: #e5333e;
   font-size: 13px;
+  line-height: 17px;
 }
 .notification_modal_wrapper .main_section .content_section > div {
   display: flex;
   align-items: center;
   gap: 12px;
+  justify-content: space-between;
 }
 .notification_modal_wrapper .main_section .content_section > div span {
   color: #666666;
@@ -101,7 +109,14 @@
   border: 1px solid #666666;
   background-color: white;
   padding: 2px;
-  width: 70px;
+  width: 60px;
+  height: 20px;
+}
+.notification_modal_wrapper .main_section .content_section > div > div .is_disabled {
+  background-color: #c9c9c9;
+  color: white;
+  border: none;
+  pointer-events: none;
 }
 .notification_modal_wrapper .main_section .button_section {
   align-self: flex-start;

@@ -49,6 +49,7 @@ function NotificationModal() {
             size: 20,
           },
         });
+        console.log("알림확인:", res.data.notice);
         setNotificationList((prev) => [...prev, ...res.data.notice]);
         setHasNext(res.data.hasNext);
       } catch (error) {
@@ -58,10 +59,6 @@ function NotificationModal() {
     };
     fetchData();
   }, [page]);
-
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
 
   const content = notificationList?.map(
     (notification: NotificationType) => {
