@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: md
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:local
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  data:
+    redis:
+      host: k10a707.p.ssafy.io
+      port: 6379
+      timeout: 6
+  jpa:
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: embedded
+      encoding: utf-8
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
