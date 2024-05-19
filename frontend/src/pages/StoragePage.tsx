@@ -11,10 +11,7 @@ import eat from "../assets/images/eat.png";
 import throwAway from "../assets/images/throwAway.png";
 import ItemBox from "../components/common/ItemBox";
 import FoodStateSection from "../components/storagePage/FoodStateSection";
-import {
-  deleteFood,
-  getFoodStorageItemList,
-} from "../api/foodApi";
+import { deleteFood, getFoodStorageItemList } from "../api/foodApi";
 import {
   useQuery,
   useQueryClient,
@@ -36,8 +33,7 @@ function StoragePage() {
   const [isFoodEdit, setIsFoodEdit] = useState(false);
   const [clickedIndexesBySection, setClickedIndexesBySection] =
     useState<{ [key: string]: number[] }>({});
-  const { setIsSelected, initInputList } =
-    useFoodStore();
+  const { setIsSelected, initInputList } = useFoodStore();
   const { storageName } = useParams() as { storageName: string };
   const [foodId, setFoodId] = useState(0);
 
@@ -59,14 +55,6 @@ function StoragePage() {
     setClickedIndexesBySection({});
   };
 
-  // 먹음 확인 모달창
-  const handleEatenFoodConfirmModal = () => {
-    setIsEatenFoodConfirmModal(!isEatenFoodConfirmModal);
-  };
-  // 버림 확인 모달창
-  const handleThrownFoodConfirmModal = () => {
-    setIsThrownFoodConfirmModal(!isThrownFoodConfirmModal);
-  };
   // 조회 및 수정 모달창
   const handleOpenFoodDetailModal = (foodId: number) => {
     setIsFoodDetailModal(true);
@@ -103,6 +91,19 @@ function StoragePage() {
     (acc, arr) => acc.concat(arr),
     []
   );
+
+  // 먹음 확인 모달창
+  const handleEatenFoodConfirmModal = () => {
+    if (foodIds.length !== 0) {
+      setIsEatenFoodConfirmModal(!isEatenFoodConfirmModal);
+    }
+  };
+  // 버림 확인 모달창
+  const handleThrownFoodConfirmModal = () => {
+    if (foodIds.length !== 0) {
+      setIsThrownFoodConfirmModal(!isThrownFoodConfirmModal);
+    }
+  };
 
   const TITLE_LIST: { [key: string]: string } = {
     ice: "냉동칸",
@@ -218,6 +219,11 @@ function StoragePage() {
               <div
                 className={styles.btn_box}
                 onClick={handleEatenFoodConfirmModal}
+                style={
+                  foodIds.length === 0
+                    ? { filter: "grayscale(100%)", opacity: "0.5" }
+                    : {}
+                }
               >
                 <img src={eat} alt="먹음 버튼" />
                 <span>먹었어요</span>
@@ -225,6 +231,11 @@ function StoragePage() {
               <div
                 className={styles.btn_box}
                 onClick={handleThrownFoodConfirmModal}
+                style={
+                  foodIds.length === 0
+                    ? { filter: "grayscale(100%)", opacity: "0.5" }
+                    : {}
+                }
               >
                 <img src={throwAway} alt="버림 버튼" />
                 <span>버렸어요</span>
