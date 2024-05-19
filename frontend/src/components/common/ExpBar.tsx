@@ -8,7 +8,11 @@ import Modal from "./Modal";
 import NotificationModal from "../mainPage/NotificationModal";
 import userBtn from "../../assets/images/userBtn.png";
 import { getLevelAndExp } from "../../api/userApi";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import {
   deleteAllNotification,
   getIsNewNotification,
@@ -233,9 +237,9 @@ function ExpBar() {
         />
       )}
       {isLevelUpModalOpen && (
-        <Modal title="레벨업!" onClick={handleCloseLevelUpModal}>
-          <LevelUpModal level={currentLevel} />
-        </Modal>
+      <Modal title="레벨업!" onClick={handleCloseLevelUpModal}>
+        <LevelUpModal level={currentLevel} />
+      </Modal>
       )}
     </div>
   );

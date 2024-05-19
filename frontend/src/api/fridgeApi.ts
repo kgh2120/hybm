@@ -15,8 +15,8 @@ const getCurrentDesign = async () => {
   try {
     const res = await instance.get(
       "/api/refrigerators/designs/using"
-      );
-      return res.data;
+    );
+    return res.data;
   } catch (e) {
     console.log(e);
   }
@@ -34,14 +34,18 @@ const putDesign = async ({
   coolDesignId,
   cabinetDesignId,
 }: PutDesignProps) => {
-  const data = {request: [
-    { position: "ICE", designId: iceDesignId },
-    { position: "COOL", designId: coolDesignId },
-    { position: "CABINET", designId: cabinetDesignId },
-  ]
-};
+  const data = {
+    request: [
+      { position: "ICE", designId: iceDesignId },
+      { position: "COOL", designId: coolDesignId },
+      { position: "CABINET", designId: cabinetDesignId },
+    ],
+  };
   try {
-    const res = await instance.put("/api/refrigerators/designs", data);
+    const res = await instance.put(
+      "/api/refrigerators/designs",
+      data
+    );
     return res;
   } catch (e) {
     console.log(e);

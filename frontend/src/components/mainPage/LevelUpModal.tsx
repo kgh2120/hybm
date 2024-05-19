@@ -1,5 +1,4 @@
 import styles from "../../styles/mainPage/LevelUpModal.module.css";
-import lock from "../../assets/images/lock.png";
 import useFridgeStore from "../../stores/useFridgeStore";
 import LevelUpItem from "./LevelUpItem";
 
@@ -16,7 +15,6 @@ function LevelUpModal({level}: { level: number | null}) {
           다음 아이템을 획득했습니다.
         </span>
         <div className={styles.item_section}>
-          <LevelUpItem content='배지슬롯 1개' imgSrc={lock}/>
           <LevelUpItem content={acquiredDesign[0].name} imgSrc={acquiredDesign[0].designImgSrc}/>
         </div>
       </section>

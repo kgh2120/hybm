@@ -1,7 +1,9 @@
 @import "../common/common";
 
 .wrapper {
+  @include center;
   > section {
+    width: 80%;
     background-color: $color-back;
     border-radius: 20px;
     padding: 12px;
