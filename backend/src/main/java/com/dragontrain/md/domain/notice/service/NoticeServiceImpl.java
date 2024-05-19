@@ -2,6 +2,7 @@ package com.dragontrain.md.domain.notice.service;
 
 import com.dragontrain.md.common.service.TimeService;
 import com.dragontrain.md.domain.food.domain.Food;
+import com.dragontrain.md.domain.food.domain.FoodDeleteType;
 import com.dragontrain.md.domain.notice.controller.response.AllNoticeResponse;
 import com.dragontrain.md.domain.notice.controller.response.HasnewNoticeResponse;
 import com.dragontrain.md.domain.notice.controller.response.NoticeResponse;
@@ -24,7 +25,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
@@ -113,6 +113,30 @@ public class NoticeServiceImpl implements NoticeService{
 	@Override
 	public void saveFCMToken(User user, String token) {
 		stringRedisTemplate.opsForValue().set(user.getUserId().toString(), token);
+	}
+
+	@Transactional
+	@Override
+	public void deleteFood(User user, String status, Long[] noticeIds) {
+		LocalDateTime now = timeService.localDateTimeNow();
+		for (Long noticeId : noticeIds) {
+			Notice notice = noticeRepository.findByNoticeId(noticeId)
+				.orElseThrow(() -> new NoticeException(NoticeErrorCode.NOTICE_NOT_FOUND));
+
+			if (!user.getUserId().equals(notice.getUser().getUserId())) {
+				throw new NoticeException(NoticeErrorCode.NOT_MY_NOTICE);
+			}
+
+			if (notice.isDeleted()) {
+				throw new NoticeException(NoticeErrorCode.ALREADY_DELETED_NOTICE);
+			}
+
+			notice.getFood().delete(FoodDeleteType.valueOf(status.toUpperCase()), now);
+			notice.check(now);
+		}
+
+
+
 	}
 
 	private List<Message> getMessageByNotices(List<Notice> notices){
