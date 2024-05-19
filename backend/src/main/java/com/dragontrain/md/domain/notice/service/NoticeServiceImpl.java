@@ -103,7 +103,10 @@ public class NoticeServiceImpl implements NoticeService{
 		foods.forEach(food -> notices.add(Notice.create(food, noticeContentParser.parseNoticeContent(food), now, food.getRefrigerator().getUser())));
 		noticeRepository.saveAll(notices);
 
-		FirebaseMessaging.getInstance().sendEachAsync(getMessageByNotices(notices));
+		List<Message> messages = getMessageByNotices(notices);
+		if (!messages.isEmpty()) {
+			FirebaseMessaging.getInstance().sendEachAsync(messages);
+		}
 	}
 
 	@Transactional
