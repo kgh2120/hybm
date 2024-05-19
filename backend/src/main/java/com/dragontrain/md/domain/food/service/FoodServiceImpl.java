@@ -298,7 +298,7 @@ public class FoodServiceImpl implements FoodService {
 				location, refrigerator, timeService.localDateTimeNow(), true);
 
 			foodRepository.save(food);
-			eventPublisher.publish(new ExpAcquired(user.getUserId(), expProperties.getEatenAmount()));
+			eventPublisher.publish(new ExpAcquired(user.getUserId(), expProperties.getRegisterAmount()));
 		}
 
 	}
