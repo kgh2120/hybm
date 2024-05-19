@@ -1,11 +1,9 @@
 import styles from "../../styles/mainPage/NotificationModal.module.css";
 import { formatDate } from "../../utils/formatting";
-import { deleteNotification } from "../../api/notificationApi";
+import { deleteFoodByNotification, deleteNotification } from "../../api/notificationApi";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteFood } from "../../api/foodApi";
 
 interface NotificationType {
-  foodId: number;
   noticeId: number;
   content: string;
   isChecked: boolean;
@@ -27,7 +25,6 @@ function NotificationItem({
   setNotificationList,
 }: NotificationItemProps) {
   const {
-    foodId,
     noticeId,
     content,
     foodImgSrc,
@@ -49,8 +46,8 @@ function NotificationItem({
     },
   });
 
-  const { mutate: mutateDeleteFood } = useMutation({
-    mutationFn: deleteFood,
+  const { mutate: mutateDeleteFoodByNotification } = useMutation({
+    mutationFn: deleteFoodByNotification,
     onSuccess: () => {
       const updatedNotificationList = notificationList.map(
         (notification) => {
@@ -71,7 +68,7 @@ function NotificationItem({
   };
 
   const handleDeleteFood = (option: string) => {
-    mutateDeleteFood({ foodIdList: [foodId], option });
+    mutateDeleteFoodByNotification({ noticeIdList: [noticeId], option });
   };
 
   const notificationItemStyles = isChecked ? "notification_item" : "notification_gray_item";
