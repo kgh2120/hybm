@@ -1,4 +1,10 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .wrapper > section {
+  width: 80%;
   background-color: #fce6e7;
   border-radius: 20px;
   padding: 12px;
