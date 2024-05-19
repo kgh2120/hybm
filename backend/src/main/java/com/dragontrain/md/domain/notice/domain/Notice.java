@@ -86,4 +86,9 @@ public class Notice {
 		this.updatedAt = deleteTime;
 		this.deletedAt = deleteTime;
 	}
+
+	public void check(LocalDateTime updatedAt){
+		this.isChecked = true;
+		this.updatedAt = updatedAt;
+	}
 }

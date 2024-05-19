@@ -21,4 +21,7 @@ public interface NoticeService {
 	void saveNotices(List<Food> foods);
 
 	void saveFCMToken(User user, String token);
+
+	void deleteFood(User user, String status, Long[] noticeId);
+
 }
