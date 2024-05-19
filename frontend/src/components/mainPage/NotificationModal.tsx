@@ -3,7 +3,6 @@ import NotificationItem from "./NotificationItem";
 import { useCallback, useEffect, useRef, useState } from "react";
 import EmptySection from "../common/EmptySection";
 import instance from "../../api/axios";
-import LoadingSpinner from "../common/LoadingSpinner";
 
 interface NotificationType {
   foodId: number;
