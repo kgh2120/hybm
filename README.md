@@ -72,7 +72,7 @@
 
 ### 아키텍처
 
-![architecture](/uploads/fd1176ebe5feb0e879f3da52c87c5652/architecture.png)
+![architecture](https://velog.velcdn.com/images/kgh2120/post/ba20d941-d506-4da7-befb-445fe3fbc65e/image.png)
 
 ### [ERD](https://www.erdcloud.com/d/aSgjGYbMQCyfdGhDB)
 
@@ -83,3 +83,6 @@
 
 ![api명세](https://velog.velcdn.com/images/kgh2120/post/0594be7f-ff52-4dcf-b663-05f1caaa3da9/image.png)
 위의 링크를 클릭하면 전체를 확인할 수 있습니다.
+
+### [APK](https://drive.google.com/file/d/1WMpmpz4QlxyzR8CDJxi3kB8b5LEq9CPq/view)
+위의 링크를 클릭하면 앱을 다운로드 받을 수 있습니다.
