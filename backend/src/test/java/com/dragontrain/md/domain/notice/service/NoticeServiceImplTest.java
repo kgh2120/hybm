@@ -1,5 +1,7 @@
 package com.dragontrain.md.domain.notice.service;
 
+import com.dragontrain.md.common.config.properties.ExpProperties;
+import com.dragontrain.md.common.service.EventPublisher;
 import com.dragontrain.md.common.service.TimeService;
 import com.dragontrain.md.domain.food.domain.CategoryDetail;
 import com.dragontrain.md.domain.food.domain.Food;
@@ -44,6 +46,9 @@ class NoticeServiceImplTest {
 
 	@Mock
 	private TimeService timeService;
+
+	@Mock EventPublisher eventPublisher;
+	@Mock ExpProperties expProperties;
 
 	@InjectMocks
 	private NoticeServiceImpl noticeService;
