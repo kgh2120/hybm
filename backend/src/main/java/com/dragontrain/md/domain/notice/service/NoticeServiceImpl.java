@@ -1,5 +1,7 @@
 package com.dragontrain.md.domain.notice.service;
 
+import com.dragontrain.md.common.config.properties.ExpProperties;
+import com.dragontrain.md.common.service.EventPublisher;
 import com.dragontrain.md.common.service.TimeService;
 import com.dragontrain.md.domain.food.domain.Food;
 import com.dragontrain.md.domain.food.domain.FoodDeleteType;
@@ -11,6 +13,7 @@ import com.dragontrain.md.domain.notice.domain.Notice;
 import com.dragontrain.md.domain.notice.exception.NoticeErrorCode;
 import com.dragontrain.md.domain.notice.exception.NoticeException;
 import com.dragontrain.md.domain.notice.service.port.NoticeRepository;
+import com.dragontrain.md.domain.refrigerator.event.ExpAcquired;
 import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorErrorCode;
 import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorException;
 import com.dragontrain.md.domain.refrigerator.service.port.RefrigeratorRepository;
@@ -42,6 +45,8 @@ public class NoticeServiceImpl implements NoticeService{
 	private final NoticeContentParser noticeContentParser;
 	private final RedisTemplate<String, String> stringRedisTemplate;
 	private final ObjectMapper objectMapper;
+	private final EventPublisher eventPublisher;
+	private final ExpProperties expProperties;
 	@Override
 	public AllNoticeResponse findAllNotDeletedNotice(User user, Pageable pageable) {
 		return AllNoticeResponse.create(
@@ -131,8 +136,13 @@ public class NoticeServiceImpl implements NoticeService{
 				throw new NoticeException(NoticeErrorCode.ALREADY_DELETED_NOTICE);
 			}
 
-			notice.getFood().delete(FoodDeleteType.valueOf(status.toUpperCase()), now);
+			FoodDeleteType foodDeleteType = FoodDeleteType.valueOf(status.toUpperCase());
+			notice.getFood().delete(foodDeleteType, now);
 			notice.check(now);
+
+			if (FoodDeleteType.EATEN.equals(foodDeleteType)) {
+				eventPublisher.publish(new ExpAcquired(user.getUserId(), expProperties.getEatenAmount()));
+			}
 		}
 
 
