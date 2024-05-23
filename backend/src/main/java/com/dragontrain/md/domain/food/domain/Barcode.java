@@ -26,7 +26,6 @@ import lombok.NoArgsConstructor;
 public class Barcode {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "barcode_id", columnDefinition = "bigint", nullable = false)
 	private Long barcodeId;
 
@@ -44,8 +43,9 @@ public class Barcode {
 	@JoinColumn(name = "kan_code", referencedColumnName = "kan_code", nullable = false)
 	private CategoryDetail categoryDetail;
 
-	public static Barcode create(String name, CategoryDetail categoryDetail, LocalDateTime now) {
+	public static Barcode create(Long barcodeId, String name, CategoryDetail categoryDetail, LocalDateTime now) {
 		return Barcode.builder()
+			.barcodeId(barcodeId)
 			.name(name)
 			.categoryDetail(categoryDetail)
 			.createdAt(now)
