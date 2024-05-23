@@ -422,11 +422,13 @@ public class FoodServiceImpl implements FoodService {
 			.forEach(Food::clear);
 	}
 
+	@Transactional
 	@Override
 	public BarcodeInfo getBarcodeInfo(Long barcode) {
 
 		Barcode barcodeInfo = barcodeRepository.findByBarcodeId(barcode)
 			.orElseGet(() -> {
+				log.info("create new barcode entity barcode number : {}", barcode);
 				// 검색
 				BarcodeCreate barcodeCreate = crawlService.crawlBarcode(barcode)
 					.orElseThrow(() -> new FoodException(FoodErrorCode.UNKNOWN_BARCODE));
@@ -434,7 +436,7 @@ public class FoodServiceImpl implements FoodService {
 				CategoryDetail categoryDetail = categoryDetailRepository.findByKanCode(barcodeCreate.getKanCode())
 					.orElseThrow(() -> new FoodException(FoodErrorCode.UNKNOWN_KAN_CODE));
 
-				Barcode createdBarcode = Barcode.create(barcodeCreate.getName(), categoryDetail,
+				Barcode createdBarcode = Barcode.create(barcodeCreate.getBarcode(), barcodeCreate.getName(), categoryDetail,
 					timeService.localDateTimeNow());
 				barcodeRepository.save(createdBarcode);
 				return createdBarcode;
