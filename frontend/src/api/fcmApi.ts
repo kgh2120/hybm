@@ -7,8 +7,17 @@ const saveFcmToken = async (token: string) => {
     return res.status;
   } catch (e) {
     console.log(e);
-    throw e;
   }
 };
 
-export { saveFcmToken };
+// FCM 메시지 수신
+const receiveFcmMessage = async () => {
+  try {
+    const res = await instance.get("/api/notices/fcm-message");
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export { saveFcmToken, receiveFcmMessage };

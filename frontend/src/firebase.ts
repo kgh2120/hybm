@@ -2,14 +2,14 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getMessaging } from "firebase/messaging";
 
-const { 
-  VITE_FIREBASE_API_KEY, 
-  VITE_FIREBASE_AUTH_DOMAIN, 
-  VITE_FIREBASE_PROJECT_ID, 
-  VITE_FIREBASE_STORAGE_BUCKET, 
-  VITE_FIREBASE_MESSAGING_SENDER_ID, 
-  VITE_FIREBASE_APP_ID, 
-  VITE_FIREBASE_MEASUREMENT_ID 
+const {
+  VITE_FIREBASE_API_KEY,
+  VITE_FIREBASE_AUTH_DOMAIN,
+  VITE_FIREBASE_PROJECT_ID,
+  VITE_FIREBASE_STORAGE_BUCKET,
+  VITE_FIREBASE_MESSAGING_SENDER_ID,
+  VITE_FIREBASE_APP_ID,
+  VITE_FIREBASE_MEASUREMENT_ID
 } = import.meta.env;
 
 const firebaseConfig = {

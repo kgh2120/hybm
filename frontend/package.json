@@ -18,6 +18,8 @@
     "chartjs-plugin-datalabels": "^2.2.0",
     "date-fns": "^3.6.0",
     "firebase": "^10.12.0",
+    "firebase-tools": "^13.9.0",
+    "global": "^4.4.0",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-calendar": "^5.0.0",
