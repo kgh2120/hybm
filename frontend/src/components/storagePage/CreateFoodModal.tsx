@@ -18,7 +18,7 @@ function CreateFoodModal({
 }: CreateFoodModalProps) {
   const queryClient = useQueryClient();
   const { storageName } = useParams() as { storageName: string };
-  const { inputList, setInputList, initialInputList, setIsSelected } =
+  const { inputList, initInputList, setIsSelected } =
     useFoodStore();
   const [foodData, setFoodData] = useState({
     name: "",
@@ -47,7 +47,7 @@ function CreateFoodModal({
       queryClient.invalidateQueries({
         queryKey: ["foodStorageItemList"],
       });
-      setInputList(initialInputList);
+      initInputList();
       handleCloseCreateFoodModal();
       setIsSelected(false);
     },

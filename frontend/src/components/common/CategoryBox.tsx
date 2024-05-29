@@ -7,6 +7,7 @@ import { getExpiredDate } from "../../api/foodApi";
 import useFoodStore, {
   useFoodCategoryStore,
 } from "../../stores/useFoodStore";
+import { useLocation } from "react-router-dom";
 
 interface FilteredCategory {
   categoryImgSrc: string;
@@ -33,6 +34,7 @@ interface CategoryDetailType {
 }
 
 function CategoryBox({ onCategoryIdChange }: CategoryBoxProps) {
+  const location = useLocation();
   const { bigCategoryList } = useFoodCategoryStore();
   const { inputList } = useFoodStore();
   const [name, setName] = useState("");
@@ -58,7 +60,6 @@ function CategoryBox({ onCategoryIdChange }: CategoryBoxProps) {
     mutateGetExpiredDate(categoryId);
     setSelectedCategoryImgSrc(category.categoryImgSrc); // 선택한 카테고리 이미지 설정
   };
-  
 
   useEffect(() => {
     if (name.length >= 1) {
@@ -118,6 +119,10 @@ function CategoryBox({ onCategoryIdChange }: CategoryBoxProps) {
         }
       }
     }
+    if (inputList.categoryId === 0) {
+      setName("");
+      setSelectedCategoryImgSrc("");
+    }
   }, [inputList.categoryBigId, inputList.categoryId]);
 
   return (
@@ -133,7 +138,11 @@ function CategoryBox({ onCategoryIdChange }: CategoryBoxProps) {
         type="text"
         value={name}
         onChange={handleChangeName}
-        placeholder="바코드를 촬영하거나 검색해보세요"
+        placeholder={
+          location.pathname !== "/receipt"
+            ? "바코드를 촬영하거나 검색해보세요"
+            : ""
+        }
       />
       <img
         className={styles.category_search_img}
@@ -142,12 +151,14 @@ function CategoryBox({ onCategoryIdChange }: CategoryBoxProps) {
       />
       <section className={styles.filtered_category_list_section}>
         {filteredCategoryList.map((category) => (
-          <article
-            onClick={() => handleSelectCategory(category)}
-            key={category.categoryId}
-          >
-            {category.name}({category.bigName})
-          </article>
+          <div className={styles.category_list}>
+            <article
+              onClick={() => handleSelectCategory(category)}
+              key={category.categoryId}
+            >
+              {category.name}({category.bigName})
+            </article>
+          </div>
         ))}
       </section>
     </div>

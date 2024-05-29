@@ -14,7 +14,7 @@ const getIsNewNotification = async () => {
 const deleteAllNotification = async () => {
   try {
     const res = await instance.delete("/api/notices/all");
-    console.log(res);
+    return res
   } catch (e) {
     console.log(e);
     throw e;
@@ -41,11 +41,31 @@ const getNotificationList = async (page: number) => {
 const deleteNotification = async (noticeId: number) => {
   try {
     const res = await instance.delete(`/api/notices?noticeId=${noticeId}`);
-    console.log(res);
     return res.data;
   } catch (e) {
     console.log(e);
     throw e;
+  }
+};
+
+interface DeleteFoodByNotificationParams {
+  noticeIdList: number[];
+  option: string;
+}
+
+// 알림에서 식품 처리하기
+const deleteFoodByNotification = async ({
+  noticeIdList,
+  option,
+}: DeleteFoodByNotificationParams) => {
+  try {
+    const noticeIdsString = noticeIdList.join("&noticeId=");
+    const res = await instance.delete(
+      `/api/notices/${option}?noticeId=${noticeIdsString}`
+    );
+    return res.data;
+  } catch (e) {
+    console.error(e);
   }
 };
 
@@ -54,4 +74,5 @@ export {
   deleteAllNotification,
   getNotificationList,
   deleteNotification,
+  deleteFoodByNotification
 };

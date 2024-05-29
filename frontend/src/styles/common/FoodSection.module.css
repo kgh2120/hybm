@@ -90,7 +90,7 @@
   color: #666666;
   font-size: 13px;
   height: 30px;
-  width: 25%;
+  width: 35%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -118,4 +118,11 @@ input::placeholder {
 }
 .barcode_section img {
   width: 30px;
+}
+
+.error_text {
+  font-size: 11px;
+  color: #fb5862;
+  width: 100%;
+  text-align: end;
 }/*# sourceMappingURL=FoodSection.module.css.map */

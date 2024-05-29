@@ -3,30 +3,22 @@ import instance from "./axios";
 // 영수증 OCR 요청
 const postReceipt = async (image: string) => {
   const byteCharacters = atob(image); // Base64 디코딩
-    const byteNumbers = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-    const byteArray = new Uint8Array(byteNumbers);
-    const blob = new Blob([byteArray], { type: 'image/jpeg' }); 
-
-
-  const file = new File([blob], 'image.jpg', { type: 'image/jpeg' });
+  const byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  const blob = new Blob([byteArray], { type: "image/jpeg" });
 
   const formData = new FormData();
   formData.append("image", blob);
-  console.log(image);
-
   try {
     const res = await instance.post(
       "/api/foods/getReceiptOCR",
       formData
     );
-    alert(`성공: 블롭: ${blob}, 폼데이터: ${formData}, 파일: ${file}`);
-    alert(`결과값0: ${JSON.stringify(res.data)}`);
-    return JSON.stringify(res.data);
+    return res.data.receiptProducts;
   } catch (e) {
-    alert(`실패: 블롭: ${blob}, 폼데이터: ${formData}, 파일: ${file}`);
     console.log(e);
     throw e;
   }

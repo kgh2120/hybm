@@ -24,6 +24,7 @@
   pointer-events: none;
 }
 .wrapper .white_section {
+  height: 85%;
   z-index: 100;
   position: absolute;
   bottom: 2.5%;

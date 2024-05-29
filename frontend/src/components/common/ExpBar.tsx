@@ -8,7 +8,11 @@ import Modal from "./Modal";
 import NotificationModal from "../mainPage/NotificationModal";
 import userBtn from "../../assets/images/userBtn.png";
 import { getLevelAndExp } from "../../api/userApi";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import {
   deleteAllNotification,
   getIsNewNotification,
@@ -18,6 +22,7 @@ import DropDown from "./DropDown";
 import ConfirmModal from "./ConfirmModal";
 import useAuthStore from "../../stores/useAuthStore";
 import LevelUpModal from "../mainPage/LevelUpModal";
+import LoadingSpinner from "./LoadingSpinner";
 
 interface IsNewNotificationType {
   hasNew: boolean;
@@ -44,6 +49,7 @@ function ExpBar() {
       setIsLogin(false);
     },
   });
+  const queryClient = useQueryClient();
 
   const handleOpenNotificationModal = () => {
     setIsNotificationModalOpen(true);
@@ -88,6 +94,9 @@ function ExpBar() {
       setIsNotificationModalOpen(false);
       setIsDeleteNotificationConfirmModalOpen(false);
       setIsCurrentNotification(false);
+      queryClient.invalidateQueries({
+        queryKey: ["isNewNotification"],
+      });
     },
   });
 
@@ -116,7 +125,6 @@ function ExpBar() {
     queryKey: ["isNewNotification"],
     queryFn: getIsNewNotification,
   });
-
   useEffect(() => {
     if (levelAndExp) {
       if (currentLevel !== null && currentLevel < levelAndExp.level) {
@@ -133,7 +141,7 @@ function ExpBar() {
   }, [isNewNotification]);
 
   if (isLevelAndExpPending || isNewNotificationPending) {
-    return <div>levelBar Loding...</div>;
+    return <LoadingSpinner />;
   }
 
   if (isLevelAndExpError) {
@@ -229,9 +237,9 @@ function ExpBar() {
         />
       )}
       {isLevelUpModalOpen && (
-        <Modal title="레벨업!" onClick={handleCloseLevelUpModal}>
-          <LevelUpModal level={currentLevel} />
-        </Modal>
+      <Modal title="레벨업!" onClick={handleCloseLevelUpModal}>
+        <LevelUpModal level={currentLevel} />
+      </Modal>
       )}
     </div>
   );

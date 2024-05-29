@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Modal from "../components/common/Modal";
 import CreateFoodModal from "../components/storagePage/CreateFoodModal";
 import styles from "../styles/storagePage/StoragePage.module.css";
@@ -11,11 +11,7 @@ import eat from "../assets/images/eat.png";
 import throwAway from "../assets/images/throwAway.png";
 import ItemBox from "../components/common/ItemBox";
 import FoodStateSection from "../components/storagePage/FoodStateSection";
-import {
-  deleteFood,
-  getFoodDetail,
-  getFoodStorageItemList,
-} from "../api/foodApi";
+import { deleteFood, getFoodStorageItemList } from "../api/foodApi";
 import {
   useQuery,
   useQueryClient,
@@ -24,7 +20,6 @@ import {
 import useFoodStore from "../stores/useFoodStore";
 import ConfirmModal from "../components/common/ConfirmModal";
 import FoodDetailModal from "../components/storagePage/FoodDetailModal";
-import { formatDashStringToDate } from "../utils/formatting";
 
 function StoragePage() {
   const queryClient = useQueryClient();
@@ -38,21 +33,20 @@ function StoragePage() {
   const [isFoodEdit, setIsFoodEdit] = useState(false);
   const [clickedIndexesBySection, setClickedIndexesBySection] =
     useState<{ [key: string]: number[] }>({});
-  const { setInputList, initialInputList, setIsSelected } =
-    useFoodStore();
+  const { setIsSelected, initInputList } = useFoodStore();
   const { storageName } = useParams() as { storageName: string };
   const [foodId, setFoodId] = useState(0);
 
   const handleOpenCreateFoodModal = () => {
     setIsCreateFoodModalOpen(true);
-    setInputList(initialInputList);
+    initInputList();
     setIsSelected(false);
   };
 
   const handleCloseCreateFoodModal = () => {
     setIsCreateFoodModalOpen(false);
     setIsSelected(false);
-    setInputList(initialInputList);
+    initInputList();
   };
 
   // 편집창 열고 닫기
@@ -61,14 +55,6 @@ function StoragePage() {
     setClickedIndexesBySection({});
   };
 
-  // 먹음 확인 모달창
-  const handleEatenFoodConfirmModal = () => {
-    setIsEatenFoodConfirmModal(!isEatenFoodConfirmModal);
-  };
-  // 버림 확인 모달창
-  const handleThrownFoodConfirmModal = () => {
-    setIsThrownFoodConfirmModal(!isThrownFoodConfirmModal);
-  };
   // 조회 및 수정 모달창
   const handleOpenFoodDetailModal = (foodId: number) => {
     setIsFoodDetailModal(true);
@@ -77,9 +63,10 @@ function StoragePage() {
   };
   const handleCloseFoodDetailModal = () => {
     setIsFoodDetailModal(false);
-    setInputList(initialInputList);
+    initInputList();
     setFoodId(0);
     setIsSelected(false);
+    // SetIsGetFoodDetailEnabled(false);
   };
 
   // 아이템 클릭
@@ -104,6 +91,19 @@ function StoragePage() {
     (acc, arr) => acc.concat(arr),
     []
   );
+
+  // 먹음 확인 모달창
+  const handleEatenFoodConfirmModal = () => {
+    if (foodIds.length !== 0) {
+      setIsEatenFoodConfirmModal(!isEatenFoodConfirmModal);
+    }
+  };
+  // 버림 확인 모달창
+  const handleThrownFoodConfirmModal = () => {
+    if (foodIds.length !== 0) {
+      setIsThrownFoodConfirmModal(!isThrownFoodConfirmModal);
+    }
+  };
 
   const TITLE_LIST: { [key: string]: string } = {
     ice: "냉동칸",
@@ -148,40 +148,6 @@ function StoragePage() {
     queryKey: ["foodStorageItemList"],
     queryFn: () => getFoodStorageItemList(storageName),
   });
-
-  // 내부 식품 상세 조회 api
-  const { refetch, data: foodDetail } = useQuery({
-    queryKey: ["foodDetail"],
-    queryFn: () => getFoodDetail(foodId),
-    enabled: isFoodDetailModal,
-  });
-
-  useEffect(() => {
-    if (isFoodDetailModal && foodId) {
-      refetch();
-    }
-  }, [isFoodDetailModal, foodId, refetch]);
-
-  useEffect(() => {
-    if (foodDetail && isFoodDetailModal) {
-      const newDate = formatDashStringToDate(foodDetail.expiredDate);
-      if (newDate) {
-        setInputList({
-          foodName: foodDetail.name,
-          categoryId: foodDetail.categoryId,
-          categoryBigId: foodDetail.bigCategoryId,
-          categoryImgSrc: foodDetail.categoryImgSrc,
-          expiredDate: {
-            year: newDate.year,
-            month: newDate.month,
-            day: newDate.day,
-          },
-          price: foodDetail.price,
-          location: foodDetail.location,
-        });
-      }
-    }
-  }, [foodDetail, isFoodDetailModal]);
 
   return (
     <div className={styles.wrapper}>
@@ -253,6 +219,11 @@ function StoragePage() {
               <div
                 className={styles.btn_box}
                 onClick={handleEatenFoodConfirmModal}
+                style={
+                  foodIds.length === 0
+                    ? { filter: "grayscale(100%)", opacity: "0.5" }
+                    : {}
+                }
               >
                 <img src={eat} alt="먹음 버튼" />
                 <span>먹었어요</span>
@@ -260,6 +231,11 @@ function StoragePage() {
               <div
                 className={styles.btn_box}
                 onClick={handleThrownFoodConfirmModal}
+                style={
+                  foodIds.length === 0
+                    ? { filter: "grayscale(100%)", opacity: "0.5" }
+                    : {}
+                }
               >
                 <img src={throwAway} alt="버림 버튼" />
                 <span>버렸어요</span>

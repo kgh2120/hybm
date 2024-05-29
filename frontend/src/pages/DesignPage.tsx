@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { getDesignList, putDesign } from "../api/fridgeApi";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import useFridgeStore from "../stores/useFridgeStore";
+import LoadingSpinner from "../components/common/LoadingSpinner";
 
 interface DesignType {
   designImgSrc: string;
@@ -54,7 +55,7 @@ function DesignPage() {
   };
 
   if (isdesignListPending) {
-    return <div>designList Loding...</div>;
+    return <LoadingSpinner />;
   }
   if (isdesignListError) {
     return <div>designList error</div>;

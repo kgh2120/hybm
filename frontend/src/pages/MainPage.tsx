@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disable */  
 import styles from "../styles/mainPage/MainPage.module.css";
 import background from "../assets/images/background.png";
 import recipe from "../assets/images/recipe.png";
@@ -20,6 +20,7 @@ import useAttachedBadgeStore, {
   useBadgeStore,
 } from "../stores/useBadgeStore";
 import useAuthStore from "../stores/useAuthStore";
+import LoadingSpinner from "../components/common/LoadingSpinner";
 
 interface StorageType {
   id: number;
@@ -253,7 +254,7 @@ function MainPage() {
     iscurrentBadgeListPending ||
     isdesignListPending
   ) {
-    return <div>MainPage Loding...</div>;
+    return <LoadingSpinner />;
   }
 
   if (isBigCategoryListError) {

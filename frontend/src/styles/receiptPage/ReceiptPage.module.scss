@@ -1,4 +1,4 @@
-@import '../common/common';
+@import "../common/common";
 .wrapper {
   background-color: $color-back;
   padding: 5px;
@@ -7,7 +7,6 @@
     background-color: white;
     @include center;
     flex-direction: column;
-    gap: 12px;
     .home_img {
       width: 20px;
       aspect-ratio: 1/1;
@@ -19,27 +18,198 @@
       width: 90%;
       @include center;
       padding: 0px 12px;
-    flex-direction: column;
-    overflow-y: auto;
-    &::-webkit-scrollbar {
-      width: 4px;
-    }
-  
-    &::-webkit-scrollbar-thumb {
-      background-color: rgba($color-line, 0.2);
-      border-radius: 10px;
-      background-clip: padding-box;
-      border: 2px solid transparent;
-      &:hover {
-        background-color: rgba($color-line, 0.4);
+      flex-direction: column;
+      overflow-y: auto;
+      margin-bottom: 12px;
+      &::-webkit-scrollbar {
+        width: 4px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba($color-line, 0.2);
+        border-radius: 10px;
+        background-clip: padding-box;
+        border: 2px solid transparent;
+        &:hover {
+          background-color: rgba($color-line, 0.4);
+        }
+      }
+
+      &::-webkit-scrollbar-track {
+        background-color: rgba(220, 220, 220, 0.7);
+        border-radius: 10px;
+        /* box-shadow: inset 0px 0px 5px white; */
       }
     }
-  
-    &::-webkit-scrollbar-track {
-      background-color: rgba(220, 220, 220, 0.7);
-      border-radius: 10px;
-      /* box-shadow: inset 0px 0px 5px white; */
+    > span {
+      font-size: 11px;
+      color: #c9c9c9;
+      line-height: 14px;
+      margin-bottom: 12px;
+      text-align: end;
+      width: 90%;
+      > span {
+        padding: 2px;
+        background-color: rgba(252, 230, 231, 0.5);
+      }
     }
+  }
+}
+
+.food_section_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 5px 0px;
+  &::after {
+    content: "";
+    // display: block;
+    border: 1px dashed $color-back;
+    width: 100%;
+  }
+  .food_option_box {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+    > span {
+      font-size: $font-lg;
+      color: $color-text;
+      min-width: 60px;
+    }
+    .expiry_date_box {
+      @include center;
+      gap: 5px;
+      width: 80%;
+
+      select {
+        height: 30px;
+        background-color: $color-back;
+        @include input-text;
+        width: 50%;
+      }
+
+      option {
+        height: 30px;
+        // background-color: $color-back;
+        @include input-text;
+        width: 50%;
+      }
+    }
+    > input {
+      @include input-text;
+      height: 30px;
+      width: 80%;
+      text-align: start;
+      background-color: $color-back;
+      padding: 0 5px;
+    }
+    > select {
+      @include input-text;
+      height: 30px;
+      text-align: start;
+      padding: 0 5px;
+      background-color: $color-back;
+    }
+    .price_box {
+      @include input-text;
+      width: 80%;
+      background-color: $color-back;
+      padding: 0 5px;
+      > input {
+        max-width: 162px;
+        background-color: transparent;
+        text-align: start;
+        height: 30px;
+
+        @include input-text;
+      }
+      > span {
+        font-size: $font-lg;
+      }
+    }
+
+    .storage_box {
+      border: 2px solid $color-back;
+      color: $color-text;
+      font-size: 13px;
+      height: 30px;
+      width: 25%;
+      @include center;
+    }
+  }
+}
+
+input::placeholder {
+  color: $color-line;
+  font-style: italic;
+  text-shadow: none;
+  font-size: $font-sm;
+}
+
+.category_box {
+  @include input-text;
+  width: 80%;
+  background-color: $color-back;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0px 5px;
+  position: relative;
+  .category_img {
+    width: 30px;
+    aspect-ratio: 1/1;
+  }
+  > input {
+    width: 85%;
+    background-color: transparent;
+    text-align: start;
+    height: 30px;
+    @include input-text;
+  }
+  .category_search_img {
+    width: 20px;
+    aspect-ratio: 1/1;
+  }
+  .filtered_category_list_section {
+    border-radius: 5px;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    max-height: 350px;
+    top: 35px;
+    left: 0px;
+    background-color: white;
+    flex-direction: column;
+    overflow-y: auto;
+    .category_list {
+      background-color: #fceced;
+      border: 1px dashed white;
+      width: 100%;
+      min-height: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+}
+
+.close_button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  .btn_box {
+    @include center;
+    flex-direction: column;
+    gap: 2px;
+    > img {
+      width: 21px;
+    }
+    > span {
+      color: $color-text;
+      font-size: $font-sm;
     }
   }
 }

@@ -11,6 +11,7 @@ import {
 } from "../api/recipeApi";
 import FoodStateSection from "../components/storagePage/FoodStateSection";
 import { useEffect, useState } from "react";
+import LoadingSpinner from "../components/common/LoadingSpinner";
 
 interface DangerFoodInfoType {
   foodId: number;
@@ -105,14 +106,14 @@ function RecipePage() {
   }, [foodIdList, isFoodIdList]);
 
   if (isDangerFoodBySectionPending) {
-    return <div>데이터 가져오는 중...</div>;
+    return <LoadingSpinner />;
   }
   if (isDangerFoodBySectionError) {
     return <div>에러나는 중...</div>;
   }
 
   if (isRecipeInfoLoading) {
-    return <div>레시피 정보 가져오는 중...</div>;
+    return <LoadingSpinner />;
   }
   if (isRecipeInfoError) {
     return <div>에러가나는 중...</div>;
@@ -135,7 +136,7 @@ function RecipePage() {
           <div className={styles.sub_content}>
             <p>
               나의 냉장고 속 <span>"위험 단계"</span> 식품들입니다.
-            <br />
+              <br />
               <span>레시피</span>를 <span>추천</span> 받아보세요.
             </p>
           </div>
@@ -158,11 +159,7 @@ function RecipePage() {
                         (item: DangerFoodInfoType, idx: number) => (
                           <ItemBox
                             key={idx}
-                            name={
-                              item.name.length > 4
-                                ? `${item.name.slice(0, 4)}..`
-                                : item.name
-                            }
+                            name={item.name}
                             content={`D${item.dday}`}
                             option="active"
                             imgSrc={item.categoryImgSrc}
@@ -199,7 +196,7 @@ function RecipePage() {
                               ? `${selectedFood.name.slice(0, 4)}..`
                               : selectedFood.name
                           }
-                          content={`D-${selectedFood.dday}`}
+                          content={`D${selectedFood.dday}`}
                           option="active"
                           imgSrc={selectedFood.categoryImgSrc}
                           onClick={() =>

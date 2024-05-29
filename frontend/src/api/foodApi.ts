@@ -1,3 +1,4 @@
+/* eslint-disable */
 import instance from "./axios";
 
 // 식품 분류 조회
@@ -66,6 +67,7 @@ const getExpiredDate = async (categoryId: number) => {
     return res.data;
   } catch (e) {
     console.error(e);
+    throw e;
   }
 };
 
@@ -81,7 +83,7 @@ interface FoodDataType {
 const postFood = async (foodData: FoodDataType) => {
   try {
     const res = await instance.post("/api/foods", foodData, {});
-    return res
+    return res;
   } catch (e) {
     console.error("식품 등록 실패:", e);
     throw e;
@@ -112,7 +114,10 @@ interface FoodDetailType {
   foodEditData: FoodEditDataType;
 }
 
-const putFoodDetail = async ({ foodId, foodEditData }: FoodDetailType) => {
+const putFoodDetail = async ({
+  foodId,
+  foodEditData,
+}: FoodDetailType) => {
   try {
     const res = await instance.put(
       `/api/foods/${foodId}`,
@@ -129,15 +134,11 @@ const putFoodDetail = async ({ foodId, foodEditData }: FoodDetailType) => {
 const getBarcodeData = async (barcode: number) => {
   try {
     const res = await instance.get(`/api/foods?barcode=${barcode}`);
-    // [object object]
-    alert(`getBarcode 성공: ${res.data}`)
     // 결과값 잘 나옴
-    alert(`바코드결과값: ${JSON.stringify(res.data)}`);
     return res.data;
   } catch (e) {
-    alert(`getBarcode error: ${e}`)
-
     console.error(e);
+    throw e;
   }
 };
 
@@ -150,5 +151,5 @@ export {
   postFood,
   getFoodDetail,
   putFoodDetail,
-  getBarcodeData
+  getBarcodeData,
 };
