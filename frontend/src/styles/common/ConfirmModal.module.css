@@ -1,0 +1,41 @@
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  max-width: 400px;
+  width: 95%;
+  z-index: 999;
+}
+.modal .modal_content {
+  padding: 40px 20px;
+  background-color: white;
+  border: 1px solid #fb5862;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+}
+.modal .modal_content > span {
+  font-size: 20px;
+  color: #fb5862;
+}
+.modal .modal_content .button_box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.overlay {
+  z-index: 90;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  z-index: 950;
+  top: 0;
+  left: 0;
+}/*# sourceMappingURL=ConfirmModal.module.css.map */

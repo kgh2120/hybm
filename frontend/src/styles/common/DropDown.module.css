@@ -1,0 +1,29 @@
+.wrapper {
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 1px solid #666666;
+  width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: absolute;
+  right: -30%;
+  bottom: -260%;
+  padding: 10px;
+  gap: 10px;
+  border-radius: 5px;
+}
+.wrapper > button {
+  background-color: #fce6e7;
+  box-shadow: 1px 1px 2px gray;
+  padding: 10% 20%;
+  border: 1px solid #666666;
+  border-radius: 5px;
+}
+.wrapper > p {
+  font-size: 11px;
+  text-decoration-line: underline;
+  text-decoration-color: #666666;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}/*# sourceMappingURL=DropDown.module.css.map */

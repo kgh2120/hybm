@@ -1,0 +1,79 @@
+$color-back: #fce6e7;
+$color-light: #fb5862;
+$color-point: #e5333e;
+$color-line: #c9c9c9;
+$color-text: #666666;
+$font-sm: 11px;
+$font-md: 13px;
+$font-lg: 15px;
+$font-xl: 20px;
+
+@mixin modal-title {
+  color: $color-text;
+  font-size: $font-xl;
+  font-weight: 100;
+}
+
+@mixin item-name {
+  color: $color-point;
+  font-size: $font-md;
+}
+
+@mixin item-content {
+  color: $color-text;
+  font-size: $font-sm;
+}
+
+@mixin center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin font-shadow($color) {
+  text-shadow: -1px 0px $color, 0px 1px $color, 1px 0px $color,
+    0px -1px $color;
+}
+
+@mixin input-text {
+  @include font-shadow(white);
+  font-size: $font-md;
+  color: $color-text;
+}
+
+@mixin scroll-bar {
+  &::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba($color-line, 0.2);
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+    &:hover {
+      background-color: rgba($color-line, 0.4);
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: rgba(220, 220, 220, 0.7);
+    border-radius: 10px;
+    /* box-shadow: inset 0px 0px 5px white; */
+  }
+}
+
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin check-img {
+  z-index: 2;
+  position: absolute;
+  bottom: 0;
+  right: -4%;
+  width: 17px;
+}

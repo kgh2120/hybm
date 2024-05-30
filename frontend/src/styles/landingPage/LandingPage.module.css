@@ -1,0 +1,20 @@
+.wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.wrapper div {
+  font-size: 12px;
+}
+.wrapper .sub_header {
+  font-size: 24px;
+}
+.wrapper .auth_btn {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}/*# sourceMappingURL=LandingPage.module.css.map */

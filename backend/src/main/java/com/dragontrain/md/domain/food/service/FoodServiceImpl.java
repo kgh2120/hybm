@@ -422,6 +422,8 @@ public class FoodServiceImpl implements FoodService {
 			.forEach(Food::clear);
 	}
 
+
+
 	@Transactional
 	@Override
 	public BarcodeInfo getBarcodeInfo(Long barcode) {
@@ -544,6 +546,7 @@ public class FoodServiceImpl implements FoodService {
 	@Transactional
 	@Override
 	public void clearRefrigerator(User user) {
+
 		Refrigerator refrigerator = refrigeratorRepository.findByUserId(user.getUserId())
 			.orElseThrow(() -> new FoodException(FoodErrorCode.REFRIGERATOR_NOT_FOUND));
 		foodRepository.findAllByRefrigeratorId(refrigerator.getRefrigeratorId())

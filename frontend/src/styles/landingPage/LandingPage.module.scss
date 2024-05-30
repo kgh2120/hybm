@@ -1,0 +1,21 @@
+@import "../common/common";
+
+.wrapper {
+  height: 100%;
+  @include center;
+  flex-direction: column;
+
+  div {
+    font-size: 12px;
+  }
+
+  .sub_header {
+    font-size: 24px;
+  }
+
+  .auth_btn {
+    margin-top: 40px;
+    @include center;
+    flex-direction: column;
+  }
+}

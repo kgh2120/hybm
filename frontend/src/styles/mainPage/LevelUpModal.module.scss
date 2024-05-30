@@ -1,0 +1,62 @@
+@import "../common/common";
+
+.wrapper {
+  @include center;
+  > section {
+    width: 80%;
+    background-color: $color-back;
+    border-radius: 20px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .content {
+      font-size: $font-lg;
+      color: $color-text;
+      line-height: 30px;
+      .level {
+        font-size: $font-xl;
+        color: $color-light;
+      }
+    }
+    .item_section {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      .item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        &::after {
+          content: "";
+          width: 1px;
+          height: 40px;
+          background-color: $color-line;
+        }
+        &:last-child::after {
+          content: none;
+        }
+        .item_img_box {
+          width: 40px;
+          aspect-ratio: 1/1;
+          background-color: white;
+          border: 1px dashed $color-light;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          .item_img {
+            width: 70%;
+            aspect-ratio: 1/1;
+          }
+        }
+        .item_text {
+          color: black;
+          font-size: $font-md;
+        }
+      }
+    }
+  }
+}

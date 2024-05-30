@@ -28,7 +28,7 @@ test-frontend:       # This job runs in the build stage, which runs first.
     - cd frontend
     - rm -rf node_modules/
     - npm install --legacy-peer-deps
-    - yarn build
+    - yarn build --mode prod
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event' && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "fe"
 
@@ -112,3 +112,4 @@ deploy-frontend:       # This job runs in the build stage, which runs first.
   needs: [build-frontend]
   only:
     - fe
+
