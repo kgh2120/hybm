@@ -8,11 +8,6 @@ spring:
     url: jdbc:h2:mem:local
     username: sa
     password:
-  data:
-    redis:
-      host: k10a707.p.ssafy.io
-      port: 6379
-      timeout: 6
   jpa:
     defer-datasource-initialization: true
   sql:
