@@ -11,7 +11,7 @@ import com.dragontrain.md.domain.refrigerator.exception.RefrigeratorException;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
@@ -21,18 +21,17 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class FileServiceImpl implements FileService{
+public class RecipeFetchServiceImpl implements RecipeFetchService {
 
-	public static String path = "C:\\Users\\SSAFY\\Desktop";
-	public static String filename = "recipesUTF.xlsx";
+	public static String path = "C:\\Users\\kyoohyun\\Desktop";
+	public static String filename = "recipe.xlsx";
 
 	private final RecipeRepository recipeRepository;
 	private final IngredientRepository ingredientRepository;
 	private final RecipeIngredientRepository recipeIngredientRepository;
 	private final CategoryDetailRepository categoryDetailRepository;
 
-	@Override
-	public void setData() {
+	public void fetchRecipeData(int start, int end) {
 		System.out.println("가자");
 		try (FileInputStream file = new FileInputStream(new File(path, filename))) {
 
@@ -40,8 +39,8 @@ public class FileServiceImpl implements FileService{
 
 			XSSFSheet sheet = workbook.getSheetAt(0);
 
-
-			for (Row row : sheet) {
+			for (int i = start; i < end; i++) {
+				XSSFRow row = sheet.getRow(i);
 				Cell recipeNo = row.getCell(0);
 				if (recipeNo == null) {
 					continue;
@@ -161,7 +160,6 @@ public class FileServiceImpl implements FileService{
 						isName = true;
 					}
 				}
-
 			}
 			System.out.println("끗");
 		} catch (IOException e) {
