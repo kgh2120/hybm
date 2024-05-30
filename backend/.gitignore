@@ -40,3 +40,4 @@ out/
 src/main/resources/secret.yml
 src/main/resources/application-dev.yml
 src/main/resources/data.sql
+src/main/resources/firebase
