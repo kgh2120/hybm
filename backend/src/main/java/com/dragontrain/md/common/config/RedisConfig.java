@@ -8,6 +8,7 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -55,5 +56,18 @@ public class RedisConfig {
 	@Bean
 	public GenericJackson2JsonRedisSerializer genericJackson2JsonRedisSerializer() {
 		return new GenericJackson2JsonRedisSerializer();
+	}
+
+	@Primary
+	@Qualifier("redisCacheManager")
+	@Bean(name = "redisCacheManager")
+	public CacheManager redisCacheManager() {
+		RedisCacheManager.RedisCacheManagerBuilder builder = RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory());
+		RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig()
+			.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()))
+			.prefixCacheNameWith("Cache:") // Key Prefix로 "Cache:"를 앞에 붙여 저장
+			.entryTtl(Duration.ofMinutes(30)); // 캐시 수명 30분
+		builder.cacheDefaults(configuration);
+		return builder.build();
 	}
 }
