@@ -6,7 +6,10 @@ import lombok.Getter;
 public enum CacheType {
 
 
-	CACTEGORY("category");
+	CATEGORY("category"),
+	USER("user")
+
+	;
 
 	private String name;
 	private Integer expireAfterWrite;

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.caffeine.CaffeineCache;
 import org.springframework.cache.support.SimpleCacheManager;
@@ -16,6 +17,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
 
 @RequiredArgsConstructor
 @Configuration
@@ -28,8 +30,10 @@ public class BeanConfig {
 		return new JPAQueryFactory(em);
 	}
 
-	@Bean
-	public CacheManager cacheManager() {
+
+	@Qualifier("caffeineCacheManager")
+	@Bean(name = "caffeineCacheManager")
+	public CacheManager caffeineCacheManager() {
 		SimpleCacheManager cacheManager = new SimpleCacheManager();
 
 		List<CaffeineCache> caches =
@@ -48,6 +52,8 @@ public class BeanConfig {
 		cacheManager.setCaches(caches);
 		return cacheManager;
 	}
+
+
 
 
 }

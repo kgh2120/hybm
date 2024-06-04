@@ -3,6 +3,7 @@ package com.dragontrain.md.domain.food.controller;
 import java.util.List;
 
 import com.dragontrain.md.domain.food.controller.response.*;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -44,9 +45,12 @@ public class FoodController {
 		return ResponseEntity.ok(foodService.getBarcodeInfo(barcode));
 	}
 
+
+
 	@GetMapping("/category")
 	public ResponseEntity<List<CategoryInfoResponse>> getCategoryInfo() {
 		return ResponseEntity.ok(foodService.getCategoryInfo());
+//		return ResponseEntity.ok().build();
 	}
 
 	@GetMapping("/expiration")

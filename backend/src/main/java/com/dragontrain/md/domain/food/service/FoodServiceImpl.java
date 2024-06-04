@@ -303,9 +303,10 @@ public class FoodServiceImpl implements FoodService {
 
 	}
 
-	@Cacheable("category")
+	@Cacheable(cacheNames = "category", cacheManager="redisCacheManager")
 	@Override
 	public List<CategoryInfoResponse> getCategoryInfo() {
+		log.info("cache miss!");
 		List<CategoryInfoResponse> categoryInfoResponseList = new ArrayList<>();
 		for (CategoryBig categoryBig : categoryBigRepository.findAll()) {
 			List<CategoryInfoDetail> categoryInfoDetails = new ArrayList<>();

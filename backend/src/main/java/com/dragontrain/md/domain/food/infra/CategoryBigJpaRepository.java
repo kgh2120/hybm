@@ -16,4 +16,7 @@ public interface CategoryBigJpaRepository extends JpaRepository<CategoryBig, Int
 		" where year(f.createdAt)=:year and month(f.createdAt)=:month")
 	List<BigCategoryPriceInfo> findAllBigGroupAndSpend(Long refrigeratorId, Integer year, Integer month);
 
+	@Query("select cb from CategoryBig cb left join fetch cb.categoryDetails")
+	List<CategoryBig> findAllCategory();
+
 }

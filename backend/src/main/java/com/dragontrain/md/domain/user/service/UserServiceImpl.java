@@ -1,5 +1,7 @@
 package com.dragontrain.md.domain.user.service;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +27,7 @@ public class UserServiceImpl implements UserService {
 	private final EventPublisher eventPublisher;
 	private final TimeService timeService;
 
+	@Cacheable(cacheNames = "user", key = "#userId", cacheManager = "caffeineCacheManager")
 	@Override
 	public User loadUserByUserId(Long userId) {
 		return userRepository.findById(userId)
@@ -50,6 +53,7 @@ public class UserServiceImpl implements UserService {
 		return Tokens.of(jwtProvider.createAccessToken(userId), jwtProvider.createRefreshToken(userId));
 	}
 
+	@CacheEvict(cacheNames = "user", key = "#user.userId")
 	@Transactional
 	@Override
 	public void signOut(User user) {

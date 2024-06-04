@@ -20,7 +20,7 @@ public class CategoryBigRepositoryImpl implements CategoryBigRepository {
 
 	@Override
 	public List<CategoryBig> findAll() {
-		return categoryBigJpaRepository.findAll();
+		return categoryBigJpaRepository.findAllCategory();
 	}
 
 	@Override
