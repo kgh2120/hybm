@@ -2,6 +2,7 @@ package com.dragontrain.md.domain.refrigerator.controller;
 
 import com.dragontrain.md.domain.refrigerator.event.ExpAcquired;
 import com.dragontrain.md.domain.refrigerator.event.GotBadge;
+import com.dragontrain.md.domain.refrigerator.facade.RefrigeratorLockFacade;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,7 @@ public class RefrigeratorEventHandler {
 	private final RefrigeratorService refrigeratorService;
 	private final LevelService levelService;
 	private final StorageStorageDesignService storageStorageDesignService;
+	private final RefrigeratorLockFacade refrigeratorLockFacade;
 
 	@EventListener
 	public void handleUserCreatedEvent(UserCreated userCreated) {
@@ -37,12 +39,12 @@ public class RefrigeratorEventHandler {
 
 	@EventListener
 	public void handleGotBadgeEvent(GotBadge gotBadge) {
-		refrigeratorService.gotBadge(gotBadge.getUserId(), gotBadge.getCategoryBigId());
+		refrigeratorLockFacade.gotBadge(gotBadge.getUserId(), gotBadge.getCategoryBigId());
 	}
 
 	@TransactionalEventListener
 	public void handleExpAddedEvent(ExpAcquired expAcquired) {
-		levelService.acquireExp(expAcquired.getUserId(), expAcquired.getExp());
+		refrigeratorLockFacade.acquireExp(expAcquired.getUserId(), expAcquired.getExp());
 	}
 
 	@TransactionalEventListener

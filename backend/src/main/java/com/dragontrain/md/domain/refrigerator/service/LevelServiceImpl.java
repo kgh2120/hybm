@@ -47,7 +47,7 @@ public class LevelServiceImpl implements LevelService {
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@Override
 	public void acquireExp(Long userId, Integer exp) {
-		log.debug("acquireExp - userId : {}, exp : {}", userId, exp);
+		log.info("acquireExp - userId : {}, exp : {}", userId, exp);
 		Refrigerator refrigerator = refrigeratorRepository.findByUserId(userId)
 			.orElseThrow(() -> new RefrigeratorException(RefrigeratorErrorCode.REFRIGERATOR_NOT_FOUND));
 
@@ -67,7 +67,6 @@ public class LevelServiceImpl implements LevelService {
 			eventPublisher.publish(new LevelUp(userId, originLevel,  afterLevel));
 		}
 
-		log.debug("acquireExp - finished");
 	}
 
 	private AcquireExpCalculateResult calculateExp(int calculatedExp, Level level) {
