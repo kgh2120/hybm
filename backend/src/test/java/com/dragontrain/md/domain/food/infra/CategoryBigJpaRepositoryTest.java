@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.dragontrain.md.setting.JpaTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -26,7 +27,7 @@ import com.dragontrain.md.domain.user.domain.User;
 import com.dragontrain.md.domain.user.infra.UserJpaRepository;
 
 @DataJpaTest
-class CategoryBigJpaRepositoryTest {
+class CategoryBigJpaRepositoryTest extends JpaTest {
 
 	@Autowired
 	private UserJpaRepository userJpaRepository;

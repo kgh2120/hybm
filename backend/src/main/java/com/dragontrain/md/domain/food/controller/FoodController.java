@@ -1,5 +1,6 @@
 package com.dragontrain.md.domain.food.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.dragontrain.md.domain.food.controller.response.*;
@@ -117,6 +118,7 @@ public class FoodController {
 		@PathVariable @Path(candidates = {"eaten", "thrown"}, message = "eaten, thrown의 값만 입력해주세요") String deleteType,
 		@RequestParam @NotNull @NotEmpty(message = "foodId를 1개 이상 보내야 합니다.") Long[] foodId,
 		@AuthenticationPrincipal User user) {
+		log.info("foodIds : {}", Arrays.toString(foodId));
 		foodService.deleteFood(deleteType, foodId, user);
 		return ResponseEntity.ok().build();
 	}

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.dragontrain.md.setting.JpaTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ import org.junit.jupiter.api.BeforeEach;
 import com.dragontrain.md.setting.TestEntityFactory;
 
 @DataJpaTest
-class NoticeJpaRepositoryTest {
+class NoticeJpaRepositoryTest extends JpaTest {
 
 	@Autowired
 	private NoticeJpaRepository noticeJpaRepository;

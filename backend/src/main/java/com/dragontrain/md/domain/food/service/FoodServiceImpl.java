@@ -366,6 +366,7 @@ public class FoodServiceImpl implements FoodService {
 		Long userId = user.getUserId();
 
 		// ids 중복 있는지 검증
+		log.info("foodIds : {}", Arrays.toString(foodIds));
 
 		validateDuplicateFoodIds(foodIds);
 
