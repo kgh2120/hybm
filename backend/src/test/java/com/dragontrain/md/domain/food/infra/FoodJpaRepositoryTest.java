@@ -2,6 +2,7 @@ package com.dragontrain.md.domain.food.infra;
 
 import java.time.LocalDateTime;
 
+import com.dragontrain.md.setting.JpaTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,7 @@ import com.dragontrain.md.domain.user.domain.User;
 import com.dragontrain.md.domain.user.infra.UserJpaRepository;
 
 @DataJpaTest
-class FoodJpaRepositoryTest {
+class FoodJpaRepositoryTest extends JpaTest {
 
 	@Autowired
 	private UserJpaRepository userJpaRepository;

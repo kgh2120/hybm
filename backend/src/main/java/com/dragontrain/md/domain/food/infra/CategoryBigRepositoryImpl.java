@@ -1,6 +1,7 @@
 package com.dragontrain.md.domain.food.infra;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
@@ -26,5 +27,10 @@ public class CategoryBigRepositoryImpl implements CategoryBigRepository {
 	@Override
 	public List<BigCategoryPriceInfo> findAllBigGroupAndSpend(Long refrigeratorId, Integer year, Integer month) {
 		return categoryBigJpaRepository.findAllBigGroupAndSpend(refrigeratorId, year, month);
+	}
+
+	@Override
+	public Optional<CategoryBig> findById(Integer id) {
+		return categoryBigJpaRepository.findById(id);
 	}
 }
