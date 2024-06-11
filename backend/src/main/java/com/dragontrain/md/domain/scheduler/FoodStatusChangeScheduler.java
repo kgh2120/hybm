@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.dragontrain.md.common.lock.LockRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,24 +28,30 @@ public class FoodStatusChangeScheduler {
 	private final FoodRepository foodRepository;
 	private final TimeService timeService;
 	private final NoticeService noticeService;
+	private final LockRepository lockRepository;
 
-	@Scheduled(cron = "0 0/10 * * * *", zone = "Asia/Seoul")
+	@Scheduled(cron = "0 0 4 * * *", zone = "Asia/Seoul")
 	public void changeFoodStatus() {
 		LocalDate now = timeService.localDateNow();
 		log.info("{}월 {}일자 - 음식 스케줄러 돌아갑니다", now.getMonthValue(), now.getDayOfMonth());
 
-		LocalDateTime localDateTime = timeService.localDateTimeNow();
-		List<Food> toWarning = foodRepository.findFoodByDDay(7, now);
-		toWarning.forEach(food -> food.changeStatus(FoodStatus.WARNING, localDateTime));
+		if(lockRepository.getLock("changeFoodStatus", "scheduleLock")){
+			log.info("=====lock  획득====");
+			LocalDateTime localDateTime = timeService.localDateTimeNow();
+			List<Food> toWarning = foodRepository.findFoodByDDay(7, now);
+			toWarning.forEach(food -> food.changeStatus(FoodStatus.WARNING, localDateTime));
 
-		List<Food> toDanger = foodRepository.findFoodByDDay(3, now);
-		toDanger.forEach(food -> food.changeStatus(FoodStatus.DANGER, localDateTime));
+			List<Food> toDanger = foodRepository.findFoodByDDay(3, now);
+			toDanger.forEach(food -> food.changeStatus(FoodStatus.DANGER, localDateTime));
 
 
-		List<Food> toRotten = foodRepository.findFoodByDDay(0, now);
-		toRotten.forEach(food -> food.changeStatus(FoodStatus.ROTTEN, localDateTime));
-		toDanger.addAll(toRotten);
-		 noticeService.saveNotices(toDanger);
+			List<Food> toRotten = foodRepository.findFoodByDDay(0, now);
+			toRotten.forEach(food -> food.changeStatus(FoodStatus.ROTTEN, localDateTime));
+			toDanger.addAll(toRotten);
+			noticeService.saveNotices(toDanger);
+		}
+
+
 	}
 
 }
