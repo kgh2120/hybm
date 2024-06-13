@@ -69,7 +69,9 @@ public class WebSecurityConfig {
 			.authorizeHttpRequests((auth) ->
 				auth.requestMatchers("/h2-console/**", "/oauth2/**", "/login/**",
 						"/api/users/login-fail", "/api/users/reissue", "/actuator/**").permitAll()
-					.anyRequest().authenticated())
+//					.anyRequest().permitAll()
+					.anyRequest().authenticated()
+			)
 			.oauth2Login(config ->
 				config.userInfoEndpoint(c -> c.userService(customOAuth2Service))
 					.authorizationEndpoint(c -> c.authorizationRequestRepository(redisAuthorizationRequestRepository))

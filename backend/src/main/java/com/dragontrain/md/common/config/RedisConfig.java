@@ -58,8 +58,7 @@ public class RedisConfig {
 		return new GenericJackson2JsonRedisSerializer();
 	}
 
-	@Primary
-	@Qualifier("redisCacheManager")
+
 	@Bean(name = "redisCacheManager")
 	public CacheManager redisCacheManager() {
 		RedisCacheManager.RedisCacheManagerBuilder builder = RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory());

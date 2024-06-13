@@ -3,18 +3,16 @@ package com.dragontrain.md.domain.food.controller.response;
 import com.dragontrain.md.domain.food.domain.Barcode;
 import com.dragontrain.md.domain.food.domain.CategoryDetail;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Builder
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 public class BarcodeInfo {
-	private final String name;
-	private final Integer categoryId;
-	private final Integer categoryBigId;
+	private  String name;
+	private  Integer categoryId;
+	private  Integer categoryBigId;
 
 	public static BarcodeInfo create(Barcode barcode) {
 		CategoryDetail categoryDetail = barcode.getCategoryDetail();

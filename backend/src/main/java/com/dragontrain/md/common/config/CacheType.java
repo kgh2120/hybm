@@ -7,7 +7,8 @@ public enum CacheType {
 
 
 	CATEGORY("category"),
-	USER("user")
+	USER("user"),
+	BARCODE("barcode"),
 
 	;
 

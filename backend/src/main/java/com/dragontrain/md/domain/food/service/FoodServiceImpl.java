@@ -425,11 +425,10 @@ public class FoodServiceImpl implements FoodService {
 	}
 
 
-
+	@Cacheable(cacheNames = "barcode", cacheManager = "redisCacheManager")
 	@Transactional
 	@Override
 	public BarcodeInfo getBarcodeInfo(Long barcode) {
-
 		Barcode barcodeInfo = barcodeRepository.findByBarcodeId(barcode)
 			.orElseGet(() -> {
 				log.info("create new barcode entity barcode number : {}", barcode);
@@ -448,7 +447,6 @@ public class FoodServiceImpl implements FoodService {
 
 		return BarcodeInfo.create(barcodeInfo);
 	}
-
 	@Override
 	public ExpectedExpirationDate getExpectedExpirationDate(int categoryDetailId, int year, int month, int day) {
 		// 일단 날짜 만들기
