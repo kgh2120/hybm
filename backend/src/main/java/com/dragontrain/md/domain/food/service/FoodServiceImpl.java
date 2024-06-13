@@ -302,8 +302,6 @@ public class FoodServiceImpl implements FoodService {
 		}
 
 	}
-
-	@Cacheable(cacheNames = "category", cacheManager="redisCacheManager")
 	@Override
 	public List<CategoryInfoResponse> getCategoryInfo() {
 		log.info("cache miss!");
