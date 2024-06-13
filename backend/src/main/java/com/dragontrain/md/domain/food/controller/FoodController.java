@@ -47,7 +47,7 @@ public class FoodController {
 	}
 
 
-
+	@Cacheable(cacheNames = "category", cacheManager = "caffeineCacheManager")
 	@GetMapping("/category")
 	public ResponseEntity<List<CategoryInfoResponse>> getCategoryInfo() {
 		return ResponseEntity.ok(foodService.getCategoryInfo());
