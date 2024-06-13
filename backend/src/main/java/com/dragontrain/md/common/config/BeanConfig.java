@@ -31,7 +31,7 @@ public class BeanConfig {
 	}
 
 
-	@Qualifier("caffeineCacheManager")
+	@Primary
 	@Bean(name = "caffeineCacheManager")
 	public CacheManager caffeineCacheManager() {
 		SimpleCacheManager cacheManager = new SimpleCacheManager();
