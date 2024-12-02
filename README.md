@@ -72,7 +72,7 @@
 
 ### 아키텍처
 
-![architecture](https://velog.velcdn.com/images/kgh2120/post/ba20d941-d506-4da7-befb-445fe3fbc65e/image.png)
+![architecture](https://velog.velcdn.com/images/kgh2120/post/26797fdc-5210-4305-a2dc-b2cba607368b/image.png)
 
 ### [ERD](https://www.erdcloud.com/d/aSgjGYbMQCyfdGhDB)
 
