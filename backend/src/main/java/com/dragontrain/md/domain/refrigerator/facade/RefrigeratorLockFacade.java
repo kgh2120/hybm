@@ -3,7 +3,9 @@ package com.dragontrain.md.domain.refrigerator.facade;
 import com.dragontrain.md.common.lock.LockRepository;
 import com.dragontrain.md.domain.refrigerator.service.LevelService;
 import com.dragontrain.md.domain.refrigerator.service.RefrigeratorService;
+import jakarta.persistence.OptimisticLockException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
@@ -16,17 +18,18 @@ public class RefrigeratorLockFacade {
 
 
 	public void acquireExp(Long userId, Integer exp){
-		while (!lockRepository.getLock("acquireExp", userId)) {
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				throw new RuntimeException(e);
+		while (true) {
+			try{
+				levelService.acquireExp(userId, exp);
+				break;
+			} catch (OptimisticLockException | ObjectOptimisticLockingFailureException e) {
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException ex) {
+					throw new RuntimeException(ex);
+				}
 			}
-		}
-		try{
-			levelService.acquireExp(userId, exp);
-		}finally {
-			lockRepository.releaseLock("acquireExp", userId);
+
 		}
 	}
 
