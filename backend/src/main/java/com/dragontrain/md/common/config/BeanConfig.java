@@ -17,8 +17,10 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Primary;
 
+@EnableAspectJAutoProxy
 @RequiredArgsConstructor
 @Configuration
 public class BeanConfig {

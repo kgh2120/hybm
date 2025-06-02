@@ -50,7 +50,7 @@ public class Refrigerator {
 	private Level level;
 
 	@Version
-	private long version;
+	private Long version;
 
 	public static Refrigerator create(User user, Level level, LocalDateTime now) {
 		return Refrigerator.builder()
