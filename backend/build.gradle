@@ -63,6 +63,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     // fcm
     implementation 'com.google.firebase:firebase-admin:9.2.0'
+    // aop
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
