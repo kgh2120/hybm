@@ -15,5 +15,6 @@ public @interface OptimisticLock {
 	int value() default 50;
 	@AliasFor("value")
 	int threadSleepTime() default 50;
+	int retryCount() default Integer.MAX_VALUE;
 
 }
